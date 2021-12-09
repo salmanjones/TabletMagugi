@@ -18,9 +18,7 @@ class App extends React.Component<Props> {
     render() {
         return (
             <Provider store={store}>
-                <NavigationContainer>
-                    <AppNavigation/>
-                </NavigationContainer>
+                <AppNavigation/>
             </Provider>
         );
     }

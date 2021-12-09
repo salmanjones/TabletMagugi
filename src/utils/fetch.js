@@ -1,6 +1,6 @@
-import { AsyncStorage } from 'react-native';
-import { AppConfig, StateCode } from './constant';
-import { desEncrypt, desDecrypt } from './encrypt/encrypt';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {AppConfig, StateCode} from './constant';
+import {desDecrypt, desEncrypt} from './encrypt/encrypt';
 import * as Api from '../services/api';
 
 let vCode = null;

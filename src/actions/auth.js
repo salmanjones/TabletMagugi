@@ -1,6 +1,7 @@
 //libs
-import {AsyncStorage, Keyboard} from "react-native";
-import { CommonActions } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {Keyboard} from "react-native";
+import {CommonActions} from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 //self
 import * as types from './action-types';

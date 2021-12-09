@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View, ScrollView, AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {ScrollView, Text, View} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 //self
-import { remindStyles } from 'styles'; //升级提示-登录页面
+import {remindStyles} from 'styles'; //升级提示-登录页面
 
 
 export class RemindBoxer extends React.Component {
