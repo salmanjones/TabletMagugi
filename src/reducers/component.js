@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions';
 import {combineReducers} from 'redux';
-import {concatWithoutDuplicate, ListStatus} from 'utils';
+import {concatWithoutDuplicate, ListStatus} from '../utils';
 
 import {
     COMPONENT_ACTIONS,

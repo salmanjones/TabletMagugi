@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
-import {NavigationActions} from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
 //self
 import {addCardItemStyles, cashierBillingStyle, commonStyles} from 'styles';
 import {
@@ -57,6 +57,7 @@ import {
 import {PaymentResultStatus, showMessage} from 'utils';
 import {getImage, ImageQutity, throttle, PixelUtil} from '../../utils';
 import { MultiPayActivity } from './MultiPayActivity';
+import {useNavigation} from "@react-navigation/native";
 
 let company_roundMode = null;
 let company_settings = {};
@@ -3856,7 +3857,7 @@ const mapDispatchToProps = (dispatch, props) => {
                 dispatch(getPendingListAction('', true));
             }
             props.navigation.setParams({back: null});
-            dispatch(NavigationActions.back())
+            dispatch(CommonActions.goBack())
         },
         checkFlowNumber: (params) => {
             dispatch(cashierCheckFlowNumberAction(params))

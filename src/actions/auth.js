@@ -1,6 +1,6 @@
 //libs
 import {AsyncStorage, Keyboard} from "react-native";
-import {NavigationActions} from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 //self
 import * as types from './action-types';
@@ -41,7 +41,7 @@ export const loginSubmitAction = () => {
     Keyboard.dismiss();
 
     return function (dispatch, getState) {
-        let formValue = getState().handleLoginForm;
+        let formValue = getState().login;
         let checkValue = verifyInputInfo(formValue);
 
         if (checkValue.commit) {
@@ -66,7 +66,7 @@ export const logoutAction = () => {
 export const linkToResetpwdAction = () => {
     return function (dispatch, getState) {
         dispatch({type: types.LOGIN_LINK_RESETPWD})
-        dispatch(NavigationActions.navigate({
+        dispatch(CommonActions.navigate({
             routeName: 'ResetPwdActivity'
         }));
 
@@ -110,7 +110,7 @@ const loginInputPostAction = () => {
         //触发loading
         dispatch(getDataPosting());
         //获取当前表单值
-        let formValue = getState().handleLoginForm;
+        let formValue = getState().login;
         //开始网络请求
         return fetchAuthUser(formValue.username, formValue.password).then((backData) => {
             let code = backData.code;

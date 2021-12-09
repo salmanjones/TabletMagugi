@@ -218,5 +218,5 @@ export const StaffSelectWidget = connect(
     mapStateToProps,
     mapDispatchToProps,
     null,
-    { withRef: true }
+    { }
 )(StaffSelectClass);

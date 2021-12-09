@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native/';
-import { NavigationActions } from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
 import {
   Text,
   View,
@@ -266,7 +265,7 @@ export class BillingModify extends React.Component {
   componentDidMount() {
     const { loadData, navigation ,orderData} = this.props;
     const { params } = this.props.navigation.state;
-    //if(orderData.billingNo) return 
+    //if(orderData.billingNo) return
     InteractionManager.runAfterInteractions(() => {
       loadData({
         billingNo: params.billingNo,
@@ -562,7 +561,7 @@ const mapDispatchToProps = dispatch => {
     updateNumber: param => dispatch(updateCustomerNumberAction(param)),
     reset: () => dispatch(resetAction()),
     resetToBillingList: () => {
-      dispatch(NavigationActions.back());
+      dispatch(CommonActions.goBack());
       dispatch(getBillingListAction({ billingStatus: '1' }, true));
     },
   };

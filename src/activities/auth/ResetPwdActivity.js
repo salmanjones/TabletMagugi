@@ -2,9 +2,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { View, Image, TextInput, KeyboardAvoidingView, Text, TouchableHighlight, ImageBackground, Alert} from 'react-native';
-import { NavigationActions } from 'react-navigation';
-
-
+import { CommonActions } from '@react-navigation/native';
 import {BottomCopyModule, ModalLoadingIndicator} from "components";
 import {resetPwdStyles} from 'styles';
 import {resetpwdSendCodeAction, resetpwdSubmitAction} from 'actions';
@@ -418,12 +416,12 @@ const verfyUserInput = (self, toCheckCode=false)=>{
 //mapping props
 const mapStateToProps = (state) => {
     return {
-        activityStatus:state.hanleResetpwdForm
+        activityStatus:state.reserPwd
     }
 };
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        backPage:()=>{dispatch(NavigationActions.back())},
+        backPage:()=>{dispatch(CommonActions.goBack())},
         sendCode:(state)=>(dispatch(resetpwdSendCodeAction(state))),
         submitForm:(state)=>(dispatch(resetpwdSubmitAction(state))),
     }

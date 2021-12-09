@@ -12,7 +12,7 @@ let loginFormValue = {
     disabledResetPwd: false
 };
 
-export const handleLoginForm = (state = loginFormValue, action) => {
+export const loginReducer = (state = loginFormValue, action) => {
     //当前状态
     let currState = Object.assign({}, state);
     switch (action.type) {

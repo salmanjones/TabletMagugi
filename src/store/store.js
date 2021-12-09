@@ -1,26 +1,32 @@
-import { createStore, applyMiddleware } from 'redux';
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
-import { Provider, connect } from 'react-redux';
-import { persistStore } from 'redux-persist';
-import { createLogger } from 'redux-logger';
+import {applyMiddleware, createStore} from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from '../reducers/index';
-import {navMiddleware} from "../navigators/app-navigator"
 
+function createLogger({getState}) {
+    return (next) => (action) => {
+        console.log('will dispatch', action)
+
+        // 调用 middleware 链中下一个 middleware 的 dispatch。
+        let returnValue = next(action)
+        console.log('state after dispatch', getState())
+
+        return returnValue
+    }
+}
 
 const getMiddleware = () => {
-  const middlewares = [reduxThunk,navMiddleware];
-  if (__DEV__) {
-    //middlewares.push(createLogger());
-  }
-  return applyMiddleware(...middlewares);
+    const middlewares = [reduxThunk];
+    if (__DEV__) {
+        middlewares.push(createLogger);
+    }
+    return applyMiddleware(...middlewares);
 };
 
 export default function configureStore() {
-  const store = createStore(reducers, getMiddleware());
-  let persistor = persistStore(store);
-  return {
-    persistor,
-    store,
-  };
+    const middleware = getMiddleware();
+    const store = createStore(reducers, middleware)
+
+    return {
+        store
+    }
 }

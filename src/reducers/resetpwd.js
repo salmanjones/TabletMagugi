@@ -3,7 +3,7 @@ import {RESETPWD_FROM_SUBMIT, RESETPWD_SEND_CODE} from "actions";
 const defaultSatete = {
     loading: false
 }
-export const hanleResetpwdForm = (state = defaultSatete, action) => {
+export const resetPwdReducer = (state = defaultSatete, action) => {
     //当前状态
     let currState = Object.assign({}, state);
     switch (action.type) {

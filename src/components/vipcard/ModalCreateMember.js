@@ -20,7 +20,7 @@ import {
     isValidCardPwd,
     displayError,
     showMessage,
-} from 'utils';
+} from '../../utils';
 import {fetchMemberNO, fetchCreateMember, fetchMemberPasswordStat} from 'services';
 
 const initMemberStatus = {

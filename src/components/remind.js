@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, ScrollView, AsyncStorage } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import RNExitApp from 'react-native-exit-app';
 //self
 import { remindStyles } from 'styles'; //升级提示-登录页面

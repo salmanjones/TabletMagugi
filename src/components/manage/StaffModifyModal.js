@@ -64,7 +64,7 @@ class StaffModifyModalClass extends PureComponent {
 		}else{
 			this.props.save(project.id, staffIndex, staff);
 		}
-		
+
 		this.setState({ visible: false });
 	};
 
@@ -353,7 +353,7 @@ const mapDispatchToProps = (dispatch) =>
 		},
 		dispatch
 	);
-export const StaffModifyModal = connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(
+export const StaffModifyModal = connect(mapStateToProps, mapDispatchToProps, null, { })(
 	StaffModifyModalClass
 );
 

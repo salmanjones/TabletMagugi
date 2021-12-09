@@ -250,5 +250,5 @@ export const StaffSelectBoxV2 = connect(
     mapStateToProps,
     mapDispatchToProps,
     null,
-    { withRef: true }
+    { }
 )(StaffSelectBoxV2Class);

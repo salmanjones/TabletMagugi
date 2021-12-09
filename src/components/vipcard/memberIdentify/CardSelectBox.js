@@ -14,7 +14,7 @@ import Toast from 'react-native-root-toast';
 
 import {CardListItem, SectionList, TabGroup, CardItem} from 'components';
 import {memberIdentifyStyle, commonStyles} from 'styles';
-import {groupBy, PixelUtil} from 'utils';
+import {groupBy, PixelUtil} from '../../../utils';
 
 const MarginContainer = styled.View`
   width: 100%;

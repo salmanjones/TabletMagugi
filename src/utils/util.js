@@ -1,7 +1,7 @@
 import {Alert} from 'react-native';
-import {NavigationActions} from 'react-navigation';
 import Toast from 'react-native-root-toast';
 import {AppConfig} from './constant';
+import {CommonActions} from '@react-navigation/native'
 
 /**
  *
@@ -9,8 +9,27 @@ import {AppConfig} from './constant';
  * @param {*} ms
  */
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-export const delay = (delayed, ms) =>
-    Promise.all([delayed, sleep(ms)]).then(([data]) => data);
+export const delay = (delayed, ms) => Promise.all([delayed, sleep(ms)]).then(([data]) => data);
+
+/**
+ * 重置请求
+ * @param routeName
+ * @param dispatch
+ * @param params
+ */
+export const resetNavigationTo = (routeName = '', dispatch = {}, params = null) => {
+    dispatch(
+        CommonActions.reset({
+            index: 0,
+            routes: [
+                {
+                    name: routeName,
+                    params: params,
+                },
+            ],
+        })
+    )
+};
 
 /**
  *
@@ -24,25 +43,6 @@ export const createAction = (actionName, noSet) => {
             SUCCESS: `${actionName}_SUCCESS`,
             ERROR: `${actionName}_ERROR`,
         };
-};
-
-export const resetNavigationTo = (
-    routeName = '',
-    dispatch = {},
-    params = null
-) => {
-    const resetAction = NavigationActions.reset({
-        index: 0,
-        key: null,
-        actions: [
-            NavigationActions.navigate({
-                routeName,
-                params,
-            }),
-        ],
-    });
-    NavigationActions.dispatch;
-    dispatch(resetAction);
 };
 
 export const throttle = (func, t) => {
@@ -120,10 +120,6 @@ export const isPhone = phone => {
     return /^1[3|4|5|6|7|8|9][0-9]{9}$/.test(phone);
 };
 
-export const isValidPWD = value => {
-    return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(value);
-};
-
 export const isValidCardPwd = value => {
     return /^[0-9]{6}$/.test(value);
 };
@@ -135,18 +131,4 @@ export const getImage = (url, format, defaultImage) => {
     } else {
         return {uri: url};
     }
-};
-
-/**
- * fix ios modal alert issue
- * @param {*} fn1
- * @param {*} fn2
- */
-export const showAlertAfterModal = (fn1, fn2) => {
-    requestAnimationFrame(() => {
-        fn1();
-        requestAnimationFrame(() => {
-            fn2();
-        });
-    });
 };

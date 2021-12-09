@@ -3,9 +3,13 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
+        "start": "node node_modules/react-native/local-cli/cli.js start",
+        "start-nocache": "react-native start --reset-cache",
         "android": "react-native run-android",
-        "ios": "react-native run-ios",
-        "start": "react-native start",
+        "ios": "react-native run-ios --simulator='iPad Pro (12.9-inch) (5th generation)'",
+        "iphone": "react-native run-ios --simulator='iPhone 11 Pro'",
+        "bundle-android": "react-native bundle --platform android --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --dev false --reset-cache --assets-dest android/app/src/main/res",
+        "bundle-ios": "react-native bundle --platform ios --entry-file index.js  --bundle-output ./ios/bundle/main.jsbundle --dev false --reset-cache --assets-dest ./ios/bundle",
         "test": "jest",
         "lint": "eslint ."
     },
@@ -34,7 +38,7 @@
         "react-native-reanimated": "^2.2.3",
         "react-native-root-toast": "^3.2.1",
         "react-native-safe-area-context": "^3.3.2",
-        "react-native-screens": "^3.8.0",
+        "react-native-screens": "^3.9.0",
         "react-native-splash-screen": "^3.2.0",
         "react-native-svg": "^12.1.1",
         "react-native-swipeout": "^2.3.6",
@@ -42,8 +46,10 @@
         "react-native-tab-view": "^3.1.1",
         "react-native-vector-icons": "^8.1.0",
         "react-redux": "^7.2.5",
+        "react-timer-mixin": "^0.13.4",
         "redux-actions": "^2.6.5",
-        "redux-persist": "^6.0.0",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.4.1",
         "styled-components": "^5.3.3"
     },
     "devDependencies": {

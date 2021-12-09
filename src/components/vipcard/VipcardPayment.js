@@ -352,11 +352,11 @@ export class VipcardPayment extends React.PureComponent {
                 <QRCodePaymentNew
                   paymentStatus={otherPaymentStatus}
                   navigation={navigation}
-                  onClose={()=>{ 
+                  onClose={()=>{
                     navigation.dispatch({
                             routeName: 'CashierActivity',
                             type: 'backToRoute',
-                          })
+                    })
                   }}
                   title={title}
                   type={'1'}

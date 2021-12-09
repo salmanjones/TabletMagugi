@@ -12,7 +12,7 @@ export const pendingStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
-    statisticsText: {x
+    statisticsText: {
         //描述文字
         fontSize: PixelUtil.size(32),
         color: '#333',

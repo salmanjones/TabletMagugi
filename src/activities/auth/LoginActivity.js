@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { View, ImageBackground, Image, TextInput, KeyboardAvoidingView, Text, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import { ModalLoadingIndicator, RemindBoxer, } from "components";
 import { loginInputChangeAction, loginInputFoucusinAction, loginInputFoucusoutAction, loginSubmitAction, linkToResetpwdAction } from 'actions';
@@ -112,7 +111,7 @@ class Login extends React.Component {
 //mapping props
 const mapStateToProps = (state) => {
     return {
-        formValues: state.handleLoginForm,
+        formValues: state.login,
         isLoggedIn: state.auth.isLoggedIn,
         userInfo: state.auth.userInfo
     }

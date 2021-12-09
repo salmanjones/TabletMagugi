@@ -92,8 +92,7 @@ class CashierView extends React.Component {
             this.props.reset();
         }
 
-        let nav = this.props.nav;
-        let routeName = this.props.nav.routes.slice(-1)[0].routeName
+        let routeName = "" // this.props.nav.routes.slice(-1)[0].routeName
         if (routeName == 'CashierBillingActivity') {
             this.timerFlag = 0;
             this.isOldCustomer = '0';
@@ -113,7 +112,7 @@ class CashierView extends React.Component {
                 handnumBg: BaseData.radioImage,
                 numType: 'flownum',
                 searchStart: false,
-                
+
             });
         }
 
@@ -869,7 +868,6 @@ const CategoryViews = props => {
 const mapStateToProps = state => {
     const {memberIdentify} = state.component;
     return {
-        nav: state.nav,
         auth: state.auth,
         orderFlowNmberRefreshTag: state.billingOrder.orderFlowNmberRefreshTag,
         list: memberIdentify.list,

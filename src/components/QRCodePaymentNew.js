@@ -1,12 +1,8 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 
-import { payForPersonStyle, openCardAccountStyle } from 'styles';
-import {
-  showMessage,
-  PaymentResultStatus,
-} from 'utils';
-import { PaymentResult } from 'components';
+import {payForPersonStyle} from 'styles';
+import {PaymentResult} from 'components';
 
 export class QRCodePaymentNew extends React.PureComponent {
   constructor(props, context) {
@@ -63,7 +59,7 @@ export class QRCodePaymentNew extends React.PureComponent {
           </View>
         </View>
       </View>
-      
+
     );
   }
 }

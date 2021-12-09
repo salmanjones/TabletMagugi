@@ -25,9 +25,9 @@ import {
 } from 'components';
 import {getImage, ImageQutity, PixelUtil, showMessage} from 'utils';
 import {priceIndexStyle} from 'styles';
+import {Dimensions} from 'react-native';
 
 // 获取页面宽度
-const Dimensions = require('Dimensions');
 const width = Dimensions.get('window').width;
 const left = width - PixelUtil.size(120);
 

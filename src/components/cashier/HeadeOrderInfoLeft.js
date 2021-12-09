@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Text,TouchableOpacity,Image,ImageBackground,Alert} from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
 import { commonStyles } from 'styles';
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         backPage: () => {
-            dispatch(NavigationActions.back());
+            dispatch(CommonActions.goBack());
         },
     };
 };
