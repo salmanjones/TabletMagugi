@@ -2,26 +2,18 @@
 import React from 'react';
 import {connect} from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {
-    Image,
-    ImageBackground,
-    KeyboardAvoidingView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-import {ModalLoadingIndicator, RemindBoxer,} from "components";
+import {ModalLoadingIndicator, RemindBoxer,} from "../../components";
 import {
     linkToResetpwdAction,
     loginInputChangeAction,
     loginInputFoucusinAction,
     loginInputFoucusoutAction,
     loginSubmitAction
-} from 'actions';
-import {loginStyles} from 'styles';
-import {resetNavigationTo, systemConfig} from 'utils';
+} from '../../actions';
+import {loginStyles} from '../../styles';
+import {resetNavigationTo, systemConfig} from '../../utils';
 
 class Login extends React.Component {
     constructor(props) {

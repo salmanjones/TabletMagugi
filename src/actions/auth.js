@@ -1,12 +1,12 @@
 //libs
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {Keyboard} from "react-native";
-import {CommonActions} from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 //self
 import * as types from './action-types';
-import {fetchAuthUser} from 'services';
-import {AppConfig, resetNavigationTo, StateCode} from 'utils';
+import {fetchAuthUser} from '../services';
+import {AppConfig, resetNavigationTo, StateCode} from '../utils';
+import {AppNavigate} from "../navigators";
 
 //输入
 export const loginInputChangeAction = (value, name) => {
@@ -67,10 +67,7 @@ export const logoutAction = () => {
 export const linkToResetpwdAction = () => {
     return function (dispatch, getState) {
         dispatch({type: types.LOGIN_LINK_RESETPWD})
-        dispatch(CommonActions.navigate({
-            routeName: 'ResetPwdActivity'
-        }));
-
+        dispatch(AppNavigate.navigate('ResetPwdActivity'))
     };
 };
 

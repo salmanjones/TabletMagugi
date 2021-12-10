@@ -4,7 +4,6 @@ import {SplashScreen} from 'react-native-splash-screen';
 import {LayoutAnimation} from 'react-native';
 import configureStore from './src/store/store';
 import {AppNavigation} from "./src/navigators";
-import {NavigationContainer} from '@react-navigation/native';
 
 const {store} = configureStore();
 
