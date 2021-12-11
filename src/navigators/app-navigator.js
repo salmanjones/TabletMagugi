@@ -264,7 +264,7 @@ export const AppNavigation = connect(state => ({userInfo: state.auth.userInfo}))
  * @param params
  */
 export const AppNavigate = {
-    navigate: (name, params) => {
+    navigate: (name, params = {}) => {
         if (navigationRef.isReady()) {
             navigationRef.navigate(name, params);
         }
@@ -277,7 +277,7 @@ export const AppNavigate = {
             });
         }
     },
-    redirect: (name, params)=>{
+    redirect: (name, params = {})=>{
         if (navigationRef.isReady()) {
             let state = navigationRef.getState()
             const routes = [

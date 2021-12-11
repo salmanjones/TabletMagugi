@@ -1,11 +1,11 @@
 //libs
 import React from 'react';
-import { connect } from "react-redux";
-import { View, Image, TextInput, KeyboardAvoidingView, Text, TouchableHighlight, ImageBackground, Alert} from 'react-native';
-import { CommonActions } from '@react-navigation/native';
-import {BottomCopyModule, ModalLoadingIndicator} from "components";
-import {resetPwdStyles} from 'styles';
-import {resetpwdSendCodeAction, resetpwdSubmitAction} from 'actions';
+import {connect} from "react-redux";
+import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
+import {BottomCopyModule, ModalLoadingIndicator} from "../../components";
+import {resetPwdStyles} from '../../styles';
+import {resetpwdSendCodeAction, resetpwdSubmitAction} from '../../actions';
 
 class ResetPwdView extends React.Component {
     constructor(props) {
@@ -416,7 +416,7 @@ const verfyUserInput = (self, toCheckCode=false)=>{
 //mapping props
 const mapStateToProps = (state) => {
     return {
-        activityStatus:state.reserPwd
+        activityStatus:state.resetPwd
     }
 };
 const mapDispatchToProps = (dispatch, props) => {

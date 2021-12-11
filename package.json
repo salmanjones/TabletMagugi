@@ -49,6 +49,7 @@
         "react-redux": "^7.2.5",
         "react-timer-mixin": "^0.13.4",
         "redux-actions": "^2.6.5",
+        "redux-devtools-extension": "^2.13.9",
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.4.1",
         "styled-components": "^5.3.3"

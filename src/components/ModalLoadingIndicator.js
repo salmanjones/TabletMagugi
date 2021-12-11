@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Modal, ActivityIndicator, Text } from 'react-native';
+import {Modal} from 'react-native';
 
 //self
-import { modalLoadingStyles } from 'styles';
-import { LoadingIndicator } from "components";
+import {LoadingIndicator} from "components";
 
 export const ModalLoadingIndicator = ({
   text = '加载中...',

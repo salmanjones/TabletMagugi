@@ -65,9 +65,9 @@ export const logoutAction = () => {
 
 //跳转重置密码
 export const linkToResetpwdAction = () => {
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
         dispatch({type: types.LOGIN_LINK_RESETPWD})
-        dispatch(AppNavigate.navigate('ResetPwdActivity'))
+        AppNavigate.navigate('ResetPwdActivity')
     };
 };
 
