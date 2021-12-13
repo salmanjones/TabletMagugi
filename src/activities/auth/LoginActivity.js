@@ -6,7 +6,6 @@ import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, Touchable
 
 import {ModalLoadingIndicator, RemindBoxer,} from "../../components";
 import {
-    linkToResetpwdAction,
     loginInputChangeAction,
     loginInputFoucusinAction,
     loginInputFoucusoutAction,
@@ -51,6 +50,7 @@ class Login extends React.Component {
     }
 
     render() {
+        const {navigation} = this.props;
         const { isShowRemindBoxer } = this.state;
         return (
             <View style={ loginStyles.container }>
@@ -101,7 +101,8 @@ class Login extends React.Component {
                                     <Text style={ loginStyles.loginButtonText }>登录</Text>
 
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={this.props.formValues.disabledResetPwd ? null:this.props.resetPwd} underlayColor="transparent" hitSlop={{top:0,left:5,right:0,bottom:15}}>
+                                <TouchableOpacity underlayColor="transparent" hitSlop={{top:0,left:5,right:0,bottom:15}}
+                                    onPress={()=>{navigation.navigate('ResetPwdActivity')}} >
                                     <Text style={ loginStyles.loginForgetPwd }>忘记密码 >></Text>
                                 </TouchableOpacity>
                                 <Text style={ loginStyles.copyright }>
@@ -145,9 +146,6 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         submitForm: () => {
             dispatch(loginSubmitAction())
-        },
-        resetPwd: () => {
-            dispatch(linkToResetpwdAction())
         }
     }
 };

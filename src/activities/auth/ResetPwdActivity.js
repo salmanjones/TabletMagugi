@@ -6,6 +6,7 @@ import {CommonActions} from '@react-navigation/native';
 import {BottomCopyModule, ModalLoadingIndicator} from "../../components";
 import {resetPwdStyles} from '../../styles';
 import {resetpwdSendCodeAction, resetpwdSubmitAction} from '../../actions';
+import {AppNavigate} from "../../navigators";
 
 class ResetPwdView extends React.Component {
     constructor(props) {
@@ -218,6 +219,7 @@ class ResetPwdView extends React.Component {
     }
 
     render() {
+        let {navigation} = this.props
         return (
             <View style={ resetPwdStyles.container }>
                 <ModalLoadingIndicator loading={ this.props.activityStatus.loading } />
@@ -313,7 +315,9 @@ class ResetPwdView extends React.Component {
                     </View>
 
                     <View style={resetPwdStyles.submitBox}>
-                        <TouchableHighlight style={resetPwdStyles.submitBtnBack} underlayColor="#aaaaaa" onPress={this.props.backPage}>
+                        <TouchableHighlight style={resetPwdStyles.submitBtnBack} underlayColor="#aaaaaa" onPress={()=>{
+                            AppNavigate.goBack()
+                        }}>
                             <Text style={resetPwdStyles.submitBtnBackText}>返回上页</Text>
                         </TouchableHighlight>
                         <TouchableHighlight style={resetPwdStyles.submitBtnSave} underlayColor="#162247" onPress={this.resetPasswd.bind(this)}>

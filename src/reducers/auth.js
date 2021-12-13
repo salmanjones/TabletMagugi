@@ -8,8 +8,7 @@ let loginFormValue = {
     passwordValid: true,
     passwordTips: "",
     loading: false,
-    focus: "",
-    disabledResetPwd: false
+    focus: ""
 };
 
 export const loginReducer = (state = loginFormValue, action) => {
@@ -45,12 +44,6 @@ export const loginReducer = (state = loginFormValue, action) => {
             return currState;
         case types.LOGIN_FORM_CLEAR:
             return loginFormValue;
-        case types.LOGIN_LINK_RESETPWD:
-            currState.disabledResetPwd = true;
-            return currState;
-        case 'Navigation/BACK':
-            currState.disabledResetPwd = false;
-            return currState;
         default:
             return state;
     }
