@@ -13,6 +13,7 @@ import {
 } from '../../actions';
 import {loginStyles} from '../../styles';
 import {resetNavigationTo, systemConfig} from '../../utils';
+import {AppNavigate} from "../../navigators";
 
 class Login extends React.Component {
     constructor(props) {
@@ -50,7 +51,6 @@ class Login extends React.Component {
     }
 
     render() {
-        const {navigation} = this.props;
         const { isShowRemindBoxer } = this.state;
         return (
             <View style={ loginStyles.container }>
@@ -102,7 +102,7 @@ class Login extends React.Component {
 
                                 </TouchableOpacity>
                                 <TouchableOpacity underlayColor="transparent" hitSlop={{top:0,left:5,right:0,bottom:15}}
-                                    onPress={()=>{navigation.navigate('ResetPwdActivity')}} >
+                                    onPress={()=>{AppNavigate.navigate('ResetPwdActivity')}} >
                                     <Text style={ loginStyles.loginForgetPwd }>忘记密码 >></Text>
                                 </TouchableOpacity>
                                 <Text style={ loginStyles.copyright }>

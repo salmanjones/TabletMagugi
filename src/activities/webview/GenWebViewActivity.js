@@ -1,5 +1,5 @@
 import React from 'react';
-import {WebView} from 'react-native';
+import { WebView } from 'react-native-webview';
 
 //通用Web浏览器
 export class GenWebViewActivity extends React.Component{
@@ -9,7 +9,7 @@ export class GenWebViewActivity extends React.Component{
     }
 
     render (){
-        let urlParams = this.props.navigation.state.params;
+        let urlParams = this.props.route.params;
         return (
             <WebView source={{uri: urlParams.url}}/>
         );

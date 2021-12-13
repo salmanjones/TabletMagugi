@@ -14,8 +14,8 @@ class HeadeConsumeTitleLeftCpm extends React.PureComponent {
         let iconShow = require('@imgPath/consumables.png');
         let broderRight = require('@imgPath/border-right.png');
         if(this.props.navigation){
-            showModifyBill = this.props.navigation.state.params.showModifyBill;
-            orderInfoData = this.props.navigation.state.params.orderInfoLeftData || this.props.orderInfo.orderData;
+            showModifyBill = this.props.route.params.showModifyBill;
+            orderInfoData = this.props.route.params.orderInfoLeftData || this.props.orderInfo.orderData;
         }
 
         return (

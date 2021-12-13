@@ -20,8 +20,8 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         let showModifyBill = null;
         let orderInfoData = this.props.orderInfo.orderData;
         if(this.props.navigation){
-            showModifyBill = this.props.navigation.state.params.showModifyBill;
-            orderInfoData = this.props.navigation.state.params.orderInfoLeftData || this.props.orderInfo.orderData;
+            showModifyBill = this.props.route.params.showModifyBill;
+            orderInfoData = this.props.route.params.orderInfoLeftData || this.props.orderInfo.orderData;
 
             if(this.props.orderInfo.orderData && this.props.orderInfo.orderData.flowNumber){
                 orderInfoData.flowNumber = this.props.orderInfo.orderData.flowNumber;
@@ -36,9 +36,9 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         orderInfoData.flowNumber = flowNumber;
 
         let iconShow = hairIcon;
-        if(this.props.navigation.state.params.operatorText=='美容'){
+        if(this.props.route.params.operatorText=='美容'){
             iconShow = beautifyIcon;
-        }else if(this.props.navigation.state.params.operatorText=='美甲'){
+        }else if(this.props.route.params.operatorText=='美甲'){
             iconShow = manicureIcon;
         }
 

@@ -112,7 +112,7 @@ class MultiPay extends React.Component {
     }
 
     componentDidMount() {
-        let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.navigation.state.params;
+        let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
         this.getInitialData(memberInfo, items, (data) => {
             let stateData = {...this.state, paymentTimesCard};
@@ -1006,7 +1006,7 @@ class MultiPay extends React.Component {
             return;
         }
 
-        let saveBillingData = this.props.navigation.state.params.saveBillingData;
+        let saveBillingData = this.props.route.params.saveBillingData;
         //如果有密码先输入密码
         if (paymentList.find((x) => (x.payType == 2 || x.payType == 4) && x.hasPassword == 0 && !x.payTypePwd)) {
             this.setState({showCardPwd: true});
@@ -1144,12 +1144,12 @@ class MultiPay extends React.Component {
     }
 
     confirmPaySuccess() {
-        this.props.navigation.goBack(this.props.navigation.state.params.goBackKey);
+        this.props.navigation.goBack(this.props.route.params.goBackKey);
     }
 
     //第三方支付取消
     onQRCancel(isSuccess) {
-        this.props.navigation.goBack(this.props.navigation.state.params.goBackKey);
+        this.props.navigation.goBack(this.props.route.params.goBackKey);
     }
 
     //卡支付总额

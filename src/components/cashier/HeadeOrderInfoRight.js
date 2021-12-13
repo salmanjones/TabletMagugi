@@ -16,14 +16,14 @@ export class HeadeOrderInfoRight extends React.PureComponent {
   onSaleCard=()=>{
     this.props.navigation.navigate('VipcardActivity', {
       type: 'vip',
-      member: this.props.navigation.state.params.memberInfo,
+      member: this.props.route.params.memberInfo,
     });
   }
 
   render() {
-    let showMemberInfo = this.props.navigation.state.params.showMemberIcon;
-    let prevPage = this.props.navigation.state.params.prevPage;
-    let currMemberInfo = this.props.navigation.state.params.memberInfo;
+    let showMemberInfo = this.props.route.params.showMemberIcon;
+    let prevPage = this.props.route.params.prevPage;
+    let currMemberInfo = this.props.route.params.memberInfo;
     let iconType = (this.props.from || '') == 'recharge' ? '0' : '1';
 
     let ShowCmpt = <View />;
@@ -31,7 +31,7 @@ export class HeadeOrderInfoRight extends React.PureComponent {
       ShowCmpt = () => (
         <View style={commonStyles.HeadClientBox}>
           <TouchableHighlight
-            // onPress={this.props.navigation.state.params.showRightCardPanel}
+            // onPress={this.props.route.params.showRightCardPanel}
             underlayColor="transparent"
             style={
               showMemberInfo
@@ -48,7 +48,7 @@ export class HeadeOrderInfoRight extends React.PureComponent {
             </View>
           </TouchableHighlight>
           {/* <TouchableOpacity style={commonStyles.HeadClientOtherInfo}
-            onPress={(iconType!=='recharge'&&prevPage!='pendingOrder')? this.props.navigation.state.params.showMemberModal:null}> */}
+            onPress={(iconType!=='recharge'&&prevPage!='pendingOrder')? this.props.route.params.showMemberModal:null}> */}
 
           <View style={commonStyles.HeadClientOtherInfo}>
             <View style={commonStyles.HeadClientInfo}>
@@ -88,7 +88,7 @@ export class HeadeOrderInfoRight extends React.PureComponent {
               </View>
             </TouchableHighlight>
           ) : (
-            <TouchableOpacity  onPress={this.props.navigation.state.params.showRightCardPanel}>
+            <TouchableOpacity  onPress={this.props.route.params.showRightCardPanel}>
               <View style={commonStyles.HeadClientCardInfo}>
                 <View style={commonStyles.HeadClientCardImgBox}>
                   <Image resizeMethod="resize"
@@ -127,7 +127,7 @@ export class HeadeOrderInfoRight extends React.PureComponent {
         <View style={commonStyles.HeadClientBox}>
           <View style={commonStyles.HeadClientSearchContent}>
             <TouchableOpacity
-              onPress={this.props.navigation.state.params.showMemberModal}
+              onPress={this.props.route.params.showMemberModal}
               style={commonStyles.HeadClientSearchIBox}
             >
               <Image resizeMethod="resize"

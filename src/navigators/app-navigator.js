@@ -10,6 +10,7 @@ import {
     AnalysisHome,
     BillingModifyActivity,
     BillManageActivity,
+    CashierActivity,
     ConsumableActivity,
     GenWebViewActivity,
     HomeActivity,
@@ -71,7 +72,7 @@ function RootNavigation() {
                                       options={{title: '重置密码'}}/>
                     <RootStack.Screen name="GenWebViewActivity"
                                       component={GenWebViewActivity}
-                                      options={({route}) => ({title: route.params.count.toString()})}
+                                      options={({route}) => ({title: route.params.title.toString()})}
                                       screenOptions={{
                                           headerTitleStyle: {
                                               textAlign: "center",
@@ -81,7 +82,7 @@ function RootNavigation() {
                                       }}/>
                     <RootStack.Screen name="HomeActivity"
                                       component={HomeActivity}
-                                      options={({route}) => ({title: route.params.count.toString()})}
+                                      options={({route}) => ({title: route.params.title.toString()})}
                                       screenOptions={{
                                           headerTitleStyle: {
                                               textAlign: "center",
@@ -269,12 +270,17 @@ export const AppNavigate = {
             navigationRef.navigate(name, params);
         }
     },
-    reset: (name) => {
+    reset: (name, params) => {
         if (navigationRef.isReady()) {
             navigationRef.reset({
                 index: 0,
-                routes: [{ name }],
-            });
+                routes: [
+                    {
+                        name,
+                        params,
+                    },
+                ],
+            })
         }
     },
     redirect: (name, params = {})=>{

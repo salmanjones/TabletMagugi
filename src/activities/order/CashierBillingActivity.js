@@ -851,7 +851,7 @@ class CashierBillingView extends React.Component {
         member.cardBalanceCount = cardBalanceCount;
 
         this.props.navigation.setParams({
-            ...this.props.navigation.state.params,
+            ...this.props.route.params,
             'showMemberIcon': true,
             memberInfo: member,
             member: member
@@ -2136,7 +2136,7 @@ class CashierBillingView extends React.Component {
                 <View
                     style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
                 {
-                    this.props.navigation.state.params.member && (
+                    this.props.route.params.member && (
                         <Animated.View
                             style={this.state.sliderDisplay ? [cashierBillingStyle.rightPositionBox, {left: this.state.sliderLeft}] : {display: 'none'}} {...this._pinchResponder.panHandlers}>
                             <TouchableOpacity onPress={this.hideRightPanel.bind(this)} activeOpacity={1}
@@ -2154,7 +2154,7 @@ class CashierBillingView extends React.Component {
                                 <View style={cashierBillingStyle.rightPanelMemberBox}>
                                     <View style={cashierBillingStyle.HeadClientImgBox}>
                                         <Image resizeMethod="resize"
-                                               source={this.props.navigation.state.params.member.userImgUrl}
+                                               source={this.props.route.params.member.userImgUrl}
                                                style={cashierBillingStyle.HeadClientImg}
                                                resizeMode={'contain'}/>
                                     </View>
@@ -2163,14 +2163,14 @@ class CashierBillingView extends React.Component {
                                             <View style={cashierBillingStyle.memberCellHeader}>
                                                 <View style={cashierBillingStyle.memberCellHeaderTxt}>
                                                     {
-                                                        (this.props.navigation.state.params.member.name == '' || this.props.navigation.state.params.member.name == '散客' || this.props.navigation.state.params.member.name == null) ?
+                                                        (this.props.route.params.member.name == '' || this.props.route.params.member.name == '散客' || this.props.route.params.member.name == null) ?
                                                             <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                                  style={cashierBillingStyle.memberCellText}>手机尾号:{(this.props.navigation.state.params.member == undefined || this.props.navigation.state.params.member.phone == undefined || this.props.navigation.state.params.member.phone == '') ? "" : this.props.navigation.state.params.member.phone.substr(7)}</Text>
+                                                                  style={cashierBillingStyle.memberCellText}>手机尾号:{(this.props.route.params.member == undefined || this.props.route.params.member.phone == undefined || this.props.route.params.member.phone == '') ? "" : this.props.route.params.member.phone.substr(7)}</Text>
                                                             :
                                                             <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                                  style={cashierBillingStyle.memberCellText}>{this.props.navigation.state.params.member.name}</Text>
+                                                                  style={cashierBillingStyle.memberCellText}>{this.props.route.params.member.name}</Text>
                                                     }
-                                                    {this.props.navigation.state.params.member.sex == 0 ?
+                                                    {this.props.route.params.member.sex == 0 ?
                                                         <Image style={cashierBillingStyle.memberCellSex}
                                                                resizeMethod="resize"
                                                                source={require('@imgPath/sex_female.png')}/>
@@ -2182,30 +2182,30 @@ class CashierBillingView extends React.Component {
                                                 </View>
                                             </View>
                                             <View style={cashierBillingStyle.memberCellFooter}>
-                                                {this.props.navigation.state.params.member.memberType == 0 ?
+                                                {this.props.route.params.member.memberType == 0 ?
                                                     <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                          style={cashierBillingStyle.memberCellText}>会员 {this.props.navigation.state.params.member.memberCardNo}</Text>
+                                                          style={cashierBillingStyle.memberCellText}>会员 {this.props.route.params.member.memberCardNo}</Text>
                                                     :
                                                     <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                          style={cashierBillingStyle.memberCellText}>散客 {this.props.navigation.state.params.member.memberCardNo}</Text>
+                                                          style={cashierBillingStyle.memberCellText}>散客 {this.props.route.params.member.memberCardNo}</Text>
                                                 }
                                             </View>
                                         </View>
                                         <View style={cashierBillingStyle.memberCell}>
                                             <View style={cashierBillingStyle.memberCellHeader}>
                                                 <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                      style={cashierBillingStyle.memberCellText}>{this.props.navigation.state.params.member.phone}</Text>
+                                                      style={cashierBillingStyle.memberCellText}>{this.props.route.params.member.phone}</Text>
                                             </View>
                                             <View style={cashierBillingStyle.memberCellFooter}>
                                                 <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                      style={cashierBillingStyle.memberCellText}>会员卡{this.props.navigation.state.params.member.cardCount}张</Text>
+                                                      style={cashierBillingStyle.memberCellText}>会员卡{this.props.route.params.member.cardCount}张</Text>
                                             </View>
                                         </View>
                                         <View style={cashierBillingStyle.memberCell}>
                                             <View style={cashierBillingStyle.memberCellHeader}></View>
                                             <View style={cashierBillingStyle.memberCellFooter}>
                                                 <Text numberOfLines={1} ellipsizeMode={'tail'}
-                                                      style={cashierBillingStyle.memberCellText}>储值卡:¥{this.props.navigation.state.params.member.cardBalanceCount}</Text>
+                                                      style={cashierBillingStyle.memberCellText}>储值卡:¥{this.props.route.params.member.cardBalanceCount}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -2217,7 +2217,7 @@ class CashierBillingView extends React.Component {
                                             showRecharge={true}
                                             showTab={false}
                                             showCardDetailInfo={true}
-                                            member={this.props.navigation.state.params.member}
+                                            member={this.props.route.params.member}
                                             page={'cashier'}
                                         />
                                     )

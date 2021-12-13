@@ -2,6 +2,7 @@ import {Alert} from 'react-native';
 import Toast from 'react-native-root-toast';
 import {AppConfig} from './constant';
 import {CommonActions} from '@react-navigation/native'
+import {AppNavigate, AppNavigation} from "../navigators";
 
 /**
  *
@@ -18,17 +19,8 @@ export const delay = (delayed, ms) => Promise.all([delayed, sleep(ms)]).then(([d
  * @param params
  */
 export const resetNavigationTo = (routeName = '', dispatch = {}, params = null) => {
-    dispatch(
-        CommonActions.reset({
-            index: 0,
-            routes: [
-                {
-                    name: routeName,
-                    params: params,
-                },
-            ],
-        })
-    )
+    debugger
+    AppNavigate.navigate(routeName, params);
 };
 
 /**

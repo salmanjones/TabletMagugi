@@ -55,7 +55,7 @@ class MergeOrderPay extends React.Component {
     }
 
     componentWillMount() {
-        this.loadData(this.props.navigation.state.params.billingIds);
+        this.loadData(this.props.route.params.billingIds);
     }
 
     render() {
