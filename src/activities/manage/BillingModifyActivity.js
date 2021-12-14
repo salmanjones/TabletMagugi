@@ -219,8 +219,8 @@ export class BillingModify extends React.Component {
         <TouchableHighlight
           underlayColor="transparent"
           onPress={throttle(() => {
-            navigation.state.params.saveBilling &&
-              navigation.state.params.saveBilling();
+            props.route.params.saveBilling &&
+              props.route.params.saveBilling();
           }, 600)}
           style={rotateItemStyles.marginRight}
         >
@@ -264,7 +264,7 @@ export class BillingModify extends React.Component {
 
   componentDidMount() {
     const { loadData, navigation ,orderData} = this.props;
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.route;
     //if(orderData.billingNo) return
     InteractionManager.runAfterInteractions(() => {
       loadData({

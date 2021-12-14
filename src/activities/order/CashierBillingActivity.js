@@ -41,7 +41,7 @@ import {
     SearchInput,
     MultiplyPayModal,
     QueryInput
-} from 'components';
+} from '../../components';
 import {changeBillingOwner, selectStaffAclInfoResult} from 'services';
 import {
     cashierBillingFlowNumberInitAction,
@@ -77,19 +77,19 @@ class CashierBillingView extends React.Component {
         super(props);
         var sex = '0';
 
-        if (props.navigation.state.params.member) {
-            sex = props.navigation.state.params.member.sex;
+        if (props.route.params.member) {
+            sex = props.route.params.member.sex;
         }
         var isOldCustomer = '0';
-        if (props.navigation.state.params.orderInfoLeftData) {
-            isOldCustomer = props.navigation.state.params.orderInfoLeftData.isOldCustomer;
+        if (props.route.params.orderInfoLeftData) {
+            isOldCustomer = props.route.params.orderInfoLeftData.isOldCustomer;
         }
 
-        //props.navigation.state.params.isOldCustomer
+        //props.route.params.isOldCustomer
         var defaultState = defaultInfos(sex, isOldCustomer);
 
         var sliderDisplayStatus = false;
-        if (props.navigation.state.params.member) {
+        if (props.route.params.member) {
             sliderDisplayStatus = false;
         }
 
@@ -99,7 +99,7 @@ class CashierBillingView extends React.Component {
             sliderDisplay: sliderDisplayStatus
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
-        this.moduleCode = props.navigation.state.params.moduleCode;
+        this.moduleCode = props.route.params.moduleCode;
         this.cardCount = 0;
     }
 
@@ -126,7 +126,7 @@ class CashierBillingView extends React.Component {
 
     componentDidMount() {
         let roundMode = 0;
-        const {params} = this.props.navigation.state;
+        const {params} = this.props.route;
         let userInfo = this.props.auth.userInfo;
         InteractionManager.runAfterInteractions(() => {
 
@@ -207,6 +207,7 @@ class CashierBillingView extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        var that = this;
         if (nextProps.orderInfo.propChangeType == 'initData' && !this.state.isInited) {
             let orderData = nextProps.orderInfo.orderData;
 
@@ -217,8 +218,7 @@ class CashierBillingView extends React.Component {
             if (orderData.memberInfo == undefined) {
                 orderData.customerSex = '0';
             }
-            var that = this;
-            var params = nextProps.navigation.state.params;
+            var params = nextProps.route.params;
             buildDatas(this, orderData, () => {
                 //加载传入的项目信息 1755117 1904625 1904630
 
@@ -276,7 +276,7 @@ class CashierBillingView extends React.Component {
                     return prevState;
                 });
 
-                const {params} = this.props.navigation.state;
+                const {params} = this.props.route;
                 Alert.alert(
                     '系统提示',
                     '订单状态异常',
@@ -303,7 +303,7 @@ class CashierBillingView extends React.Component {
                 return prevState;
             })
 
-            const {params} = this.props.navigation.state;
+            const {params} = this.props.route;
             //this.props.navigation.setParams({ back: null});
             if (params.page == 'pendingOrder') {
                 this.props.resetToCashier(true);
@@ -512,8 +512,7 @@ class CashierBillingView extends React.Component {
         if (nextProps == this.props && !nextState.isgeted) {
             var isAdd = nextState.consumeItems && nextState.consumeItems.length == 1;
             var isEmpty = !nextState.consumeItems || !nextState.consumeItems.length;
-
-            var backHandler = nextProps.navigation.getParam('back');
+            var backHandler = nextProps.route.params['back'];
             if (isAdd && !backHandler) this.handleBackEvent(true);
             if (isEmpty && backHandler) this.handleBackEvent(false);
         }
@@ -760,7 +759,9 @@ class CashierBillingView extends React.Component {
     editServicer(){
         const {currentEditConsumeItemIndex,currentEditConsumeServicerIndex,consumeItems}=this.state;
         let item=consumeItems[currentEditConsumeItemIndex];
-        this.staffEditModal.getWrappedInstance().show({
+
+        debugger
+        this.staffEditModal.show({
             ...item
             ,assistList:item.assistStaffDetail
             ,service:Number(item.service)
@@ -935,7 +936,7 @@ class CashierBillingView extends React.Component {
         });
 
         //打开会员识别框
-        let prevState = this.props.navigation.state;
+        let prevState = this.props.route;
         this.props.navigation.setParams({
             ...prevState, orderInfoLeftData: orderInfo
         });
@@ -1023,7 +1024,7 @@ class CashierBillingView extends React.Component {
                         items:payComsumeItems,
                         memberInfo:this.state.memberInfo,
                         paymentTimesCard:paymentTimesCard,
-                        goBackKey:this.props.navigation.state.key
+                        goBackKey:this.props.route.key
                     });
 
                     return;
@@ -1044,7 +1045,7 @@ class CashierBillingView extends React.Component {
             return prevState;
         });
 
-        const {params} = this.props.navigation.state;
+        const {params} = this.props.route;
 
         if (params.page == 'pendingOrder') {
             this.props.resetToCashier(true);
@@ -1060,7 +1061,7 @@ class CashierBillingView extends React.Component {
             return prevState;
         });
 
-        const {params} = this.props.navigation.state;
+        const {params} = this.props.route;
 
         if (params.page == 'pendingOrder') {
             this.props.resetToCashier(true);
@@ -1077,7 +1078,7 @@ class CashierBillingView extends React.Component {
         });
 
         if ('0' == type) {
-            const {params} = this.props.navigation.state;
+            const {params} = this.props.route;
 
             if (params.page == 'pendingOrder') {
                 this.props.resetToCashier(true);
@@ -1085,7 +1086,7 @@ class CashierBillingView extends React.Component {
                 this.props.resetToCashier();
             }
         } else {
-            const {params} = this.props.navigation.state;
+            const {params} = this.props.route;
 
             if (params.page == 'pendingOrder') {
                 this.props.resetToCashier(true);
@@ -3198,7 +3199,7 @@ const buildMemberInfos = (self, prevState, memberInfo) => {
     prevState.customerSex = memberInfo.sex;
     prevState.memberInfo = memberInfo;
     self.props.navigation.setParams({
-        ...self.props.navigation.state.params,
+        ...self.props.route.params,
         'showMemberIcon': true,
         memberInfo: memberInfo,
         member: member
@@ -3786,7 +3787,7 @@ const imEmpty = (obj) => {
 
 //按配置计算价格小数点
 var priceFixed = function (price) {
-    var roundMode = this.self ? this.self.state.roundMode : company_roundMode;
+    var roundMode = this && this.state? this.state.roundMode : company_roundMode;
     if (price) {
         if (roundMode) {
             return parseFloat(price).toFixed(roundMode);

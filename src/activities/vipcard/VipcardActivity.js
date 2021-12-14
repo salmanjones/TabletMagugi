@@ -61,7 +61,7 @@ class VipCard extends React.Component {
 
             });
         InteractionManager.runAfterInteractions(() => {
-            init(navigation.state.params.member || {});
+            init(props.route.params.member || {});
         });
     }
 

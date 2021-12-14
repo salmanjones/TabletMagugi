@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import {Text, View, Image, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import { getImage, ImageQutity } from 'utils';
 import { cashierBillingStyle, manageConsumablesStyle } from 'styles';
 import Swipeout from 'react-native-swipeout';
@@ -9,25 +9,24 @@ export class ConsumableList extends PureComponent {
 		//let availableConsumables=consumables.filter(item=>!item.delFlag);
 		return (
 			<View>
-				<FlatList
-					data={consumables}
-					keyExtractor={(item, index) => index}
-					initialNumToRender={6}
-					renderItem={({ item, index }) => {
-						return item.delFlag ? (
-							<View />
-						) : (
-							<ConsumableItem
-								item={item}
-								onStaffSelected={(staffIndex, staff) => onStaffSelected({ staff, index, staffIndex })}
-								onItemSelected={() => onConsumableSelected({ item, index })}
-								onDelete={() => {
-									onDelete({ item, index });
-								}}
-							/>
-						);
-					}}
-				/>
+                <ScrollView style={{width: '100%', height: '100%'}}>
+                    {
+                        consumables.map((item, index)=>{
+                            return item.delFlag ? (
+                                <View />
+                            ) : (
+                                <ConsumableItem
+                                    item={item}
+                                    onStaffSelected={(staffIndex, staff) => onStaffSelected({ staff, index, staffIndex })}
+                                    onItemSelected={() => onConsumableSelected({ item, index })}
+                                    onDelete={() => {
+                                        onDelete({ item, index });
+                                    }}
+                                />
+                            )
+                        })
+                    }
+                </ScrollView>
 				<TouchableOpacity style={cashierBillingStyle.addServicerBodyLi} onPress={onAdd}>
 					<View style={cashierBillingStyle.addServicerBodyBox}>
 						<Image resizeMethod="resize"

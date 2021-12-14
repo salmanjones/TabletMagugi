@@ -353,7 +353,7 @@ const mapDispatchToProps = (dispatch) =>
 		},
 		dispatch
 	);
-export const StaffModifyModal = connect(mapStateToProps, mapDispatchToProps, null, { })(
+export const StaffModifyModal = connect(mapStateToProps, mapDispatchToProps, null, {forwardRef: true})(
 	StaffModifyModalClass
 );
 

@@ -35,7 +35,7 @@ class PendingOrder extends React.Component {
             tabBarOnPress: tab => {
                 if (tab.scene.index === 1) {
                     tab.jumpToIndex(tab.scene.index);
-                    navigation.state.params && navigation.state.params.loadData && navigation.state.params.loadData();
+                    props.route.params && props.route.params.loadData && props.route.params.loadData();
                 }
             },
         };

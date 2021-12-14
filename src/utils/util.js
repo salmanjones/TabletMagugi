@@ -19,8 +19,7 @@ export const delay = (delayed, ms) => Promise.all([delayed, sleep(ms)]).then(([d
  * @param params
  */
 export const resetNavigationTo = (routeName = '', dispatch = {}, params = null) => {
-    debugger
-    AppNavigate.navigate(routeName, params);
+    AppNavigate.reset(routeName, params);
 };
 
 /**

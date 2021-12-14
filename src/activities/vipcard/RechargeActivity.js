@@ -36,7 +36,7 @@ class Recharge extends React.Component {
     constructor(props) {
         super(props);
 
-        const { params } = this.props.navigation.state;
+        const { params } = this.props.route;
         this.props.navigation.setParams({
             showMemberIcon: true,
             memberInfo: params.member,

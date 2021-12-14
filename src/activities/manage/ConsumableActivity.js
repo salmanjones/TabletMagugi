@@ -1,16 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {ImageBackground, InteractionManager, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {InteractionManager, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
     ConsumableList,
     ConsumableSelectBoxComponent,
     ModalLoadingIndicator,
-    SearchInput,
-    StaffSelectWidget,
+    QueryInput,
     StaffEditWidget,
-    QueryInput
-} from 'components';
+    StaffSelectWidget
+} from '../../components';
 import {
     addConsumableAction,
     addConsumablesAction,
@@ -21,16 +20,16 @@ import {
     deleteStaffAction,
     openConsumableBoxAction,
     openConsumableBoxUpdateAction,
-    resetSearchAction,
     openStaffsBoxAction,
     resetConsumeAction,
+    resetSearchAction,
     searchAction,
     showBlockAction,
     updateConsumableAction
-} from 'actions';
+} from '../../actions';
 //self
-import {cashierBillingStyle, manageConsumablesStyle} from 'styles';
-import {dealyAction, showMessage} from 'utils';
+import {cashierBillingStyle, manageConsumablesStyle} from '../../styles';
+import {dealyAction, showMessage} from '../../utils';
 
 class Consumable extends React.Component {
     constructor(props) {
@@ -61,7 +60,7 @@ class Consumable extends React.Component {
 
     componentDidMount() {
         const {loadOrderData, navigation} = this.props;
-        const {params} = this.props.navigation.state;
+        const {params} = this.props.route;
         InteractionManager.runAfterInteractions(() => {
             const {itemData, orderData} = params;
 
@@ -168,8 +167,8 @@ class Consumable extends React.Component {
                 <View style={manageConsumablesStyle.consumeRightBox}>
                     {/* 右侧顶部区域 */}
                     <View style={manageConsumablesStyle.consumeRightTitle}>
-                        {showBlock == 'consumable' && <Text style={cashierBillingStyle.consumeText}>选择消耗品</Text>} 
-                        {showBlock == 'staffs' && <Text style={cashierBillingStyle.consumeText}>选择领料人</Text>} 
+                        {showBlock == 'consumable' && <Text style={cashierBillingStyle.consumeText}>选择消耗品</Text>}
+                        {showBlock == 'staffs' && <Text style={cashierBillingStyle.consumeText}>选择领料人</Text>}
                         {showBlock == 'consumable' && <QueryInput onConfirm={search} onClear={resetSearch} type="consumable"/>}
                     </View>
                     <View style={manageConsumablesStyle.consumeRightContent}>
