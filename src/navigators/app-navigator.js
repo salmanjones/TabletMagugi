@@ -232,11 +232,15 @@ function RootNavigation() {
     )
 }
 
+/**
+ * Tab结构
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function TabNavigation() {
     return (
         <TabStack.Navigator
             initialRouteName="CashierActivity"
-            tabBar={() => null}
             options={{
                 headerShown: false,
                 tabBarIndicatorStyle: {
