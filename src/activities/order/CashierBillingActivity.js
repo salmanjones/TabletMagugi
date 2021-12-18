@@ -3,44 +3,43 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
     Alert,
+    Animated,
     FlatList,
     Image,
-    ImageBackground,
     InteractionManager,
+    Modal,
+    PanResponder,
     ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
-    Animated,
-    Modal,
-    PanResponder
+    View
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 //self
-import {addCardItemStyles, cashierBillingStyle, commonStyles} from 'styles';
+import {addCardItemStyles, cashierBillingStyle} from 'styles';
 import {
     AmendItemInfo,
+    CardSelectBox,
     CashierBillInfo,
     CashierPay,
     HeadeOrderInfoLeft,
     HeadeOrderInfoRight,
     LoadingIndicator,
     ModalMemberIndentify,
+    MultiplyPayModal,
     OtherPayFor,
     QRCodePaymentCashier,
     QRCodePaymentNew,
+    QueryInput,
+    SearchInput,
     SectionList,
     StaffModifyModal,
     StaffSelectBox,
     StockTips,
-    VipPayFor,
-    CardSelectBox,
-    SearchInput,
-    MultiplyPayModal,
-    QueryInput
+    VipPayFor
 } from '../../components';
 import {changeBillingOwner, selectStaffAclInfoResult} from 'services';
 import {
@@ -51,13 +50,12 @@ import {
     cashierBillingSaveAction,
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
-    getPendingListAction,
-    deleteBillingAction
+    deleteBillingAction,
+    getPendingListAction
 } from 'actions';
 import {PaymentResultStatus, showMessage} from 'utils';
-import {getImage, ImageQutity, throttle, PixelUtil} from '../../utils';
-import { MultiPayActivity } from './MultiPayActivity';
-import {useNavigation} from "@react-navigation/native";
+import {getImage, ImageQutity, PixelUtil, throttle} from '../../utils';
+import {MultiPayActivity} from './MultiPayActivity';
 
 let company_roundMode = null;
 let company_settings = {};

@@ -411,8 +411,7 @@ export class CashierPay extends React.Component {
                                             <TouchableHighlight
                                                 underlayColor="white"
                                                 style={cashierPayStyle.couponTitleBox}
-                                                onPress={this.toggleCoupons.bind(this)}
-                                            >
+                                                onPress={this.toggleCoupons.bind(this)}>
                                                 <View style={cashierPayStyle.couponTitle}>
                                                     <Text style={cashierPayStyle.couponTitleText}>
                                                         优惠券：<Text style={cashierPayStyle.couponText}>{couponDesc}</Text>
@@ -429,48 +428,45 @@ export class CashierPay extends React.Component {
                                                 </View>
                                             </TouchableHighlight>
                                             <View style={[cashierPayStyle.couponList, {display: showCoupons ? 'flex' : 'none' }]}>
-                                                <FlatList
-                                                    style={cashierPayStyle.couponListFlat}
-                                                    data={coupons}
-                                                    keyExtractor={(item, index) => index}
-                                                    renderItem={({ item, index }) => {
-                                                        let selected = selectedCoupons.indexOf(item) != -1;
-                                                        return (
-                                                            <TouchableOpacity
-                                                                style={cashierPayStyle.couponLi}
-                                                                onPress={this.onToggleSeleted.bind(this, item)}
-                                                            >
-                                                                <ImageBackground
-                                                                    source={require('@imgPath/coupon-bg.png')}
-                                                                    style={cashierPayStyle.couponLiBg}
-                                                                    resizeMode={'contain'}
-                                                                >
-                                                                    <View style={cashierPayStyle.couponLiBox}>
-                                                                        <View style={cashierPayStyle.couponLiL}>
-                                                                            <Text style={cashierPayStyle.couponUnit}>
-                                                                                ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
-                                                                            </Text>
-                                                                        </View>
-                                                                        <View style={cashierPayStyle.couponLiR}>
-                                                                            <View style={cashierPayStyle.couponLiRL}>
-                                                                                <Text style={cashierPayStyle.color333}>{item.name}</Text>
+                                                <ScrollView style={cashierPayStyle.couponListFlat}>
+                                                    {
+                                                        coupons.map((item, index)=>{
+                                                            let selected = selectedCoupons.indexOf(item) != -1;
+                                                            return (
+                                                                <TouchableOpacity
+                                                                    style={cashierPayStyle.couponLi}
+                                                                    onPress={this.onToggleSeleted.bind(this, item)}>
+                                                                    <ImageBackground
+                                                                        source={require('@imgPath/coupon-bg.png')}
+                                                                        style={cashierPayStyle.couponLiBg}
+                                                                        resizeMode={'contain'}>
+                                                                        <View style={cashierPayStyle.couponLiBox}>
+                                                                            <View style={cashierPayStyle.couponLiL}>
+                                                                                <Text style={cashierPayStyle.couponUnit}>
+                                                                                    ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
+                                                                                </Text>
                                                                             </View>
-                                                                            <Image
-                                                                                resizeMethod="resize"
-                                                                                source={
-                                                                                    selected
-                                                                                        ? require('@imgPath/radio-111c3c-active.png')
-                                                                                        : require('@imgPath/radio-111c3c.png')
-                                                                                }
-                                                                                style={[cashierPayStyle.couponLiRR, { resizeMode: 'contain' }]}
-                                                                            />
+                                                                            <View style={cashierPayStyle.couponLiR}>
+                                                                                <View style={cashierPayStyle.couponLiRL}>
+                                                                                    <Text style={cashierPayStyle.color333}>{item.name}</Text>
+                                                                                </View>
+                                                                                <Image
+                                                                                    resizeMethod="resize"
+                                                                                    source={
+                                                                                        selected
+                                                                                            ? require('@imgPath/radio-111c3c-active.png')
+                                                                                            : require('@imgPath/radio-111c3c.png')
+                                                                                    }
+                                                                                    style={[cashierPayStyle.couponLiRR, { resizeMode: 'contain' }]}
+                                                                                />
+                                                                            </View>
                                                                         </View>
-                                                                    </View>
-                                                                </ImageBackground>
-                                                            </TouchableOpacity>
-                                                        );
-                                                    }}
-                                                />
+                                                                    </ImageBackground>
+                                                                </TouchableOpacity>
+                                                            );
+                                                        })
+                                                    }
+                                                </ScrollView>
                                             </View>
                                         </View>
                                         <ScrollView style={{width: '100%'}}>

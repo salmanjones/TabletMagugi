@@ -5,6 +5,7 @@
     "scripts": {
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "start-nocache": "react-native start --reset-cache",
+        "pod": "npx pod-install",
         "android": "react-native run-android",
         "ios": "react-native run-ios --simulator='iPad Pro (12.9-inch) (5th generation)'",
         "iphone": "react-native run-ios --simulator='iPhone 11 Pro'",
