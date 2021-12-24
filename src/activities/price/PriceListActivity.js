@@ -14,7 +14,7 @@ import {
     PanResponder
 } from 'react-native';
 import styled from 'styled-components/native/';
-import {getCompanyAutoFlowNumber, priceListInfo} from 'services';
+import {getCompanyAutoFlowNumber, priceListInfo} from '../../services';
 import {
     ModalLoadingIndicator,
     PriceListContent,

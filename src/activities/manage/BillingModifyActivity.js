@@ -33,7 +33,7 @@ import {
   resetAction,
   getBillingListAction,
 } from '../../actions';
-import { fetchModifyBilling } from 'services';
+import { fetchModifyBilling } from '../../services';
 import { balanceBillManageStyle, rotateItemStyles } from '../../styles';
 
 const ViewContainer = styled.View`

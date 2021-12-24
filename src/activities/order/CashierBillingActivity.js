@@ -41,7 +41,7 @@ import {
     StockTips,
     VipPayFor
 } from '../../components';
-import {changeBillingOwner, selectStaffAclInfoResult} from 'services';
+import {changeBillingOwner, selectStaffAclInfoResult} from '../../services';
 import {
     cashierBillingFlowNumberInitAction,
     cashierBillingGetAction,

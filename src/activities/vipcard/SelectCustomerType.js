@@ -16,7 +16,7 @@ import {
 } from '../../components';
 import { PixelUtil, displayError } from '../../utils';
 import { selectCustomerTypeStyles } from '../../styles';
-import { fetchMemberNO } from 'services';
+import { fetchMemberNO } from '../../services';
 
 export class SelectCustomerType extends React.Component {
   constructor(props) {

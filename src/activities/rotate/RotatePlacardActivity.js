@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { View, FlatList, Image, Text, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { rotateItemStyles } from '../../styles';
-import { getStoreDutys, updateDutyStaffs, updateDutyStaffStatus, sortDutyStaffs, batchSaveDutyStaffs, resetDutyStaffs } from 'services';
+import { getStoreDutys, updateDutyStaffs, updateDutyStaffStatus, sortDutyStaffs, batchSaveDutyStaffs, resetDutyStaffs } from '../../services';
 import { RotateTitleRight, PlacardGroup, RotateOperateModal, RotateStaffSelectModal, ModalLoadingIndicator } from '../../components';
 import { showMessage } from '../../utils';
 

@@ -19,7 +19,7 @@ import {
     fetchWaitingMembersResult,
     getCompanyAutoFlowNumber,
     selectStaffAclInfoResult
-} from 'services';
+} from '../../services';
 import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberAction} from '../../actions';
 
 //self

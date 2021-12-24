@@ -10,7 +10,7 @@ import {
     mergeBindBilling4App,
     preCheckStock,
     payBillingV4,
-} from 'services';
+} from '../../services';
 import { ModalLoadingIndicator, QRCodePaymentCashier, VipPayFor, StockTips, OtherPayFor, PayArea ,QRCodePaymentNew} from '../../components';
 import { showMessage,PaymentResultStatus } from '../../utils';
 import Swipeout from 'react-native-swipeout';

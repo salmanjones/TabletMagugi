@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image, Text, TouchableHighlight, View, Platform} from 'react-native';
+import {Image, Platform, Text, TouchableHighlight, View} from 'react-native';
 import {homeStyles,} from '../../styles';
-import {HeaderLogout, HeaderMoments, ToggleImageBackground, AboutBeauty} from '../../components';
-import {throttle ,systemConfig} from '../../utils';
+import {AboutBeauty, ToggleImageBackground} from '../../components';
+import {systemConfig} from '../../utils';
 import {connect} from 'react-redux';
-import {fetchFindVersionResult , getDayCountPager} from 'services';
+import {fetchFindVersionResult, getDayCountPager} from '../../services';
 
 const initState = {
     operator: false,

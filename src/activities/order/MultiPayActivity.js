@@ -8,7 +8,7 @@ import {
     fetchStockBilling,
     getAvailablePaymentInfo,
     payBillingV4,
-} from 'services';
+} from '../../services';
 import {clone, PaymentResultStatus, showMessage, throttle} from '../../utils';
 import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
 import {

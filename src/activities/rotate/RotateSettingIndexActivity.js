@@ -1,7 +1,7 @@
 //轮牌设置
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getStoreDutysSetting,changeSortOfDutysSetting,deleteDutyTableSetting} from 'services';
+import {getStoreDutysSetting,changeSortOfDutysSetting,deleteDutyTableSetting} from '../../services';
 import { ListStatus, PixelUtil ,showMessage} from '../../utils';
 import {AddRotateModal,RotateSmallTipModal} from '../../components';
 import {

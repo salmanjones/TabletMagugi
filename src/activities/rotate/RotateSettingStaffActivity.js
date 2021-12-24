@@ -13,7 +13,7 @@ import Orientation from 'react-native-orientation';
 import { RotateSettingStyles,cashierBillingStyle,rotateBigModalStyle } from '../../styles';
 import {StaffSelectBoxV2,SearchModule,} from '../../components';
 import { getImage, ImageQutity,showMessage } from '../../utils';
-import { findStaffRotateInfoResult,saveStaffRotateInfoResult} from 'services';
+import { findStaffRotateInfoResult,saveStaffRotateInfoResult} from '../../services';
 
 import { CheckBox} from 'react-native-elements';
 

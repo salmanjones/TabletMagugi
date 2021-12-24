@@ -27,7 +27,7 @@ import {
     vipcardSelectStaffAction,
     vipcardSetStaffAction,
 } from '../../actions';
-import { fetchStaffAcl } from 'services';
+import { fetchStaffAcl } from '../../services';
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
