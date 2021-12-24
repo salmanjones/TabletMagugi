@@ -7,14 +7,6 @@ module.exports = {
             "alias": {
                 "~": "./src",
                 "@imgPath": "./assets/images",
-                "activities": "./src/activities",
-                "styles": "./src/styles",
-                "actions": "./src/actions",
-                "components": "./src/components",
-                "navigators": "./src/navigators",
-                "reducers": "./src/reducers",
-                "services": "./src/services",
-                "utils": "./src/utils"
             }
         }],
         "@babel/plugin-transform-flow-strip-types",
