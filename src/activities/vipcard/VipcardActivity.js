@@ -9,8 +9,8 @@ import {
     InteractionManager,
 } from 'react-native';
 
-import { RechargeStoredCardStyles } from 'styles';
-import { showMessage } from 'utils';
+import { RechargeStoredCardStyles } from '../../styles';
+import { showMessage } from '../../utils';
 import {
     StaffServiceBar,
     StaffSelectBox,
@@ -19,14 +19,14 @@ import {
     VipcardDetailSection,
     StaffServiceEdit,
     VipcardPayment,
-} from 'components';
+} from '../../components';
 import {
     vipcardInitAction,
     vipcardSelectCardAction,
     vipcardSetCountAction,
     vipcardSelectStaffAction,
     vipcardSetStaffAction,
-} from 'actions';
+} from '../../actions';
 import { fetchStaffAcl } from 'services';
 
 const Msg = {

@@ -10,8 +10,8 @@ import {
     MemberWaitListItem,
     ModalLoadingIndicator,
     SearchModule,
-} from 'components';
-import {getImage, ImageQutity, ListStatus, PixelUtil} from 'utils';
+} from '../../components';
+import {getImage, ImageQutity, ListStatus, PixelUtil} from '../../utils';
 
 import {
     fetchMemberCardList,
@@ -20,10 +20,10 @@ import {
     getCompanyAutoFlowNumber,
     selectStaffAclInfoResult
 } from 'services';
-import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberAction} from 'actions';
+import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberAction} from '../../actions';
 
 //self
-import {cashierStyles, memberIdentifyStyle} from 'styles';
+import {cashierStyles, memberIdentifyStyle} from '../../styles';
 import { showMessage } from '../../utils';
 
 const defaultMemberImg = require('@imgPath/rotate-portrait.png');

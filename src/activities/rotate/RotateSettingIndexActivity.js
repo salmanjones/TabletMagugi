@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getStoreDutysSetting,changeSortOfDutysSetting,deleteDutyTableSetting} from 'services';
-import { ListStatus, PixelUtil ,showMessage} from 'utils';
-import {AddRotateModal,RotateSmallTipModal} from 'components';
+import { ListStatus, PixelUtil ,showMessage} from '../../utils';
+import {AddRotateModal,RotateSmallTipModal} from '../../components';
 import {
   View,
   ScrollView,
@@ -13,7 +13,7 @@ import {
   ImageBackground,
   Image
 } from 'react-native';
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 
 export class RotateListItem extends React.PureComponent {
     constructor(props) {

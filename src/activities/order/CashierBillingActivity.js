@@ -19,7 +19,7 @@ import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
 import {CommonActions} from '@react-navigation/native';
 //self
-import {addCardItemStyles, cashierBillingStyle} from 'styles';
+import {addCardItemStyles, cashierBillingStyle} from '../../styles';
 import {
     AmendItemInfo,
     CardSelectBox,
@@ -52,8 +52,8 @@ import {
     clearBillingCacheAction,
     deleteBillingAction,
     getPendingListAction
-} from 'actions';
-import {PaymentResultStatus, showMessage} from 'utils';
+} from '../../actions';
+import {PaymentResultStatus, showMessage} from '../../utils';
 import {getImage, ImageQutity, PixelUtil, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";

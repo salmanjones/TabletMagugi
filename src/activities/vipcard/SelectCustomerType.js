@@ -13,9 +13,9 @@ import {
   ModalMemberIndentify,
   ModalCreateMember,
   ModalLoadingIndicator,
-} from 'components';
-import { PixelUtil, displayError } from 'utils';
-import { selectCustomerTypeStyles } from 'styles';
+} from '../../components';
+import { PixelUtil, displayError } from '../../utils';
+import { selectCustomerTypeStyles } from '../../styles';
 import { fetchMemberNO } from 'services';
 
 export class SelectCustomerType extends React.Component {

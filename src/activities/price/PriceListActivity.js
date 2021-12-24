@@ -22,9 +22,9 @@ import {
     PriceListModal,
     PriceListShopCart,
     PriceSwiper
-} from 'components';
-import {getImage, ImageQutity, PixelUtil, showMessage} from 'utils';
-import {priceIndexStyle} from 'styles';
+} from '../../components';
+import {getImage, ImageQutity, PixelUtil, showMessage} from '../../utils';
+import {priceIndexStyle} from '../../styles';
 import {Dimensions} from 'react-native';
 
 // 获取页面宽度

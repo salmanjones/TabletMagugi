@@ -19,22 +19,22 @@ import {
   CashierBillInfo,
   StaffModifyModal,
   StockTips,
-} from 'components';
+} from '../../components';
 import {
   getImage,
   ImageQutity,
   showMessage,
   displayError,
   throttle,
-} from 'utils';
+} from '../../utils';
 import {
   findBillingDetailAction,
   updateCustomerNumberAction,
   resetAction,
   getBillingListAction,
-} from 'actions';
+} from '../../actions';
 import { fetchModifyBilling } from 'services';
-import { balanceBillManageStyle, rotateItemStyles } from 'styles';
+import { balanceBillManageStyle, rotateItemStyles } from '../../styles';
 
 const ViewContainer = styled.View`
   flex: 1;

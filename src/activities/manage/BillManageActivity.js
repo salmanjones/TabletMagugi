@@ -6,7 +6,7 @@ import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { showMessage } from 'utils';
+import { showMessage } from '../../utils';
 
 import {
   ModalLoadingIndicator,
@@ -14,10 +14,10 @@ import {
   DatepickerBox,
   PendingOrderItem,
   BillingOrderSummary,
-} from 'components';
-import { getBillingListAction, resetBillingListAction } from 'actions';
-import { cashierStyles, pendingStyles } from 'styles';
-import { PixelUtil, throttle } from 'utils';
+} from '../../components';
+import { getBillingListAction, resetBillingListAction } from '../../actions';
+import { cashierStyles, pendingStyles } from '../../styles';
+import { PixelUtil, throttle } from '../../utils';
 
 const CURRENT_TAB_INDEX = 1;
 

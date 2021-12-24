@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image, Text, TouchableHighlight, View, Platform} from 'react-native';
-import {homeStyles,} from 'styles';
-import {HeaderLogout, HeaderMoments, ToggleImageBackground, AboutBeauty} from 'components';
-import {throttle ,systemConfig} from 'utils';
+import {homeStyles,} from '../../styles';
+import {HeaderLogout, HeaderMoments, ToggleImageBackground, AboutBeauty} from '../../components';
+import {throttle ,systemConfig} from '../../utils';
 import {fetchFindVersionResult} from 'services';
 
 const initState = {

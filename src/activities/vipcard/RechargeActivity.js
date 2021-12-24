@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {groupBy, showMessage} from 'utils';
-import {RechargeStoredCardStyles,} from 'styles';
+import {groupBy, showMessage} from '../../utils';
+import {RechargeStoredCardStyles,} from '../../styles';
 
 import {
     CardDetails,
@@ -15,7 +15,7 @@ import {
     StaffServiceEdit,
     TabGroup,
     VipcardPayment,
-} from 'components';
+} from '../../components';
 
 const tabs = [
     { id: 1, name: '储值卡' },

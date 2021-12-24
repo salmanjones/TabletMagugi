@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemberIdentify } from 'components';
+import { MemberIdentify } from '../../components';
 
 export class IdentifyActivity extends React.Component {
   render() {

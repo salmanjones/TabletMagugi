@@ -9,7 +9,7 @@ import {
     getAvailablePaymentInfo,
     payBillingV4,
 } from 'services';
-import {clone, PaymentResultStatus, showMessage, throttle} from 'utils';
+import {clone, PaymentResultStatus, showMessage, throttle} from '../../utils';
 import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
@@ -21,9 +21,9 @@ import {
     QRCodePaymentNew,
     SimulateKeyboardPay,
     StockTips,
-} from 'components';
-import {CASHIERBILLING_RELOAD_ORDER,} from 'actions';
-import {multiplyPayStyle} from 'styles';
+} from '../../components';
+import {CASHIERBILLING_RELOAD_ORDER,} from '../../actions';
+import {multiplyPayStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
 
 class MultiPay extends React.Component {

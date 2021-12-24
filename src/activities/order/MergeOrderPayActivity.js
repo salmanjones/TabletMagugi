@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, FlatList, TouchableOpacity, Image, Animated } from 'react-native';
-import { pendingOrderPayStyle } from 'styles';
+import { pendingOrderPayStyle } from '../../styles';
 import {
     mergePayInit,
     fetchPrePayBilling,
@@ -11,8 +11,8 @@ import {
     preCheckStock,
     payBillingV4,
 } from 'services';
-import { ModalLoadingIndicator, QRCodePaymentCashier, VipPayFor, StockTips, OtherPayFor, PayArea ,QRCodePaymentNew} from 'components';
-import { showMessage,PaymentResultStatus } from 'utils';
+import { ModalLoadingIndicator, QRCodePaymentCashier, VipPayFor, StockTips, OtherPayFor, PayArea ,QRCodePaymentNew} from '../../components';
+import { showMessage,PaymentResultStatus } from '../../utils';
 import Swipeout from 'react-native-swipeout';
 const height = 0;
 class MergeOrderPay extends React.Component {

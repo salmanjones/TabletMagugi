@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Text, View, InteractionManager, TouchableOpacity } from 'react-native';
+import {connect} from 'react-redux';
+import {InteractionManager, Text, TouchableOpacity, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 
-import { ModalLoadingIndicator, SearchModule, PendingOrderItem, PendingOrderSummary } from 'components';
-import { getPendingListAction } from 'actions';
-import { cashierStyles, pendingStyles } from 'styles';
-import { PixelUtil, throttle, showMessage } from 'utils';
-import { CheckBox } from 'react-native-elements';
+import {ModalLoadingIndicator, PendingOrderItem, PendingOrderSummary, SearchModule} from '../../components';
+import {getPendingListAction} from '../../actions';
+import {cashierStyles, pendingStyles} from '../../styles';
+import {PixelUtil, showMessage} from '../../utils';
+import {CheckBox} from 'react-native-elements';
 
 const CURRENT_TAB_INDEX = 1;
 

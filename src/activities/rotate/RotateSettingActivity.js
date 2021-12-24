@@ -9,11 +9,11 @@ import {
   ImageBackground,
 } from 'react-native';
 import Orientation from 'react-native-orientation';
-import { RotateSettingStyles } from 'styles';
+import { RotateSettingStyles } from '../../styles';
 import {
   ToggleImageBackground,
-} from 'components';
-import { throttle } from 'utils';
+} from '../../components';
+import { throttle } from '../../utils';
 
 const initState = {
   rotate: false,
