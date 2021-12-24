@@ -1,4 +1,4 @@
-import {createAction, delay} from 'utils';
+import {createAction, delay} from '../../utils';
 import {BILLING_MODIFY_ACTIONS, CASHIERBILLING_UPDATE_CONSUMABLE} from './action-types';
 
 export const BILLING_CONSUME_MODIFY_ACTIONS = {

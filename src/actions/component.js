@@ -1,5 +1,5 @@
-import {billingSearch, getCommonSetting, getRights} from 'services';
-import {createAction} from 'utils';
+import {billingSearch, getCommonSetting, getRights} from '../../services';
+import {createAction} from '../../utils';
 
 const CACHE_TIME = 1000 * 300;
 export const COMPONENT_ACTIONS = {

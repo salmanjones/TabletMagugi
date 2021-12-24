@@ -1,5 +1,5 @@
 import {BILLING_MODIFY_ACTIONS} from './action-types';
-import {fetchBillingDetail4Modify} from 'services';
+import {fetchBillingDetail4Modify} from '../../services';
 
 /**
  * 获取订单明细
