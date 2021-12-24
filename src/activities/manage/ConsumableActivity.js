@@ -147,7 +147,7 @@ class Consumable extends React.Component {
                             <ConsumableList
                                 consumables={consumables}
                                 onStaffSelected={(param) => {
-                                    this.staffSelectBox.getWrappedInstance().reset();
+                                    this.staffSelectBox.reset();
                                     openStaffsBox(param);
                                 }}
                                 onConsumableSelected={openConsumableBoxUpdate}

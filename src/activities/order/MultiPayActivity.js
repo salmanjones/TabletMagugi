@@ -1,33 +1,30 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-    getAvailablePaymentInfo,
     fetchCheckFlowNumber,
-    fetchSaveBilling,
-    fetchStockBilling,
-    preCheckStock,
-    payBillingV4,
     fetchPayBilling,
     fetchPrePayBilling,
+    fetchSaveBilling,
+    fetchStockBilling,
+    getAvailablePaymentInfo,
+    payBillingV4,
 } from 'services';
-import {showMessage, clone, throttle, PaymentResultStatus} from 'utils';
-import {Modal, View, Image, Text, TouchableOpacity} from 'react-native';
+import {clone, PaymentResultStatus, showMessage, throttle} from 'utils';
+import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
 import {
-    LoadingIndicator,
-    SimulateKeyboardPay,
-    PayTypeList,
     CouponList,
-    MemberCardList,
     EditCardPay,
+    LoadingIndicator,
+    MemberCardList,
+    PayTypeList,
     QRCodePaymentCashier,
     QRCodePaymentNew,
+    SimulateKeyboardPay,
     StockTips,
 } from 'components';
-import {
-    CASHIERBILLING_RELOAD_ORDER, //重新加载已保存订单
-} from 'actions';
+import {CASHIERBILLING_RELOAD_ORDER,} from 'actions';
 import {multiplyPayStyle} from 'styles';
-import {objectOf} from 'prop-types';
+import {AppNavigate} from "../../navigators";
 
 class MultiPay extends React.Component {
     constructor(props) {
@@ -947,7 +944,7 @@ class MultiPay extends React.Component {
     //取消
     onCancel = () => {
         if (this.savedBilling) this.props.cashierScreenReloadOrder();
-        this.props.navigation.goBack();
+        AppNavigate.goBack()
     };
 
     onPwdConfirm(pwd) {

@@ -1,8 +1,8 @@
-// const devHost = 'http://tablet.magugi.com';
-// const prodHost = 'http://tablet.magugi.com';
+const devHost = 'http://tablet.magugi.com';
+const prodHost = 'http://tablet.magugi.com';
 
-const devHost = 'http://192.168.1.2:8090/bms';
-const prodHost = 'http://192.168.1.2:8090/bms';
+// const devHost = 'http://192.168.1.2:8090/bms';
+// const prodHost = 'http://192.168.1.2:8090/bms';
 
 const host = __DEV__ ? devHost : prodHost;
 

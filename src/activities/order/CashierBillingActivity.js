@@ -56,6 +56,7 @@ import {
 import {PaymentResultStatus, showMessage} from 'utils';
 import {getImage, ImageQutity, PixelUtil, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
+import {AppNavigate} from "../../navigators";
 
 let company_roundMode = null;
 let company_settings = {};
@@ -758,7 +759,6 @@ class CashierBillingView extends React.Component {
         const {currentEditConsumeItemIndex,currentEditConsumeServicerIndex,consumeItems}=this.state;
         let item=consumeItems[currentEditConsumeItemIndex];
 
-        debugger
         this.staffEditModal.show({
             ...item
             ,assistList:item.assistStaffDetail
@@ -1054,13 +1054,17 @@ class CashierBillingView extends React.Component {
 
     //去微信小程序支付
     onToWXAppPay() {
-        this.setState((prevState, prop) => {
+        this.setState((prevState, props) => {
+            prevState.showCashierPayModal = false;
+            prevState.showStockTipsModal = false;
+            prevState.showToAppPayModal = false;
+            prevState.showToMultiplyPayModal = false;
             prevState.showToWXAppPayModal = false;
             return prevState;
-        });
+        })
 
+        debugger
         const {params} = this.props.route;
-
         if (params.page == 'pendingOrder') {
             this.props.resetToCashier(true);
         } else {
@@ -3856,7 +3860,7 @@ const mapDispatchToProps = (dispatch, props) => {
                 dispatch(getPendingListAction('', true));
             }
             props.navigation.setParams({back: null});
-            dispatch(CommonActions.goBack())
+            AppNavigate.goBack()
         },
         checkFlowNumber: (params) => {
             dispatch(cashierCheckFlowNumberAction(params))

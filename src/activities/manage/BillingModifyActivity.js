@@ -372,7 +372,7 @@ export class BillingModify extends React.Component {
   };
 
   onStaffPress = (itemData, staffIndex) => {
-    this.staffModal.getWrappedInstance().show(itemData, staffIndex);
+    this.staffModal.show(itemData, staffIndex);
   };
 
   onConsumePress = itemData => {
