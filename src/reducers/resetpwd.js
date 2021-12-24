@@ -1,4 +1,4 @@
-import {RESETPWD_FROM_SUBMIT, RESETPWD_SEND_CODE} from "actions";
+import {RESETPWD_FROM_SUBMIT, RESETPWD_SEND_CODE} from "../actions";
 
 const defaultSatete = {
     loading: false

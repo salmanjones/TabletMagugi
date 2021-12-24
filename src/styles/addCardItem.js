@@ -1,7 +1,7 @@
 //libs
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 export const addCardItemStyles = StyleSheet.create({
     addCardItemStylesContent: {

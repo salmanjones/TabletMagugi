@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {GET_PENDING_LIST} from 'actions';
+import {GET_PENDING_LIST} from '../actions';
 
 export const initialState = {
     searchKey: '',

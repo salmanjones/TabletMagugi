@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {BILLING_MODIFY_ACTIONS} from 'actions';
+import {BILLING_MODIFY_ACTIONS} from '../actions';
 
 export const initialState = {
     loading: true,

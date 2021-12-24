@@ -17,7 +17,7 @@ import {
     CASHIERBILLING_TOAPP,
     CASHIERBILLING_UPDATE_CONSUMABLE,
     CASHIERBILLING_WXAPP
-} from 'actions';
+} from '../actions';
 
 const defaultOrderState = {
     loading: false,

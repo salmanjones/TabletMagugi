@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 let headerHeight = PixelUtil.size(120, 1920);
 let footerHeight = PixelUtil.size(150, 1920);

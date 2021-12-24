@@ -1,6 +1,6 @@
 // 价目单首页
 import { StyleSheet ,Platform } from 'react-native';
-import { PixelUtil } from 'utils';
+import { PixelUtil } from '../utils';
 
 export const priceIndexStyle = StyleSheet.create({
     bgBox:{
@@ -56,7 +56,7 @@ export const priceIndexStyle = StyleSheet.create({
     },
     indexImg:{
         width: '100%',
-        height: '100%',  
+        height: '100%',
     },
     tipTextBox:{
         paddingBottom: PixelUtil.size(24),
@@ -83,9 +83,9 @@ export const priceIndexStyle = StyleSheet.create({
     },
     // 购物车-动画框
     rightPositionBox:{
-        flex: 1,  
+        flex: 1,
         width: '100%',
-        height: '100%',  
+        height: '100%',
         position: 'absolute',
         top:0,
         flexDirection: 'row',
@@ -95,7 +95,7 @@ export const priceIndexStyle = StyleSheet.create({
     rightPositionBoxShow:{
         flex: 1,
         width: '100%',
-        height: '100%',  
+        height: '100%',
         position: 'absolute',
         left:0,
         top:0,
@@ -106,7 +106,7 @@ export const priceIndexStyle = StyleSheet.create({
     rightPositionBoxO:{
         flex: 0,
         width: '50%',
-        height: '100%',  
+        height: '100%',
         position: 'absolute',
         left:0,
         top:0,
@@ -159,7 +159,7 @@ export const priceIndexStyle = StyleSheet.create({
     rigthNum:{
         fontSize: PixelUtil.size(24),
         color: '#fff',
-        
+
     },
     rightText:{
         fontSize: PixelUtil.size(32),
@@ -307,7 +307,7 @@ export const priceIndexStyle = StyleSheet.create({
     },
     jmTrolleyLiRText:{
         fontSize: PixelUtil.size(30),
-        color: '#F98F1F',      
+        color: '#F98F1F',
     },
     jmOperateBtn:{
         width: PixelUtil.rect(216, 60).width,
@@ -374,7 +374,7 @@ export const priceIndexStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: PixelUtil.size(40),
-        paddingRight: PixelUtil.size(40),        
+        paddingRight: PixelUtil.size(40),
         borderTopColor: '#e9e9e9',
         borderTopWidth: PixelUtil.size(1),
         backgroundColor: '#fff',
@@ -454,7 +454,7 @@ export const priceIndexStyle = StyleSheet.create({
     },
     modalTitleO:{
         width: PixelUtil.rect(100, 116).width,
-        height: PixelUtil.rect(100, 116).height,       
+        height: PixelUtil.rect(100, 116).height,
         position: 'absolute',
         right: 0,
         top: 0,
@@ -472,7 +472,7 @@ export const priceIndexStyle = StyleSheet.create({
         height: PixelUtil.rect(168, 68).height,
         backgroundColor: '#fff',
         borderRadius: PixelUtil.size(34),
-        marginRight: PixelUtil.size(32),        
+        marginRight: PixelUtil.size(32),
     },
     // 弹层标题-选中
     modalTitleAct:{

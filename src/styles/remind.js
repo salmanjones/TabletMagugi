@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from "utils";
+import {PixelUtil} from '../utils';
 
 let boxWidth = PixelUtil.screenSize.width * 0.39;
 let boxHeight = PixelUtil.screenSize.height * 0.60;

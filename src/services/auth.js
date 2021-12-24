@@ -1,4 +1,4 @@
-import {callService} from 'utils';
+import {callService} from '../utils';
 import * as api from './api';
 
 export const fetchAuthUser = (username, password) => {

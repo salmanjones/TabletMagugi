@@ -1,6 +1,6 @@
 //libs
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 let naviBarHeight = PixelUtil.size(136, 1920);
 let footerHeight = PixelUtil.size(170, 1920);

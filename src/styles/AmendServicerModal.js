@@ -1,6 +1,6 @@
 // 結單管理
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 export const AmendServicerModalStyle = StyleSheet.create({
 

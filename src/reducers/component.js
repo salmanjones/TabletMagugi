@@ -8,7 +8,7 @@ import {
     MEMBER_INDENTIFY_RESET,
     SERVICE_STAFFS_GET,
     VIPCARD_GET_SALES_CARD,
-} from 'actions';
+} from '../actions';
 
 const MemberInitialState = {
     listState: ListStatus.idle,

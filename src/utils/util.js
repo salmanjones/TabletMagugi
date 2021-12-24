@@ -1,8 +1,7 @@
 import {Alert} from 'react-native';
 import Toast from 'react-native-root-toast';
 import {AppConfig} from './constant';
-import {CommonActions} from '@react-navigation/native'
-import {AppNavigate, AppNavigation} from "../navigators";
+import {AppNavigate} from "../navigators";
 
 /**
  *

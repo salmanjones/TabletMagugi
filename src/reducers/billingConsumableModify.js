@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {BILLING_CONSUME_MODIFY_ACTIONS} from 'actions';
+import {BILLING_CONSUME_MODIFY_ACTIONS} from '../actions';
 
 const {
     //加载信息

@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import {PixelUtil} from "utils";
+import {PixelUtil} from '../utils';
 
 let screenSize = {
     width: Dimensions.get('window').width,

@@ -1,4 +1,4 @@
-import {callService} from 'utils';
+import {callService} from '../utils';
 import * as api from './api';
 
 const THIRD_PAY = {

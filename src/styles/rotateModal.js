@@ -1,6 +1,6 @@
 // 轮牌小弹层
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 export const rotateModalStyle = StyleSheet.create({
     modalBackground: {

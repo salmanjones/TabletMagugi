@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {GET_BILLING_LIST, RESET_BILLING_LIST} from 'actions';
+import {GET_BILLING_LIST, RESET_BILLING_LIST} from '../actions';
 
 export const initialState = {
     searchKey: '',

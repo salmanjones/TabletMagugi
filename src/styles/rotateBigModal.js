@@ -1,6 +1,6 @@
 // 轮牌大弹层
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 export const rotateBigModalStyle = StyleSheet.create({
     modalBackground: {

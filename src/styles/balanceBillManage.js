@@ -1,6 +1,6 @@
 // 单据详情
 import {StyleSheet} from 'react-native';
-import {PixelUtil} from 'utils';
+import {PixelUtil} from '../utils';
 
 export const balanceBillManageStyle = StyleSheet.create({
     // 結單管理主頁

@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {VIPCARD_INIT, VIPCARD_SELECT_CARD, VIPCARD_SELECT_STAFF, VIPCARD_SET_COUNT, VIPCARD_SET_STAFF,} from 'actions';
+import {VIPCARD_INIT, VIPCARD_SELECT_CARD, VIPCARD_SELECT_STAFF, VIPCARD_SET_COUNT, VIPCARD_SET_STAFF,} from '../actions';
 
 export const initialState = {
     staffs: [{}, {}, {}, {}],
