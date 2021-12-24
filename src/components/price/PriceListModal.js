@@ -1,9 +1,8 @@
 // 轮牌设置弹层.
 import React from 'react';
-import { Text, View, TouchableHighlight, Image, Modal, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
-import { priceIndexStyle } from '../../styles';
-import { getImage, ImageQutity } from 'utils';
+import {FlatList, Image, Modal, ScrollView, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {priceIndexStyle} from '../../styles';
+import {getImage, ImageQutity} from '../../utils';
 
 export class PriceListModal extends React.PureComponent {
     constructor(props) {

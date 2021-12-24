@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Image, ImageBackground, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { SimulateKeyboardPay } from 'components';
-import { CheckBox } from 'react-native-elements';
-import { multiplyPayStyle } from '../../styles';
-import { showMessage, clone } from 'utils';
+import {Image, ImageBackground, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {SimulateKeyboardPay} from '../../components';
+import {CheckBox} from 'react-native-elements';
+import {multiplyPayStyle} from '../../styles';
+import {clone} from '../../utils';
 import Dash from 'react-native-dash';
 
 /**

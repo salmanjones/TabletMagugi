@@ -12,7 +12,7 @@ import {
   cashierBillingStyle,
   commonStyles,
 } from '../../styles';
-import { CardItem } from 'components';
+import { CardItem } from '../../components';
 
 const storageCardBgImg = require('@imgPath/card-genre-one.png');
 const timeCardBgImg = require('@imgPath/time-card-two.png');

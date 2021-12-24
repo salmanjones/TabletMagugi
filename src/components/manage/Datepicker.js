@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Text,  ImageBackground } from 'react-native';
+import React from 'react';
+import {ImageBackground, Text} from 'react-native';
 import DatePicker from 'react-native-datepicker';
-import { PixelUtil } from 'utils';
+import {PixelUtil} from '../../utils';
 
-import { manageConsumablesStyle } from '../../styles';
+import {manageConsumablesStyle} from '../../styles';
+
 export class DatepickerBox extends React.Component {
 
 	constructor(props) {

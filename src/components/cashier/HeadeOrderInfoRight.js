@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableHighlight,
-  ImageBackground,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, Text, TouchableHighlight, TouchableOpacity, View,} from 'react-native';
 
-import { commonStyles } from '../../styles';
+import {commonStyles} from '../../styles';
 
 export class HeadeOrderInfoRight extends React.PureComponent {
 

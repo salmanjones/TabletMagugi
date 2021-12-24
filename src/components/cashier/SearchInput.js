@@ -1,6 +1,6 @@
 //libs
 import React from 'react';
-import { Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {cashierBillingStyle} from '../../styles';
 
 export class SearchInput extends React.Component {

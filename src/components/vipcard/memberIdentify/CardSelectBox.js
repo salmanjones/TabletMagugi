@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, View,} from 'react-native';
 import styled from 'styled-components/native/';
 
-import {CardItem, SectionList, TabGroup} from 'components';
+import {CardItem, SectionList, TabGroup} from '../../../components';
 import {memberIdentifyStyle} from '../../../styles';
 import {groupBy, PixelUtil} from '../../../utils';
 

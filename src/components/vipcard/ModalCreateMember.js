@@ -12,7 +12,7 @@ import {
 
 import {CheckBox} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
-import {ModalLoadingIndicator} from 'components';
+import {ModalLoadingIndicator} from '../../components';
 import {memberFilingStyle, manageConsumablesStyle} from '../../styles';
 import {
     PixelUtil,
@@ -21,7 +21,7 @@ import {
     displayError,
     showMessage,
 } from '../../utils';
-import {fetchMemberNO, fetchCreateMember, fetchMemberPasswordStat} from 'services';
+import {fetchMemberNO, fetchCreateMember, fetchMemberPasswordStat} from '../../services';
 
 const initMemberStatus = {
     isCreateMemberPending: false,

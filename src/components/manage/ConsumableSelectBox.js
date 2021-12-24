@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import {FlatList, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {amendItemInfoStyle, cashierBillingStyle, manageConsumablesStyle} from '../../styles';
-import {SimulateKeyboardInpBox} from 'components';
-import {loadConsumablesAction} from 'actions';
+import {SimulateKeyboardInpBox} from '../../components';
+import {loadConsumablesAction} from '../../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 

@@ -1,9 +1,9 @@
 //libs
 import React from 'react';
 import {Image, ImageBackground, Text, TouchableOpacity, View,} from 'react-native';
-import {showMessage} from 'utils';
-import {SimulateKeyboard,} from 'components';
-import {fetchCheckFlowNumber} from 'services';
+import {showMessage} from '../../utils';
+import {SimulateKeyboard,} from '../../components';
+import {fetchCheckFlowNumber} from '../../services';
 //self
 import {cashierBillInfoStyle, MemberQueryStyle} from '../../styles';
 

@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
-import {Text, View, TouchableHighlight, TouchableOpacity, Image, Platform, ImageBackground} from 'react-native';
-import {pendingStyles, manageConsumablesStyle} from '../../styles';
+import {Image, ImageBackground, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {manageConsumablesStyle, pendingStyles} from '../../styles';
 
-import {Icon, CheckBox} from 'react-native-elements';
+import {CheckBox} from 'react-native-elements';
 import moment from 'moment';
-import locale from 'moment/locale/zh-cn';
 
 export class PendingOrderItem extends PureComponent {
     render() {

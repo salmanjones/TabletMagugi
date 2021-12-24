@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
-import { CardItem, ConsumeHistory } from 'components';
+import { CardItem, ConsumeHistory } from '../../components';
 import { RechargeStoredCardStyles } from '../../styles';
 
 import { ButtonGroup } from 'react-native-elements';

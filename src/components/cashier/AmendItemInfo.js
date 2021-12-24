@@ -1,11 +1,10 @@
 //libs
 import React from 'react';
-import { connect } from 'react-redux';
-import { Text, View, ImageBackground, TouchableOpacity, Image, TextInput, Modal} from 'react-native';
-import { SimulateKeyboard, ModalLoadingIndicator} from 'components';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {SimulateKeyboard} from '../../components';
 //self
-import { amendItemInfoStyle} from '../../styles';
-import { showMessage } from 'utils'
+import {amendItemInfoStyle} from '../../styles';
+import {showMessage} from '../../utils'
 
 export class AmendItemInfo extends React.Component {
     constructor(props){

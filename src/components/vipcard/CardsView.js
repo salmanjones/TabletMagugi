@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { CardItem } from 'components';
+import { CardItem } from '../../components';
 import { RechargeStoredCardStyles } from '../../styles';
 import styled from 'styled-components/native/';
-import { PixelUtil } from 'utils';
+import { PixelUtil } from '../../utils';
 
 const MarginContainer = styled.View`
   width: 100%;

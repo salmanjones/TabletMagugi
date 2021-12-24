@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { commonStyles } from '../../styles';
-import { PixelUtil, ImageQutity, getImage } from 'utils';
+import { PixelUtil, ImageQutity, getImage } from '../../utils';
 import { encode } from 'punycode';
 
 const storageCardBgImg = require('@imgPath/card-genre-one.png');

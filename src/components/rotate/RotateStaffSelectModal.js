@@ -3,8 +3,8 @@ import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image, Modal, FlatList, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { rotateBigModalStyle, RotateSettingStyles, openCardAccountStyle } from '../../styles';
-import { getImage, ImageQutity, showMessage, PixelUtil } from 'utils';
-import { getServiceStaffs } from 'services';
+import { getImage, ImageQutity, showMessage, PixelUtil } from '../../utils';
+import { getServiceStaffs } from '../../services';
 import { CheckBox } from 'react-native-elements';
 class StaffPositions extends React.PureComponent {
     render() {

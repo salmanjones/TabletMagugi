@@ -1,12 +1,14 @@
-import React, { PureComponent } from 'react';
-import { priceIndexStyle } from '../../styles';
-import { View, Text, Image } from 'react-native';
+import React, {PureComponent} from 'react';
+import {priceIndexStyle} from '../../styles';
+import {Image, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
-import { getImage, ImageQutity } from 'utils';
+import {getImage, ImageQutity} from '../../utils';
+
 const SwiperContainer = styled.View`
     flex: 1;
 `;
+
 export class PriceSwiper extends PureComponent {
     scrollBy(step) {
         this.swiper.scrollBy(step);

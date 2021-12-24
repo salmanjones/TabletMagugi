@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Modal, FlatList } from 'react-native';
-import { fetchCardConsumeHistory } from 'services';
-import { SectionList, FlatListFooter } from 'components';
+import { fetchCardConsumeHistory } from '../../services';
+import { SectionList, FlatListFooter } from '../../components';
 import styled from 'styled-components/native/';
-import { ListStatus, PixelUtil } from 'utils';
+import { ListStatus, PixelUtil } from '../../utils';
 //self
 import {
   MemberQueryStyle,

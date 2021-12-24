@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
-import {Text, View, Image, FlatList, TouchableOpacity, ScrollView} from 'react-native';
-import { getImage, ImageQutity } from 'utils';
-import { cashierBillingStyle, manageConsumablesStyle } from '../../styles';
+import React, {PureComponent} from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {getImage, ImageQutity} from '../../utils';
+import {cashierBillingStyle, manageConsumablesStyle} from '../../styles';
 import Swipeout from 'react-native-swipeout';
+
 export class ConsumableList extends PureComponent {
 	render() {
 		const { consumables, onStaffSelected, onConsumableSelected, onDelete, onAdd } = this.props;

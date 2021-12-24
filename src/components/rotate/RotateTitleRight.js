@@ -3,8 +3,8 @@ import React from 'react';
 import { View, Text, TouchableHighlight, InteractionManager ,Alert} from 'react-native';
 
 import { rotateItemStyles } from '../../styles';
-import { resetDutyStaffs, checkResource } from 'services';
-import { RotateSmallTipModal } from 'components';
+import { resetDutyStaffs, checkResource } from '../../services';
+import { RotateSmallTipModal } from '../../components';
 export class RotateTitleRight extends React.PureComponent {
 	constructor(props) {
 		super(props);

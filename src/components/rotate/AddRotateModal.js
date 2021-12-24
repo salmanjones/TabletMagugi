@@ -1,24 +1,11 @@
 // 上牌弹层
 import React from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  Modal,
-  InteractionManager,
-  TextInput,
-} from 'react-native';
+import {ImageBackground, Modal, ScrollView, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 
-import { CheckBox } from 'react-native-elements';
-import { rotateBigModalStyle,commonStyles } from '../../styles';
-import {showMessage,displayError} from 'utils';
-import {modifyStoreDutysSetting} from 'services';
-import {
-  PixelUtil,
-} from 'utils';
+import {CheckBox} from 'react-native-elements';
+import {rotateBigModalStyle} from '../../styles';
+import {displayError, showMessage} from '../../utils';
+import {modifyStoreDutysSetting} from '../../services';
 
 export class RuleItem extends React.PureComponent {
 	constructor(props) {

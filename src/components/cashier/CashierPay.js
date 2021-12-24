@@ -3,7 +3,7 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import { Text, View, FlatList, ImageBackground, TouchableOpacity, Image, ScrollView, TouchableHighlight, Animated } from 'react-native';
-import { ModalLoadingIndicator } from 'components';
+import { ModalLoadingIndicator } from '../../components';
 
 //self
 import { cashierPayStyle } from '../../styles';

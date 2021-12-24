@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View, InteractionManager } from 'react-native';
-import { getSalesCardAction } from 'actions';
-import { SectionList, SaleCardItem } from 'components';
+import { getSalesCardAction } from '../../actions';
+import { SectionList, SaleCardItem } from '../../components';
 import { memberIdentifyStyle } from '../../styles';
 
 export class VipcardSaleCardListComponent extends React.PureComponent {

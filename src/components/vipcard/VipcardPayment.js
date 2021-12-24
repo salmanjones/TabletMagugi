@@ -17,10 +17,10 @@ import {
   ModalLoadingIndicator,
   QRCodePayment,
   QRCodePaymentNew,
-} from 'components';
+} from '../../components';
 
-import { showMessage, displayError } from 'utils';
-import { fetchCreateCardOrder, fetchPaymentResult, fetchOtherPayType, fetchOtherPayment } from 'services';
+import { showMessage, displayError } from '../../utils';
+import { fetchCreateCardOrder, fetchPaymentResult, fetchOtherPayType, fetchOtherPayment } from '../../services';
 
 export class VipcardPayment extends React.PureComponent {
   constructor(props) {

@@ -1,29 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-    Text,
-    View,
-    FlatList,
-    InteractionManager,
-    Image,
-    TouchableOpacity ,
-} from 'react-native';
-import styled from 'styled-components/native/';
-import { ListItem } from 'react-native-elements';
+import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {FlatList, Image, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
-import { memberIdentifyStyle } from '../../../styles';
+import {memberIdentifyStyle} from '../../../styles';
 import {
-    SearchModule,
     CardSelectBox,
     FlatListFooter,
     MemberListItem,
     MemberWaitListItem,
-} from 'components';
-import { ListStatus } from 'utils';
-import { getMemberInfoAction, resetMemberAction } from 'actions';
-import { fetchWaitingMembersResult } from 'services';
-import { ModalLoadingIndicator } from "components";
+    ModalLoadingIndicator,
+    SearchModule,
+} from '../../../components';
+import {ListStatus} from '../../../utils';
+import {getMemberInfoAction, resetMemberAction} from '../../../actions';
+import {fetchWaitingMembersResult} from '../../../services';
 
 export class MemberIdentifyComponent extends React.PureComponent {
     constructor(props) {

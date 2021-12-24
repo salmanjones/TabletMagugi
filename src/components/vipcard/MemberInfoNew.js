@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 
 import { openCardAccountStyle } from '../../styles';
-import { ImageQutity, getImage } from 'utils';
+import { ImageQutity, getImage } from '../../utils';
 
 export class MemberInfoNew extends React.PureComponent {
   render() {

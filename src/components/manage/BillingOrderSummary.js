@@ -1,9 +1,6 @@
-import React, { PureComponent } from 'react';
-import {
-  Text,
-  View
-} from 'react-native';
-import { pendingStyles } from '../../styles';
+import React, {PureComponent} from 'react';
+import {Text, View} from 'react-native';
+import {pendingStyles} from '../../styles';
 
 export class BillingOrderSummary extends PureComponent {
   render() {

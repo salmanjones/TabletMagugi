@@ -1,22 +1,9 @@
 //libs
 import React from 'react';
-import { connect } from 'react-redux';
-import {
-    Text,
-    View,
-    TextInput,
-    ImageBackground,
-    TouchableOpacity,
-    Image,
-    ScrollView,
-    Modal,
-    Alert
-} from 'react-native';
-import {
-    SimulateKeyboardInpBox,
-} from 'components';
+import {Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SimulateKeyboardInpBox,} from 'components';
 //self
-import { cashierBillingStyle, AmendServicerModalStyle } from '../../styles';
+import {AmendServicerModalStyle, cashierBillingStyle} from '../../styles';
 
 export class AmendServicerModal extends React.Component {
 

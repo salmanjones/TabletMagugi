@@ -15,7 +15,7 @@ import { CheckBox } from 'react-native-elements';
 import { rotateBigModalStyle } from '../../styles';
 import {
   PixelUtil,
-} from 'utils';
+} from '../../utils';
 
 export class SettingItem extends React.PureComponent {
     render() {

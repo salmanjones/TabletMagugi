@@ -1,7 +1,7 @@
 //轮牌-单牌-底部
 import React, { PureComponent } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { PlacardTimer } from 'components';
+import { PlacardTimer } from '../../components';
 
 import { rotateItemStyles } from '../../styles';
 export class PlacardStatusBar extends PureComponent {

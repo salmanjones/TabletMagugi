@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { rotateItemStyles } from '../../styles';
 import { View, Text, ImageBackground, Image, TouchableOpacity, FlatList } from 'react-native';
-import { Placard } from 'components';
+import { Placard } from '../../components';
 
 // 未上牌
 class NullRotateItem extends React.PureComponent {

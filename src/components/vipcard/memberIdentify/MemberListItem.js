@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
-import { ListItem } from 'react-native-elements';
-
-import { commonStyles } from '../../../styles';
-
-import { ImageQutity, getImage } from 'utils';
+import React from 'react';
+import {Image, Text, View} from 'react-native';
+import {ListItem} from 'react-native-elements';
+import {commonStyles} from '../../../styles';
+import {getImage, ImageQutity} from '../../../utils';
 
 const defaultMemberImg = require('@imgPath/rotate-portrait.png');
 export class MemberListItem extends React.PureComponent {

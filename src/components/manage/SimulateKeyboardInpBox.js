@@ -1,8 +1,7 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import {Text, TouchableOpacity, View} from 'react-native';
 
-import { commonStyles } from '../../styles';
+import {commonStyles} from '../../styles';
 
 export class SimulateKeyboardInpBox extends React.PureComponent {
   constructor(props){

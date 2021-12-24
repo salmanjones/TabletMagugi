@@ -1,7 +1,7 @@
 //轮牌-单牌-顶部图片
 import React, { PureComponent } from 'react';
 import { Text, View, Image, ImageBackground } from 'react-native';
-import { getImage, ImageQutity } from 'utils';
+import { getImage, ImageQutity } from '../../utils';
 import { rotateItemStyles } from '../../styles';
 export class PlacardImg extends PureComponent {
 	render() {

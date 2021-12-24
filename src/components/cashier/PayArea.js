@@ -1,8 +1,17 @@
 //轮牌-单牌
-import React, { PureComponent } from 'react';
-import { Icon } from 'react-native-elements';
-import { Text, View, FlatList, ImageBackground, TouchableOpacity, Image, ScrollView, TouchableHighlight, Animated } from 'react-native';
-import { cashierPayStyle, pendingOrderPayStyle } from '../../styles';
+import React, {PureComponent} from 'react';
+import {Icon} from 'react-native-elements';
+import {
+    FlatList,
+    Image,
+    ImageBackground,
+    ScrollView,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {cashierPayStyle, pendingOrderPayStyle} from '../../styles';
 
 const height = 0;
 export class PayArea extends PureComponent {

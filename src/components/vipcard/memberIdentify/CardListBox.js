@@ -1,15 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  FlatList,
-} from 'react-native';
+import {FlatList, View,} from 'react-native';
 
 import styled from 'styled-components/native/';
 
-import { SectionList,CardItem} from 'components';
-import { memberIdentifyStyle } from '../../../styles';
-import { PixelUtil } from 'utils';
+import {CardItem, SectionList} from '../../../components';
+import {memberIdentifyStyle} from '../../../styles';
+import {PixelUtil} from '../../../utils';
 
 const MarginContainer = styled.View`
   width: 50%;

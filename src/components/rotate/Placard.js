@@ -1,7 +1,7 @@
 //轮牌-单牌
 import React, { PureComponent } from 'react';
 import { View, TouchableOpacity, Image, Animated, Text, ImageBackground } from 'react-native';
-import { PlacardImg, PlacardTimer } from 'components';
+import { PlacardImg, PlacardTimer } from '../../components';
 
 import { rotateItemStyles } from '../../styles';
 

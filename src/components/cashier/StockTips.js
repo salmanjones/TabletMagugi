@@ -1,21 +1,10 @@
 //libs
 import React from 'react';
-import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  TextInput,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  Modal,
-} from 'react-native';
-import { TimeCard } from 'components';
-import { CheckBox } from 'react-native-elements';
-import { PixelUtil } from 'utils';
+import {ScrollView, Text, TouchableOpacity, View,} from 'react-native';
 //self
-import { inventoryTableStyle } from '../../styles';
+import {inventoryTableStyle} from '../../styles';
+import {TimeCard} from '../../components';
+
 export class StockTips extends React.Component {
   constructor(props) {
     super(props);
