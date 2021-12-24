@@ -3,14 +3,14 @@ import { Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { payForPersonStyle, openCardAccountStyle } from '../styles';
-import { fetchPaymentResult } from 'services';
+import { fetchPaymentResult } from '../services';
 import {
   showMessage,
   displayError,
   PaymentResultStatus,
   resetNavigationTo,
-} from 'utils';
-import { PaymentResult, ModalLoadingIndicator, MemberInfoNew } from 'components';
+} from '../utils';
+import { PaymentResult, ModalLoadingIndicator, MemberInfoNew } from '../components';
 
 const MAX_RETRY_COUNT = 100;
 

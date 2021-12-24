@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
-import { PixelUtil } from 'utils';
+import { PixelUtil } from '../utils';
 import { tabGroupStyles, RechargeStoredCardStyles } from '../styles';
 
 export class TabGroup extends React.PureComponent {

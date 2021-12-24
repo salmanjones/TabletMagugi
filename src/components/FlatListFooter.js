@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Text, View, ActivityIndicator, TouchableOpacity } from 'react-native';
 
-import { ListStatus, PixelUtil } from 'utils';
+import { ListStatus, PixelUtil } from '../utils';
 
 export class FlatListFooter extends PureComponent {
   render() {

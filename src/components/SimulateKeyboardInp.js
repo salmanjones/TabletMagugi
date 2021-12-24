@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { SimulateKeyboard } from 'components';
+import { SimulateKeyboard } from '../components';
 
 import { commonStyles } from '../styles';
 const imgConfirmBtn = require('@imgPath/search-text.png');

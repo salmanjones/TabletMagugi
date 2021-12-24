@@ -1,7 +1,7 @@
 //libs
 import React from 'react';
 import {Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {SimulateKeyboardInpBox,} from 'components';
+import {SimulateKeyboardInpBox,} from '../../components';
 //self
 import {AmendServicerModalStyle, cashierBillingStyle} from '../../styles';
 

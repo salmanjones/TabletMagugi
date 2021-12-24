@@ -1,7 +1,7 @@
 //libs
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {SimulateKeyboard} from 'components';
+import {SimulateKeyboard} from '../../components';
 //self
 import {amendItemInfoStyle, manageConsumablesStyle} from '../../styles';
 

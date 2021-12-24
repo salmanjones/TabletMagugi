@@ -7,7 +7,7 @@ import { ModalLoadingIndicator } from '../../components';
 
 //self
 import { cashierPayStyle } from '../../styles';
-import { getAvailablePaymentInfo, fetchPrePayBilling } from 'services';
+import { getAvailablePaymentInfo, fetchPrePayBilling } from '../../services';
 import { showMessage } from '../../utils';
 
 const height = 0;

@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 import {payForPersonStyle} from '../styles';
-import {PaymentResult} from 'components';
+import {PaymentResult} from '../components';
 
 export class QRCodePaymentNew extends React.PureComponent {
   constructor(props, context) {

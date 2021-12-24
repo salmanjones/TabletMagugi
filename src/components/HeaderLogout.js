@@ -8,10 +8,10 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import { logoutAction } from 'actions';
+import { logoutAction } from '../actions';
 import { homeStyles } from '../styles';
-import { fetchAuthUser } from 'services';
-import { AppConfig, clearFetchCache } from 'utils';
+import { fetchAuthUser } from '../services';
+import { AppConfig, clearFetchCache } from '../utils';
 
 export class HeaderLogout extends React.PureComponent {
   handleLogout = () => {

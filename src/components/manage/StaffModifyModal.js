@@ -1,21 +1,22 @@
 //libs
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Text, View, TextInput, InteractionManager, TouchableOpacity, Image, ScrollView, Modal } from 'react-native';
-import { SimulateKeyboardInpBox, StaffSelectBoxV2 } from 'components';
-import { getImage, ImageQutity,PixelUtil } from '../../utils';
-import { cashierBillingStyle, AmendServicerModalStyle, MemberQueryStyle } from '../../styles';
-import { moidfyStaffAction ,getStaffModifySettingAction} from '../../actions';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {Image, InteractionManager, Modal, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SimulateKeyboardInpBox, StaffSelectBoxV2} from '../../components';
+import {getImage, ImageQutity} from '../../utils';
+import {AmendServicerModalStyle, cashierBillingStyle} from '../../styles';
+import {getStaffModifySettingAction, moidfyStaffAction} from '../../actions';
+
 class StaffModifyModalClass extends PureComponent {
-	constructor(props) {
-		super(props);
-		this.state = {
-			staff: {},
-			staffIndex: null,
-			project: {},
-			currentModifyItem: null,
-			showBox: null,
+    constructor(props) {
+        super(props);
+        this.state = {
+            staff: {},
+            staffIndex: null,
+            project: {},
+            currentModifyItem: null,
+            showBox: null,
 			visible: false,
 			loading: false
 		};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
 import styled from 'styled-components/native/';
-import { PixelUtil } from 'utils';
+import { PixelUtil } from '../utils';
 
 const DefaultNoItemMsg = '暂时没有内容~';
 

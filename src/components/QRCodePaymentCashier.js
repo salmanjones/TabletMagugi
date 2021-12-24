@@ -3,9 +3,9 @@ import { Text, View, Image, Modal, TouchableOpacity, Alert} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { payWxAliForCashier } from '../styles';
-import { fetchPaymentResult } from 'services';
-import { showMessage, displayError, PaymentResultStatus } from 'utils';
-import { PaymentResult, ModalLoadingIndicator, MemberInfo } from 'components';
+import { fetchPaymentResult } from '../services';
+import { showMessage, displayError, PaymentResultStatus } from '../utils';
+import { PaymentResult, ModalLoadingIndicator, MemberInfo } from '../components';
 
 const MAX_RETRY_COUNT = 60;
 
