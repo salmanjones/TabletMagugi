@@ -1,6 +1,6 @@
 //libs
 //self
-import {displayError} from '../../utils';
+import {displayError} from '../utils';
 import {
     deleteBilling,
     fetchAppBilling,
@@ -15,7 +15,7 @@ import {
     fetchStockBilling,
     getServiceStaffs,
     payBillingV4
-} from '../../services';
+} from '../services';
 import {
     CASHIERBILLING_CLEAR,
     CASHIERBILLING_DELETE,
@@ -35,7 +35,7 @@ import {
     GET_PENDING_LIST,
     RESET_BILLING_LIST,
     SERVICE_STAFFS_GET
-} from '../../actions';
+} from '../actions';
 
 //收银-清除缓存
 export const clearBillingCacheAction = () => {

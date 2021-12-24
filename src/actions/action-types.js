@@ -1,4 +1,4 @@
-import {createAction} from '../../utils';
+import {createAction} from '../utils';
 
 //LoginActivity
 export const LOGIN_TEXTINPUT_CHANGE = 1000; //登录输入框改变

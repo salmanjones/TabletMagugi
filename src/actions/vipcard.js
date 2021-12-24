@@ -1,6 +1,6 @@
 import * as types from './action-types';
-import {fetchVipcardSales} from '../../services';
-import {delay, showMessage} from '../../utils';
+import {fetchVipcardSales} from '../services';
+import {delay, showMessage} from '../utils';
 
 const CACHE_TIME = 3600 * 1000 * 2;
 

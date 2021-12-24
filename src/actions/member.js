@@ -1,5 +1,5 @@
 import * as types from './action-types';
-import {fetchMemberInfo} from '../../services';
+import {fetchMemberInfo} from '../services';
 
 /**
  * 获取会员信息

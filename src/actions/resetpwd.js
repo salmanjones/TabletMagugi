@@ -1,9 +1,9 @@
 import {Keyboard} from "react-native";
 import Toast from 'react-native-root-toast';
 
-import {RESETPWD_SEND_CODE} from "actions";
-import {fetchResetPwdCode, fetchResetPwdSubmit} from "services";
-import {resetNavigationTo, StateCode} from "utils";
+import {RESETPWD_SEND_CODE} from "../actions";
+import {fetchResetPwdCode, fetchResetPwdSubmit} from "../services";
+import {resetNavigationTo, StateCode} from "../utils";
 
 //重置密码--发送验证码
 export const resetpwdSendCodeAction = (currState) => {
