@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components/native/';
 
 import { SectionList,CardItem} from 'components';
-import { memberIdentifyStyle } from 'styles';
+import { memberIdentifyStyle } from '../../../styles';
 import { PixelUtil } from 'utils';
 
 const MarginContainer = styled.View`

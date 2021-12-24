@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {FlatList, Image, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
-import {cashierBillingStyle} from 'styles';
+import {cashierBillingStyle} from '../styles';
 import {getServiceStaffsAction} from 'actions';
 import {getImage, ImageQutity, PixelUtil} from 'utils';
 

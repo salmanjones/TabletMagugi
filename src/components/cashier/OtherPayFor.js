@@ -3,7 +3,7 @@ import React from 'react';
 import {Image, Text, TouchableOpacity, View,} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 //self
-import {vipPayForStyle} from 'styles';
+import {vipPayForStyle} from '../../styles';
 
 export class OtherPayFor extends React.Component {
     constructor(props) {

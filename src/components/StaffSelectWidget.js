@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, FlatList, Image, TouchableOpacity, InteractionManager, ScrollView } from 'react-native';
-import { cashierBillingStyle, AmendServicerModalStyle } from 'styles';
+import { cashierBillingStyle, AmendServicerModalStyle } from '../styles';
 import { getServiceStaffsAction } from 'actions';
 import { getImage, ImageQutity } from 'utils';
 import {manageConsumablesStyle} from "../styles";

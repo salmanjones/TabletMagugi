@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Text, View, FlatList, TouchableOpacity, Image,ImageBackground } from 'react-native';
-import { multiplyPayStyle } from 'styles';
+import { multiplyPayStyle } from '../../styles';
 
 export class CouponList extends PureComponent {
     constructor(props) {

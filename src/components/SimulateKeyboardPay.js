@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, Text} from 'react-native';
 import { SimulateKeyboard } from 'components';
-import { commonStyles, multiplyPayStyle } from 'styles';
+import { commonStyles, multiplyPayStyle } from '../styles';
 
 //混合支付页面使用虚拟键盘：含输入框，确定｜清除按钮
 export class SimulateKeyboardPay extends React.PureComponent {

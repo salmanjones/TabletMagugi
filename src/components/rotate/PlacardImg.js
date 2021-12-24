@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { Text, View, Image, ImageBackground } from 'react-native';
 import { getImage, ImageQutity } from 'utils';
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 export class PlacardImg extends PureComponent {
 	render() {
 		const { staffImg, orderAmt, isRed, setting } = this.props;

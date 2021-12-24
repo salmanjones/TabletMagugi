@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { commonStyles } from 'styles';
+import { commonStyles } from '../../styles';
 
 export class SimulateKeyboardInpBox extends React.PureComponent {
   constructor(props){
@@ -21,7 +21,7 @@ export class SimulateKeyboardInpBox extends React.PureComponent {
     }else if(type=='clear'){
       this.props.onClear();
     }
-    
+
     this.setState((prevState, props)=>{
       return {
         ...prevState,

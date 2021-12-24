@@ -1,7 +1,7 @@
 //libs
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
-import {cashierBillingStyle} from 'styles';
+import {cashierBillingStyle} from '../../styles';
 
 export class QueryInput extends React.Component {
     constructor(props){

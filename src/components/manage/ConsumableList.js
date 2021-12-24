@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import {Text, View, Image, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import { getImage, ImageQutity } from 'utils';
-import { cashierBillingStyle, manageConsumablesStyle } from 'styles';
+import { cashierBillingStyle, manageConsumablesStyle } from '../../styles';
 import Swipeout from 'react-native-swipeout';
 export class ConsumableList extends PureComponent {
 	render() {

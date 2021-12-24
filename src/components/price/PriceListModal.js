@@ -2,7 +2,7 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, Image, Modal, FlatList, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { priceIndexStyle } from 'styles';
+import { priceIndexStyle } from '../../styles';
 import { getImage, ImageQutity } from 'utils';
 
 export class PriceListModal extends React.PureComponent {

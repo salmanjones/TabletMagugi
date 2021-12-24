@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { CheckBox } from 'react-native-elements';
-import { rotateBigModalStyle } from 'styles';
+import { rotateBigModalStyle } from '../../styles';
 import {
   PixelUtil,
 } from 'utils';
@@ -76,11 +76,11 @@ export class SettingItem extends React.PureComponent {
 			uncheckedColor={'#999'}
 			// checked={this.state.checked}
 		/>
-	  
-	  
-	  
-	  
-	  
+
+
+
+
+
 	  </View>
     )
   }
@@ -133,4 +133,3 @@ export class RotateSettingModal extends React.Component {
     );
   }
 }
- 

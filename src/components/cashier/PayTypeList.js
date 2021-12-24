@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
-import { multiplyPayStyle } from 'styles';
+import { multiplyPayStyle } from '../../styles';
 import { CheckBox } from 'react-native-elements';
 import Dash from 'react-native-dash';
 export class PayTypeList extends PureComponent {

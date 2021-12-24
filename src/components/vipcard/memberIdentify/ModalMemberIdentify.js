@@ -2,7 +2,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { MemberIdentify } from 'components';
-import { MemberQueryStyle } from 'styles';
+import { MemberQueryStyle } from '../../../styles';
 import Toast from 'react-native-root-toast';
 
 export class ModalMemberIndentify extends React.Component {

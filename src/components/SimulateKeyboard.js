@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
-import {commonStyles} from 'styles';
+import {commonStyles} from '../styles';
 
 export class SimulateKeyboard extends React.PureComponent {
     constructor(props) {

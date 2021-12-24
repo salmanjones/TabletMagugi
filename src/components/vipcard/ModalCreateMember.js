@@ -13,7 +13,7 @@ import {
 import {CheckBox} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import {ModalLoadingIndicator} from 'components';
-import {memberFilingStyle, manageConsumablesStyle} from 'styles';
+import {memberFilingStyle, manageConsumablesStyle} from '../../styles';
 import {
     PixelUtil,
     isPhone,

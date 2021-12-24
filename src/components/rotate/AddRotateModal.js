@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import { CheckBox } from 'react-native-elements';
-import { rotateBigModalStyle,commonStyles } from 'styles';
+import { rotateBigModalStyle,commonStyles } from '../../styles';
 import {showMessage,displayError} from 'utils';
 import {modifyStoreDutysSetting} from 'services';
 import {

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { priceIndexStyle } from 'styles';
+import { priceIndexStyle } from '../../styles';
 import { View, Text, Image } from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';

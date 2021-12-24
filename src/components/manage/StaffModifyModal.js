@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Text, View, TextInput, InteractionManager, TouchableOpacity, Image, ScrollView, Modal } from 'react-native';
 import { SimulateKeyboardInpBox, StaffSelectBoxV2 } from 'components';
 import { getImage, ImageQutity,PixelUtil } from 'utils';
-import { cashierBillingStyle, AmendServicerModalStyle, MemberQueryStyle } from 'styles';
+import { cashierBillingStyle, AmendServicerModalStyle, MemberQueryStyle } from '../../styles';
 import { moidfyStaffAction ,getStaffModifySettingAction} from 'actions';
 class StaffModifyModalClass extends PureComponent {
 	constructor(props) {

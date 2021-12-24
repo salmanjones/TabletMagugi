@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import { PixelUtil } from 'utils';
-import { tabGroupStyles, RechargeStoredCardStyles } from 'styles';
+import { tabGroupStyles, RechargeStoredCardStyles } from '../styles';
 
 export class TabGroup extends React.PureComponent {
   constructor(props) {
@@ -50,4 +50,3 @@ export class TabGroup extends React.PureComponent {
     );
   }
 }
- 

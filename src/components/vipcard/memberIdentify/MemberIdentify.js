@@ -12,7 +12,7 @@ import {
 import styled from 'styled-components/native/';
 import { ListItem } from 'react-native-elements';
 
-import { memberIdentifyStyle } from 'styles';
+import { memberIdentifyStyle } from '../../../styles';
 import {
     SearchModule,
     CardSelectBox,
@@ -220,7 +220,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                             onRechargePress={this.onRechargePress}
                         />
                     </View>
-                    
+
                 </View>
             </View>
         );

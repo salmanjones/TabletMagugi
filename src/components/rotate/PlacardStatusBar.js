@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { PlacardTimer } from 'components';
 
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 export class PlacardStatusBar extends PureComponent {
     render() {
         const { staff, setting } = this.props;

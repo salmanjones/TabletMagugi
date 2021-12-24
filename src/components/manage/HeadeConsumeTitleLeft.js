@@ -3,7 +3,7 @@ import {View,Text,TouchableOpacity,Image,ImageBackground,Alert} from 'react-nati
 import { CommonActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
-import { commonStyles } from 'styles';
+import { commonStyles } from '../../styles';
 
 class HeadeConsumeTitleLeftCpm extends React.PureComponent {
     constructor(props){

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 import { View, Text, ImageBackground, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Placard } from 'components';
 

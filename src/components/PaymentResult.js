@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import { PaymentResultStatus } from 'utils';
-import { payForStyle } from 'styles';
+import { payForStyle } from '../styles';
 
 export const PaymentResult = ({ status }) => (
   <View style={payForStyle.payForState}>

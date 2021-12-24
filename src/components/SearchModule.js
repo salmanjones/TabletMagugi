@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, ImageBackground, TextInput, TouchableOpacity, View,} from 'react-native';
 
-import {commonStyles} from 'styles';
+import {commonStyles} from '../styles';
 
 export class SearchModule extends React.PureComponent {
     constructor() {

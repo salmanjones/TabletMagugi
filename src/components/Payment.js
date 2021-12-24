@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 
-import { payForPersonStyle, openCardAccountStyle } from 'styles';
+import { payForPersonStyle, openCardAccountStyle } from '../styles';
 import { fetchPaymentResult } from 'services';
 import {
   showMessage,

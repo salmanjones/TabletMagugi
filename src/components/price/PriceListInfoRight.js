@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
-import { priceIndexStyle } from 'styles';
+import { priceIndexStyle } from '../../styles';
 
 export class PriceListInfoRight extends React.PureComponent {
     render() {

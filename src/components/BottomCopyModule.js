@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
-import { homeStyles, commonStyles } from 'styles';
+import { homeStyles, commonStyles } from '../styles';
 
 export class BottomCopyModule extends React.PureComponent {
   render() {

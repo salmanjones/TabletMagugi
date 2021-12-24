@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { Icon } from 'react-native-elements';
 import { Text, View, FlatList, ImageBackground, TouchableOpacity, Image, ScrollView, TouchableHighlight, Animated } from 'react-native';
-import { cashierPayStyle, pendingOrderPayStyle } from 'styles';
+import { cashierPayStyle, pendingOrderPayStyle } from '../../styles';
 
 const height = 0;
 export class PayArea extends PureComponent {

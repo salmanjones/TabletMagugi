@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, TouchableHighlight, InteractionManager ,Alert} from 'react-native';
 
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 import { resetDutyStaffs, checkResource } from 'services';
 import { RotateSmallTipModal } from 'components';
 export class RotateTitleRight extends React.PureComponent {
@@ -47,7 +47,7 @@ export class RotateTitleRight extends React.PureComponent {
 			}).catch(() => {});
 
 		});
-		
+
 	};
 
 	render() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { commonStyles } from 'styles';
+import { commonStyles } from '../../../styles';
 
 import { ImageQutity, getImage } from 'utils';
 

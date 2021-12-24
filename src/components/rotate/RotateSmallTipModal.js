@@ -2,7 +2,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 
-import { rotateSmallModalStyle } from 'styles';
+import { rotateSmallModalStyle } from '../../styles';
 
 export class RotateSmallTipModal extends React.Component {
 	constructor(props) {
@@ -42,7 +42,7 @@ export class RotateSmallTipModal extends React.Component {
 							{type === 1 ? (
 								// <Text style={rotateSmallModalStyle.rotateModalText}>确定要将全部轮牌洗牌吗？</Text>
 								<Text style={rotateSmallModalStyle.rotateModalText}>确定要将全部轮牌下牌吗？</Text>
-								
+
 							) : null}
 							{type === 2 ? <Text style={rotateSmallModalStyle.rotateModalText}>确定要下牌吗？</Text> : null}
 						</View>

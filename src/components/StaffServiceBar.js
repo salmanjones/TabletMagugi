@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { RechargeStoredCardStyles, cashierBillingStyle } from 'styles';
+import { RechargeStoredCardStyles, cashierBillingStyle } from '../styles';
 import { getImage, ImageQutity } from 'utils';
 
 const defaultImg = require('@imgPath/rotate-portrait.png');

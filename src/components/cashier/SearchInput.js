@@ -1,7 +1,7 @@
 //libs
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
-import {cashierBillingStyle} from 'styles';
+import {cashierBillingStyle} from '../../styles';
 
 export class SearchInput extends React.Component {
     constructor(props){
@@ -15,7 +15,7 @@ export class SearchInput extends React.Component {
     componentWillReceiveProps(props) {
         this.setState({showFilterMsgBoard: props.showFilterMsgBoard});
     }
-    
+
     render() {
         const {onCancel} = this.props;
         const {showFilterMsgBoard} = this.state;

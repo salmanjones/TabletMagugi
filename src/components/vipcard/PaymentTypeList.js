@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 
-import { openCardAccountStyle } from 'styles';
+import { openCardAccountStyle } from '../../styles';
 
 export class PaymentTypeList extends React.PureComponent {
   constructor(props) {

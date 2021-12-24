@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Text, View, ImageBackground, TouchableOpacity, Image, TextInput, Modal} from 'react-native';
 import { SimulateKeyboard, ModalLoadingIndicator} from 'components';
 //self
-import { amendItemInfoStyle} from 'styles';
+import { amendItemInfoStyle} from '../../styles';
 import { showMessage } from 'utils'
 
 export class AmendItemInfo extends React.Component {
@@ -87,7 +87,7 @@ export class AmendItemInfo extends React.Component {
                         return prevState;
                     }
                 }
-                
+
             }
 
             let cachePaidPrice = 0.0;
@@ -122,7 +122,7 @@ export class AmendItemInfo extends React.Component {
 
     onAdd(){
         let number = this.state.number;
-        
+
         number = number.length<1?'0':number;
         number = parseInt(number);
 
@@ -168,7 +168,7 @@ export class AmendItemInfo extends React.Component {
             return {...preState, changType ,isNum , isReceived}
         })
     }
-    
+
     onChangeReceived(changType){
         isNum = 0;
         isReceived = 1;
@@ -249,14 +249,14 @@ export class AmendItemInfo extends React.Component {
                                                     itemInfo.itemType=='card'?
                                                     '次数：':'数量：'
                                                 }
-                                            
+
                                             </Text>
                                             <TouchableOpacity style={amendItemInfoStyle.AmendCardItemCountAdd} onPress={this.onReduce.bind(this)}>
                                                 <Text style={amendItemInfoStyle.AmendCardItemCountAddText}>-</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity activeOpacity={1} style={this.state.isNum == 0? amendItemInfoStyle.AmendCardItemCountTextBox:amendItemInfoStyle.AmendCardItemCountTextBoxActive} onPress={this.onChangeState.bind(this,0)}>
                                                 <View style={amendItemInfoStyle.AmendCardItemCountTextInp}>
-                                                    <Text style={amendItemInfoStyle.AmendCardItemCountT}>{this.state.number}</Text>  
+                                                    <Text style={amendItemInfoStyle.AmendCardItemCountT}>{this.state.number}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={amendItemInfoStyle.AmendCardItemCountMin} onPress={this.onAdd.bind(this)}>
@@ -267,19 +267,19 @@ export class AmendItemInfo extends React.Component {
                                             this.props.itemInfo.itemType != 'card' && this.props.moduleCode == '1' && (
                                                 <View style={amendItemInfoStyle.iteminfoBoxItemLi}>
                                                     <Text style={amendItemInfoStyle.AmendCardItemCountText}>
-                                                    实收：                                            
+                                                    实收：
                                                     </Text>
                                                     <TouchableOpacity activeOpacity={1} style={this.state.isReceived == 0? amendItemInfoStyle.AmendCardItemCountInpBox:amendItemInfoStyle.AmendCardItemCountInpBoxActive} onPress={this.onChangeReceived.bind(this ,1)}>
-                                                        <Text style={amendItemInfoStyle.AmendCardItemCountT}>{this.state.cachePaidPrice}</Text> 
-                                                    </TouchableOpacity> 
+                                                        <Text style={amendItemInfoStyle.AmendCardItemCountT}>{this.state.cachePaidPrice}</Text>
+                                                    </TouchableOpacity>
                                                 </View>
                                             )
                                         }
-                                    
+
                                     </View>
                                 </View>
                                 <View style={amendItemInfoStyle.AmendCardItemKeyboard}>
-                                    <SimulateKeyboard 
+                                    <SimulateKeyboard
                                         changType = {this.state.changType}
                                         onPress={this.onPress.bind(this)}
                                         onPointPress={this.onPointPress.bind(this)}
@@ -300,7 +300,7 @@ export class AmendItemInfo extends React.Component {
                         </View>
                     </View>
                 </View>
-           
+
         )
     }
 }

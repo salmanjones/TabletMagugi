@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import {ModalCardInfo} from 'components';
-import {commonStyles} from 'styles';
+import {commonStyles} from '../../styles';
 import {getImage, ImageQutity} from 'utils';
 
 const storageCardBgImg = require('@imgPath/card-genre-one.png');

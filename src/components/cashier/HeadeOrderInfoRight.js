@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { commonStyles } from 'styles';
+import { commonStyles } from '../../styles';
 
 export class HeadeOrderInfoRight extends React.PureComponent {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, Text, View, ScrollView, Linking, Alert} from 'react-native';
 
 //self
-import {UpgradeAlertStyles} from 'styles'; //升级提示-登录页面
+import {UpgradeAlertStyles} from '../styles'; //升级提示-登录页面
 
 export class UpgradeBoxer extends React.Component {
     constructor(props) {

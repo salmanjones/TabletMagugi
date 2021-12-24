@@ -11,7 +11,7 @@ import {
   MemberQueryStyle,
   cashierBillingStyle,
   commonStyles,
-} from 'styles';
+} from '../../styles';
 import { CardItem } from 'components';
 
 const storageCardBgImg = require('@imgPath/card-genre-one.png');

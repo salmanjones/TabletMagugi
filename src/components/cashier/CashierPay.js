@@ -6,7 +6,7 @@ import { Text, View, FlatList, ImageBackground, TouchableOpacity, Image, ScrollV
 import { ModalLoadingIndicator } from 'components';
 
 //self
-import { cashierPayStyle } from 'styles';
+import { cashierPayStyle } from '../../styles';
 import { getAvailablePaymentInfo, fetchPrePayBilling } from 'services';
 import { showMessage } from '../../utils';
 

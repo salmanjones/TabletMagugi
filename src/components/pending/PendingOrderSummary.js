@@ -9,7 +9,7 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import { pendingStyles } from 'styles';
+import { pendingStyles } from '../../styles';
 
 export class PendingOrderSummary extends PureComponent {
   render() {

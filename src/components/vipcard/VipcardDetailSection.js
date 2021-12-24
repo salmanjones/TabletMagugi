@@ -13,7 +13,7 @@ import {
   commonStyles,
   RechargeStoredCardStyles,
   amendItemInfoStyle,
-} from 'styles';
+} from '../../styles';
 import { showMessage } from 'utils';
 import { SaleCardItem } from 'components';
 

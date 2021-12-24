@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import { logoutAction } from 'actions';
-import { homeStyles } from 'styles';
+import { homeStyles } from '../styles';
 import { fetchAuthUser } from 'services';
 import { AppConfig, clearFetchCache } from 'utils';
 

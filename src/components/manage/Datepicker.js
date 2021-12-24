@@ -3,7 +3,7 @@ import { Text,  ImageBackground } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { PixelUtil } from 'utils';
 
-import { manageConsumablesStyle } from 'styles';
+import { manageConsumablesStyle } from '../../styles';
 export class DatepickerBox extends React.Component {
 
 	constructor(props) {

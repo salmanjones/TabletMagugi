@@ -16,7 +16,7 @@ import {
     SimulateKeyboardInpBox,
 } from 'components';
 //self
-import { cashierBillingStyle, AmendServicerModalStyle } from 'styles';
+import { cashierBillingStyle, AmendServicerModalStyle } from '../../styles';
 
 export class AmendServicerModal extends React.Component {
 

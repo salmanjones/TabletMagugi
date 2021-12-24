@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { SimulateKeyboard } from 'components';
 
-import { addCardItemStyles } from 'styles';
+import { addCardItemStyles } from '../styles';
 export class AddCardItem extends React.PureComponent {
   render() {
     return (

@@ -10,7 +10,7 @@ import {
   timeCardInfoStyles,
   cardInfoStyles,
   consumeHistoryStyles,
-} from 'styles';
+} from '../../styles';
 
 const MarginContainer = styled.View`
   position: absolute;

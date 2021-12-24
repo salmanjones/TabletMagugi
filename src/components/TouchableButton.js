@@ -8,7 +8,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import { homeStyles } from 'styles';
+import { homeStyles } from '../styles';
 
 const disableImage = require('@imgPath/index-border-will.png');
 

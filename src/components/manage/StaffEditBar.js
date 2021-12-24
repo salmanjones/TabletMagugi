@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Text, View, Image, TouchableOpacity,ImageBackground } from 'react-native';
-import { cashierBillingStyle,AmendServicerModalStyle } from 'styles';
+import { cashierBillingStyle,AmendServicerModalStyle } from '../../styles';
 
 export class StaffEditBar extends PureComponent {
 

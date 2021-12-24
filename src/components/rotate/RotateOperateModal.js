@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, Modal, TouchableOpacity, Alert, ImageBackground } from 'react-native';
-import { rotateModalStyle, rotateItemStyles } from 'styles';
+import { rotateModalStyle, rotateItemStyles } from '../../styles';
 import { Button } from '../../../node_modules/react-native-elements';
 import { getImage, ImageQutity, PixelUtil } from 'utils';
 import { PlacardTimer } from 'components';

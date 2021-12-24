@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Image, ImageBackground, KeyboardAvoidingView, Text, View, Linking, TouchableOpacity,ScrollView} from 'react-native';
 //self
-import { aboutBeautyStyles } from 'styles'; //升级提示-登录页面
+import { aboutBeautyStyles } from '../styles'; //升级提示-登录页面
 import { systemConfig} from 'utils';
 
 export class AboutBeauty extends React.Component {

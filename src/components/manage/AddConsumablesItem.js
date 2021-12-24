@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Text, View, ImageBackground, TouchableOpacity, Image, TextInput, Modal} from 'react-native';
 import { SimulateKeyboard, ModalLoadingIndicator} from 'components';
 //self
-import { amendItemInfoStyle,manageConsumablesStyle} from 'styles';
+import { amendItemInfoStyle,manageConsumablesStyle} from '../../styles';
 
 export class AddConsumablesItem extends React.Component {
 
@@ -16,7 +16,7 @@ export class AddConsumablesItem extends React.Component {
             // <View style={amendItemInfoStyle.bodybox}>
                 <View style={manageConsumablesStyle.bodyContent}>
                     <View style={amendItemInfoStyle.iteminfoBox}>
-                        <Text style={amendItemInfoStyle.AmendCardItemNameText} numberOfLines={1} ellipsizeMode={'tail'}> 
+                        <Text style={amendItemInfoStyle.AmendCardItemNameText} numberOfLines={1} ellipsizeMode={'tail'}>
                             消耗：消耗品名称
                         </Text>
                         <View style={amendItemInfoStyle.AmendCardItemPrice}>
@@ -32,11 +32,11 @@ export class AddConsumablesItem extends React.Component {
                         </View>
                         <View style={manageConsumablesStyle.AmendCardItemCount}>
                             <Text style={amendItemInfoStyle.AmendCardItemCountText}>
-                            数量：                            
+                            数量：
                             </Text>
                             <View style={manageConsumablesStyle.AmendCardItemCountTextBox}>
                                 <View style={manageConsumablesStyle.AmendCardItemCountTextInp}>
-                                    <Text style={amendItemInfoStyle.AmendCardItemCountT}>0</Text>   
+                                    <Text style={amendItemInfoStyle.AmendCardItemCountT}>0</Text>
                                 </View>
                             </View>
                         </View>
@@ -53,9 +53,9 @@ export class AddConsumablesItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-               
+
             // </View>
-                             
+
         )
     }
 }

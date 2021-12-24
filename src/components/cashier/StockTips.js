@@ -15,7 +15,7 @@ import { TimeCard } from 'components';
 import { CheckBox } from 'react-native-elements';
 import { PixelUtil } from 'utils';
 //self
-import { inventoryTableStyle } from 'styles';
+import { inventoryTableStyle } from '../../styles';
 export class StockTips extends React.Component {
   constructor(props) {
     super(props);

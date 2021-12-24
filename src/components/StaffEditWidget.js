@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Text, View, Image, TouchableOpacity,ImageBackground } from 'react-native';
-import { cashierBillingStyle,  manageConsumablesStyle} from 'styles';
+import { cashierBillingStyle,  manageConsumablesStyle} from '../styles';
 
 export class StaffEditWidget extends PureComponent {
     render(){

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View,} from 'react-native';
-import {cashierBillingStyle, RechargeStoredCardStyles} from 'styles';
+import {cashierBillingStyle, RechargeStoredCardStyles} from '../styles';
 
 const numberBg = require('@imgPath/store-staff-No.png');
 const assignBg = require('@imgPath/assign.png');

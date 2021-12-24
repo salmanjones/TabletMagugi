@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {FlatList, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {amendItemInfoStyle, cashierBillingStyle, manageConsumablesStyle} from 'styles';
+import {amendItemInfoStyle, cashierBillingStyle, manageConsumablesStyle} from '../../styles';
 import {SimulateKeyboardInpBox} from 'components';
 import {loadConsumablesAction} from 'actions';
 import {connect} from 'react-redux';
@@ -51,7 +51,7 @@ class ConsumableSelectBox extends PureComponent {
 					if (datas && datas.length) result[key] = datas;
 					return result;
 				}, {});
-				
+
 			}
 			this.setState({selectedCategoryId:null});
 			this.setState(this.buildState(categoryConsumables));

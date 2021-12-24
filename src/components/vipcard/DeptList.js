@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
-import { openCardAccountStyle } from 'styles';
+import { openCardAccountStyle } from '../../styles';
 import { PixelUtil } from 'utils';
 
 class DeptListComponent extends React.PureComponent {

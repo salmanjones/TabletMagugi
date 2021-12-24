@@ -1,7 +1,7 @@
 //轮牌-单牌-底部
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
-import { rotateItemStyles, rotateModalStyle } from 'styles';
+import { rotateItemStyles, rotateModalStyle } from '../../styles';
 export class PlacardTimer extends PureComponent {
 	constructor(props) {
 		super(props);
@@ -72,7 +72,7 @@ export class PlacardTimer extends PureComponent {
 		let minutes = Math.round(timeDiff % 60);
 		timeDiff = Math.floor(timeDiff / 60);
 		let hours = timeDiff;
-		 
+
 		let hoursStr=hours<10?'0'+hours:hours.toString()
 		let minutesStr=minutes<10?'0'+minutes:minutes.toString()
 		let secondsStr=seconds<10?'0'+seconds:seconds.toString()

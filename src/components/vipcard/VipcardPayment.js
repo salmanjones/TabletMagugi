@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 
-import { openCardAccountStyle,cashierPayStyle } from 'styles';
+import { openCardAccountStyle,cashierPayStyle } from '../../styles';
 import {
   SaleCardItem,
   DeptList,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-import { payForPersonStyle, openCardAccountStyle } from 'styles';
+import { payForPersonStyle, openCardAccountStyle } from '../styles';
 import { fetchPaymentResult } from 'services';
 import {
   showMessage,

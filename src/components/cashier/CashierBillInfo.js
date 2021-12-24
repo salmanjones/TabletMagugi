@@ -5,7 +5,7 @@ import {showMessage} from 'utils';
 import {SimulateKeyboard,} from 'components';
 import {fetchCheckFlowNumber} from 'services';
 //self
-import {cashierBillInfoStyle, MemberQueryStyle} from 'styles';
+import {cashierBillInfoStyle, MemberQueryStyle} from '../../styles';
 
 export class CashierBillInfo extends React.Component {
     constructor(props) {

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { FlatList, View, InteractionManager } from 'react-native';
 import { getSalesCardAction } from 'actions';
 import { SectionList, SaleCardItem } from 'components';
-import { memberIdentifyStyle } from 'styles';
+import { memberIdentifyStyle } from '../../styles';
 
 export class VipcardSaleCardListComponent extends React.PureComponent {
   constructor(props) {

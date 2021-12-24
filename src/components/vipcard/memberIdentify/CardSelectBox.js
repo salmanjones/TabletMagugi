@@ -1,19 +1,9 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    FlatList,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-} from 'react-native';
-
-import {Button} from 'react-native-elements';
+import {FlatList, View,} from 'react-native';
 import styled from 'styled-components/native/';
-import Toast from 'react-native-root-toast';
 
-import {CardListItem, SectionList, TabGroup, CardItem} from 'components';
-import {memberIdentifyStyle, commonStyles} from 'styles';
+import {CardItem, SectionList, TabGroup} from 'components';
+import {memberIdentifyStyle} from '../../../styles';
 import {groupBy, PixelUtil} from '../../../utils';
 
 const MarginContainer = styled.View`

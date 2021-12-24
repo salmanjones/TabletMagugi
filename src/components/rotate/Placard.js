@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { View, TouchableOpacity, Image, Animated, Text, ImageBackground } from 'react-native';
 import { PlacardImg, PlacardTimer } from 'components';
 
-import { rotateItemStyles } from 'styles';
+import { rotateItemStyles } from '../../styles';
 
 class Arrows extends PureComponent {
     render() {
