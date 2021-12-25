@@ -156,7 +156,9 @@ export class HomeActivity extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPress={throttle(() => this.props.navigation.navigate('BillManageActivity'), 600)}
+                                onPress={() =>
+                                    this.props.navigation.navigate('BillManageActivity')
+                                }
                                 onPressIn={() => this.activeButton('consumables')}>
                                 <ToggleImageBackground
                                     isActive={this.state.consumables}
@@ -171,7 +173,9 @@ export class HomeActivity extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPress={throttle(() => this.props.navigation.navigate('PriceListActivity'), 600)}
+                                onPress={() =>
+                                    this.props.navigation.navigate('PriceListActivity')
+                                }
                                 onPressIn={() => this.activeButton('price')}>
                                 <ToggleImageBackground
                                     isActive={this.state.price}
@@ -186,7 +190,9 @@ export class HomeActivity extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPress={throttle(() => this.props.navigation.navigate('AnalysisHome'), 600)}
+                                onPress={() =>
+                                    this.props.navigation.navigate('AnalysisHome')
+                                }
                                 onPressIn={() => this.activeButton('count')}>
                                 <ToggleImageBackground
                                     // disable={true}
