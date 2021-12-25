@@ -233,7 +233,7 @@ class MultiPay extends React.Component {
                     : ''
                 : '';
         return (
-            <Modal>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 {isLoading && <LoadingIndicator/>}
                 {isPaySuccess && (
                     <QRCodePaymentNew
@@ -411,7 +411,7 @@ class MultiPay extends React.Component {
                         }}
                     />
                 )}
-            </Modal>
+            </View>
         );
     }
 
@@ -943,8 +943,11 @@ class MultiPay extends React.Component {
 
     //取消
     onCancel = () => {
-        if (this.savedBilling) this.props.cashierScreenReloadOrder();
-        AppNavigate.goBack()
+        if (this.savedBilling) {
+            this.props.cashierScreenReloadOrder()
+        }
+
+        this.props.navigation.goBack();
     };
 
     onPwdConfirm(pwd) {

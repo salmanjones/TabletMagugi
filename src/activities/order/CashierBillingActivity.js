@@ -1062,7 +1062,6 @@ class CashierBillingView extends React.Component {
             return prevState;
         })
 
-        debugger
         const {params} = this.props.route;
         if (params.page == 'pendingOrder') {
             this.props.resetToCashier(true);

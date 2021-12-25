@@ -199,7 +199,8 @@ function RootNavigation() {
                                               justifyContent: "center",
                                               width: "100%"
                                           }
-                                      }}/>
+                                      }}
+                                      screenOptions={{ presentation: 'modal' }}/>
                     <RootStack.Screen name="PriceListActivity"
                                       component={PriceListActivity}
                                       options={{
