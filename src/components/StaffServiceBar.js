@@ -10,7 +10,7 @@ import {
 import { RechargeStoredCardStyles, cashierBillingStyle } from '../styles';
 import { getImage, ImageQutity } from '../utils';
 
-const defaultImg = require('@imgPath/rotate-portrait.png');
+const defaultImg = 'https://pic.magugi.com/rotate-portrait.png';
 const addImgBtn = require('@imgPath/add.png');
 
 export class StaffServiceBar extends React.PureComponent {

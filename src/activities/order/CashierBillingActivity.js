@@ -62,7 +62,7 @@ let company_roundMode = null;
 let company_settings = {};
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
 
-const defaultMemberImg = require('@imgPath/rotate-portrait.png');
+const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
 class CashierBillingView extends React.Component {
     static navigationOptions = ({navigation}) => {
@@ -822,7 +822,6 @@ class CashierBillingView extends React.Component {
     }
 
     bindMemberInfo(member) {
-
         member.userImgUrl = getImage(
             member.imgUrl,
             ImageQutity.member_small,

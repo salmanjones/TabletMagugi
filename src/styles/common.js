@@ -339,6 +339,7 @@ export const commonStyles = StyleSheet.create({
         //顾客识别-列
         width: PixelUtil.rect(984, 143.8).width,
         height: PixelUtil.rect(984, 143.8).height,
+        color: '#151515',
         borderBottomColor: '#CFDDFF',
         borderBottomWidth: PixelUtil.size(2),
         flex: 0,
@@ -350,6 +351,7 @@ export const commonStyles = StyleSheet.create({
         //顾客识别-列-选中
         width: PixelUtil.rect(984, 143.8).width,
         height: PixelUtil.rect(984, 143.8).height,
+        color: '#151515',
         borderBottomColor: '#CFDDFF',
         borderBottomWidth: PixelUtil.size(2),
         flex: 0,
@@ -383,7 +385,7 @@ export const commonStyles = StyleSheet.create({
     MemberListName: {
         //顾客识别-列-信息-姓名
         fontSize: PixelUtil.size(28),
-        color: '#333',
+        color: '#333333',
         marginRight: PixelUtil.size(16),
         maxWidth: PixelUtil.size(240),
     },
@@ -406,8 +408,6 @@ export const commonStyles = StyleSheet.create({
         //顾客识别-列-手机号
         fontSize: PixelUtil.size(28),
         color: '#333',
-        marginBottom: PixelUtil.size(18),
-        marginTop: PixelUtil.size(-40),
         marginRight: PixelUtil.size(20),
     },
     MemberListSex: {

@@ -26,7 +26,7 @@ import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberActi
 import {cashierStyles, memberIdentifyStyle} from '../../styles';
 import { showMessage } from '../../utils';
 
-const defaultMemberImg = require('@imgPath/rotate-portrait.png');
+const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
 class CashierView extends React.Component {
     static navigationOptions = ({navigation}) => {
