@@ -1,33 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-    Text,
-    View,
-    ImageBackground,
-    TouchableOpacity,
-    InteractionManager,
-} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
-import { RechargeStoredCardStyles } from '../../styles';
-import { showMessage } from '../../utils';
+import {RechargeStoredCardStyles} from '../../styles';
+import {showMessage} from '../../utils';
 import {
-    StaffServiceBar,
     StaffSelectBox,
-    TabGroup,
-    VipcardSaleCardList,
-    VipcardDetailSection,
+    StaffServiceBar,
     StaffServiceEdit,
+    TabGroup,
+    VipcardDetailSection,
     VipcardPayment,
+    VipcardSaleCardList,
 } from '../../components';
 import {
     vipcardInitAction,
     vipcardSelectCardAction,
-    vipcardSetCountAction,
     vipcardSelectStaffAction,
+    vipcardSetCountAction,
     vipcardSetStaffAction,
 } from '../../actions';
-import { fetchStaffAcl } from '../../services';
+import {fetchStaffAcl} from '../../services';
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
@@ -46,22 +40,21 @@ class VipCard extends React.Component {
     }
 
     componentDidMount() {
-
-        const { init, navigation, operateUser } = this.props;
+        const { init, operateUser } = this.props;
         let aclTxt = 'ncashier_opencard_card_money';
-        fetchStaffAcl(aclTxt, operateUser)
-            .then(o => {
-                if (o.data) {
-                    this.acl = o.data;
-                } else {
-                    this.acl = {};
-                }
-            })
-            .catch(err => {
+        fetchStaffAcl(aclTxt, operateUser).then(o => {
+            if (o.data) {
+                this.acl = o.data;
+            } else {
+                this.acl = {};
+            }
+        }).catch(err => {
+            console.error(err)
+        });
 
-            });
+        let params = this.props.route.params.member || {}
         InteractionManager.runAfterInteractions(() => {
-            init(props.route.params.member || {});
+            init(params);
         });
     }
 
@@ -126,10 +119,8 @@ class VipCard extends React.Component {
             staffIndex,
             setCount,
             selectCard,
-            selectStaff,
             setStaff,
             navigation,
-            operateUser,
         } = this.props;
 
         const { tabIndex } = this.state;

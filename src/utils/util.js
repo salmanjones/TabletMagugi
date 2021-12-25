@@ -115,7 +115,13 @@ export const isValidCardPwd = value => {
 };
 
 export const getImage = (url, format, defaultImage) => {
-    if (!url) return defaultImage;
+    if (!url) {
+        if(defaultImage && defaultImage.indexOf && defaultImage.indexOf('http') != -1) {
+            return {uri: defaultImage}
+        }else{
+            return defaultImage
+        }
+    };
     if (url && url.indexOf('http') === -1) {
         return {uri: AppConfig.imageServer + url + (format || '')};
     } else {

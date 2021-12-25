@@ -23,7 +23,7 @@ export class MemberListItem extends React.PureComponent {
                         : commonStyles.MemberListBox
                 }
                 onPress={() => {onPress(data);}}>
-                <Avatar rounded style={commonStyles.MemberListAvatar} containerStyle={commonStyles.MemberListAvatar} source={{ uri: memberImg }} />
+                <Avatar rounded style={commonStyles.MemberListAvatar} containerStyle={commonStyles.MemberListAvatar} source={memberImg} />
                 <ListItem.Content>
                     <ListItem.Title style={{ color: 'red' }}>
                         {
