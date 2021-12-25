@@ -53,13 +53,9 @@ class RotatePlacard extends React.Component {
 
     componentWillMount() {
         let that = this;
-        console.log('RotatePlacard will mount');
-
-        this.subscribeDidFocus = this.props.navigation.addListener('didFocus', () => {
-            console.log('RotatePlacard focus');
+        this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
             that.query();
         });
-        //this.query();
     }
 
     onAddStaff = item => {
