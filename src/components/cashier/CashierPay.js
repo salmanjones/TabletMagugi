@@ -1,16 +1,26 @@
 //libs
 
 import React from 'react';
-import { Icon } from 'react-native-elements';
-import { Text, View, FlatList, ImageBackground, TouchableOpacity, Image, ScrollView, TouchableHighlight, Animated } from 'react-native';
-import { ModalLoadingIndicator } from '../../components';
+import {Icon} from 'react-native-elements';
+import {
+    FlatList,
+    Image,
+    ImageBackground,
+    ScrollView,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {ModalLoadingIndicator} from '../../components';
 
 //self
-import { cashierPayStyle } from '../../styles';
-import { getAvailablePaymentInfo, fetchPrePayBilling } from '../../services';
-import { showMessage } from '../../utils';
+import {cashierPayStyle} from '../../styles';
+import {fetchPrePayBilling, getAvailablePaymentInfo} from '../../services';
+import {showMessage} from '../../utils';
 
 const height = 0;
+
 export class CashierPay extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +37,7 @@ export class CashierPay extends React.Component {
             selectedPayType: null,
             wait4PayAmt: null, //待付金额
             payTypes: [],
-            couponDiscountPrice:0
+            couponDiscountPrice: 0
         };
     }
 
@@ -40,36 +50,39 @@ export class CashierPay extends React.Component {
         var params = {
             items: JSON.stringify(
                 this.props.consumeItems.map((x) => {
-                    return { itemId: x.itemId, itemType: x.service };
+                    return {itemId: x.itemId, itemType: x.service};
                 })
             ),
         };
         if (this.props.member) params.member = JSON.stringify(this.props.member);
 
-        let totalPrice= this.props.consumeItems.reduce((result, x) => {
+        let totalPrice = this.props.consumeItems.reduce((result, x) => {
             return result + (Number(x.totalPrice) || 0);
         }, 0);
 
-        this.setState({ loading:true });
+        this.setState({loading: true});
         getAvailablePaymentInfo(params)
             .then((o) => {
                 if (o.data) {
 
-                    let channels=this.getAvailableChannels();
-                    let first= Object.keys(channels).map(key=>({key:key,value:channels[key]})).find(x=>x.value).key;
+                    let channels = this.getAvailableChannels();
+                    let first = Object.keys(channels).map(key => ({
+                        key: key,
+                        value: channels[key]
+                    })).find(x => x.value).key;
                     this.setState({
-                        channel:first,
+                        channel: first,
                         coupons: o.data.coupons || [],
                         othersPaymentList: o.data.othersPaymentList || [],
-                        wait4PayAmt:totalPrice
+                        wait4PayAmt: totalPrice
                     });
                 }
             })
             .catch((err) => {
                 showMessage('获取支付信息异常');
             }).finally(() => {
-                this.setState({ loading: false });
-            });
+            this.setState({loading: false});
+        });
     }
 
     //选择支付通道
@@ -91,7 +104,7 @@ export class CashierPay extends React.Component {
         else selectedCoupons.push(coupon);
 
         this.calculateBilling((data) => {
-            if (data.data.payResultCode === '1'&& !data.data.payTypeErrorList) {
+            if (data.data.payResultCode === '1' && !data.data.payTypeErrorList) {
                 let totalCouponPrice = (data.data.payTypeUsedList || []).reduce(
                     (result, x) => result + (x.payType == 5 ? x.consumeActualMoney : 0),
                     0
@@ -113,6 +126,7 @@ export class CashierPay extends React.Component {
             });
         });
     }
+
     //选择支付方式
     choosePayWay(payType, otherPayId) {
         this.setState(
@@ -174,11 +188,11 @@ export class CashierPay extends React.Component {
             billingInfo: JSON.stringify(this.props.billingInfo),
             sendMsg: '0',
         };
-        this.setState({ loading: true });
+        this.setState({loading: true});
         fetchPrePayBilling(param)
             .then((data) => {
                 cb && cb(data);
-                this.setState({ loading: false });
+                this.setState({loading: false});
             })
             .catch((err) => {
                 //showMessage(err);
@@ -187,38 +201,73 @@ export class CashierPay extends React.Component {
 
     buildPayTypeParams = (payAmt) => {
         let payTypes = [];
-        let { selectedOtherPayment, selectedPayType, coupons, selectedCoupons } = this.state;
+        let {selectedOtherPayment, selectedPayType, coupons, selectedCoupons} = this.state;
         if (selectedPayType) {
             switch (selectedPayType) {
                 case 'wx':
-                    payTypes.push({ payType: 6, payTypeId: 19, payTypeNo: 19, paymentName: '微信', payAmount: payAmt, payMode: 0 });
+                    payTypes.push({
+                        payType: 6,
+                        payTypeId: 19,
+                        payTypeNo: 19,
+                        paymentName: '微信',
+                        payAmount: payAmt,
+                        payMode: 0
+                    });
                     break;
                 case 'ali':
-                    payTypes.push({ payType: 6, payTypeId: 18, payTypeNo: 18, paymentName: '支付宝', payAmount: payAmt, payMode: 0 });
+                    payTypes.push({
+                        payType: 6,
+                        payTypeId: 18,
+                        payTypeNo: 18,
+                        paymentName: '支付宝',
+                        payAmount: payAmt,
+                        payMode: 0
+                    });
                     break;
                 case 'bank':
-                    payTypes.push({ payType: 3, payTypeId: 5, payTypeNo: 5, payAmount: payAmt, paymentName: '银行卡', payMode: 0 }); //payTypeId 5?
+                    payTypes.push({
+                        payType: 3,
+                        payTypeId: 5,
+                        payTypeNo: 5,
+                        payAmount: payAmt,
+                        paymentName: '银行卡',
+                        payMode: 0
+                    }); //payTypeId 5?
                     break;
                 case 'cash':
-                    payTypes.push({ payType: 1, payTypeId: -1, payTypeNo: -1, paymentName: '现金', payAmount: payAmt, payMode: 0 });
+                    payTypes.push({
+                        payType: 1,
+                        payTypeId: -1,
+                        payTypeNo: -1,
+                        paymentName: '现金',
+                        payAmount: payAmt,
+                        payMode: 0
+                    });
                     break;
                 case 'other':
                     selectedOtherPayment &&
-                        payTypes.push({
-                            payType: 3,
-                            payTypeId: selectedOtherPayment.id,
-                            payTypeNo: selectedOtherPayment.id,
-                            payAmount: payAmt,
-                            payMode: 0,
-                            paymentName: selectedOtherPayment.name,
-                        });
+                    payTypes.push({
+                        payType: 3,
+                        payTypeId: selectedOtherPayment.id,
+                        payTypeNo: selectedOtherPayment.id,
+                        payAmount: payAmt,
+                        payMode: 0,
+                        paymentName: selectedOtherPayment.name,
+                    });
                     break;
             }
         }
 
         if (selectedCoupons && selectedCoupons.length) {
             let couponItems = selectedCoupons.map((x) => {
-                return { payType: 5, payTypeId: x.id, payTypeNo: x.couponNo, payAmount: x.couponPrice, payMode: 0, paymentName: x.name };
+                return {
+                    payType: 5,
+                    payTypeId: x.id,
+                    payTypeNo: x.couponNo,
+                    payAmount: x.couponPrice,
+                    payMode: 0,
+                    paymentName: x.name
+                };
             });
             payTypes = payTypes.concat(couponItems);
         }
@@ -226,24 +275,24 @@ export class CashierPay extends React.Component {
     };
 
     gotoPay() {
-        let { channel, selectedPayType, selectedCoupons, wait4PayAmt } = this.state; //支付渠道，选中的支付方式
-        if(channel=='tablet'){//快速支付
-            if(selectedPayType){
+        let {channel, selectedPayType, selectedCoupons, wait4PayAmt} = this.state; //支付渠道，选中的支付方式
+        if (channel == 'tablet') {//快速支付
+            if (selectedPayType) {
                 let payTypeParams = this.buildPayTypeParams(this.state.wait4PayAmt);
-                let payType =selectedPayType;
+                let payType = selectedPayType;
 
-                let hasCoupons=payTypeParams.filter((x) =>x.payType==5).length>0;
-                if(hasCoupons){
+                let hasCoupons = payTypeParams.filter((x) => x.payType == 5).length > 0;
+                if (hasCoupons) {
                     payTypeParams = payTypeParams.filter((x) => Number(x.payAmount) > 0);
-                    payType = payTypeParams.length == payTypeParams.filter((x) =>x.payType==5).length ? 'other' : selectedPayType;
+                    payType = payTypeParams.length == payTypeParams.filter((x) => x.payType == 5).length ? 'other' : selectedPayType;
                 }
 
                 this.props.onCashierOrderPay(channel, payType, payTypeParams);
-            }else{
-                this.setState({showPayDetails:true});
+            } else {
+                this.setState({showPayDetails: true});
                 this.choosePayWay('wx');
             }
-        }else {//小程序支付 会员卡支付
+        } else {//小程序支付 会员卡支付
             this.props.onCashierOrderPay(channel, null, null);
         }
     }
@@ -258,32 +307,32 @@ export class CashierPay extends React.Component {
 
     toggleCoupons() {
         if (!this.state.coupons.length && !this.state.showCoupons) return;
-        this.setState({ showCoupons: !this.state.showCoupons });
+        this.setState({showCoupons: !this.state.showCoupons});
     }
 
-    getAvailableChannels(){
-        const {memberType,consumeItems } = this.props;
+    getAvailableChannels() {
+        const {memberType, consumeItems} = this.props;
         let isMember = memberType == '0';
         let hasCardProject = !!consumeItems.find((item) => item.projectConsumeType == '1');
 
-        let channels={tablet:true,miniApp:true,app:true};
+        let channels = {tablet: true, miniApp: true, app: true};
 
-        if(hasCardProject){
-            channels.tablet=false;
-            channels.miniApp=false;
+        if (hasCardProject) {
+            channels.tablet = false;
+            channels.miniApp = false;
         }
 
-        if(isMember){
-            channels.miniApp=false;
-        }else{
-            channels.app=false;
+        if (isMember) {
+            channels.miniApp = false;
+        } else {
+            channels.app = false;
         }
 
         return channels;
     }
 
     render() {
-        const { otherPayments, totalCardPrjs, memberType,consumeItems,companySetting} = this.props;
+        const {otherPayments, totalCardPrjs, memberType, consumeItems, companySetting} = this.props;
         const {
             channel,
             othersPaymentList,
@@ -297,14 +346,14 @@ export class CashierPay extends React.Component {
             loading,
             couponDiscountPrice
         } = this.state;
-        const isUseCash=companySetting.isUseCash;
-        let wait4PayAmt=this.state.wait4PayAmt;
-        wait4PayAmt=wait4PayAmt=='-0.0'?'0.0':wait4PayAmt;
-        let availableChannels=this.getAvailableChannels();
-        const couponDesc=selectedCoupons.length?`已选择${selectedCoupons.length}张优惠券`:coupons.length?`可用优惠券${coupons.length}张`:'暂无可用优惠券';
+        const isUseCash = companySetting.isUseCash;
+        let wait4PayAmt = this.state.wait4PayAmt;
+        wait4PayAmt = wait4PayAmt == '-0.0' ? '0.0' : wait4PayAmt;
+        let availableChannels = this.getAvailableChannels();
+        const couponDesc = selectedCoupons.length ? `已选择${selectedCoupons.length}张优惠券` : coupons.length ? `可用优惠券${coupons.length}张` : '暂无可用优惠券';
         return (
             <View style={cashierPayStyle.modalBackground}>
-                {loading && <ModalLoadingIndicator />}
+                {loading && <ModalLoadingIndicator/>}
                 <View style={cashierPayStyle.cashierBillInfoWrapper}>
                     <View style={cashierPayStyle.timeCradPayWrapper}>
                         <View style={cashierPayStyle.title}>
@@ -340,13 +389,15 @@ export class CashierPay extends React.Component {
                                                         <Text style={cashierPayStyle.timePayText}>{item.itemName}</Text>
                                                     </View>
                                                     <View style={cashierPayStyle.timePayItem}>
-                                                        <Text style={cashierPayStyle.timePayText}>￥{item.costPrice}</Text>
+                                                        <Text
+                                                            style={cashierPayStyle.timePayText}>￥{item.costPrice}</Text>
                                                     </View>
                                                     <View style={cashierPayStyle.timePayItem}>
                                                         <Text style={cashierPayStyle.timePayText}>{item.amount}</Text>
                                                     </View>
                                                     <View style={cashierPayStyle.timePayItem}>
-                                                        <Text style={cashierPayStyle.timePayText}>{item.discountPrice}</Text>
+                                                        <Text
+                                                            style={cashierPayStyle.timePayText}>{item.discountPrice}</Text>
                                                     </View>
                                                     <View style={cashierPayStyle.timePayItem}>
                                                         <Text style={cashierPayStyle.timePayText}>
@@ -364,19 +415,24 @@ export class CashierPay extends React.Component {
                             <View style={cashierPayStyle.timePayR}>
                                 {/* 支付方式 */}
                                 <View style={cashierPayStyle.timePayRBox}>
-                                    <View style={(cashierPayStyle.timePayRBoxWayBox, { display: showPayDetails ? 'none' : 'flex' })}>
+                                    <View
+                                        style={(cashierPayStyle.timePayRBoxWayBox, {display: showPayDetails ? 'none' : 'flex'})}>
                                         <Text style={cashierPayStyle.payTitle}>请选择支付通道：</Text>
                                         {availableChannels.tablet && (
-                                            <TouchableOpacity style={channel == 'tablet' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
+                                            <TouchableOpacity
+                                                style={channel == 'tablet' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
                                                 onPress={this.onChannalChoosed.bind(this, 'tablet')}>
-                                                <Image source={require('@imgPath/pay-quickly.png')} style={cashierPayStyle.timePayImgPb} resizeMode={'contain'}/>
+                                                <Image source={require('@imgPath/pay-quickly.png')}
+                                                       style={cashierPayStyle.timePayImgPb} resizeMode={'contain'}/>
                                                 <Text style={cashierPayStyle.titleText}>快速支付</Text>
                                             </TouchableOpacity>
                                         )}
                                         {/*组合支付*/}
-                                        <TouchableOpacity style={channel == 'multiply' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
+                                        <TouchableOpacity
+                                            style={channel == 'multiply' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
                                             onPress={this.onChannalChoosed.bind(this, 'multiply')}>
-                                            <Image source={require('@imgPath/pay-multiply.png')} style={cashierPayStyle.timePaymultiply} resizeMode={'contain'}/>
+                                            <Image source={require('@imgPath/pay-multiply.png')}
+                                                   style={cashierPayStyle.timePaymultiply} resizeMode={'contain'}/>
                                             <Text style={cashierPayStyle.titleText}>组合支付</Text>
                                         </TouchableOpacity>
                                         {availableChannels.miniApp && (
@@ -386,7 +442,7 @@ export class CashierPay extends React.Component {
                                             >
                                                 <Image
                                                     source={require('@imgPath/magugi-text.png')}
-                                                    style={[cashierPayStyle.timePayImgXcx, { resizeMode: 'contain' }]}
+                                                    style={[cashierPayStyle.timePayImgXcx, {resizeMode: 'contain'}]}
                                                 />
                                                 <Text style={cashierPayStyle.titleText}>小程序支付</Text>
                                             </TouchableOpacity>
@@ -398,14 +454,15 @@ export class CashierPay extends React.Component {
                                             >
                                                 <Image
                                                     source={require('@imgPath/magugi-text.png')}
-                                                    style={[cashierPayStyle.timePayImgXcx, { resizeMode: 'contain' }]}
+                                                    style={[cashierPayStyle.timePayImgXcx, {resizeMode: 'contain'}]}
                                                 />
                                                 <Text style={cashierPayStyle.titleText}>移动端支付</Text>
                                             </TouchableOpacity>
                                         )}
                                     </View>
                                     {/* 平板支付-支付选择*/}
-                                    <View style={[cashierPayStyle.timePayRBoxChoose, { display: showPayDetails ? 'flex' : 'none' }]}>
+                                    <View
+                                        style={[cashierPayStyle.timePayRBoxChoose, {display: showPayDetails ? 'flex' : 'none'}]}>
                                         {/* 优惠券 */}
                                         <View style={cashierPayStyle.couponBox}>
                                             <TouchableHighlight
@@ -416,8 +473,10 @@ export class CashierPay extends React.Component {
                                                     <Text style={cashierPayStyle.couponTitleText}>
                                                         优惠券：<Text style={cashierPayStyle.couponText}>{couponDesc}</Text>
                                                     </Text>
-                                                    <View style={[cashierPayStyle.couponTitleR, { display: coupons.length ? 'flex' : 'none' }]}>
-                                                        <Text style={cashierPayStyle.dangerText}>抵扣-￥{couponDiscountPrice}</Text>
+                                                    <View
+                                                        style={[cashierPayStyle.couponTitleR, {display: coupons.length ? 'flex' : 'none'}]}>
+                                                        <Text
+                                                            style={cashierPayStyle.dangerText}>抵扣-￥{couponDiscountPrice}</Text>
                                                         <Icon
                                                             name={showCoupons ? 'chevron-down' : 'chevron-up'} //收起
                                                             //name='chevron-up'    展开
@@ -427,10 +486,11 @@ export class CashierPay extends React.Component {
                                                     </View>
                                                 </View>
                                             </TouchableHighlight>
-                                            <View style={[cashierPayStyle.couponList, {display: showCoupons ? 'flex' : 'none' }]}>
+                                            <View
+                                                style={[cashierPayStyle.couponList, {display: showCoupons ? 'flex' : 'none'}]}>
                                                 <ScrollView style={cashierPayStyle.couponListFlat}>
                                                     {
-                                                        coupons.map((item, index)=>{
+                                                        coupons.map((item, index) => {
                                                             let selected = selectedCoupons.indexOf(item) != -1;
                                                             return (
                                                                 <TouchableOpacity
@@ -442,13 +502,17 @@ export class CashierPay extends React.Component {
                                                                         resizeMode={'contain'}>
                                                                         <View style={cashierPayStyle.couponLiBox}>
                                                                             <View style={cashierPayStyle.couponLiL}>
-                                                                                <Text style={cashierPayStyle.couponUnit}>
-                                                                                    ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
+                                                                                <Text
+                                                                                    style={cashierPayStyle.couponUnit}>
+                                                                                    ￥<Text
+                                                                                    style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
                                                                                 </Text>
                                                                             </View>
                                                                             <View style={cashierPayStyle.couponLiR}>
-                                                                                <View style={cashierPayStyle.couponLiRL}>
-                                                                                    <Text style={cashierPayStyle.color333}>{item.name}</Text>
+                                                                                <View
+                                                                                    style={cashierPayStyle.couponLiRL}>
+                                                                                    <Text
+                                                                                        style={cashierPayStyle.color333}>{item.name}</Text>
                                                                                 </View>
                                                                                 <Image
                                                                                     resizeMethod="resize"
@@ -457,7 +521,7 @@ export class CashierPay extends React.Component {
                                                                                             ? require('@imgPath/radio-111c3c-active.png')
                                                                                             : require('@imgPath/radio-111c3c.png')
                                                                                     }
-                                                                                    style={[cashierPayStyle.couponLiRR, { resizeMode: 'contain' }]}
+                                                                                    style={[cashierPayStyle.couponLiRR, {resizeMode: 'contain'}]}
                                                                                 />
                                                                             </View>
                                                                         </View>
@@ -483,7 +547,7 @@ export class CashierPay extends React.Component {
                                                         <Image
                                                             resizeMethod="resize"
                                                             source={require('@imgPath/WeChat.png')}
-                                                            style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
+                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>微信支付</Text>
                                                     </TouchableOpacity>
@@ -496,7 +560,7 @@ export class CashierPay extends React.Component {
                                                         <Image
                                                             resizeMethod="resize"
                                                             source={require('@imgPath/alipay.png')}
-                                                            style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
+                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>支付宝支付</Text>
                                                     </TouchableOpacity>
@@ -509,7 +573,7 @@ export class CashierPay extends React.Component {
                                                         <Image
                                                             resizeMethod="resize"
                                                             source={require('@imgPath/xj-zf-icon.png')}
-                                                            style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
+                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>现金支付</Text>
                                                     </TouchableOpacity>}
@@ -522,7 +586,7 @@ export class CashierPay extends React.Component {
                                                         <Image
                                                             resizeMethod="resize"
                                                             source={require('@imgPath/yl-zf-icon.png')}
-                                                            style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
+                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>银联支付</Text>
                                                     </TouchableOpacity>}
@@ -536,7 +600,7 @@ export class CashierPay extends React.Component {
                                                         data={othersPaymentList}
                                                         numColumns={2}
                                                         keyExtractor={(item, index) => index}
-                                                        renderItem={({ item, index }) => (
+                                                        renderItem={({item, index}) => (
                                                             <TouchableOpacity
                                                                 style={
                                                                     selectedOtherPayment == item
@@ -545,7 +609,8 @@ export class CashierPay extends React.Component {
                                                                 }
                                                                 onPress={this.choosePayWay.bind(this, 'other', item.id)}
                                                             >
-                                                                <Text style={cashierPayStyle.titleText}>{item.name}</Text>
+                                                                <Text
+                                                                    style={cashierPayStyle.titleText}>{item.name}</Text>
                                                             </TouchableOpacity>
                                                         )}
                                                     />
@@ -562,7 +627,8 @@ export class CashierPay extends React.Component {
                                 <TouchableOpacity style={cashierPayStyle.canelBtn} onPress={this.toCanel.bind(this)}>
                                     <Text style={cashierPayStyle.timePayBtnBoxText}>取消</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={cashierPayStyle.successBtn} onPress={this.toSaveOrder.bind(this)}>
+                                <TouchableOpacity style={cashierPayStyle.successBtn}
+                                                  onPress={this.toSaveOrder.bind(this)}>
                                     <Text style={cashierPayStyle.timePayBtnBoxText}>挂单</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={cashierPayStyle.confirmBtn} onPress={this.gotoPay.bind(this)}>

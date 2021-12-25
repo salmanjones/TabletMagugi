@@ -48,7 +48,7 @@ export class VipPayFor extends React.Component {
                             <View style={vipPayForStyle.QRCodeBox}>
                                 <View style={vipPayForStyle.vipPayQRCodeViewCenter}>
                                     <QRCode value={`https://sj.qq.com/myapp/detail.htm?apkName=com.magugi.enterprise`}
-                                        size={160}/>
+                                            size={160}/>
                                     <View style={vipPayForStyle.vipPayForRightText}>
                                         <Text style={vipPayForStyle.vipPayForText}>
                                             下载APP
