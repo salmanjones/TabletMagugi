@@ -25,9 +25,7 @@ class Login extends React.Component {
 
     componentDidMount() {
         if (this.props.isLoggedIn && this.props.userInfo) {
-            resetNavigationTo('HomeActivity', this.props.navigation.dispatch, {
-                title: this.props.userInfo.storeName
-            });
+            AppNavigate.reset('HomeActivity', {title: this.props.userInfo.storeName})
         }
 
         // 1:是第一次安装

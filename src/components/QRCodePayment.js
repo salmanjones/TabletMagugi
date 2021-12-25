@@ -80,10 +80,7 @@ export class QRCodePayment extends React.PureComponent {
     const { paymentStatus } = this.state;
     if (paymentStatus === PaymentResultStatus.success) {
       onClose && onClose();
-      navigation.dispatch({
-        routeName: 'CashierActivity',
-        type: 'backToRoute',
-      });
+      navigation.navigate('CashierActivity');
     } else if (!paymentStatus) {
       Alert.alert(
         '你确定要关闭支付界面？',

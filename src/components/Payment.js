@@ -79,10 +79,7 @@ export class Payment extends React.PureComponent {
     const { paymentStatus } = this.state;
     if (paymentStatus === PaymentResultStatus.success) {
       onClose && onClose();
-      navigation.dispatch({
-        routeName: 'CashierActivity',
-        type: 'backToRoute',
-      });
+      navigation.navigate('CashierActivity');
     } else {
       onClose && onClose();
     }
