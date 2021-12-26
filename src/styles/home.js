@@ -12,18 +12,19 @@ export const homeStyles = StyleSheet.create({
         display: "none"
     },
     logoutWrapper: {
+        display: 'flex',
         //首页头部
-        flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
         height: naviBarHeight,
+        marginTop:  PixelUtil.size(-50, 2548),
         marginLeft: PixelUtil.size(75, 2548),
         marginRight: PixelUtil.size(75, 2548),
     },
     logoutText: {
         //首页头部
-        fontSize: PixelUtil.size(44.79, 2548),
+        fontSize: PixelUtil.size(36, 2548),
         color: 'white',
     },
     logout: {

@@ -7,7 +7,7 @@ import { homeStyles } from "../styles";
 export class HeaderMoments extends React.Component{
     render(){
       return(
-          <View style={homeStyles.logoutWrapper }>
+          <View>
               <Moment format="YYYY-MM-DD HH:mm" element={ Text } style={ homeStyles.logoutText }></Moment>
           </View>
       );

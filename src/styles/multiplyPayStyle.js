@@ -4,7 +4,7 @@ import {PixelUtil} from '../utils';
 let headerHeight = PixelUtil.size(120, 1920);
 let footerHeight = PixelUtil.size(150, 1920);
 let borderWidth = PixelUtil.size(2);
-let bodyerHeight = PixelUtil.screenSize.height * 0.88 - headerHeight - footerHeight - borderWidth * 2;
+let bodyerHeight = PixelUtil.screenSize.height * 0.91 - headerHeight - footerHeight - borderWidth * 2;
 let footerWidth = PixelUtil.screenSize.width * 0.95;
 let footerRight = PixelUtil.size(384);
 let footerLeft = footerWidth - footerRight - PixelUtil.size(40) * 3;

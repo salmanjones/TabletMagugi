@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, Text, TouchableHighlight, View, Platform} from 'react-native';
+import {Image, Platform, SafeAreaView, Text, TouchableHighlight, View} from 'react-native';
 import {homeStyles,} from '../../styles';
-import {HeaderLogout, HeaderMoments, ToggleImageBackground, AboutBeauty} from '../../components';
-import {throttle ,systemConfig} from '../../utils';
+import {AboutBeauty, ToggleImageBackground} from '../../components';
+import {systemConfig} from '../../utils';
 import {fetchFindVersionResult} from '../../services';
 
 const initState = {
@@ -20,13 +20,6 @@ const initState = {
 };
 
 export class HomeActivity extends React.Component {
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerLeft: <HeaderMoments/>,
-            headerRight: <HeaderLogout navigation={navigation}/>,
-        };
-    };
-
     constructor(props) {
         super(props);
         this.state = initState;
@@ -95,7 +88,7 @@ export class HomeActivity extends React.Component {
     render() {
         const {showAbout, updateResult, updateResultStatus, downloadUrl} = this.state;
         return (
-            <View style={homeStyles.container}>
+            <SafeAreaView style={homeStyles.container}>
                 <AboutBeauty isShow={showAbout}
                              closeEvent={this.toggleAbout.bind(this)}
                              updateResult={updateResult}
@@ -211,7 +204,7 @@ export class HomeActivity extends React.Component {
                     <Image style={homeStyles.footerLogo} source={require('@imgPath/zmr.png')}></Image>
                     <Text style={homeStyles.footerAbout} onPress={this.toggleAbout.bind(this)}>关于智美人</Text>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }

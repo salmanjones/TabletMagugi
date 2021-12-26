@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View} from 'react-native';
+import {StatusBar, Text, View} from 'react-native';
 import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -31,6 +31,7 @@ import {
     VipcardActivity
 } from '../activities';
 import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
+import {HeaderLogout, HeaderMoments} from "../components";
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
@@ -44,33 +45,62 @@ const navigationRef = createNavigationContainerRef()
 function RootNavigation() {
     return (
         <SafeAreaProvider>
+            {/*状态栏*/}
+            <StatusBar hidden={true}
+                       translucent={true}
+                       barStyle="light-content"
+                       backgroundColor="#6a51ae"/>
+            {/*路由*/}
             <NavigationContainer ref={navigationRef}>
-                <RootStack.Navigator
-                    initialRouteName="LoginActivity"
-                    options={{
-                        headerShown: false,
-                        headerStyle: {
-                            backgroundColor: '#111C3C',
-                            height: PixelUtil.size(132),
-                        },
-                        headerTitleStyle: {
-                            color: 'white',
-                            textAlign: 'center',
-                            alignSelf: 'center',
-                            fontSize: PixelUtil.size(36),
-                        },
-                        headerTintColor: 'white',
-                        headerBackTitle: null,
-                        headerRight: () => {
-                            return <View/>
-                        }
-                    }}>
+                <RootStack.Navigator initialRouteName="LoginActivity"
+                                     options={{
+                                         headerBackTitle: null,
+                                         headerRight: () => {
+                                             return <View/>
+                                         }
+                                     }}>
                     <RootStack.Screen name="LoginActivity"
                                       component={LoginActivity}
-                                      options={{title: '登录'}}/>
+                                      options={{
+                                          title: '登录',
+                                          headerShown: false,
+                                          headerStyle: {
+                                              backgroundColor: '#111C3C',
+                                              height: PixelUtil.size(132),
+                                          },
+                                          headerTitleStyle: {
+                                              color: 'white',
+                                              textAlign: 'center',
+                                              alignSelf: 'center',
+                                              fontSize: PixelUtil.size(36),
+                                          },
+                                          headerTintColor: 'white',
+                                          headerBackTitle: null,
+                                          headerRight: () => {
+                                              return <View/>
+                                          }
+                                      }}/>
                     <RootStack.Screen name="ResetPwdActivity"
                                       component={ResetPwdActivity}
-                                      options={{title: '重置密码'}}/>
+                                      options={{
+                                          title: '重置密码',
+                                          headerShown: false,
+                                          headerStyle: {
+                                              backgroundColor: '#111C3C',
+                                              height: PixelUtil.size(132),
+                                          },
+                                          headerTitleStyle: {
+                                              color: 'white',
+                                              textAlign: 'center',
+                                              alignSelf: 'center',
+                                              fontSize: PixelUtil.size(36),
+                                          },
+                                          headerTintColor: 'white',
+                                          headerBackTitle: null,
+                                          headerRight: () => {
+                                              return <View/>
+                                          }
+                                      }}/>
                     <RootStack.Screen name="GenWebViewActivity"
                                       component={GenWebViewActivity}
                                       options={({route}) => ({
@@ -84,12 +114,23 @@ function RootNavigation() {
                     <RootStack.Screen name="HomeActivity"
                                       component={HomeActivity}
                                       options={({route}) => ({
-                                          title: route.params.title.toString(),
+                                          headerShown: true,
+                                          headerStyle: {
+                                              backgroundColor: '#111C3C',
+                                              height: PixelUtil.size(132),
+                                          },
+                                          headerTintColor: '#fff',
                                           headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
+                                              color: 'white',
+                                              textAlign: 'center',
+                                              alignSelf: 'center',
+                                              fontSize: PixelUtil.size(32),
+                                          },
+                                          title: route.params.title.toString(),
+                                          headerLeft: () => (
+                                              <HeaderMoments/>
+                                          ),
+                                          headerRight: ()=>(<HeaderLogout/>)
                                       })}
                     />
                     <RootStack.Screen name="CashierBillingActivity"
@@ -200,7 +241,7 @@ function RootNavigation() {
                                               width: "100%"
                                           }
                                       }}
-                                      screenOptions={{ presentation: 'modal' }}/>
+                                      screenOptions={{presentation: 'modal'}}/>
                     <RootStack.Screen name="PriceListActivity"
                                       component={PriceListActivity}
                                       options={{
@@ -309,12 +350,12 @@ export const AppNavigate = {
             })
         }
     },
-    redirect: (name, params = {})=>{
+    redirect: (name, params = {}) => {
         if (navigationRef.isReady()) {
             let state = navigationRef.getState()
             const routes = [
                 ...state.routes.slice(0, -1),
-                { name, params },
+                {name, params},
                 state.routes[state.routes.length - 1],
             ];
 
@@ -325,7 +366,7 @@ export const AppNavigate = {
             });
         }
     },
-    goBack: ()=>{
+    goBack: () => {
         if (navigationRef.isReady()) {
             navigationRef.goBack()
         }

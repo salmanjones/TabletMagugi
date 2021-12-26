@@ -5,20 +5,15 @@ import {LayoutAnimation} from 'react-native';
 import store from './src/store/store';
 import {AppNavigation} from "./src/navigators";
 
-type Props = {};
-class App extends React.Component<Props> {
-    componentDidMount() {
+export default function App() {
+    React.useEffect(() => {
         SplashScreen&&SplashScreen.hide();
         LayoutAnimation.spring();
-    }
+    }, []);
 
-    render() {
-        return (
-            <Provider store={store}>
-                <AppNavigation/>
-            </Provider>
-        );
-    }
+    return (
+        <Provider store={store}>
+            <AppNavigation/>
+        </Provider>
+    );
 }
-
-export default App;
