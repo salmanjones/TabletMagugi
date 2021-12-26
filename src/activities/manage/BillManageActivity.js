@@ -11,6 +11,7 @@ import {PixelUtil, showMessage, throttle} from '../../utils';
 import {DatepickerBox, ModalLoadingIndicator, PendingOrderItem, SearchModule,} from '../../components';
 import {getBillingListAction, resetBillingListAction} from '../../actions';
 import {cashierStyles, pendingStyles} from '../../styles';
+import {AppNavigate} from "../../navigators";
 
 const CURRENT_TAB_INDEX = 1;
 
@@ -75,14 +76,9 @@ class BillManageOtherView extends React.Component {
     }
 
     goOrder = billing => {
-
-        this.props.navigation.navigate({
-            routeName: "BillingModifyActivity",
-            params: {
-                billingNo: billing.billingNo
-            },
-            key: "BillingModifyActivity"
-        })
+        AppNavigate.navigate("BillingModifyActivity", {
+            billingNo: billing.billingNo
+        });
 
         // this.props.navigation.navigate('BillingModifyActivity', {
         //   billingNo: billing.billingNo,

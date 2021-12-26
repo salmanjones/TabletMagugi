@@ -5,6 +5,7 @@ import { View, Text, TouchableHighlight, InteractionManager ,Alert} from 'react-
 import { rotateItemStyles } from '../../styles';
 import { resetDutyStaffs, checkResource } from '../../services';
 import { RotateSmallTipModal } from '../../components';
+import {AppNavigate} from "../../navigators";
 export class RotateTitleRight extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -33,7 +34,7 @@ export class RotateTitleRight extends React.PureComponent {
 	};
 
 	settingCard = () => {
-		this.props.navigation.navigate('RotateSettingActivity');
+        AppNavigate.navigate('RotateSettingActivity')
 	};
 
 	resetCard = () => {

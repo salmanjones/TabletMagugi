@@ -1,21 +1,13 @@
 // 员工轮牌设置主页
 import React from 'react';
-import {
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    Image,
-    Alert,
-    ImageBackground
-} from 'react-native';
-import Orientation from 'react-native-orientation';
-import { RotateSettingStyles,cashierBillingStyle,rotateBigModalStyle } from '../../styles';
-import {StaffSelectBoxV2,SearchModule,} from '../../components';
-import { getImage, ImageQutity,showMessage } from '../../utils';
-import { findStaffRotateInfoResult,saveStaffRotateInfoResult} from '../../services';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {cashierBillingStyle, rotateBigModalStyle, RotateSettingStyles} from '../../styles';
+import {SearchModule, StaffSelectBoxV2,} from '../../components';
+import {getImage, ImageQutity, showMessage} from '../../utils';
+import {findStaffRotateInfoResult, saveStaffRotateInfoResult} from '../../services';
 
-import { CheckBox} from 'react-native-elements';
+import {CheckBox} from 'react-native-elements';
+import {AppNavigate} from "../../navigators";
 
 export class RotateSettingStaffActivity extends React.Component {
 
@@ -99,7 +91,7 @@ export class RotateSettingStaffActivity extends React.Component {
 
     gotoPage  = () => {
         let params = {};
-        this.props.navigation.navigate('RotateSettingIndexActivity', params);
+        AppNavigate.navigate('RotateSettingIndexActivity', params);
     };
 
     render() {

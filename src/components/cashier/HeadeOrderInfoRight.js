@@ -2,11 +2,12 @@ import React from 'react';
 import {Image, Text, TouchableHighlight, TouchableOpacity, View,} from 'react-native';
 
 import {commonStyles} from '../../styles';
+import {AppNavigate} from "../../navigators";
 
 export class HeadeOrderInfoRight extends React.PureComponent {
 
     onSaleCard = () => {
-        this.props.navigation.navigate('VipcardActivity', {
+        AppNavigate.navigate('VipcardActivity', {
             type: 'vip',
             member: this.props.route.params.memberInfo,
         });
