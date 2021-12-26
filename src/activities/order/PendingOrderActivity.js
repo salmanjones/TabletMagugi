@@ -30,17 +30,6 @@ const NoContentContainer = styled.View`
 `;
 
 class PendingOrder extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            tabBarOnPress: tab => {
-                if (tab.scene.index === 1) {
-                    tab.jumpToIndex(tab.scene.index);
-                    props.route.params && props.route.params.loadData && props.route.params.loadData();
-                }
-            },
-        };
-    };
-
     constructor(props) {
         super(props);
         this.getSwiperDataSource = this.getSwiperDataSource.bind(this);
@@ -68,10 +57,6 @@ class PendingOrder extends React.Component {
         this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
             this.loadData(true);
         });
-    }
-
-    componentDidMount() {
-        this.props.navigation.setParams({ loadData: this.loadData });
     }
 
     getSwiperDataSource(list) {

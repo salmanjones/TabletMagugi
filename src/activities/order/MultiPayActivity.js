@@ -1144,12 +1144,12 @@ class MultiPay extends React.Component {
     }
 
     confirmPaySuccess() {
-        this.props.navigation.goBack(this.props.route.params.goBackKey);
+        AppNavigate.reset("CashierActivity");
     }
 
     //第三方支付取消
     onQRCancel(isSuccess) {
-        this.props.navigation.goBack(this.props.route.params.goBackKey);
+        AppNavigate.reset("CashierActivity");
     }
 
     //卡支付总额

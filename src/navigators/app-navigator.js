@@ -234,7 +234,8 @@ function RootNavigation() {
                                 textAlign: "center",
                                 justifyContent: "center",
                                 width: "100%"
-                            }
+                            },
+                            headerShown: false
                         }}
                         screenOptions={{presentation: 'modal'}}
                     />

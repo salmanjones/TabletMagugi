@@ -1015,13 +1015,14 @@ class CashierBillingView extends React.Component {
                 }
 
                 if(channel=='multiply'){//组合支付
+                    let prevPage = this.props.route.params.prevPage
                     this.props.navigation.navigate('MultiPayActivity', {
                         companySetting:this.state.companySetting,
                         saveBillingData:data,
                         items:payComsumeItems,
                         memberInfo:this.state.memberInfo,
                         paymentTimesCard:paymentTimesCard,
-                        goBackKey:this.props.route.key
+                        goBackKey:prevPage
                     });
 
                     return;
