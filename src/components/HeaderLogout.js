@@ -7,8 +7,7 @@ import {AppConfig, clearFetchCache} from '../utils';
 
 export class HeaderLogout extends React.PureComponent {
     handleLogout = () => {
-        debugger
-
+        const { dispatch } = this.props;
         Alert.alert(
             null,
             '您确定要注销吗?',
@@ -22,7 +21,7 @@ export class HeaderLogout extends React.PureComponent {
                     onPress: () => {
                         clearFetchCache();
                         AsyncStorage.removeItem(AppConfig.sessionStaffId);
-                        navigation.dispatch(logoutAction());
+                        dispatch(logoutAction());
                     },
                 },
             ],

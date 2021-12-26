@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StatusBar, Text, View} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -52,221 +52,222 @@ function RootNavigation() {
                        backgroundColor="#6a51ae"/>
             {/*路由*/}
             <NavigationContainer ref={navigationRef}>
-                <RootStack.Navigator initialRouteName="LoginActivity"
-                                     options={{
-                                         headerBackTitle: null,
-                                         headerRight: () => {
-                                             return <View/>
-                                         }
-                                     }}>
-                    <RootStack.Screen name="LoginActivity"
-                                      component={LoginActivity}
-                                      options={{
-                                          title: '登录',
-                                          headerShown: false,
-                                          headerStyle: {
-                                              backgroundColor: '#111C3C',
-                                              height: PixelUtil.size(132),
-                                          },
-                                          headerTitleStyle: {
-                                              color: 'white',
-                                              textAlign: 'center',
-                                              alignSelf: 'center',
-                                              fontSize: PixelUtil.size(36),
-                                          },
-                                          headerTintColor: 'white',
-                                          headerBackTitle: null,
-                                          headerRight: () => {
-                                              return <View/>
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="ResetPwdActivity"
-                                      component={ResetPwdActivity}
-                                      options={{
-                                          title: '重置密码',
-                                          headerShown: false,
-                                          headerStyle: {
-                                              backgroundColor: '#111C3C',
-                                              height: PixelUtil.size(132),
-                                          },
-                                          headerTitleStyle: {
-                                              color: 'white',
-                                              textAlign: 'center',
-                                              alignSelf: 'center',
-                                              fontSize: PixelUtil.size(36),
-                                          },
-                                          headerTintColor: 'white',
-                                          headerBackTitle: null,
-                                          headerRight: () => {
-                                              return <View/>
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="GenWebViewActivity"
-                                      component={GenWebViewActivity}
-                                      options={({route}) => ({
-                                          title: route.params.title.toString(),
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      })}/>
-                    <RootStack.Screen name="HomeActivity"
-                                      component={HomeActivity}
-                                      options={({route}) => ({
-                                          headerShown: true,
-                                          headerStyle: {
-                                              backgroundColor: '#111C3C',
-                                              height: PixelUtil.size(132),
-                                          },
-                                          headerTintColor: '#fff',
-                                          headerTitleStyle: {
-                                              color: 'white',
-                                              textAlign: 'center',
-                                              alignSelf: 'center',
-                                              fontSize: PixelUtil.size(32),
-                                          },
-                                          title: route.params.title.toString(),
-                                          headerLeft: () => (
-                                              <HeaderMoments/>
-                                          ),
-                                          headerRight: ()=>(<HeaderLogout/>)
-                                      })}
+                <RootStack.Navigator
+                    initialRouteName="LoginActivity"
+                    options={{
+                        headerBackTitle: null,
+                        headerRight: () => {
+                            return <View/>
+                        }
+                    }}
+                >
+                    <RootStack.Screen
+                        name="LoginActivity"
+                        component={LoginActivity}
+                        options={{
+                            title: '登录',
+                            headerShown: false,
+                        }}
                     />
-                    <RootStack.Screen name="CashierBillingActivity"
-                                      component={CashierBillingActivity}
-                                      options={{
-                                          title: '收银',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}
+                    <RootStack.Screen
+                        name="ResetPwdActivity"
+                        component={ResetPwdActivity}
+                        options={{
+                            title: '重置密码',
+                            headerShown: false,
+                        }}
                     />
-                    <RootStack.Screen name="RechargeActivity"
-                                      component={RechargeActivity}
-                                      options={{title: '充值'}}/>
-                    <RootStack.Screen name="VipcardActivity"
-                                      component={VipcardActivity}
-                                      options={{title: '售卡'}}/>
-                    <RootStack.Screen name="RotatePlacardActivity"
-                                      component={RotatePlacardActivity}
-                                      options={{
-                                          title: '轮牌',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}
+                    <RootStack.Screen
+                        name="GenWebViewActivity"
+                        component={GenWebViewActivity}
+                        options={({route}) => ({
+                            title: route.params.title.toString(),
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        })}/>
+                    <RootStack.Screen
+                        name="HomeActivity"
+                        component={HomeActivity}
+                        options={({route}) => ({
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            },
+                            title: route.params.title.toString(),
+                        })}
                     />
-                    <RootStack.Screen name="RotateSettingActivity"
-                                      component={RotateSettingActivity}
-                                      options={{
-                                          title: '设置',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="RotateSettingIndexActivity"
-                                      component={RotateSettingIndexActivity}
-                                      options={{
-                                          title: '轮牌设置',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="RotateSettingStaffActivity"
-                                      component={RotateSettingStaffActivity}
-                                      options={{
-                                          title: '员工轮牌设置',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="ConsumableActivity"
-                                      component={ConsumableActivity}
-                                      options={{
-                                          title: '修改消耗',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="BillingModifyActivity"
-                                      component={BillingModifyActivity}
-                                      options={{
-                                          title: '结单管理',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="BillManageActivity"
-                                      component={BillManageActivity}
-                                      options={{
-                                          title: '结单列表',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="MergeOrderPayActivity"
-                                      component={MergeOrderPayActivity}
-                                      options={{
-                                          title: '并单结算',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="MultiPayActivity"
-                                      component={MultiPayActivity}
-                                      options={{
-                                          title: '组合支付',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}
-                                      screenOptions={{presentation: 'modal'}}/>
-                    <RootStack.Screen name="PriceListActivity"
-                                      component={PriceListActivity}
-                                      options={{
-                                          title: '价目单',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="AnalysisHome"
-                                      component={AnalysisHome}
-                                      options={{
-                                          title: '统计',
-                                          headerTitleStyle: {
-                                              textAlign: "center",
-                                              justifyContent: "center",
-                                              width: "100%"
-                                          }
-                                      }}/>
-                    <RootStack.Screen name="CashierActivity"
-                                      component={TabNavigation}
-                                      options={{
-                                          title: '收银',
-                                      }}
+                    <RootStack.Screen
+                        name="CashierBillingActivity"
+                        component={CashierBillingActivity}
+                        options={{
+                            title: '收银',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="RechargeActivity"
+                        component={RechargeActivity}
+                        options={{title: '充值'}}
+                    />
+                    <RootStack.Screen
+                        name="VipcardActivity"
+                        component={VipcardActivity}
+                        options={{title: '售卡'}}
+                    />
+                    <RootStack.Screen
+                        name="RotatePlacardActivity"
+                        component={RotatePlacardActivity}
+                        options={{
+                            title: '轮牌',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="RotateSettingActivity"
+                        component={RotateSettingActivity}
+                        options={{
+                            title: '设置',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="RotateSettingIndexActivity"
+                        component={RotateSettingIndexActivity}
+                        options={{
+                            title: '轮牌设置',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="RotateSettingStaffActivity"
+                        component={RotateSettingStaffActivity}
+                        options={{
+                            title: '员工轮牌设置',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="ConsumableActivity"
+                        component={ConsumableActivity}
+                        options={{
+                            title: '修改消耗',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="BillingModifyActivity"
+                        component={BillingModifyActivity}
+                        options={{
+                            title: '结单管理',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="BillManageActivity"
+                        component={BillManageActivity}
+                        options={{
+                            title: '结单列表',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="MergeOrderPayActivity"
+                        component={MergeOrderPayActivity}
+                        options={{
+                            title: '并单结算',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="MultiPayActivity"
+                        component={MultiPayActivity}
+                        options={{
+                            title: '组合支付',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                        screenOptions={{presentation: 'modal'}}
+                    />
+                    <RootStack.Screen
+                        name="PriceListActivity"
+                        component={PriceListActivity}
+                        options={{
+                            title: '价目单',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="AnalysisHome"
+                        component={AnalysisHome}
+                        options={{
+                            title: '统计',
+                            headerTitleStyle: {
+                                textAlign: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="CashierActivity"
+                        component={TabNavigation}
+                        options={{
+                            title: '收银',
+                        }}
                     />
                 </RootStack.Navigator>
             </NavigationContainer>
@@ -322,9 +323,12 @@ function TabNavigation() {
 }
 
 /**
- * 页面结构
+ * 页面路由
  */
-export const AppNavigation = connect(state => ({userInfo: state.auth.userInfo}))(RootNavigation);
+const mapStateToProps = state => ({
+    userInfo: state.auth.userInfo
+});
+export const AppNavigation = connect(mapStateToProps)(RootNavigation);
 
 /**
  * 页面导航

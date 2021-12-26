@@ -1,9 +1,10 @@
 import React from 'react';
 import {Image, Platform, SafeAreaView, Text, TouchableHighlight, View} from 'react-native';
 import {homeStyles,} from '../../styles';
-import {AboutBeauty, ToggleImageBackground} from '../../components';
+import {AboutBeauty, HeaderLogout, HeaderMoments, ToggleImageBackground} from '../../components';
 import {systemConfig} from '../../utils';
 import {fetchFindVersionResult} from '../../services';
+import {connect} from "react-redux";
 
 const initState = {
     reserve: false,
@@ -19,11 +20,23 @@ const initState = {
     downloadUrl: ''
 };
 
-export class HomeActivity extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = initState;
         this.systemName = Platform.OS === 'ios' ? 'ios' : 'android';
+    }
+
+    componentDidMount() {
+        let {navigation, dispatch} = this.props
+        navigation.setOptions({
+            headerLeft: () => (
+                <HeaderMoments/>
+            ),
+            headerRight: () => {
+                return  (<HeaderLogout dispatch={dispatch}/>)
+            }
+        })
     }
 
     activeButton(field) {
@@ -208,3 +221,7 @@ export class HomeActivity extends React.Component {
         );
     }
 }
+
+export const HomeActivity = connect(state => ({
+    userInfo: state.auth.userInfo
+}))(Home);

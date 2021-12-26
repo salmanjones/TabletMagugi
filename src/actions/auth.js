@@ -60,7 +60,7 @@ export const logoutAction = () => {
         dispatch(logoutSuccessAction());
 
         resetNavigationTo('LoginActivity');
-    };
+    }
 };
 
 //跳转重置密码
