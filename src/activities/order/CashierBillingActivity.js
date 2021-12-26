@@ -11,7 +11,7 @@ import {
     PanResponder,
     ScrollView,
     StyleSheet,
-    Text,
+    Text, TouchableHighlight,
     TouchableOpacity,
     View
 } from 'react-native';
@@ -19,7 +19,7 @@ import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
 import {CommonActions} from '@react-navigation/native';
 //self
-import {addCardItemStyles, cashierBillingStyle} from '../../styles';
+import {addCardItemStyles, cashierBillingStyle, rotateItemStyles} from '../../styles';
 import {
     AmendItemInfo,
     CardSelectBox,
@@ -65,13 +65,6 @@ const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
 class CashierBillingView extends React.Component {
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerLeft: <HeadeOrderInfoLeft navigation={navigation} hiddenPriceOrder={true}/>,
-            headerRight: <HeadeOrderInfoRight navigation={navigation}/>
-        };
-    };
-
     constructor(props) {
         super(props);
         var sex = '0';
@@ -125,55 +118,64 @@ class CashierBillingView extends React.Component {
 
     componentDidMount() {
         let roundMode = 0;
+        const self = this;
+        const {navigation} = this.props;
         const {params} = this.props.route;
         let userInfo = this.props.auth.userInfo;
         InteractionManager.runAfterInteractions(() => {
+            selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
+                var resultMap = data.data;
+                var staffAclMap = resultMap.staffAclMap;
 
-            selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId)
-                .then(data => {
-                    var resultMap = data.data;
-                    var staffAclMap = resultMap.staffAclMap;
+                roundMode = resultMap.roundMode;
 
-                    roundMode = resultMap.roundMode;
-
-                    this.setState((prevState, props) => {
-                        prevState.roundMode = roundMode;
-                        prevState.companySetting.isUseCash = resultMap.isUseCash;
-                        prevState.accessRights=resultMap.accessRights;
-                        return prevState
-                    });
-                    company_roundMode = roundMode;
-                    //company_settings.isUseCash=resultMap.isUseCash;//是否使用现金
-
-                    if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
-                        this.moduleCode = "1";
-                    } else {
-                        this.moduleCode = "0";
-                    }
-
-                    if (params.page == 'pendingOrder') {
-                        let queryParams = {
-                            companyId: userInfo.companyId,
-                            storeId: userInfo.storeId,
-                            staffId: userInfo.staffId,
-                            staffDBId: userInfo.staffDBId,
-                            isSynthesis: userInfo.isSynthesis,//是否综合店
-                            flowNumber: params.billing.flowNumber,
-                            billingNo: params.billing.billingNo
-                        }
-
-                        this.props.getOrderInfo(queryParams);
-
-                        //来自于开单
-                    } else {
-                        this.props.initOrderInfo(params);
-
-                        if (params.member && params.member.id) {
-                            this.onMemberConfirm(params.member);
-                        }
-                    }
+                this.setState((prevState, props) => {
+                    prevState.roundMode = roundMode;
+                    prevState.companySetting.isUseCash = resultMap.isUseCash;
+                    prevState.accessRights=resultMap.accessRights;
+                    return prevState
                 });
+                company_roundMode = roundMode;
+                //company_settings.isUseCash=resultMap.isUseCash;//是否使用现金
 
+                if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
+                    this.moduleCode = "1";
+                } else {
+                    this.moduleCode = "0";
+                }
+
+                if (params.page == 'pendingOrder') {
+                    let queryParams = {
+                        companyId: userInfo.companyId,
+                        storeId: userInfo.storeId,
+                        staffId: userInfo.staffId,
+                        staffDBId: userInfo.staffDBId,
+                        isSynthesis: userInfo.isSynthesis,//是否综合店
+                        flowNumber: params.billing.flowNumber,
+                        billingNo: params.billing.billingNo
+                    }
+
+                    this.props.getOrderInfo(queryParams);
+
+                    //来自于开单
+                } else {
+                    this.props.initOrderInfo(params);
+
+                    if (params.member && params.member.id) {
+                        this.onMemberConfirm(params.member);
+                    }
+                }
+
+                let {route} = self.props
+                navigation.setOptions({
+                    headerLeft:  () => (
+                        <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
+                    ),
+                    headerRight: () =>  (
+                        <HeadeOrderInfoRight navigation={navigation} router={route}/>
+                    )
+                })
+            });
         });
 
         //打开会员识别框
