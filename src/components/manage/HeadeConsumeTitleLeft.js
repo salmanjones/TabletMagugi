@@ -4,6 +4,7 @@ import {CommonActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
 
 import {commonStyles} from '../../styles';
+import {AppNavigate} from "../../navigators";
 
 class HeadeConsumeTitleLeftCpm extends React.PureComponent {
     constructor(props){
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         backPage: () => {
-            dispatch(CommonActions.goBack());
+            AppNavigate.goBack()
         },
     };
 };

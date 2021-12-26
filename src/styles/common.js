@@ -59,18 +59,18 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderBox: {
         //登录后-左侧内容（非首页）
-        height: PixelUtil.rect(600, 96).height,
-        width: PixelUtil.rect(600, 96).width,
+        height: PixelUtil.rect(600, 66).height,
+        width: PixelUtil.rect(600, 66).width,
         overflow: 'hidden',
-        flex: 1,
+        display: "flex",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginLeft: PixelUtil.size(40),
     },
     headOrderInfoBox: {
-        height: PixelUtil.rect(560, 96).height,
-        width: PixelUtil.rect(560, 96).width,
+        height: PixelUtil.rect(560, 66).height,
+        width: PixelUtil.rect(560, 66).width,
         overflow: 'hidden',
         flex: 1,
         flexDirection: 'row',
@@ -79,26 +79,26 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderInfo: {
         //登录后-左侧内容-单据信息
-        height: PixelUtil.rect(280, 92).height,
-        width: PixelUtil.rect(280, 92).width,
+        height: PixelUtil.rect(280, 62).height,
+        width: PixelUtil.rect(280, 62).width,
         marginRight: PixelUtil.size(44),
     },
     headOrderGenre: {
         //登录后-左侧内容-单据类型
-        height: PixelUtil.rect(70, 76).height,
-        width: PixelUtil.rect(70, 76).width,
+        height: PixelUtil.rect(70, 56).height,
+        width: PixelUtil.rect(70, 56).width,
         marginLeft: PixelUtil.size(20),
         marginRight: PixelUtil.size(20),
     },
     borderRightImg: {
         //登录后-左侧内容-右边线
-        height: PixelUtil.rect(6, 76).height,
-        width: PixelUtil.rect(6, 76).width,
+        height: PixelUtil.rect(6, 66).height,
+        width: PixelUtil.rect(6, 66).width,
         marginRight: PixelUtil.size(20),
     },
     headOrderNumber: {
         //登录后-左侧内容-单号
-        fontSize: PixelUtil.size(28),
+        fontSize: PixelUtil.size(23),
         color: '#FF9B1F',
     },
     headOrderOther: {
@@ -113,7 +113,7 @@ export const commonStyles = StyleSheet.create({
     },
     headGuestNumber: {
         //登录后-左侧内容-客数
-        fontSize: PixelUtil.size(32),
+        fontSize: PixelUtil.size(23),
         color: '#fff',
     },
     headOrderHand: {

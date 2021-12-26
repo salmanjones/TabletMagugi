@@ -18,6 +18,7 @@ import {displayError, getImage, ImageQutity, showMessage, throttle,} from '../..
 import {findBillingDetailAction, getBillingListAction, resetAction, updateCustomerNumberAction,} from '../../actions';
 import {fetchModifyBilling} from '../../services';
 import {balanceBillManageStyle, rotateItemStyles} from '../../styles';
+import {AppNavigate} from "../../navigators";
 
 const ViewContainer = styled.View`
   flex: 1;
@@ -226,7 +227,8 @@ class BillingModify extends React.Component {
     }
 
     componentDidMount() {
-        const {loadData, navigation} = this.props;
+        const self = this;
+        const {loadData, navigation, dispatch} = this.props;
         const {params} = this.props.route;
         //if(orderData.billingNo) return
         InteractionManager.runAfterInteractions(() => {
@@ -243,7 +245,7 @@ class BillingModify extends React.Component {
                         },
                     ]);
                 }
-                debugger
+
                 navigation.setParams({
                     orderInfoLeftData: data,
                     showMemberIcon: false,
@@ -251,23 +253,27 @@ class BillingModify extends React.Component {
                         this.setState({
                             showBillEditModal: true,
                         });
-                    }.bind(this),
-                    headerLeft: (
-                        <HeadeOrderInfoLeft navigation={navigation} hiddenPriceOrder={true}/>
+                    }.bind(this)
+                });
+
+                let {route} = self.props
+                navigation.setOptions({
+                    headerLeft:  () => (
+                        <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
                     ),
-                    headerRight: (
+                    headerRight: () =>  (
                         <TouchableHighlight
                             underlayColor="transparent"
                             onPress={throttle(() => {
-                                props.route.params.saveBilling &&
-                                props.route.params.saveBilling();
+                                route.params.saveBilling &&
+                                route.params.saveBilling();
                             }, 600)}
                             style={rotateItemStyles.marginRight}
                         >
                             <Text style={rotateItemStyles.rotateText}>保存</Text>
                         </TouchableHighlight>
                     )
-                });
+                })
             }).catch(err => {
                 Alert.alert('系统提示', err.exceptions || '请求单据详情失败', [
                     {
@@ -538,7 +544,7 @@ const mapDispatchToProps = dispatch => {
         updateNumber: param => dispatch(updateCustomerNumberAction(param)),
         reset: () => dispatch(resetAction()),
         resetToBillingList: () => {
-            dispatch(CommonActions.goBack());
+            AppNavigate.goBack()
             dispatch(getBillingListAction({billingStatus: '1'}, true));
         },
     };

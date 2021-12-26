@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, ImageBackground, Text, TouchableOpacity, View} from 'react-native';
-import {CommonActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
 
 import {commonStyles} from '../../styles';
+import {AppNavigate} from "../../navigators";
 
 class HeadeOrderInfoLeftCmpt extends React.PureComponent {
     constructor(props) {
@@ -19,9 +19,11 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         let broderRight = require('@imgPath/border-right.png');
         let showModifyBill = null;
         let orderInfoData = this.props.orderInfo.orderData;
+        let {router} = this.props
+
         if (this.props.navigation) {
-            showModifyBill = this.props.route.params.showModifyBill;
-            orderInfoData = this.props.route.params.orderInfoLeftData || this.props.orderInfo.orderData;
+            showModifyBill = router.params.showModifyBill;
+            orderInfoData = router.params.orderInfoLeftData || this.props.orderInfo.orderData;
 
             if (this.props.orderInfo.orderData && this.props.orderInfo.orderData.flowNumber) {
                 orderInfoData.flowNumber = this.props.orderInfo.orderData.flowNumber;
@@ -36,9 +38,9 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         orderInfoData.flowNumber = flowNumber;
 
         let iconShow = hairIcon;
-        if (this.props.route.params.operatorText == '美容') {
+        if (router.params.operatorText == '美容') {
             iconShow = beautifyIcon;
-        } else if (this.props.route.params.operatorText == '美甲') {
+        } else if (router.params.operatorText == '美甲') {
             iconShow = manicureIcon;
         }
 
@@ -99,7 +101,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         backPage: () => {
-            dispatch(CommonActions.goBack());
+            AppNavigate.goBack()
         },
     };
 };

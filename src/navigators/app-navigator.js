@@ -273,8 +273,8 @@ function RootNavigation() {
                             title: '结单管理',
                             headerShown: true,
                             headerStyle: {
-                                backgroundColor: '#111C3C',
                                 height: PixelUtil.size(132),
+                                backgroundColor: '#111C3C',
                             },
                             headerTintColor: '#fff',
                             headerTitleStyle: {

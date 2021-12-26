@@ -425,7 +425,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        backPage:()=>{dispatch(CommonActions.goBack())},
+        backPage:()=>{AppNavigate.goBack()},
         sendCode:(state)=>(dispatch(resetpwdSendCodeAction(state))),
         submitForm:(state)=>(dispatch(resetpwdSubmitAction(state))),
     }
