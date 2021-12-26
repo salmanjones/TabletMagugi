@@ -29,18 +29,16 @@ class Login extends React.Component {
         }
 
         // 1:是第一次安装
-        AsyncStorage.getItem('isFirstInstall')
-            .then((value) => {
-                console.log('isFirstInstall:' + value);
-                if (value == '0') {
-                    this.setState({ isShowRemindBoxer: false });
-                } else {
-                    this.setState({ isShowRemindBoxer: true });
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        AsyncStorage.getItem('isFirstInstall').then((value) => {
+            console.log('isFirstInstall:' + value);
+            if (value == '0') {
+                this.setState({ isShowRemindBoxer: false });
+            } else {
+                this.setState({ isShowRemindBoxer: true });
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 
     //打开隐私声明
