@@ -25,6 +25,7 @@ import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberActi
 //self
 import {cashierStyles, memberIdentifyStyle} from '../../styles';
 import { showMessage } from '../../utils';
+import {AppNavigate} from "../../navigators";
 
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
@@ -745,7 +746,7 @@ class CashierView extends React.Component {
                     } else {
                         params.member.vipStorageCardList = [];
                     }
-                    this.props.navigation.navigate('CashierBillingActivity', params);
+                    AppNavigate.navigate('CashierBillingActivity', params);
 
                     this.setState({
                         member: null,
@@ -763,7 +764,7 @@ class CashierView extends React.Component {
                 loading: false
             });
 
-            this.props.navigation.navigate('CashierBillingActivity', params);
+            AppNavigate.navigate('CashierBillingActivity', params);
         }
     };
 }

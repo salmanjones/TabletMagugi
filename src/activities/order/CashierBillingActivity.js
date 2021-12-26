@@ -1016,7 +1016,7 @@ class CashierBillingView extends React.Component {
 
                 if(channel=='multiply'){//组合支付
                     let prevPage = this.props.route.params.prevPage
-                    this.props.navigation.navigate('MultiPayActivity', {
+                    AppNavigate.navigate('MultiPayActivity', {
                         companySetting:this.state.companySetting,
                         saveBillingData:data,
                         items:payComsumeItems,

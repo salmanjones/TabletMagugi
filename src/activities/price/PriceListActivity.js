@@ -26,6 +26,7 @@ import {
 import {getImage, ImageQutity, PixelUtil, showMessage} from '../../utils';
 import {priceIndexStyle} from '../../styles';
 import {Dimensions} from 'react-native';
+import {AppNavigate} from "../../navigators";
 
 // 获取页面宽度
 const width = Dimensions.get('window').width;
@@ -276,7 +277,7 @@ class PriceList extends React.Component {
                     type: 'vip',
                     preLoadItems: preLoadItems,
                 };
-                this.props.navigation.navigate('CashierBillingActivity', params);
+                AppNavigate.navigate('CashierBillingActivity', params);
             });
 
         this.hideSlider();

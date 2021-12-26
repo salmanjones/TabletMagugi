@@ -10,6 +10,7 @@ import {getPendingListAction} from '../../actions';
 import {cashierStyles, pendingStyles} from '../../styles';
 import {PixelUtil, showMessage} from '../../utils';
 import {CheckBox} from 'react-native-elements';
+import {AppNavigate} from "../../navigators";
 
 const CURRENT_TAB_INDEX = 1;
 
@@ -85,7 +86,7 @@ class PendingOrder extends React.Component {
     };
 
     goOrder = billing => {
-        this.props.navigation.navigate('CashierBillingActivity', {
+        AppNavigate.navigate('CashierBillingActivity', {
             billing: billing,
             page: 'pendingOrder',
         });
@@ -98,7 +99,7 @@ class PendingOrder extends React.Component {
         }
 
         let billingIds = this.state.selectedBillings.map(billing => billing.id).join();
-        this.props.navigation.navigate('MergeOrderPayActivity', {
+        AppNavigate.navigate('MergeOrderPayActivity', {
             billingIds: billingIds,
         });
     };

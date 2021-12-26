@@ -43,7 +43,7 @@ class Login extends React.Component {
 
     //打开隐私声明
     openLink(url, title) {
-        this.props.navigation.navigate('GenWebViewActivity', {'url': url, "title": title});
+        AppNavigate.navigate('GenWebViewActivity', {'url': url, "title": title});
     }
 
     render() {

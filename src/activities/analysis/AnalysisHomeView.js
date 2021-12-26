@@ -5,6 +5,7 @@ import {AboutBeauty, ToggleImageBackground} from '../../components';
 import {systemConfig} from '../../utils';
 import {connect} from 'react-redux';
 import {fetchFindVersionResult, getDayCountPager} from '../../services';
+import {AppNavigate} from "../../navigators";
 
 const initState = {
     operator: false,
@@ -79,7 +80,7 @@ export class AnalysisHomeView extends React.Component {
         let storeId = this.props.auth.userInfo.storeId;
 
         url = url+"?companyId="+companyId+"&storeId="+storeId;
-        this.props.navigation.navigate('GenWebViewActivity', {'url': url, "title": title});
+        AppNavigate.navigate('GenWebViewActivity', {'url': url, "title": title});
     }
 
     render() {

@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, Text, TouchableHighlight, View,} from 'react-native';
 import {RotateSettingStyles} from '../../styles';
 import {ToggleImageBackground,} from '../../components';
+import {AppNavigate} from "../../navigators";
 
 const initState = {
     rotate: false,
@@ -29,7 +30,7 @@ export class RotateSettingActivity extends React.Component {
                 <View style={RotateSettingStyles.flexBox}>
                     <TouchableHighlight
                         underlayColor="white"
-                        onPress={() => this.props.navigation.navigate('RotateSettingIndexActivity')}
+                        onPress={() => AppNavigate.navigate('RotateSettingIndexActivity')}
                         onPressIn={() => this.activeButton('rotate')}
                     >
                         <ToggleImageBackground
@@ -48,7 +49,7 @@ export class RotateSettingActivity extends React.Component {
                     <TouchableHighlight
                         underlayColor="white"
                         onPress={() =>
-                            this.props.navigation.navigate('RotateSettingStaffActivity')
+                            AppNavigate.navigate('RotateSettingStaffActivity')
                         }
                         onPressIn={() => this.activeButton('staff')}
                     >

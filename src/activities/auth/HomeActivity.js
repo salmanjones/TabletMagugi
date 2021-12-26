@@ -5,6 +5,7 @@ import {AboutBeauty, HeaderLogout, HeaderMoments, ToggleImageBackground} from '.
 import {systemConfig} from '../../utils';
 import {fetchFindVersionResult} from '../../services';
 import {connect} from "react-redux";
+import {AppNavigate} from "../../navigators";
 
 const initState = {
     reserve: false,
@@ -95,7 +96,7 @@ class Home extends React.Component {
 
     //打开隐私声明
     openLink(url, title) {
-        this.props.navigation.navigate('GenWebViewActivity', {'url': url, "title": title});
+        AppNavigate.navigate('GenWebViewActivity', {'url': url, "title": title});
     }
 
     render() {
@@ -128,7 +129,7 @@ class Home extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPress={() => this.props.navigation.navigate('CashierActivity')}
+                                onPress={() => AppNavigate.navigate('CashierActivity')}
                                 onPressIn={() => this.activeButton('collect')}>
                                 <ToggleImageBackground
                                     isActive={this.state.collect}
@@ -144,7 +145,7 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    this.props.navigation.navigate('RotatePlacardActivity')
+                                    AppNavigate.navigate('RotatePlacardActivity')
                                 }
                                 onPressIn={() => this.activeButton('rotate')}>
                                 <ToggleImageBackground
@@ -163,7 +164,7 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    this.props.navigation.navigate('BillManageActivity')
+                                    AppNavigate.navigate('BillManageActivity')
                                 }
                                 onPressIn={() => this.activeButton('consumables')}>
                                 <ToggleImageBackground
@@ -180,7 +181,7 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    this.props.navigation.navigate('PriceListActivity')
+                                    AppNavigate.navigate('PriceListActivity')
                                 }
                                 onPressIn={() => this.activeButton('price')}>
                                 <ToggleImageBackground
@@ -197,7 +198,7 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    this.props.navigation.navigate('AnalysisHome')
+                                    AppNavigate.navigate('AnalysisHome')
                                 }
                                 onPressIn={() => this.activeButton('count')}>
                                 <ToggleImageBackground
