@@ -243,6 +243,7 @@ class BillingModify extends React.Component {
                         },
                     ]);
                 }
+                debugger
                 navigation.setParams({
                     orderInfoLeftData: data,
                     showMemberIcon: false,

@@ -82,10 +82,17 @@ function RootNavigation() {
                         component={GenWebViewActivity}
                         options={({route}) => ({
                             title: route.params.title.toString(),
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         })}/>
                     <RootStack.Screen
@@ -112,32 +119,74 @@ function RootNavigation() {
                         component={CashierBillingActivity}
                         options={{
                             title: '收银',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
                     <RootStack.Screen
                         name="RechargeActivity"
                         component={RechargeActivity}
-                        options={{title: '充值'}}
+                        options={{
+                            title: '充值',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            }
+                        }}
                     />
                     <RootStack.Screen
                         name="VipcardActivity"
                         component={VipcardActivity}
-                        options={{title: '售卡'}}
+                        options={{
+                            title: '售卡',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            }
+                        }}
                     />
                     <RootStack.Screen
                         name="RotatePlacardActivity"
                         component={RotatePlacardActivity}
                         options={{
                             title: '轮牌',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -146,10 +195,17 @@ function RootNavigation() {
                         component={RotateSettingActivity}
                         options={{
                             title: '设置',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -158,10 +214,17 @@ function RootNavigation() {
                         component={RotateSettingIndexActivity}
                         options={{
                             title: '轮牌设置',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -170,10 +233,17 @@ function RootNavigation() {
                         component={RotateSettingStaffActivity}
                         options={{
                             title: '员工轮牌设置',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -182,10 +252,17 @@ function RootNavigation() {
                         component={ConsumableActivity}
                         options={{
                             title: '修改消耗',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -194,10 +271,17 @@ function RootNavigation() {
                         component={BillingModifyActivity}
                         options={{
                             title: '结单管理',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -206,10 +290,17 @@ function RootNavigation() {
                         component={BillManageActivity}
                         options={{
                             title: '结单列表',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -218,10 +309,17 @@ function RootNavigation() {
                         component={MergeOrderPayActivity}
                         options={{
                             title: '并单结算',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -230,10 +328,16 @@ function RootNavigation() {
                         component={MultiPayActivity}
                         options={{
                             title: '组合支付',
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             },
                             headerShown: false
                         }}
@@ -244,10 +348,17 @@ function RootNavigation() {
                         component={PriceListActivity}
                         options={{
                             title: '价目单',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -256,10 +367,17 @@ function RootNavigation() {
                         component={AnalysisHome}
                         options={{
                             title: '统计',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
                             headerTitleStyle: {
-                                textAlign: "center",
-                                justifyContent: "center",
-                                width: "100%"
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
                             }
                         }}
                     />
@@ -268,6 +386,18 @@ function RootNavigation() {
                         component={TabNavigation}
                         options={{
                             title: '收银',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            }
                         }}
                     />
                 </RootStack.Navigator>
@@ -286,7 +416,7 @@ function TabNavigation() {
         <TabStack.Navigator
             initialRouteName="CashierActivity"
             options={{
-                headerShown: false,
+                headerShown: true,
                 tabBarIndicatorStyle: {
                     backgroundColor: '#111c3c',
                     height: PixelUtil.size(6),
