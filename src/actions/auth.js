@@ -59,7 +59,7 @@ export const logoutAction = () => {
         dispatch(loginFormClearAction())
         dispatch(logoutSuccessAction());
 
-        resetNavigationTo('LoginActivity', dispatch);
+        resetNavigationTo('LoginActivity');
     };
 };
 
@@ -174,7 +174,7 @@ const saveUserInfoAction = (data) => {
         });
         dispatch(loginSuccessAction(data));
 
-        resetNavigationTo('HomeActivity', dispatch, {
+        resetNavigationTo('HomeActivity', {
             title: data.storeName
         });
     }

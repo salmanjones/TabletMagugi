@@ -67,7 +67,7 @@ export const resetpwdSubmitAction = (currState) => {
                 dispatch({
                     type: RESETPWD_SEND_CODE.SUCCESS
                 })
-                resetNavigationTo('LoginActivity', dispatch);
+                resetNavigationTo('LoginActivity');
             } else {
                 showToast(convertCodeMsg(backData.code));
                 dispatch({

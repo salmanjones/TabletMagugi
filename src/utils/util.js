@@ -14,10 +14,9 @@ export const delay = (delayed, ms) => Promise.all([delayed, sleep(ms)]).then(([d
 /**
  * 重置请求
  * @param routeName
- * @param dispatch
  * @param params
  */
-export const resetNavigationTo = (routeName = '', dispatch = {}, params = null) => {
+export const resetNavigationTo = (routeName = '', params = null) => {
     AppNavigate.reset(routeName, params);
 };
 

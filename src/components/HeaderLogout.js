@@ -7,7 +7,7 @@ import {AppConfig, clearFetchCache} from '../utils';
 
 export class HeaderLogout extends React.PureComponent {
     handleLogout = () => {
-        const {navigation} = this.props;
+        debugger
 
         Alert.alert(
             null,
