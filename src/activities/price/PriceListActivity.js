@@ -4,14 +4,15 @@ import {connect} from 'react-redux';
 import {
     Alert,
     Animated,
+    Dimensions,
     Image,
     ImageBackground,
     InteractionManager,
+    PanResponder,
     Text,
     TouchableHighlight,
     TouchableOpacity,
-    View,
-    PanResponder
+    View
 } from 'react-native';
 import styled from 'styled-components/native/';
 import {getCompanyAutoFlowNumber, priceListInfo} from '../../services';
@@ -25,7 +26,6 @@ import {
 } from '../../components';
 import {getImage, ImageQutity, PixelUtil, showMessage} from '../../utils';
 import {priceIndexStyle} from '../../styles';
-import {Dimensions} from 'react-native';
 import {AppNavigate} from "../../navigators";
 
 // 获取页面宽度
@@ -37,12 +37,6 @@ const SwiperContainer = styled.View`
 `;
 
 class PriceList extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: <PriceListInfoRight navigation={navigation} />,
-        };
-    };
-
     constructor() {
         super();
         this.state = {
@@ -67,12 +61,6 @@ class PriceList extends React.Component {
         //     this.setState({ sliderDisplay: false, shopCartData: [] });
         // });
 
-        this.props.navigation.setParams({
-            toggleModal: () => {
-                this.setState({ showFilterModal: true });
-            }, //.bind(this),
-        });
-
         // 设置手势的动作
         this._pinchResponder = PanResponder.create({
             /**
@@ -90,6 +78,19 @@ class PriceList extends React.Component {
                 this.hideSlider()
             },
         });
+    }
+
+    componentDidMount(){
+        let {navigation, route} = this.props
+        route.params.toggleModal = () => {
+            this.setState({ showFilterModal: true });
+        }
+
+        navigation.setOptions({
+            headerRight: () =>  (
+                <PriceListInfoRight navigation={navigation} router={route}/>
+            )
+        })
     }
 
     query() {

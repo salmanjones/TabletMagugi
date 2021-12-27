@@ -1,11 +1,23 @@
 //轮牌-首页
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { View, FlatList, Image, Text, TouchableOpacity, ImageBackground, Alert } from 'react-native';
-import { rotateItemStyles } from '../../styles';
-import { getStoreDutys, updateDutyStaffs, updateDutyStaffStatus, sortDutyStaffs, batchSaveDutyStaffs, resetDutyStaffs } from '../../services';
-import { RotateTitleRight, PlacardGroup, RotateOperateModal, RotateStaffSelectModal, ModalLoadingIndicator } from '../../components';
-import { showMessage } from '../../utils';
+import React from 'react';
+import {connect} from 'react-redux';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {rotateItemStyles} from '../../styles';
+import {
+    batchSaveDutyStaffs,
+    getStoreDutys,
+    sortDutyStaffs,
+    updateDutyStaffs,
+    updateDutyStaffStatus
+} from '../../services';
+import {
+    ModalLoadingIndicator,
+    PlacardGroup,
+    RotateOperateModal,
+    RotateStaffSelectModal,
+    RotateTitleRight
+} from '../../components';
+import {showMessage} from '../../utils';
 
 // 空牌
 class NullRotate extends React.PureComponent {
@@ -20,11 +32,6 @@ class NullRotate extends React.PureComponent {
 }
 
 class RotatePlacard extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: <RotateTitleRight navigation={navigation} />,
-        };
-    };
     constructor() {
         super();
         this.state = {
@@ -49,6 +56,15 @@ class RotatePlacard extends React.Component {
             add_setting: null, //添加员工时对应setting
             sort_currentGroup: null,
         };
+    }
+
+    componentDidMount(){
+        let {navigation} = this.props
+        navigation.setOptions({
+            headerRight: () =>  (
+                <RotateTitleRight navigation={navigation} />
+            )
+        })
     }
 
     componentWillMount() {
