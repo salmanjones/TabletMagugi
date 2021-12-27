@@ -30,12 +30,6 @@ import {AppNavigate} from "../../navigators";
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
 class CashierView extends React.Component {
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerRight: <HeadeOrderInfoRight/>,
-        };
-    };
-
     constructor(props) {
         super(props);
         this.state = {

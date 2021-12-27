@@ -519,6 +519,11 @@ class CashierBillingView extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        // 移除缓存的会员识别数据
+        AsyncStorage.removeItem("queryMemberInfo")
+    }
+
     handleBackEvent = isEdit => {
         const {navigation} = this.props;
         if (isEdit) {

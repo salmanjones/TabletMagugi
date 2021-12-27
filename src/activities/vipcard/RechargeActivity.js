@@ -28,20 +28,12 @@ let timeCard = null;
 class Recharge extends React.Component {
     constructor(props) {
         super(props);
-
         const { params } = this.props.route;
-        this.props.navigation.setParams({
-            showMemberIcon: true,
-            memberInfo: params.member,
-        });
-
         let avaiableCards = filterUnRechargeableCard(
             params.member.vipStorageCardList,
             this.props.storeId
         );
-
         const card = avaiableCards.filter(x => x.id === params.card.id)[0];
-
         this.state = {
             member: params.member,
             currentCard: card,
@@ -61,7 +53,14 @@ class Recharge extends React.Component {
     }
 
     componentDidMount() {
+        // 处理右上角会员信息展示
         let {route, navigation} = this.props
+        this.props.navigation.setParams({
+            showMemberIcon: true,
+            memberInfo: route.params.member,
+        });
+        route.params.showMemberIcon = true
+        route.params.memberInfo = route.params.member
         navigation.setOptions({
             headerRight: () =>  (
                 <HeadeOrderInfoRight navigation={navigation} router={route}  from="recharge"/>
