@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
 //self
@@ -57,7 +58,6 @@ import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 
 let company_roundMode = null;
-let company_settings = {};
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
 
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
@@ -120,6 +120,39 @@ class CashierBillingView extends React.Component {
         const {navigation} = this.props;
         const {params} = this.props.route;
         let userInfo = this.props.auth.userInfo;
+
+        // 移除缓存的会员识别数据
+        AsyncStorage.removeItem("queryMemberInfo")
+
+        //会员识别框
+        this.props.navigation.setParams({
+            showMemberIcon: false,
+            'prevPage': params.page,
+            showMemberModal: function () {
+                this.setState((prevState, props) => {
+                    return {
+                        ...prevState,
+                        showMemberQueryModal: true
+                    }
+                });
+            }.bind(this),
+            showModifyBill: function () {
+                this.setState((prevState, props) => {
+                    return {
+                        ...prevState,
+                        showBillEditModal: true
+                    }
+                });
+            }.bind(this),
+            showRightCardPanel: function () {
+                this.showRightPanel();
+            }.bind(this),
+            hideRightCardPanel: function () {
+                this.hideRightPanel();
+            }.bind(this)
+        });
+
+        // 请求数据
         InteractionManager.runAfterInteractions(() => {
             selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
                 var resultMap = data.data;
@@ -170,38 +203,10 @@ class CashierBillingView extends React.Component {
                         <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
                     ),
                     headerRight: () =>  (
-                        <HeadeOrderInfoRight navigation={navigation} router={route}/>
+                        <HeadeOrderInfoRight navigation={navigation} router={route} />
                     )
                 })
             });
-        });
-
-        //打开会员识别框
-        this.props.navigation.setParams({
-            'showMemberIcon': false,
-            'prevPage': params.page,
-            showMemberModal: function () {
-                this.setState((prevState, props) => {
-                    return {
-                        ...prevState,
-                        showMemberQueryModal: true
-                    }
-                });
-            }.bind(this),
-            showModifyBill: function () {
-                this.setState((prevState, props) => {
-                    return {
-                        ...prevState,
-                        showBillEditModal: true
-                    }
-                });
-            }.bind(this),
-            showRightCardPanel: function () {
-                this.showRightPanel();
-            }.bind(this),
-            hideRightCardPanel: function () {
-                this.hideRightPanel();
-            }.bind(this)
         });
     }
 
@@ -502,8 +507,6 @@ class CashierBillingView extends React.Component {
         } else if (nextProps.orderInfo.propChangeType=='deleteOrderError'){
             showMessage(nextProps.orderInfo.message);
         }
-
-
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -802,7 +805,6 @@ class CashierBillingView extends React.Component {
 
     //会员识别确定
     onMemberConfirm(member) {
-
         if (!member) return;
 
         //如果是取单并且是散客单 则转为会员单
@@ -813,7 +815,6 @@ class CashierBillingView extends React.Component {
                 storeId: this.state.storeId
             }).then(() => {
                 showMessage('订单已转为会员单');
-
             });
         }
         this.bindMemberInfo(member);
@@ -848,10 +849,20 @@ class CashierBillingView extends React.Component {
 
         this.props.navigation.setParams({
             ...this.props.route.params,
-            'showMemberIcon': true,
+            showMemberIcon: true,
             memberInfo: member,
             member: member
         });
+
+        // 更新缓存
+        let {route, navigation} = this.props;
+        route.params.showMemberIcon = true
+        route.params.memberInfo = member
+        route.params.member = member
+        AsyncStorage.setItem("queryMemberInfo", JSON.stringify({
+            route,
+            navigation
+        }))
 
         this.setState((prevState, props) => {
             //构建次卡项目
@@ -865,18 +876,18 @@ class CashierBillingView extends React.Component {
 
             //构建切换视图
             prevState.showMemberQueryModal = false;
-            prevState.addProjStyle = cashierBillingStyle.consumeTextBoxActive,
-                prevState.addProjTextStyle = cashierBillingStyle.consumeTextActive,
-                prevState.addItemStyle = cashierBillingStyle.consumeTextBox,
-                prevState.addItemTextStyle = cashierBillingStyle.consumeText,
-                prevState.addCardStyle = cashierBillingStyle.consumeTextBox
-            prevState.addCardTextStyle = cashierBillingStyle.consumeText,
-                prevState.addConsumeType = 'proj',
-                prevState.currentEditConsumeItemIndex = -1,
-                prevState.currentEditConsumeServicerIndex = -1,
-                prevState.clearServicerGridChoose = '02',
-                prevState.queryInputTips = '项目查询';
-                prevState.queryInputText = '';
+            prevState.addProjStyle = cashierBillingStyle.consumeTextBoxActive
+            prevState.addProjTextStyle = cashierBillingStyle.consumeTextActive
+            prevState.addItemStyle = cashierBillingStyle.consumeTextBox
+            prevState.addItemTextStyle = cashierBillingStyle.consumeText
+            prevState.addCardStyle = cashierBillingStyle.consumeTextBox
+            prevState.addCardTextStyle = cashierBillingStyle.consumeText
+            prevState.addConsumeType = 'proj'
+            prevState.currentEditConsumeItemIndex = -1
+            prevState.currentEditConsumeServicerIndex = -1
+            prevState.clearServicerGridChoose = '02'
+            prevState.queryInputTips = '项目查询'
+            prevState.queryInputText = ''
             prevState.memberType = member.memberType;
             prevState.memberId = member.id;
             prevState.customerSex = member.sex;
@@ -3199,10 +3210,20 @@ const buildMemberInfos = (self, prevState, memberInfo) => {
     prevState.memberInfo = memberInfo;
     self.props.navigation.setParams({
         ...self.props.route.params,
-        'showMemberIcon': true,
+        showMemberIcon: true,
         memberInfo: memberInfo,
         member: member
     });
+
+    // 更新缓存，展示会员信息
+    let {route, navigation} = self.props;
+    route.params.showMemberIcon = true
+    route.params.memberInfo = memberInfo
+    route.params.member = member
+    AsyncStorage.setItem("queryMemberInfo", JSON.stringify({
+        route,
+        navigation
+    }))
 }
 
 //构建待提交数据

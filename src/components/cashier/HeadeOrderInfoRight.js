@@ -3,8 +3,17 @@ import {Image, Text, TouchableHighlight, TouchableOpacity, View,} from 'react-na
 
 import {commonStyles} from '../../styles';
 import {AppNavigate} from "../../navigators";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export class HeadeOrderInfoRight extends React.PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            routed: undefined
+        }
+    }
+
     onSaleCard = () => {
         let {router} = this.props
         AppNavigate.navigate('VipcardActivity', {
@@ -13,8 +22,26 @@ export class HeadeOrderInfoRight extends React.PureComponent {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        AsyncStorage.getItem("queryMemberInfo").then((args) => {
+            if(args !== null && args !== undefined) {
+                let memberInfo = JSON.parse(args)
+                this.setState((prevState, props) => {
+                    return {
+                        routed: memberInfo.route,
+                        navi: memberInfo.navigation
+                    };
+                });
+            }
+        })
+    }
+
     render() {
-        let {router} = this.props
+        let router = this.props.router
+        let routed = this.state.routed
+        if(routed){
+            router.params = Object.assign({}, router.params, routed.params)
+        }
         let showMemberInfo = router.params.showMemberIcon;
         let currMemberInfo = router.params.memberInfo;
         let iconType = (this.props.from || '') == 'recharge' ? '0' : '1';

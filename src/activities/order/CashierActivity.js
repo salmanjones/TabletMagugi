@@ -72,6 +72,13 @@ class CashierView extends React.Component {
         this.selectWaitingMemberResult();
         this.timer = setInterval(this.selectWaitingMemberResult.bind(this), 5000);
         this.timerFlag = 1;
+
+        let {route, navigation} = this.props
+        navigation.setOptions({
+            headerRight: () =>  (
+                <HeadeOrderInfoRight navigation={navigation} router={route}  from="recharge"/>
+            )
+        })
     }
 
     componentWillMount() {

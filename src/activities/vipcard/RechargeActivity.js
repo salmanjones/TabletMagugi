@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Image, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
-import {groupBy, showMessage, throttle} from '../../utils';
-import {RechargeStoredCardStyles, rotateItemStyles,} from '../../styles';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {groupBy, showMessage} from '../../utils';
+import {RechargeStoredCardStyles,} from '../../styles';
 
 import {
     CardDetails,
-    CardsView, HeadeOrderInfoLeft,
+    CardsView,
     HeadeOrderInfoRight,
     ModalCardInfo,
     RechargeInputBar,
