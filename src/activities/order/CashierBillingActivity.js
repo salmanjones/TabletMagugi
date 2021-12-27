@@ -43,6 +43,7 @@ import {
 } from '../../components';
 import {changeBillingOwner, selectStaffAclInfoResult} from '../../services';
 import {
+    CASHIERBILLING_CUSTOMER, CASHIERBILLING_SAVE,
     cashierBillingFlowNumberInitAction,
     cashierBillingGetAction,
     cashierBillingInitAction,
@@ -951,6 +952,9 @@ class CashierBillingView extends React.Component {
         this.props.navigation.setParams({
             ...prevState, orderInfoLeftData: orderInfo
         });
+
+        // 修改客数
+        this.props.updateCustomerInfo(orderInfo)
     }
 
     //挂单
@@ -3887,6 +3891,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         checkFlowNumber: (params) => {
             dispatch(cashierCheckFlowNumberAction(params))
+        },
+        updateCustomerInfo: (orderInfo)=>{
+            dispatch({ type: CASHIERBILLING_CUSTOMER.SUCCESS , orderInfo: orderInfo});
         }
     };
 };

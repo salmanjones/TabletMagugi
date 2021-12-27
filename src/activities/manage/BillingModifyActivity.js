@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components/native/';
-import {CommonActions} from '@react-navigation/native';
 import {
     Alert,
     Image,
@@ -15,7 +14,13 @@ import {
 
 import {CashierBillInfo, HeadeOrderInfoLeft, LoadingIndicator, StaffModifyModal, StockTips,} from '../../components';
 import {displayError, getImage, ImageQutity, showMessage, throttle,} from '../../utils';
-import {findBillingDetailAction, getBillingListAction, resetAction, updateCustomerNumberAction,} from '../../actions';
+import {
+    CASHIERBILLING_CUSTOMER,
+    findBillingDetailAction,
+    getBillingListAction,
+    resetAction,
+    updateCustomerNumberAction,
+} from '../../actions';
 import {fetchModifyBilling} from '../../services';
 import {balanceBillManageStyle, rotateItemStyles} from '../../styles';
 import {AppNavigate} from "../../navigators";
@@ -382,6 +387,7 @@ class BillingModify extends React.Component {
             orderInfoLeftData: orderInfo,
         });
         this.props.updateNumber(orderInfo.customerNumber);
+        this.props.updateCustomerInfo(orderInfo)
     };
 
     render() {
@@ -547,6 +553,9 @@ const mapDispatchToProps = dispatch => {
             AppNavigate.goBack()
             dispatch(getBillingListAction({billingStatus: '1'}, true));
         },
+        updateCustomerInfo: (orderInfo)=>{
+            dispatch({ type: CASHIERBILLING_CUSTOMER.SUCCESS , orderInfo: orderInfo});
+        }
     };
 };
 

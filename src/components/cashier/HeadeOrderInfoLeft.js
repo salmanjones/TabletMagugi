@@ -65,8 +65,7 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
                             <Text style={commonStyles.headOrderNumber} numberOfLines={1}
                                   ellipsizeMode={'tail'}>NO：{orderInfoData.flowNumber}</Text>
                             <View style={commonStyles.headOrderOther}>
-                                <Text
-                                    style={commonStyles.headGuestNumber}>{orderInfoData.isOldCustomer == 1 ? '老客' : '新客'}：{orderInfoData.customerNumber}</Text>
+                                <Text style={commonStyles.headGuestNumber}>{orderInfoData.isOldCustomer == 1 ? '老客' : '新客'}：{orderInfoData.customerNumber}</Text>
                                 <ImageBackground
                                     style={orderInfoData.handNumber ? commonStyles.headOrderHand : commonStyles.hidden}
                                     source={require('@imgPath/hand-FC9A1F.png')}>

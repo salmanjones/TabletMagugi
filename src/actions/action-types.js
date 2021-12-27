@@ -33,9 +33,8 @@ export const CASHIERBILLING_TOAPP = createAction('CASHIERBILLING_TOAPP'); //收�
 export const CASHIERBILLING_WXAPP = createAction('CASHIERBILLING_WXAPP'); //收银-微信小程序支付
 export const CASHIERBILLING_MULTIPLY = createAction('CASHIERBILLING_MULTIPLY'); //收银-混合支付
 export const CASHIERBILLING_STOCK = createAction('CASHIERBILLING_STOCK'); //收银-预出库
-export const CASHIERBILLING_FLOWNUMBER = createAction(
-    'CASHIERBILLING_FLOWNUMBER'
-); //收银-校验水单号
+export const CASHIERBILLING_FLOWNUMBER = createAction('CASHIERBILLING_FLOWNUMBER'); //收银-校验水单号
+export const CASHIERBILLING_CUSTOMER = createAction('CASHIERBILLING_CUSTOMER'); //收银-校验水单号
 export const CASHIERBILLING_UPDATE_CONSUMABLE = createAction('CASHIERBILLING_UPDATE_CONSUMABLE', true);//添加修改消耗
 export const CASHIERBILLING_RELOAD_ORDER = createAction('CASHIERBILLING_RELOAD_ORDER'); //重新加载保存订单
 export const CASHIERBILLING_DELETE = createAction('CASHIERBILLING_DELETE'); //收银-废单

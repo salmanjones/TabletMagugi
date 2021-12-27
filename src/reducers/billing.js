@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions';
 
 import {
     CASHIERBILLING_CLEAR,
+    CASHIERBILLING_CUSTOMER,
     CASHIERBILLING_DELETE,
     CASHIERBILLING_FLOWNUMBER,
     CASHIERBILLING_FLOWNUMBER_INIT,
@@ -147,6 +148,25 @@ export const billingOrderReducer = handleActions({
             ...state,
             loading: false,
             propChangeType: 'loading'
+        };
+    },
+
+    //修改客数｜新老客｜水单
+    [CASHIERBILLING_CUSTOMER.SUCCESS]: (state, {orderInfo}) => {
+        let orderData = {
+            ...state.orderData,
+            customerNumber: orderInfo.customerNumber,
+            customerSex: orderInfo.customerSex,
+            flowNumber: orderInfo.flowNumber,
+            handNumber: orderInfo.handNumber,
+            isOldCustomer: orderInfo.isOldCustomer,
+        }
+
+        return {
+            ...state,
+            orderData,
+            loading: false,
+            propChangeType: 'updateCustomer'
         };
     },
 
