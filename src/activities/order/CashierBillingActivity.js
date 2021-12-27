@@ -11,15 +11,14 @@ import {
     PanResponder,
     ScrollView,
     StyleSheet,
-    Text, TouchableHighlight,
+    Text,
     TouchableOpacity,
     View
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
-import {CommonActions} from '@react-navigation/native';
 //self
-import {addCardItemStyles, cashierBillingStyle, rotateItemStyles} from '../../styles';
+import {addCardItemStyles, cashierBillingStyle} from '../../styles';
 import {
     AmendItemInfo,
     CardSelectBox,
@@ -53,8 +52,7 @@ import {
     deleteBillingAction,
     getPendingListAction
 } from '../../actions';
-import {PaymentResultStatus, showMessage} from '../../utils';
-import {getImage, ImageQutity, PixelUtil, throttle} from '../../utils';
+import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 
@@ -509,7 +507,6 @@ class CashierBillingView extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-
         if (nextProps == this.props && !nextState.isgeted) {
             var isAdd = nextState.consumeItems && nextState.consumeItems.length == 1;
             var isEmpty = !nextState.consumeItems || !nextState.consumeItems.length;
@@ -517,7 +514,6 @@ class CashierBillingView extends React.Component {
             if (isAdd && !backHandler) this.handleBackEvent(true);
             if (isEmpty && backHandler) this.handleBackEvent(false);
         }
-
     }
 
     handleBackEvent = isEdit => {

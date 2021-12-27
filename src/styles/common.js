@@ -162,18 +162,17 @@ export const commonStyles = StyleSheet.create({
     },
     HeadClientBox: {
         //登录后-右侧内容（非首页）
-        height: PixelUtil.rect(900, 104).height,
-        width: PixelUtil.rect(900, 104).width,
-        overflow: 'hidden',
-        flex: 1,
+        height: PixelUtil.rect(900, 66).height,
+        width: PixelUtil.rect(900, 66).width,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
     HeadClientImgBox: {
         //登录后-右侧内容-头像
-        height: PixelUtil.rect(104, 104).height,
-        width: PixelUtil.rect(104, 104).width,
+        height: PixelUtil.rect(66, 66).height,
+        width: PixelUtil.rect(66, 66).width,
         borderRadius: PixelUtil.size(52),
         overflow: 'hidden',
         marginRight: PixelUtil.size(20),
@@ -181,18 +180,18 @@ export const commonStyles = StyleSheet.create({
         flexShrink: 0
     },
     HeadClientImg: {
-        height: PixelUtil.rect(104, 104).height,
-        width: PixelUtil.rect(104, 104).width,
+        height: PixelUtil.rect(66, 66).height,
+        width: PixelUtil.rect(66, 66).width,
     },
     HeadClientSearchContent: {
-        height: PixelUtil.rect(336, 68).height,
-        width: PixelUtil.rect(336, 68).width,
+        height: PixelUtil.rect(336, 70).height,
+        width: PixelUtil.rect(336, 70).width,
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         position: 'relative',
-        marginRight: PixelUtil.size(40.2),
+        marginRight: PixelUtil.size( 10),
     },
     HeadClientSearchImg: {
         width: 21,
@@ -208,20 +207,22 @@ export const commonStyles = StyleSheet.create({
         width: PixelUtil.rect(336, 68).width,
     },
     HeadClientOtherInfo: {
-        height: PixelUtil.rect(214, 104).height,
-        width: PixelUtil.rect(214, 104).width,
         marginRight: PixelUtil.size(10),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
     },
 
     HeadClientOtherInfoText: {
-        fontSize: PixelUtil.size(32),
+        fontSize: PixelUtil.size(24),
         color: '#fff',
         textAlign: 'center',
+        marginRight: PixelUtil.size(15),
+        marginTop: PixelUtil.size(15)
     },
     HeadClientInfo: {
-        height: PixelUtil.rect(214, 68).height,
-        width: PixelUtil.rect(214, 68).width,
-        flex: 1,
+        display:'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -234,27 +235,23 @@ export const commonStyles = StyleSheet.create({
         alignItems: 'center',
     },
     HeadClientOtherSexBox: {
-        width: PixelUtil.size(50),
-        flex: 0,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     HeadClientCardInfo: {
-        height: PixelUtil.rect(200, 104).height,
-        width: PixelUtil.rect(200, 104).width,
         marginRight: PixelUtil.size(20)
     },
     HeadClientCardImgBox: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: PixelUtil.size(10)
     },
     HeadClientCardImg: {
-        height: PixelUtil.rect(48, 36).height,
-        width: PixelUtil.rect(48, 36).width,
-        marginBottom: PixelUtil.size(20),
+        height: PixelUtil.rect(28, 20).height,
+        width: PixelUtil.rect(28, 20).width,
     },
     simulateKeyboardContent: {
         // 虚拟键盘

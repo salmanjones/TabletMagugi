@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {groupBy, showMessage} from '../../utils';
-import {RechargeStoredCardStyles,} from '../../styles';
+import {Image, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {groupBy, showMessage, throttle} from '../../utils';
+import {RechargeStoredCardStyles, rotateItemStyles,} from '../../styles';
 
 import {
     CardDetails,
-    CardsView,
+    CardsView, HeadeOrderInfoLeft,
     HeadeOrderInfoRight,
     ModalCardInfo,
     RechargeInputBar,
@@ -26,13 +26,6 @@ const tabs = [
 let storageCard = null;
 let timeCard = null;
 class Recharge extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: (
-                <HeadeOrderInfoRight navigation={navigation} from="recharge" />
-            ),
-        };
-    };
     constructor(props) {
         super(props);
 
@@ -67,12 +60,19 @@ class Recharge extends React.Component {
         timeCard = cardGroups['2'] || [];
     }
 
+    componentDidMount() {
+        let {route, navigation} = this.props
+        navigation.setOptions({
+            headerRight: () =>  (
+                <HeadeOrderInfoRight navigation={navigation} router={route}  from="recharge"/>
+            )
+        })
+    }
+
     render() {
         const {
             member,
-            currentTabIndex,
             servicers,
-            currentServicerIndex,
             currentCard,
             rechargeAmt,
             rechargeCount,

@@ -5,7 +5,6 @@ import {commonStyles} from '../../styles';
 import {AppNavigate} from "../../navigators";
 
 export class HeadeOrderInfoRight extends React.PureComponent {
-
     onSaleCard = () => {
         let {router} = this.props
         AppNavigate.navigate('VipcardActivity', {
@@ -19,8 +18,8 @@ export class HeadeOrderInfoRight extends React.PureComponent {
         let showMemberInfo = router.params.showMemberIcon;
         let currMemberInfo = router.params.memberInfo;
         let iconType = (this.props.from || '') == 'recharge' ? '0' : '1';
+        let ShowCmpt;
 
-        let ShowCmpt = <View/>;
         if (showMemberInfo) {
             ShowCmpt = () => (
                 <View style={commonStyles.HeadClientBox}>
@@ -47,18 +46,12 @@ export class HeadeOrderInfoRight extends React.PureComponent {
                     <View style={commonStyles.HeadClientOtherInfo}>
                         <View style={commonStyles.HeadClientInfo}>
                             <View style={commonStyles.HeadClientOtherNameBox}>
-                                <Text
-                                    style={commonStyles.HeadClientOtherInfoText}
-                                    numberOfLines={1} ellipsizeMode={'tail'}
-                                >
+                                <Text style={commonStyles.HeadClientOtherInfoText}
+                                    numberOfLines={1} ellipsizeMode={'tail'}>
                                     {currMemberInfo.name}
                                 </Text>
-                            </View>
-                            <View style={commonStyles.HeadClientOtherSexBox}>
-                                <Text
-                                    style={commonStyles.HeadClientOtherInfoText}
-                                    numberOfLines={1} ellipsizeMode={'tail'}
-                                >
+                                <Text style={commonStyles.HeadClientOtherInfoText}
+                                    numberOfLines={1} ellipsizeMode={'tail'}>
                                     {currMemberInfo.sex == '0' ? '女' : '男'}
                                 </Text>
                             </View>
