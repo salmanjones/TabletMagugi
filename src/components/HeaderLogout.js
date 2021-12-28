@@ -1,6 +1,6 @@
 import React from 'react';
-import {Alert, AsyncStorage, Image, Text, TouchableHighlight, View,} from 'react-native';
-
+import {Alert, Image, Text, TouchableHighlight, View,} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {logoutAction} from '../actions';
 import {homeStyles} from '../styles';
 import {AppConfig, clearFetchCache} from '../utils';
@@ -19,9 +19,11 @@ export class HeaderLogout extends React.PureComponent {
                 {
                     text: '确定',
                     onPress: () => {
-                        clearFetchCache();
-                        AsyncStorage.removeItem(AppConfig.sessionStaffId);
-                        dispatch(logoutAction());
+                        clearFetchCache()
+                        AsyncStorage.removeItem(AppConfig.staffRStore)
+                        AsyncStorage.removeItem(AppConfig.sessionStaffId)
+
+                        dispatch(logoutAction())
                     },
                 },
             ],

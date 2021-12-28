@@ -10,14 +10,10 @@ const host = __DEV__ ? devHost : prodHost;
 export const getToken = `${host}/tablet/token/get`;
 //用户登录
 export const loginAction = `${host}/tablet/login/user`;
-//检查用户session
-export const checkIsLogin = `${host}/tablet/login/session`;
 //重置密码--获取验证码
 export const resetpwdSendCode = `${host}/tablet/resetpwd/sendcode`;
 //重置密码--重置
 export const resetpwdSubmit = `${host}/tablet/resetpwd/reset`;
-//查找客户信息
-export const findMemberInfoUrl = `${host}/tablet/vipcard/find/members/info`;
 //收银开单初始化
 export const initCashierBilling = `${host}/tablet/billing/init`;
 //收银开单获取自动生成水单号
@@ -29,7 +25,6 @@ export const prePayCashierBilling = `${host}/tablet/pay/bill/pay4`;
 //删除订单
 export const deleteCashierBilling = `${host}/tablet/billing/delete`;
 //收银app支付
-
 export const appPayCashierBilling = `${host}//tablet/billing/app/binding`;
 //收银校验水单号
 export const checkFlowNoCashierBilling = `${host}//tablet/billing/check/flownumber`;

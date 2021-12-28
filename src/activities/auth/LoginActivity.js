@@ -9,10 +9,11 @@ import {
     loginInputChangeAction,
     loginInputFoucusinAction,
     loginInputFoucusoutAction,
-    loginSubmitAction
+    loginSubmitAction, loginSuccessAction
 } from '../../actions';
 import {loginStyles} from '../../styles';
-import {systemConfig} from '../../utils';
+import {AppConfig, resetNavigationTo, systemConfig} from '../../utils';
+import {desDecrypt} from '../../utils/encrypt/encrypt'
 import {AppNavigate} from "../../navigators";
 
 class Login extends React.Component {
@@ -24,9 +25,21 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.isLoggedIn && this.props.userInfo) {
-            AppNavigate.reset('HomeActivity', {title: this.props.userInfo.storeName})
-        }
+        // 0自动登录
+        const {autoLogin} = this.props
+        AsyncStorage.getItem(AppConfig.staffRStore).then((userRStore)=>{
+            if(userRStore && userRStore.length > 0){
+                const userInfo = JSON.parse(desDecrypt(userRStore))
+                const lastLogin = userInfo._loginTime
+                const maxValidTime = 5 * 24 * 3600 * 1000
+                const timeNow = new Date().getTime()
+
+                if(timeNow - lastLogin <= maxValidTime){ //5天内登录
+                    userInfo._loginTime = timeNow
+                    autoLogin(userInfo)
+                }
+            }
+        })
 
         // 1:是第一次安装
         AsyncStorage.getItem('isFirstInstall').then((value) => {
@@ -130,9 +143,7 @@ class Login extends React.Component {
 //mapping props
 const mapStateToProps = (state) => {
     return {
-        formValues: state.login,
-        isLoggedIn: state.auth.isLoggedIn,
-        userInfo: state.auth.userInfo
+        formValues: state.login
     }
 };
 const mapDispatchToProps = (dispatch, props) => {
@@ -157,6 +168,14 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         submitForm: () => {
             dispatch(loginSubmitAction())
+        },
+        autoLogin: (data)=>{
+            //更新store用户信息
+            dispatch(loginSuccessAction(data));
+
+            resetNavigationTo('HomeActivity', {
+                title: data.storeName
+            });
         }
     }
 };

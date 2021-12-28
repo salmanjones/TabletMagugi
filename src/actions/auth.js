@@ -7,6 +7,7 @@ import * as types from './action-types';
 import {fetchAuthUser} from '../services';
 import {AppConfig, resetNavigationTo, StateCode} from '../utils';
 import {AppNavigate} from "../navigators";
+import {desEncrypt} from '../utils/encrypt/encrypt'
 
 //输入
 export const loginInputChangeAction = (value, name) => {
@@ -168,10 +169,17 @@ const saveUserInfoAction = (data) => {
             };
         })
 
-        //保存用户信息到
+        //保存用户id
         AsyncStorage.setItem(AppConfig.sessionStaffId, data.staffId, err => {
-            console.log('保存vCode异常', err);
+            console.log('保存用户id错误', err);
         });
+
+        //保存用户信息到localStoreage
+        data._loginTime = new Date().getTime()
+        const userInfo = desEncrypt(JSON.stringify(data))
+        AsyncStorage.setItem(AppConfig.staffRStore, userInfo)
+
+        //更新store用户信息
         dispatch(loginSuccessAction(data));
 
         resetNavigationTo('HomeActivity', {
@@ -198,7 +206,7 @@ const getDataFailureAction = (message) => {
 };
 
 //登陆成功
-const loginSuccessAction = (data) => {
+export const loginSuccessAction = (data) => {
     return {
         type: types.LOGIN_SUCCESS,
         isLoggedIn: true,
