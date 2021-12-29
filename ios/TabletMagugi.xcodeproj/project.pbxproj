@@ -14,6 +14,7 @@
 		6BDCE61BE2314BB6B6F193C1 /* libPods-TabletMagugi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC1FEE384E68197D74EF230 /* libPods-TabletMagugi.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D05C9193BA7E717C2A938EEC /* libPods-TabletMagugi-TabletMagugiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF33FAC531E550FAD529A02C /* libPods-TabletMagugi-TabletMagugiTests.a */; };
+		D4A14D2D277BEE1100042459 /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = D4A14D2C277BEE1100042459 /* bundle */; };
 		D4C90DD3276DBAE80044A400 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C90DD1276DBA840044A400 /* Entypo.ttf */; };
 		D4C90DD4276DBAE80044A400 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C90DD2276DBA850044A400 /* EvilIcons.ttf */; };
 		D4C90DD5276DBAE80044A400 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C90DC8276DBA830044A400 /* Feather.ttf */; };
@@ -53,6 +54,7 @@
 		6AC1FEE384E68197D74EF230 /* libPods-TabletMagugi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TabletMagugi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TabletMagugi/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0DA15E7BD883C2666E22C81 /* Pods-TabletMagugi-TabletMagugiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabletMagugi-TabletMagugiTests.release.xcconfig"; path = "Target Support Files/Pods-TabletMagugi-TabletMagugiTests/Pods-TabletMagugi-TabletMagugiTests.release.xcconfig"; sourceTree = "<group>"; };
+		D4A14D2C277BEE1100042459 /* bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundle; sourceTree = "<group>"; };
 		D4C90DC7276DBA4B0044A400 /* MicrosoftYaHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MicrosoftYaHei.ttf; sourceTree = "<group>"; };
 		D4C90DC8276DBA830044A400 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		D4C90DC9276DBA830044A400 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D4A14D2C277BEE1100042459 /* bundle */,
 				D4C90DC6276DB9CD0044A400 /* Resources */,
 				13B07FAE1A68108700A75B9A /* TabletMagugi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -296,6 +299,7 @@
 				D4C90DDA276DBAE80044A400 /* MaterialIcons.ttf in Resources */,
 				D4C90DDB276DBAE80044A400 /* Octicons.ttf in Resources */,
 				D4C90DDC276DBAE80044A400 /* SimpleLineIcons.ttf in Resources */,
+				D4A14D2D277BEE1100042459 /* bundle in Resources */,
 				D4C90DDD276DBAE80044A400 /* Zocial.ttf in Resources */,
 				D4C90DDE276DBAE80044A400 /* MicrosoftYaHei.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
