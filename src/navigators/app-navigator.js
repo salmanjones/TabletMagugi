@@ -35,6 +35,7 @@ import Orientation from "react-native-orientation";
 import {fetchFindVersionResult} from "../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UpgradeBoxer} from "../components";
+import Toast from "react-native-root-toast";
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
@@ -56,11 +57,12 @@ function RootNavigation() {
         updateUrl: '',
         forceUpdateValue: '0'
     })
-
     // 当前APP活动状态
     let appState = AppState.currentState
     // 进入后台的时间
     let backgroundTime = -1
+    // 按下物理返回键的时间
+    let lastBackTime = undefined
 
     // 检查版本
     const checkAppVersion = (operType)=>{
@@ -123,13 +125,30 @@ function RootNavigation() {
         // 检查版本
         checkAppVersion("0")
 
-        // 物理返回键处理
+        // 物理返回键监听
         const backPressListener = BackHandler.addEventListener("hardwareBackPress", ()=>{
-            const {dispatch, route} = this.props
+            const {route} = this.props
+            if (route.index !== 0) {
+                AppNavigate.goBack()
+            } else {
+                if (lastBackTime && lastBackTime + 2000 >= Date.now()) {
+                    return false;
+                }
 
+                lastBackTime = Date.now();
+                Toast.show("再按一次退出应用", {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
+            }
+            return true;
         });
 
-        // APP前后台状态变更
+        // APP前后台状态变更监听
         const stateChangeListener = AppState.addEventListener("change", (nextState)=>{
             if(appState.match(/inactive|background/) && nextState === 'active'){ // 后台切换至前台
                 let swipeTime = new Date().getTime();
