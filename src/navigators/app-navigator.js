@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {StatusBar, View} from 'react-native';
+import {AppState, BackHandler, Platform, StatusBar, View} from 'react-native';
 import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {PixelUtil} from '../utils';
+import {AppConfig, clearFetchCache, PixelUtil, resetNavigationTo, systemConfig} from '../utils';
 
 import {
     AnalysisHome,
@@ -31,7 +31,10 @@ import {
     VipcardActivity
 } from '../activities';
 import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
-import {HeaderLogout, HeaderMoments} from "../components";
+import Orientation from "react-native-orientation";
+import {fetchFindVersionResult} from "../services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {UpgradeBoxer} from "../components";
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
@@ -43,13 +46,129 @@ const navigationRef = createNavigationContainerRef()
  * @constructor
  */
 function RootNavigation() {
+    // 版本号
+    const currentVersion = systemConfig.version
+    // 是否需要更新
+    const [needUpdate, setNeedUpdate] = useState(false)
+    const [versionInfo, setVersionInfo] = useState({
+        checkVersion: '',
+        updateContents: '',
+        updateUrl: '',
+        forceUpdateValue: '0'
+    })
+
+    // 当前APP活动状态
+    let appState = AppState.currentState
+    // 进入后台的时间
+    let backgroundTime = -1
+
+    // 检查版本
+    const checkAppVersion = (operType)=>{
+        const systemType = Platform.OS === 'ios' ? 'ios' : 'android';
+        fetchFindVersionResult(systemType).then(data => {
+            let versionMap = data.data;
+            if (versionMap) {
+                let nextVersion = versionMap.versionName
+                let nextType = versionMap.type
+                let versionDesc = versionMap.versionDesc
+                let downloadUrl = versionMap.downloadUrl
+                let forceUpdate = '0'
+                let showUpdate = false
+
+                // 是否强制更新
+                if (operType == '1') {
+                    if (nextVersion != currentVersion && nextType == 'unique') {
+                        if(nextType == 'unique'){
+                            clearFetchCache()
+                            AsyncStorage.removeItem(AppConfig.staffRStore)
+                            AsyncStorage.removeItem(AppConfig.sessionStaffId)
+
+                            resetNavigationTo('LoginActivity');
+                        }else if(nextType == 'recommend'){
+                            showUpdate = true
+                        }
+                    }
+                }else if (operType == '0') {
+                    if (nextVersion != currentVersion) {
+                        showUpdate = true
+
+                        if(nextType == 'unique'){
+                            forceUpdate = '1'
+                        }
+                    }
+                }
+
+                // 更新信息
+                setVersionInfo({
+                    ...versionInfo,
+                    checkVersion: nextVersion,
+                    updateContents: versionDesc,
+                    updateUrl: downloadUrl,
+                    forceUpdateValue: forceUpdate
+                })
+
+                // 是否展示更新弹窗
+                setNeedUpdate(showUpdate)
+            }
+        }).catch(err => {
+            console.error("-----------------", err);
+        });
+    }
+
+    // 处理事件监听
+    React.useEffect(() => {
+        // 锁定横屏
+        Orientation.lockToLandscape()
+
+        // 检查版本
+        checkAppVersion("0")
+
+        // 物理返回键处理
+        const backPressListener = BackHandler.addEventListener("hardwareBackPress", ()=>{
+            const {dispatch, route} = this.props
+
+        });
+
+        // APP前后台状态变更
+        const stateChangeListener = AppState.addEventListener("change", (nextState)=>{
+            if(appState.match(/inactive|background/) && nextState === 'active'){ // 后台切换至前台
+                let swipeTime = new Date().getTime();
+                let wasteTime = swipeTime - backgroundTime;
+                if(wasteTime > systemConfig.updateVersionLimitTime){
+                    checkAppVersion("1")
+                }
+            }else{
+                //前台切换至后台
+                backgroundTime = new Date().getTime()
+            }
+
+            // 缓存本次状态
+            appState = nextState
+        })
+
+        return ()=>{
+            backPressListener.remove()
+            stateChangeListener.remove()
+        }
+    }, [])
+
     return (
         <SafeAreaProvider>
             {/*状态栏*/}
             <StatusBar hidden={true}
                        translucent={true}
                        barStyle="light-content"
-                       backgroundColor="#6a51ae"/>
+                       backgroundColor="#111c3c"/>
+            {/*版本更新*/}
+            {
+                needUpdate && (
+                    <UpgradeBoxer version={versionInfo.checkVersion}
+                                  isForceUpdateValue={versionInfo.forceUpdateValue}
+                                  updateContents={versionInfo.updateContents}
+                                  updateUrl={versionInfo.updateUrl}>
+                    </UpgradeBoxer>
+                )
+            }
             {/*路由*/}
             <NavigationContainer ref={navigationRef}>
                 <RootStack.Navigator

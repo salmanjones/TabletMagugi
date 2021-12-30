@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Text, View, ScrollView, Linking, Alert} from 'react-native';
+import {Alert, Image, Linking, ScrollView, Text, View} from 'react-native';
 
 //self
 import {UpgradeAlertStyles} from '../styles'; //升级提示-登录页面
@@ -9,20 +9,20 @@ export class UpgradeBoxer extends React.Component {
         super(props);
         this.state = {
             isShow: true,
-            updateContentArray:[]
+            updateContentArray: []
         };
     }
 
     componentDidMount() {
         let updateContents = this.props.updateContents;
-        if(updateContents != ''){
+        if (updateContents != '') {
             this.setState({
-                updateContentArray:updateContents.split("$")
+                updateContentArray: updateContents.split("$")
             });
         }
     };
 
-    async updateNow(url){
+    async updateNow(url) {
         const supported = await Linking.canOpenURL(url);
         if (supported) {
             await Linking.openURL(url);
@@ -51,27 +51,31 @@ export class UpgradeBoxer extends React.Component {
                 <View style={UpgradeAlertStyles.container}>
                     <View style={UpgradeAlertStyles.content}>
                         <View style={UpgradeAlertStyles.bgImgWrap}>
-                            <Image style={UpgradeAlertStyles.bgImgItem} resizeMode={'stretch'} resizeMethod="resize" source={require('@imgPath/upgrade-boxer-bg.png')}></Image>
+                            <Image style={UpgradeAlertStyles.bgImgItem} resizeMode={'stretch'} resizeMethod="resize"
+                                   source={require('@imgPath/upgrade-boxer-bg.png')}></Image>
                             <View style={UpgradeAlertStyles.descTitle}>
                                 <Text style={UpgradeAlertStyles.descTitleText}>发现新版本啦</Text>
                                 <Text style={UpgradeAlertStyles.descTitleNumber}>V {version}</Text>
                             </View>
                         </View>
-                        <ScrollView style={UpgradeAlertStyles.scrollWrap}  showsVerticalScrollIndicator={false}>
+                        <ScrollView style={UpgradeAlertStyles.scrollWrap} showsVerticalScrollIndicator={false}>
                             <Text style={UpgradeAlertStyles.descCaption}>升级到新版本</Text>
                             {
-                                updateContentArray.map((item,index)=>{
+                                updateContentArray.map((item, index) => {
                                     return (
                                         <Text key={index} style={UpgradeAlertStyles.descItem}>{item}</Text>
                                     )
                                 })
                             }
                         </ScrollView>
-                        <View style={isForceUpdateValue == 0?UpgradeAlertStyles.footer:UpgradeAlertStyles.footerSingle}>
+                        <View
+                            style={isForceUpdateValue == 0 ? UpgradeAlertStyles.footer : UpgradeAlertStyles.footerSingle}>
                             {isForceUpdateValue == 0 && (
                                 <Text style={UpgradeAlertStyles.laterBtn} onPress={this.closeBoxer.bind(this)}>稍后</Text>
                             )}
-                            <Text style={isForceUpdateValue == 0 ?UpgradeAlertStyles.upgradeBtn:UpgradeAlertStyles.upgradeBtnSingle} onPress={this.updateNow.bind(this, updateUrl)}>立即升级</Text>
+                            <Text
+                                style={isForceUpdateValue == 0 ? UpgradeAlertStyles.upgradeBtn : UpgradeAlertStyles.upgradeBtnSingle}
+                                onPress={this.updateNow.bind(this, updateUrl)}>立即升级</Text>
                         </View>
                     </View>
                 </View>
