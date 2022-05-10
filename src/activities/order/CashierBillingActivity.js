@@ -1674,8 +1674,7 @@ class CashierBillingView extends React.Component {
                         <View style={cashierBillingStyle.consumeBoxBorder}>
                             {/* 项目价格 */}
                             {this.state.addConsumeType == 'proj' && (
-                                <View
-                                    style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
+                                <View style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
                                     <View style={cashierBillingStyle.priceAllQuery}>
                                         <TouchableOpacity
                                             onPress={this.filterConsumeItem.bind(this, 'price', 'proj', "-1", -1)}
