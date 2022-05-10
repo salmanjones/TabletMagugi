@@ -54,7 +54,8 @@ buck-out/
 */fastlane/screenshots
 
 # Bundle artifact
-# *.jsbundle
+*.jsbundle
 
-# CocoaPods
+# Ruby / CocoaPods
 /ios/Pods/
+/vendor/bundle/
