@@ -25,8 +25,8 @@ export class PendingOrderItem extends PureComponent {
             staffName,
         } = this.props;
 
-        const formatCreateTime = moment(createTime).format('MMM Do H:mm');
-        const formatPayEndTime = moment(payEndTime).format('MMM Do H:mm');
+        const formatCreateTime = moment(createTime).format('MM月DD日 HH:mm');
+        const formatPayEndTime = moment(payEndTime).format('MM月DD日 HH:mm');
         const showKeyNumber = keyNumber.length > 0;
 
         return (

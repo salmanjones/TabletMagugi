@@ -10,7 +10,7 @@ export const pendingStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     statisticsText: {
         //描述文字
@@ -22,8 +22,7 @@ export const pendingStyles = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#FF4660',
         paddingLeft: PixelUtil.size(6),
-        paddingRight: PixelUtil.size(6),
-        marginTop: Platform.OS === 'ios' ? PixelUtil.size(-6) : 0,
+        paddingRight: PixelUtil.size(6)
     },
     singleBox: {
         marginTop: PixelUtil.size(40),
