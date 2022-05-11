@@ -5,9 +5,9 @@ export const pendingStyles = StyleSheet.create({
     statisticsTextBox: {
         //单据个数
         position: 'absolute',
-        top: PixelUtil.size(-40),
+        top: Platform.OS === 'ios'? PixelUtil.size(-60):PixelUtil.size(-74),
         right: '3.8%',
-        flex: 1,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -84,17 +84,17 @@ export const pendingStyles = StyleSheet.create({
     },
     swiperInfo: {
         //取单-单据-信息
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '4%',
+        marginTop: '4%',
         height: '12%',
     },
 
     swiperInfoMemo0: {
         //取单-单据-信息(电话行)
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -106,40 +106,34 @@ export const pendingStyles = StyleSheet.create({
         color: '#333',
         fontSize: PixelUtil.size(28),
         height: '100%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: '2%',
     },
     swiperRight: {
         //取单-单据-信息-右侧
         color: '#333',
-        marginBottom: '10%',
         fontSize: PixelUtil.size(28),
         height: '12%',
-        paddingTop: '2%',
     },
     swiperPrice: {
         //取单-单据-信息-金额
         color: '#ff4660',
-        paddingTop: '8%',
         height: '100%',
         width: '50%',
-        textAlign: 'right',
-        marginTop: '4%',
+        textAlign: 'right'
     },
     swiperHand: {
         //取单-单据-信息-手牌背景
         width: '35%',
         height: '100%',
-        paddingTop: '1%',
     },
     swiperHandBg: {
         //取单-单据-信息-手牌背景
         width: '100%',
         height: '100%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -218,8 +212,6 @@ export const pendingStyles = StyleSheet.create({
     swiperDate: {
         //取单-单据-信息-时间
         position: 'relative',
-        top: '1%',
-        marginTop: '8%',
         height: '100%',
     },
     singleBoxTop: {

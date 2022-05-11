@@ -7,11 +7,8 @@ import {
     TouchableOpacity,
     Image,
     Modal,
-    InteractionManager,
 } from 'react-native';
-
 import {CheckBox} from 'react-native-elements';
-import DatePicker from 'react-native-datepicker';
 import {ModalLoadingIndicator} from '../../components';
 import {memberFilingStyle, manageConsumablesStyle} from '../../styles';
 import {
@@ -22,6 +19,8 @@ import {
     showMessage,
 } from '../../utils';
 import {fetchMemberNO, fetchCreateMember, fetchMemberPasswordStat} from '../../services';
+import moment from "moment";
+import DatePicker from "react-native-date-picker";
 
 const initMemberStatus = {
     isCreateMemberPending: false,
@@ -38,11 +37,12 @@ const initMemberStatus = {
     confirmPwd: '',
     confirmPwdError: '',
     sex: 0,
-    birthday: '',
+    birthday: '1970-01-01',
     birthdayError: '',
     nowDate: new Date(),
     image: '',
     activeLabel: '',
+    showDatePicker: false
 };
 
 export class ModalCreateMember extends React.Component {
@@ -250,30 +250,33 @@ export class ModalCreateMember extends React.Component {
                             resizeMode="contain"
                             style={memberFilingStyle.memberFilingInfoInpBox}
                         >
-                            <DatePicker
-                                style={manageConsumablesStyle.DatepickerInpBoxJD}
-                                date={this.state.birthday}
-                                mode="date"
-                                placeholder=" "
-                                format="YYYY-MM-DD"
-                                maxDate={this.state.nowDate}
-                                confirmBtnText="确定"
-                                cancelBtnText="取消"
-                                customStyles={{
-                                    dateIcon: {
-                                        display: 'none',
-                                    },
-                                    dateInput: {
-                                        backgroundColor: 'transparent',
-                                        height: PixelUtil.size(76),
-                                        flex: 0,
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        borderWidth: 0,
-                                    },
+                            <TouchableOpacity style={manageConsumablesStyle.DatepickerInpBoxJD}
+                                onPress={() => {
+                                    this.setState({showDatePicker: true});
                                 }}
-                                onDateChange={(date) => {
-                                    this.setState({birthday: date});
+                            >
+                                <Text>
+                                    {this.state.birthday}
+                                </Text>
+                            </TouchableOpacity>
+
+                            <DatePicker
+                                modal
+                                title="选择开单日期"
+                                open={this.state.showDatePicker}
+                                date={new Date(this.state.birthday)}
+                                minimumDate={new Date("1900-01-01")}
+                                maximumDate={new Date()}
+                                format="YYYY-MM-DD"
+                                mode="date"
+                                locale="zh-Hans"
+                                confirmText="确定"
+                                cancelText="取消"
+                                onConfirm={(date) => {
+                                    this.setState({ birthday: moment(date).format('YYYY-MM-DD') , showDatePicker: false}, () => {});
+                                }}
+                                onCancel={() => {
+                                    this.setState({showDatePicker: false})
                                 }}
                             />
                         </ImageBackground>

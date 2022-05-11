@@ -79,9 +79,13 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderInfo: {
         //登录后-左侧内容-单据信息
-        height: PixelUtil.rect(280, 62).height,
-        width: PixelUtil.rect(280, 62).width,
+        height: PixelUtil.rect(280, 86).height,
+        width: PixelUtil.rect(280, 86).width,
         marginRight: PixelUtil.size(44),
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
     },
     headOrderGenre: {
         //登录后-左侧内容-单据类型
@@ -98,18 +102,16 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderNumber: {
         //登录后-左侧内容-单号
-        fontSize: PixelUtil.size(23),
+        fontSize: PixelUtil.size(22),
         color: '#FF9B1F',
     },
     headOrderOther: {
         //登录后-左侧内容-手牌号+客数
-        flex: 1,
+        display:'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: PixelUtil.size(10),
-        height: PixelUtil.rect(280, 48).height,
-        width: PixelUtil.rect(280, 48).width,
+        marginTop: PixelUtil.size(4)
     },
     headGuestNumber: {
         //登录后-左侧内容-客数

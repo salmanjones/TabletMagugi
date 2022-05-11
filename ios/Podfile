@@ -18,12 +18,7 @@ target 'TabletMagugi' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-
-  target 'TabletMagugiTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-
+  
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and

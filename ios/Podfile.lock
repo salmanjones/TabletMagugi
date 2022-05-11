@@ -282,6 +282,8 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
+  - react-native-date-picker (4.2.1):
+    - React-Core
   - react-native-orientation (3.1.3):
     - React
   - react-native-pager-view (5.4.15):
@@ -445,6 +447,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-orientation (from `../node_modules/react-native-orientation`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -526,6 +529,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-date-picker:
+    :path: "../node_modules/react-native-date-picker"
   react-native-orientation:
     :path: "../node_modules/react-native-orientation"
   react-native-pager-view:
@@ -609,7 +614,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
-  react-native-orientation: f1caf84d65f1a4fd4511a18f2b924e634ad7a628
+  react-native-date-picker: 211dead8aeaecab3904a07b967f580e6ea3dee88
+  react-native-orientation: 225d7cc6ec61a3a18ac9d7b32a6c5db27297b4df
   react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
@@ -637,6 +643,6 @@ SPEC CHECKSUMS:
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d5891c78f6433002fb88f0bede82eb58245a6fed
+PODFILE CHECKSUM: 4c5671324b1bc82336c62db441be10f774261a95
 
 COCOAPODS: 1.11.3

@@ -441,14 +441,13 @@ export const manageConsumablesStyle = StyleSheet.create({
     DatepickerBox: {
         height: PixelUtil.rect(593, 70).height,
         width: PixelUtil.rect(593, 70).width,
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: PixelUtil.size(20),
         paddingRight: PixelUtil.size(20),
         marginTop: PixelUtil.size(40),
         marginLeft: PixelUtil.size(60.3),
-
     },
     DatepickerText: {
         width: PixelUtil.size(173),
@@ -459,11 +458,21 @@ export const manageConsumablesStyle = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#333',
     },
-    DatepickerInpBox: {
-        width: PixelUtil.size(380),
+    DatepickerInput:{
+        width:PixelUtil.size(400),
+        height:PixelUtil.size(70),
+    },
+    DatepickerInputTxt:{
+        width: '100%',
         height: '100%',
-        flex: 0,
+        paddingLeft: PixelUtil.size(20),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'flex-start',
+        fontSize: PixelUtil.size(26),
+        color: '#333',
+        lineHeight: PixelUtil.size(70),
     },
     suoDanImg: {
         width: PixelUtil.rect(32, 32).width,
@@ -484,7 +493,7 @@ export const manageConsumablesStyle = StyleSheet.create({
         height: PixelUtil.rect(608, 76).height,
         paddingLeft: PixelUtil.size(30),
         paddingRight: PixelUtil.size(30),
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },

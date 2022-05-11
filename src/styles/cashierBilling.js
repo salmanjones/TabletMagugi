@@ -580,8 +580,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     priceAllQuery: {
         //右边框-价格选择框-全部价格
-        height: PixelUtil.rect(152, 52).height,
-        width: PixelUtil.rect(152, 52).width,
+        height: PixelUtil.rect(162, 52).height,
+        width: PixelUtil.rect(162, 52).width,
         marginTop: PixelUtil.size(10),
         marginLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),

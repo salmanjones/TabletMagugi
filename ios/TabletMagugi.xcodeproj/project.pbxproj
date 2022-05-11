@@ -16,8 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* TabletMagugiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabletMagugiTests.m; sourceTree = "<group>"; };
 		0446A9143B3484B5D3A55807 /* Pods-TabletMagugi-TabletMagugiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabletMagugi-TabletMagugiTests.debug.xcconfig"; path = "Target Support Files/Pods-TabletMagugi-TabletMagugiTests/Pods-TabletMagugi-TabletMagugiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TabletMagugi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletMagugi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TabletMagugi/AppDelegate.h; sourceTree = "<group>"; };
@@ -59,23 +57,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* TabletMagugiTests */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F21AD99517003FC87E /* TabletMagugiTests.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
-			);
-			path = TabletMagugiTests;
-			sourceTree = "<group>";
-		};
-		00E356F01AD99517003FC87E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F11AD99517003FC87E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* TabletMagugi */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,7 +105,6 @@
 				D4C90DC6276DB9CD0044A400 /* Resources */,
 				13B07FAE1A68108700A75B9A /* TabletMagugi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* TabletMagugiTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				3CA7E5753EB32B64BB5280A5 /* Pods */,
