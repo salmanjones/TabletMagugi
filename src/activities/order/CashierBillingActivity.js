@@ -482,7 +482,7 @@ class CashierBillingView extends React.Component {
                 return prevState;
             })
             //showMessage('支付成功');
-            //this.props.resetToCashier();
+            // this.props.resetToCashier();
 
         } else if (nextProps.orderInfo.propChangeType == 'payEndException') {
             showMessage('支付失败,' + nextProps.orderInfo.message);
@@ -1040,7 +1040,8 @@ class CashierBillingView extends React.Component {
                         items:payComsumeItems,
                         memberInfo:this.state.memberInfo,
                         paymentTimesCard:paymentTimesCard,
-                        goBackKey:prevPage
+                        goBackKey:prevPage,
+                        resetToCashier: this.props.resetToCashier
                     });
 
                     return;
