@@ -2153,8 +2153,7 @@ class CashierBillingView extends React.Component {
                     </View>
                 </View>
                 {/* ------------会员卡信息------------ */}
-                <View
-                    style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
+                <View style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
                 {
                     this.props.route.params.member && (
                         <Animated.View

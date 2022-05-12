@@ -1214,7 +1214,7 @@ export const cashierBillingStyle = StyleSheet.create({
         top: 0,
         backgroundColor: 'rgba(0,0,0,.5)',
         flexDirection: 'row',
-        zIndex: 1001
+        zIndex: 1001,
     },
     rightPositionBox: {
         flex: 1,
