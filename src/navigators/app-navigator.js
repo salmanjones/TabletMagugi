@@ -221,6 +221,7 @@ function RootNavigation() {
                         options={({route}) => ({
                             title: route.params.title.toString(),
                             headerShown: true,
+                            headerTitleAlign: 'center',
                             headerStyle: {
                                 backgroundColor: '#111C3C',
                                 height: PixelUtil.size(132),
@@ -238,6 +239,7 @@ function RootNavigation() {
                         component={HomeActivity}
                         options={({route}) => ({
                             headerShown: true,
+                            headerTitleAlign: 'center',
                             headerStyle: {
                                 backgroundColor: '#111C3C',
                                 height: PixelUtil.size(132),
@@ -257,6 +259,7 @@ function RootNavigation() {
                         component={CashierBillingActivity}
                         options={{
                             title: '收银',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -276,6 +279,7 @@ function RootNavigation() {
                         component={RechargeActivity}
                         options={{
                             title: '充值',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -295,6 +299,7 @@ function RootNavigation() {
                         component={VipcardActivity}
                         options={{
                             title: '售卡',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -314,6 +319,7 @@ function RootNavigation() {
                         component={RotatePlacardActivity}
                         options={{
                             title: '轮牌',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -333,6 +339,7 @@ function RootNavigation() {
                         component={RotateSettingActivity}
                         options={{
                             title: '设置',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -352,6 +359,7 @@ function RootNavigation() {
                         component={RotateSettingIndexActivity}
                         options={{
                             title: '轮牌设置',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -371,6 +379,7 @@ function RootNavigation() {
                         component={RotateSettingStaffActivity}
                         options={{
                             title: '员工轮牌设置',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -390,6 +399,7 @@ function RootNavigation() {
                         component={ConsumableActivity}
                         options={{
                             title: '修改消耗',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -415,6 +425,7 @@ function RootNavigation() {
                                 backgroundColor: '#111C3C',
                             },
                             headerTintColor: '#fff',
+                            headerTitleAlign: 'center',
                             headerTitleStyle: {
                                 color: 'white',
                                 textAlign: 'center',
@@ -428,6 +439,7 @@ function RootNavigation() {
                         component={BillManageActivity}
                         options={{
                             title: '结单列表',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -447,6 +459,7 @@ function RootNavigation() {
                         component={MergeOrderPayActivity}
                         options={{
                             title: '并单结算',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -466,6 +479,7 @@ function RootNavigation() {
                         component={MultiPayActivity}
                         options={{
                             title: '组合支付',
+                            headerTitleAlign: 'center',
                             headerStyle: {
                                 backgroundColor: '#111C3C',
                                 height: PixelUtil.size(132),
@@ -486,6 +500,7 @@ function RootNavigation() {
                         component={PriceListActivity}
                         options={{
                             title: '价目单',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -505,6 +520,7 @@ function RootNavigation() {
                         component={AnalysisHome}
                         options={{
                             title: '统计',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
@@ -524,6 +540,7 @@ function RootNavigation() {
                         component={TabNavigation}
                         options={{
                             title: '收银',
+                            headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
