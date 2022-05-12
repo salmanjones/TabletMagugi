@@ -262,7 +262,7 @@ export class ModalCreateMember extends React.Component {
 
                             <DatePicker
                                 modal
-                                title="选择开单日期"
+                                title="选择生日"
                                 open={this.state.showDatePicker}
                                 date={new Date(this.state.birthday)}
                                 minimumDate={new Date("1900-01-01")}

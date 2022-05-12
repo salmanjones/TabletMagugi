@@ -4,27 +4,26 @@ import { PixelUtil } from '../utils';
 
 export const priceIndexStyle = StyleSheet.create({
     bgBox:{
-        flex: 1,
+        display: 'flex',
         position: 'relative',
     },
     //价目单-目录
     catalogViewBox:{
         marginRight: PixelUtil.size(40),
-        height: PixelUtil.size(104),
-        marginTop: PixelUtil.size(28),
+        height: PixelUtil.size(96),
     },
     catalogView:{
-        flex:0,
+        display: 'flex',
         alignItems: 'center',
-        height: PixelUtil.size(104),
+        height: PixelUtil.size(96),
     },
     catalogImg:{
-        width: PixelUtil.rect(40, 32).width,
-        height: PixelUtil.rect(40, 32).height,
+        width: PixelUtil.rect(32, 26).width,
+        height: PixelUtil.rect(32, 26).height,
     },
     catalogText: {
-        marginTop: PixelUtil.size(10),
-        fontSize: PixelUtil.size(32),
+        marginTop: PixelUtil.size(6),
+        fontSize: PixelUtil.size(26),
         color: '#fff',
     },
     //价目单-首页

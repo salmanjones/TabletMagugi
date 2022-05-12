@@ -212,9 +212,13 @@ class OperateArea extends React.PureComponent {
                             title="红牌"
                             backgroundColor="#f0f5ff"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.red == false ? '#ccc' : '#111c3c'}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={
+                                Object.assign({}, rotateModalStyle.rotateBodyRBtn, {
+                                    backgroundColor: "#f0f5ff",
+                                    color: vm.red == false ? '#ccc' : '#111c3c'
+                                })
+                            }
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.red}
                             onPress={() => {
