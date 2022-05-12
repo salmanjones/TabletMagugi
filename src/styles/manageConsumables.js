@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let naviBarHeight = PixelUtil.size(136);
+let naviBarHeight = PixelUtil.size(120);
 let headerHeight = PixelUtil.screenSize.height * 0.1;
 let operatorBoxHeight = PixelUtil.size(180)
 let leftBoxWidth = PixelUtil.screenSize.width * 0.4;

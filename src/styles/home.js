@@ -1,8 +1,8 @@
 //libs
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let naviBarHeight = PixelUtil.size(136, 1920);
+let naviBarHeight = PixelUtil.size(120, 1920);
 let footerHeight = PixelUtil.size(170, 1920);
 let bodyHeight = PixelUtil.screenSize.height - naviBarHeight - footerHeight;
 let operateBoxHeight = bodyHeight * 0.30;
@@ -18,9 +18,9 @@ export const homeStyles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         height: naviBarHeight,
-        marginTop:  PixelUtil.size(-50, 2548),
         marginLeft: PixelUtil.size(75, 2548),
         marginRight: PixelUtil.size(75, 2548),
+        marginTop: Platform.OS === 'ios' ? -20:0
     },
     logoutText: {
         //首页头部
@@ -30,7 +30,7 @@ export const homeStyles = StyleSheet.create({
     logout: {
         //首页头部-图标
         width: PixelUtil.rect(52.3, 62, 2548).width,
-        height: PixelUtil.rect(57.2, 523, 2548).height,
+        height: PixelUtil.rect(57.2, 62, 2548).height,
         marginRight: 10,
         resizeMode: 'contain',
     },

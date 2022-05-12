@@ -3,7 +3,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let naviBarHeight = PixelUtil.size(136);
+let naviBarHeight = PixelUtil.size(120);
 let rightPanelWidth = PixelUtil.screenSize.width * 0.5;
 let rightPanelHeight = PixelUtil.screenSize.height - naviBarHeight;
 let rightTabHeight = PixelUtil.size(106);

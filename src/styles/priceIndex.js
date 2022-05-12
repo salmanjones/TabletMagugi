@@ -10,16 +10,20 @@ export const priceIndexStyle = StyleSheet.create({
     //价目单-目录
     catalogViewBox:{
         marginRight: PixelUtil.size(40),
-        height: PixelUtil.size(96),
+        height: PixelUtil.size(110),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     catalogView:{
         display: 'flex',
         alignItems: 'center',
-        height: PixelUtil.size(96),
+        justifyContent: 'center',
+        height: PixelUtil.size(108),
     },
     catalogImg:{
-        width: PixelUtil.rect(32, 26).width,
-        height: PixelUtil.rect(32, 26).height,
+        width: PixelUtil.rect(40, 32).width,
+        height: PixelUtil.rect(40, 32).height,
     },
     catalogText: {
         marginTop: PixelUtil.size(6),
