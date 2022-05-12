@@ -10,10 +10,10 @@ export const priceIndexStyle = StyleSheet.create({
     //价目单-目录
     catalogViewBox:{
         marginRight: PixelUtil.size(40),
-        height: PixelUtil.size(110),
+        height: PixelUtil.size(75),
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     catalogView:{
         display: 'flex',
