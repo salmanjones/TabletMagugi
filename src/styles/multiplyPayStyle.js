@@ -493,7 +493,7 @@ export const multiplyPayStyle = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         fontWeight: 'bold',
         color: '#333',
-        marginLeft: -PixelUtil.size(65)
+        marginLeft: -PixelUtil.size(26)
     },
     cardMoneyModifyWrap: {
         width: '100%',
