@@ -23,7 +23,7 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
 
         if (this.props.navigation) {
             showModifyBill = router.params.showModifyBill;
-            orderInfoData = router.params.orderInfoLeftData || this.props.orderInfo.orderData;
+            orderInfoData = this.props.orderInfo.orderData || router.params.orderInfoLeftData;
 
             if (this.props.orderInfo.orderData && this.props.orderInfo.orderData.flowNumber) {
                 orderInfoData.flowNumber = this.props.orderInfo.orderData.flowNumber;
@@ -34,7 +34,6 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         if (flowNumber == '') {
             flowNumber = this.props.orderInfo.orderData.flowNumber;
         }
-
         orderInfoData.flowNumber = flowNumber;
 
         let iconShow = hairIcon;
@@ -65,12 +64,17 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
                             <Text style={commonStyles.headOrderNumber} numberOfLines={1}
                                   ellipsizeMode={'tail'}>NO：{orderInfoData.flowNumber}</Text>
                             <View style={commonStyles.headOrderOther}>
-                                <Text style={commonStyles.headGuestNumber}>{orderInfoData.isOldCustomer == 1 ? '老客' : '新客'}：{orderInfoData.customerNumber}</Text>
+                                <Text style={commonStyles.headGuestNumber}>
+                                    {orderInfoData.isOldCustomer == 1 ? '老客' : '新客'}：{orderInfoData.customerNumber}
+                                </Text>
                                 <ImageBackground
                                     style={orderInfoData.handNumber ? commonStyles.headOrderHand : commonStyles.hidden}
-                                    source={require('@imgPath/hand-FC9A1F.png')}>
-                                    <View style={commonStyles.headOrderHandBox}><Text
-                                        style={commonStyles.headOrderHandText}>{orderInfoData.handNumber}</Text></View>
+                                    source={require('@imgPath/hand-FC9A1F.png')}
+                                    resizeMode={'contain'}
+                                    resizeMethod="resize">
+                                    <View style={commonStyles.headOrderHandBox}>
+                                        <Text style={commonStyles.headOrderHandText}>{orderInfoData.handNumber}</Text>
+                                    </View>
                                 </ImageBackground>
                             </View>
                         </View>

@@ -120,8 +120,8 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderHand: {
         //登录后-左侧内容-手牌号
-        width: PixelUtil.rect(134, 48).width,
-        height: PixelUtil.rect(134, 48).height,
+        width: PixelUtil.rect(95, 33).width,
+        height: PixelUtil.rect(95, 33).height,
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -129,19 +129,20 @@ export const commonStyles = StyleSheet.create({
     },
     headOrderHandBox: {
         //登录后-左侧内容-手牌号-框
-        width: PixelUtil.rect(100, 40).width,
-        height: PixelUtil.rect(100, 40).height,
-        flex: 0,
+        width: PixelUtil.rect(75, 32).width,
+        height: PixelUtil.rect(75, 32).height,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
     headOrderHandText: {
         //登录后-左侧内容-手牌数字
-        fontSize: PixelUtil.size(28),
-        // position: 'absolute',
-        // top: PixelUtil.size(5.4),
-        // left: PixelUtil.size(60),
+        fontSize: PixelUtil.size(22),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         color: '#fff',
     },
     headOrderPriceLi: {
