@@ -4,7 +4,7 @@ import { PixelUtil } from '../utils';
 
 export const priceIndexStyle = StyleSheet.create({
     bgBox:{
-        display: 'flex',
+        flex: 1,
         position: 'relative',
     },
     //价目单-目录
