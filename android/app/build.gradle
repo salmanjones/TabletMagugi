@@ -228,6 +228,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('../magugi.keystore')
+            storePassword 'doubibi#android@sysadmin!@#~'
+            keyAlias 'android.keystore'
+            keyPassword 'doubibi#android@sysadmin!@#~'
+        }
     }
     buildTypes {
         debug {
