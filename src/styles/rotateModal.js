@@ -83,7 +83,7 @@ export const rotateModalStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     rotateItem: {// 卡片-普通
         width: PixelUtil.size(470),

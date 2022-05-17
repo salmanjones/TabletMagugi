@@ -28,10 +28,10 @@ export class VipPayFor extends React.Component {
                                     亲爱的顾客，
                                 </Text>
                                 <Text style={vipPayForStyle.vipPayForText}>
-                                    您的订单已经存入美聚集APP，
+                                    您的订单已经存入小程序，
                                 </Text>
                                 <Text style={vipPayForStyle.vipPayForText}>
-                                    请使用APP或小程序完成支付！
+                                    请使用小程序完成支付！
                                 </Text>
                             </View>
                             <Image source={require('@imgPath/app-desc.png')}
@@ -46,17 +46,17 @@ export class VipPayFor extends React.Component {
                                    resizeMode={'contain'}
                             />
                             <View style={vipPayForStyle.QRCodeBox}>
+                                {/*<View style={vipPayForStyle.vipPayQRCodeViewCenter}>*/}
+                                {/*    <QRCode value={`https://sj.qq.com/myapp/detail.htm?apkName=com.magugi.enterprise`}*/}
+                                {/*            size={160}/>*/}
+                                {/*    <View style={vipPayForStyle.vipPayForRightText}>*/}
+                                {/*        <Text style={vipPayForStyle.vipPayForText}>*/}
+                                {/*            下载APP*/}
+                                {/*        </Text>*/}
+                                {/*    </View>*/}
+                                {/*</View>*/}
                                 <View style={vipPayForStyle.vipPayQRCodeViewCenter}>
-                                    <QRCode value={`https://sj.qq.com/myapp/detail.htm?apkName=com.magugi.enterprise`}
-                                            size={160}/>
-                                    <View style={vipPayForStyle.vipPayForRightText}>
-                                        <Text style={vipPayForStyle.vipPayForText}>
-                                            下载APP
-                                        </Text>
-                                    </View>
-                                </View>
-                                <View style={vipPayForStyle.vipPayQRCodeViewCenter}>
-                                    <QRCode value={`https://op.magugi.com/publicDir/billingList`} size={160}/>
+                                    <QRCode value={`https://magi.magugi.com/wxapp/billingList`} size={160}/>
                                     <View style={vipPayForStyle.vipPayForRightText}>
                                         <Text style={vipPayForStyle.vipPayForText}>
                                             小程序支付

@@ -37,7 +37,7 @@ const initMemberStatus = {
     confirmPwd: '',
     confirmPwdError: '',
     sex: 0,
-    birthday: '1970-01-01',
+    birthday: '2000-01-01',
     birthdayError: '',
     nowDate: new Date(),
     image: '',

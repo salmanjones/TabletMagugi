@@ -105,7 +105,9 @@ export const cashierStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: PixelUtil.size(40)
+        marginTop: PixelUtil.size(40),
+        width: PixelUtil.size(980),
+        overflow: 'hidden'
     },
     orderGenre: {
         borderWidth: PixelUtil.size(2),
@@ -120,6 +122,7 @@ export const cashierStyles = StyleSheet.create({
         height: PixelUtil.rect(240, 100).height,
         marginLeft: PixelUtil.size(30),
         marginRight: PixelUtil.size(30),
+        marginBottom: PixelUtil.size(30)
     },
     orderGenreImg: {
         //开单-单据-美发图片
@@ -229,7 +232,7 @@ export const cashierStyles = StyleSheet.create({
     },
     memberCardListBox: {
         width: '100%',
-        height: Platform.OS === 'ios' ? '66.5%' : '55.5%',
+        maxHeight: Platform.OS === 'ios' ? '66.5%' : '65.5%',
         paddingLeft: PixelUtil.size(14),
         paddingRight: PixelUtil.size(48),
         flex: 0,

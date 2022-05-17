@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Modal, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import { View, Text, Image, Modal, TouchableOpacity, ImageBackground } from 'react-native';
 import { rotateModalStyle, rotateItemStyles } from '../../styles';
 import { Button } from '../../../node_modules/react-native-elements';
 import { getImage, ImageQutity, PixelUtil } from '../../utils';
@@ -80,12 +80,16 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROther}>
                         <Button
                             title={vm.standBtn}
-                            backgroundColor={staff.standStatus === 1 ? '#f3f3f3' : '#E8FEF8'}
                             borderRadius={PixelUtil.size(8)}
-                            color={!vm.stand ? '#ccc' : staff.standStatus === 1 ? '#333' : '#1BBC93'}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            titleStyle={!vm.stand ? {color:'#ccc'}: staff.standStatus === 1 ? {color:'#333'}:{color:'#1BBC93'}}
+                            buttonStyle={
+                                staff.standStatus === 1 ?
+                                    Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f3f3f3"}):
+                                    Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#E8FEF8"})
+                            }
+
                             disabled={!vm.stand}
                             onPress={() => {
                                 onChangeStatus(staff.standStatus === 1 ? 'cancelStand' : 'stand');
@@ -95,9 +99,9 @@ class OperateArea extends React.PureComponent {
                             title={vm.awayBtn}
                             backgroundColor={'#f0f5ff'}
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.away || vm.cancelAway ? '#111c3c' : '#ccc'}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            titleStyle={vm.away || vm.cancelAway ? {color:'#111c3c'}:{color:'#ccc'}}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.away && !vm.cancelAway}
                             onPress={() => {
@@ -108,22 +112,20 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROther}>
                         <Button
                             title={'跳牌'}
-                            backgroundColor={'#f0f5ff'}
                             borderRadius={PixelUtil.size(8)}
-                            color={'#111c3c'}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            titleStyle={{color:'#111c3c'}}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             onPress={() => {
                                 onChangeStatus('last');
                             }}
                         />
                         <Button
                             title="置顶"
-                            backgroundColor="#ffeeee"
                             borderRadius={PixelUtil.size(8)}
-                            color="#ff2626"
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            titleStyle={{color:'#ff2626'}}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#ffeeee"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.remove}
                             onPress={() => {
@@ -139,11 +141,14 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROBox}>
                         <Button
                             title={vm.serviceBtn}
-                            backgroundColor={staff.serviceStatus === 1 ? '#FFF4E5' : '#f0f5ff'}
                             borderRadius={PixelUtil.size(8)}
-                            color={!vm.rotate ? '#ccc' : staff.serviceStatus === 1 ? '#FAA132' : '#111c3c'}
+                            titleStyle={!vm.rotate ? {color: '#ccc'} : staff.serviceStatus === 1 ? {color: '#FAA132'} : {color: '#111c3c'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyROBtn}
+                            buttonStyle={
+                                staff.serviceStatus === 1 ?
+                                    Object.assign({}, rotateModalStyle.rotateBodyROBtn , {backgroundColor: '#FFF4E5'}):
+                                    Object.assign({}, rotateModalStyle.rotateBodyROBtn , {backgroundColor: '#f0f5ff'})
+                            }
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.rotate}
                             onPress={() => {
@@ -154,11 +159,10 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROther}>
                         <Button
                             title="点客"
-                            backgroundColor="#f0f5ff"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.order == false ? '#ccc' : '#111c3c'}
+                            titleStyle={vm.order == false ? {color: '#ccc'} : {color:'#111c3c'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.order}
                             onPress={() => {
@@ -167,11 +171,10 @@ class OperateArea extends React.PureComponent {
                         />
                         <Button
                             title="取消点客"
-                            backgroundColor="#f3f3f3"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.cancelOrder == false ? '#ccc' : '#333'}
+                            titleStyle={vm.cancelOrder == false ? {color: '#ccc'} : {color:'#333'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f3f3f3"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.cancelOrder}
                             onPress={() => {
@@ -182,11 +185,10 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROther}>
                         <Button
                             title="临休"
-                            backgroundColor="#f0f5ff"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.away == false ? '#ccc' : '#111c3c'}
+                            titleStyle={vm.away == false ? {color: '#ccc'} : {color:'#111c3c'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.away}
                             onPress={() => {
@@ -195,11 +197,10 @@ class OperateArea extends React.PureComponent {
                         />
                         <Button
                             title="取消临休"
-                            backgroundColor="#f3f3f3"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.cancelAway == false ? '#ccc' : '#333'}
+                            titleStyle={vm.cancelAway == false ? {color: '#ccc'} : {color:'#333'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f3f3f3"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.cancelAway}
                             onPress={() => {
@@ -212,13 +213,9 @@ class OperateArea extends React.PureComponent {
                             title="红牌"
                             backgroundColor="#f0f5ff"
                             borderRadius={PixelUtil.size(8)}
+                            titleStyle={vm.red == false ? {color: '#ccc'} : {color:'#111c3c'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={
-                                Object.assign({}, rotateModalStyle.rotateBodyRBtn, {
-                                    backgroundColor: "#f0f5ff",
-                                    color: vm.red == false ? '#ccc' : '#111c3c'
-                                })
-                            }
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.red}
                             onPress={() => {
@@ -227,11 +224,10 @@ class OperateArea extends React.PureComponent {
                         />
                         <Button
                             title="取消红牌"
-                            backgroundColor="#f3f3f3"
                             borderRadius={PixelUtil.size(8)}
-                            color={vm.cancelRed == false ? '#ccc' : '#333'}
+                            titleStyle={vm.red == false ? {color: '#ccc'} : {color:'#333'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f3f3f3"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.cancelRed}
                             onPress={() => {
@@ -242,11 +238,10 @@ class OperateArea extends React.PureComponent {
                     <View style={rotateModalStyle.rotateBodyROther}>
                         <Button
                             title="跳牌"
-                            backgroundColor="#f0f5ff"
                             borderRadius={PixelUtil.size(8)}
-                            color="#111c3c"
+                            titleStyle={{color:'#111c3c'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#f0f5ff"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.last}
                             onPress={() => {
@@ -255,11 +250,10 @@ class OperateArea extends React.PureComponent {
                         />
                         <Button
                             title="置顶"
-                            backgroundColor="#ffeeee"
                             borderRadius={PixelUtil.size(8)}
-                            color="#ff2626"
+                            titleStyle={{color:'#ff2626'}}
                             fontSize={PixelUtil.size(34)}
-                            buttonStyle={rotateModalStyle.rotateBodyRBtn}
+                            buttonStyle={Object.assign({}, rotateModalStyle.rotateBodyRBtn, {backgroundColor:"#ffeeee"})}
                             disabledStyle={{ backgroundColor: '#f3f3f3' }}
                             disabled={!vm.remove}
                             onPress={() => {
