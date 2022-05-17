@@ -288,7 +288,6 @@ class CashierView extends React.Component {
     };
 
     onMemberPress = member => {
-        debugger
         let memberId = -1;
         this.state.member && (
             memberId = this.state.member.id
