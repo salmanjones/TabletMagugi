@@ -211,7 +211,6 @@ class CashierView extends React.Component {
     }
 
     createOrder(type, deptId, operatorId, operatorText) {
-
         if(this.state.numType=='flownum' && !this.state.numValue) {
             showMessage('请输入水单号');
             return;
@@ -289,6 +288,7 @@ class CashierView extends React.Component {
     };
 
     onMemberPress = member => {
+        debugger
         let memberId = -1;
         this.state.member && (
             memberId = this.state.member.id
@@ -683,7 +683,7 @@ class CashierView extends React.Component {
                 self.timerFlag = 1;
 
                 //选择的顾客信息
-                if (self.pressFlag == "1") {
+                if (memberInfoCache && self.pressFlag == "1") {
                     self.setState({
                         loading: true
                     });
@@ -715,6 +715,7 @@ class CashierView extends React.Component {
                     });
 
                     self.setState({
+                        searchStart: false,
                         member: null,
                     });
 
@@ -750,6 +751,7 @@ class CashierView extends React.Component {
                     AppNavigate.navigate('CashierBillingActivity', params);
 
                     this.setState({
+                        searchStart: false,
                         member: null,
                         isBillingPageShow: false
                     });
@@ -762,7 +764,8 @@ class CashierView extends React.Component {
             });
         } else {
             this.setState({
-                loading: false
+                loading: false,
+                member: null
             });
 
             AppNavigate.navigate('CashierBillingActivity', params);
