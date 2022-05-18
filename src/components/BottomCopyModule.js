@@ -13,7 +13,7 @@ export class BottomCopyModule extends React.PureComponent {
           source={require('@imgPath/magugi.png')}
           style={commonStyles.magugiLogo}
         />
-        <Text style={homeStyles.copyText}>美聚集提供技术支持</Text>
+        <Text style={homeStyles.copyText}>美界提供技术支持</Text>
       </View>
     );
   }

@@ -57,7 +57,7 @@ export class RemindBoxer extends React.Component {
                             <Text style={remindStyles.remindTitle}>温馨提醒</Text>
                         </View>
                         <ScrollView style={remindStyles.scrollWrap} showsVerticalScrollIndicator={false}>
-                            <Text style={remindStyles.thanksText}>亲，感谢您对美聚集的信任：</Text>
+                            <Text style={remindStyles.thanksText}>亲，感谢您对美界的信任：</Text>
                             <Text style={remindStyles.notice}>
                                  {whiteSpace}请注意，在您使用本软件过程中我们会按照
                                  <Text style={remindStyles.highLight} onPress={this.openAuthDesc.bind(this, '1')}>《用户协议与隐私政策》</Text>、

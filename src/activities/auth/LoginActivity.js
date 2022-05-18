@@ -130,7 +130,7 @@ class Login extends React.Component {
                                 <Text style={loginStyles.loginForgetPwd}>忘记密码 >></Text>
                             </TouchableOpacity>
                             <Text style={loginStyles.copyright}>
-                                2018 © Magugi Business Mgmt System. Ver {systemConfig.version}
+                                2022 © MAGI Business Mgmt System. Ver {systemConfig.version}
                             </Text>
                         </ImageBackground>
                     </ImageBackground>

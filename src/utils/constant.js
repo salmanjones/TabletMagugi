@@ -1,6 +1,6 @@
 export const AppConfig = {
     appName: '门店小助手',
-    initStoreName: '美聚集演示门店',
+    initStoreName: '美界演示门店',
     tokenName: 'accessToken',
     staffRStore: '_staffReduxStore',
     sessionStaffId: '_tabletSessionStaffId',
