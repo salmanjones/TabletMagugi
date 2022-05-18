@@ -408,7 +408,12 @@ export const commonStyles = StyleSheet.create({
         //顾客识别-列-手机号
         fontSize: PixelUtil.size(28),
         color: '#333',
-        marginRight: PixelUtil.size(20),
+    },
+    MemberListPhoneR:{
+        //顾客识别-列-手机号
+        fontSize: PixelUtil.size(28),
+        color: '#333',
+        marginTop: PixelUtil.size(-40)
     },
     MemberListSex: {
         //顾客识别-列-性别
@@ -692,12 +697,12 @@ export const commonStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     appointmentImage: {
-        width: PixelUtil.rect(150, 44).width,
-        height: PixelUtil.rect(150, 44).height,
+        width: PixelUtil.rect(120, 35).width,
+        height: PixelUtil.rect(120, 35).height,
         flex: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-end'
     },
     // 收银主页-预约信息
     appointmentInfoBox: {

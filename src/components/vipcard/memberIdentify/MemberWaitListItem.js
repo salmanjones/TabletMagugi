@@ -78,7 +78,7 @@ export class MemberWaitListItem extends React.PureComponent {
                     </ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Content right>
-                    <ListItem.Title right style={commonStyles.MemberListPhone}>
+                    <ListItem.Title right style={isShowReserve ? commonStyles.MemberListPhoneR : commonStyles.MemberListPhone}>
                         {data.phoneStr}
                     </ListItem.Title>
                 </ListItem.Content>
