@@ -484,45 +484,43 @@ class CashierView extends React.Component {
                                 isLoading={this.state.loading}/>
                         </View>
                         {/*右侧会员信息样式*/}
-                        <View style={cashierStyles.memberItemBox}>
-                            <View style={cashierStyles.memberInfoBox}>
-                                <View style={cashierStyles.memberInfoLi}>
-                                    <Image resizeMethod="resize" source={this.userImgUrl} style={cashierStyles.memberAvatarImg}/>
-                                    <View style={cashierStyles.memberBaseInfo}>
-                                        <View style={[cashierStyles.memberUserBase, cashierStyles.marginBottom10]}>
-                                            {
-                                                (member.name == '' || member.name == '散客' || member.name == null) ?
-                                                    <Text style={cashierStyles.nameText}>手机尾号:{(member == undefined || member.phone == undefined || member.phone == '') ? "" : member.phone.substr(7)}</Text>
-                                                    :
-                                                    <Text style={cashierStyles.nameText} numberOfLines={1}>{member.name}</Text>
-                                            }
-
-                                            {member.sex == 0 ?
-                                                <Image resizeMethod="resize" source={require('@imgPath/sex_female.png')} style={cashierStyles.MemberListSexImage}/>
+                        <View style={cashierStyles.memberInfoBox}>
+                            <View style={cashierStyles.memberInfoLi}>
+                                <Image resizeMethod="resize" source={this.userImgUrl} style={cashierStyles.memberAvatarImg}/>
+                                <View style={cashierStyles.memberBaseInfo}>
+                                    <View style={[cashierStyles.memberUserBase, cashierStyles.marginBottom10]}>
+                                        {
+                                            (member.name == '' || member.name == '散客' || member.name == null) ?
+                                                <Text style={cashierStyles.nameText}>手机尾号:{(member == undefined || member.phone == undefined || member.phone == '') ? "" : member.phone.substr(7)}</Text>
                                                 :
-                                                <Image resizeMethod="resize" source={require('@imgPath/sex_man.png')} style={cashierStyles.MemberListSexImage}/>
-                                            }
-
-                                        </View>
-                                        {member.memberType == 0 ?
-                                            <Text style={cashierStyles.memberVipNum}>会员 {member.memberCardNo}</Text>
-                                            :
-                                            <Text style={cashierStyles.memberVipNum}>散客 {member.memberCardNo}</Text>
+                                                <Text style={cashierStyles.nameText} numberOfLines={1}>{member.name}</Text>
                                         }
+
+                                        {member.sex == 0 ?
+                                            <Image resizeMethod="resize" source={require('@imgPath/sex_female.png')} style={cashierStyles.MemberListSexImage}/>
+                                            :
+                                            <Image resizeMethod="resize" source={require('@imgPath/sex_man.png')} style={cashierStyles.MemberListSexImage}/>
+                                        }
+
                                     </View>
+                                    {member.memberType == 0 ?
+                                        <Text style={cashierStyles.memberVipNum}>会员 {member.memberCardNo}</Text>
+                                        :
+                                        <Text style={cashierStyles.memberVipNum}>散客 {member.memberCardNo}</Text>
+                                    }
                                 </View>
-                                <View style={cashierStyles.memberNumInfo}>
-                                    <Text style={[cashierStyles.memberVipNum, cashierStyles.marginBottom10]}>{member.phone}</Text>
-                                    <Text style={cashierStyles.memberVipNum}>会员卡{cardCount}张</Text>
+                            </View>
+                            <View style={cashierStyles.memberNumInfo}>
+                                <Text style={[cashierStyles.memberVipNum, cashierStyles.marginBottom10]}>{member.phone}</Text>
+                                <Text style={cashierStyles.memberVipNum}>会员卡{cardCount}张</Text>
+                            </View>
+                            <View style={cashierStyles.memberOtherInfo}>
+                                <View style={[cashierStyles.appointmentImage, cashierStyles.marginBottom10]}>
+                                    {member.reserveStatus === '0' && (
+                                        <Image resizeMethod="resize" source={require('@imgPath/appointment_img.png')} style={cashierStyles.appointmentImage}/>
+                                    )}
                                 </View>
-                                <View style={cashierStyles.memberOtherInfo}>
-                                    <View style={[cashierStyles.appointmentImage, cashierStyles.marginBottom10]}>
-                                        {member.reserveStatus === '0' && (
-                                            <Image resizeMethod="resize" source={require('@imgPath/appointment_img.png')} style={cashierStyles.appointmentImage}/>
-                                        )}
-                                    </View>
-                                    <Text style={cashierStyles.memberVipNum}>储值卡余额 ¥{cardBalanceCount}</Text>
-                                </View>
+                                <Text style={cashierStyles.memberVipNum}>储值卡余额 ¥{cardBalanceCount}</Text>
                             </View>
                         </View>
                         {/*右侧会员卡样式*/}

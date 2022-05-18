@@ -1,6 +1,13 @@
 import {Platform, StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
+let naviBarHeight = PixelUtil.size(120);
+let cardListHeight = PixelUtil.screenSize.height
+                        - naviBarHeight
+                        - PixelUtil.size(110)
+                        - PixelUtil.size(280)
+                        - PixelUtil.size(160)
+
 export const cashierStyles = StyleSheet.create({
     hidden: {
         display: 'none'
@@ -29,11 +36,7 @@ export const cashierStyles = StyleSheet.create({
         height: '100%',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
-    },
-    memberItemBox: {
-        marginBottom: PixelUtil.size(5),
-        marginTop: PixelUtil.size(79),
+        alignItems: 'center',
     },
     inputBox: {
         //开单-输入框-背景
@@ -174,14 +177,12 @@ export const cashierStyles = StyleSheet.create({
     },
     // 会员识别
     memberInfoBox: {
-        // paddingLeft: PixelUtil.size(48),
-        // paddingRight: PixelUtil.size(48),
         width: PixelUtil.size(1000),
-        flex: 0,
+        height: PixelUtil.size(160),
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: PixelUtil.size(-60),
+        justifyContent: 'space-between'
     },
     memberInfoLi: {
         // width: PixelUtil.size(1000),
@@ -232,7 +233,8 @@ export const cashierStyles = StyleSheet.create({
     },
     memberCardListBox: {
         width: '100%',
-        maxHeight: Platform.OS === 'ios' ? '66.5%' : '65.5%',
+        maxHeight: cardListHeight,
+        height: cardListHeight,
         paddingLeft: PixelUtil.size(14),
         paddingRight: PixelUtil.size(48),
         flex: 0,
