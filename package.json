@@ -9,7 +9,7 @@
         "android": "npx react-native run-android",
         "ios": "npx react-native run-ios --simulator='iPad Pro (12.9-inch) (5th generation)'",
         "iphone": "npx react-native run-ios --simulator='iPhone 11 Pro'",
-        "bundle-android": "npx react-native bundle --platform android --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --dev false --reset-cache --assets-dest android/app/src/main/res",
+        "bundle-android": "npx react-native bundle --platform android --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --dev false --reset-cache",
         "bundle-ios": "npx react-native bundle --platform ios --entry-file index.js  --bundle-output ./ios/bundle/main.jsbundle --dev false --reset-cache --assets-dest ./ios/bundle",
         "test": "jest",
         "lint": "eslint ."
