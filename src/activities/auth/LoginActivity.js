@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-import {ModalLoadingIndicator, RemindBoxer,} from "../../components";
+import {ModalLoadingIndicator, RemindBoxer} from "../../components";
 import {
     loginInputChangeAction,
     loginInputFoucusinAction,
@@ -68,71 +68,74 @@ class Login extends React.Component {
                     <RemindBoxer style={RemindBoxer.hidden} openLink={this.openLink.bind(this)}></RemindBoxer>
                 )}
                 <KeyboardAvoidingView behavior="padding" style={loginStyles.loginKeyView}>
-                    <ImageBackground style={loginStyles.loginWrapper} resizeMode={'cover'}
-                                     source={require("@imgPath/login-background.png")}>
-                        <ImageBackground style={loginStyles.loginBox} source={require("@imgPath/login-box.png")}>
-                            <Image resizeMethod="resize" style={loginStyles.loginLogo}
-                                   source={require("@imgPath/login-logo.png")}></Image>
-
+                    <ImageBackground style={loginStyles.loginWrapper} resizeMode={'cover'} source={require("@imgPath/login-background.png")}>
+                        <ImageBackground style={loginStyles.loginBox}>
+                            {/*logo*/}
+                            <Image resizeMethod="resize" style={loginStyles.loginLogo} source={require("@imgPath/login-logo.png")}></Image>
+                            {/*用户名*/}
                             <View style={loginStyles.loginTextBox}>
                                 <TextInput type="name-phone-pad" keyboardType="email-address"
                                            style={this.props.formValues.focus == 'username' ? loginStyles.loginUserNameActive : loginStyles.loginUserName}
                                            underlineColorAndroid="transparent"
                                            maxLength={20} placeholder="工号"
-                                           placeholderTextColor="#999999" value={this.props.formValues.username}
+                                           placeholderTextColor="#fff" value={this.props.formValues.username}
                                            onChangeText={this.props.unameChangeAction}
                                            onFocus={this.props.unameFoucusinAction}
-                                           onBlur={this.props.unameFoucusoutAction}
-                                />
-                                <Image resizeMethod="resize" style={loginStyles.loginUserNameIcon}
-                                       source={require("@imgPath/login-uname.png")}></Image>
-                                <View style={loginStyles.loginUserNameLine}></View>
-                                <Image resizeMethod="resize"
-                                       style={this.props.formValues.usernameValid ? loginStyles.hidden : loginStyles.loginWarningIcon}
-                                       source={require("@imgPath/login-warning.png")}></Image>
-                                <Text
-                                    style={this.props.formValues.usernameValid ? loginStyles.hidden : loginStyles.loginTextTips}>
-                                    {this.props.formValues.usernameTips}
-                                </Text>
+                                           onBlur={this.props.unameFoucusoutAction}/>
+                                <Image resizeMethod="resize" style={loginStyles.loginUserNameIcon} source={require("@imgPath/login-uname.png")}></Image>
+                                <View style={this.props.formValues.usernameValid ? loginStyles.hidden : loginStyles.loginTextTips}>
+                                    <Image resizeMethod="resize"
+                                           style={this.props.formValues.usernameValid ? loginStyles.hidden : loginStyles.loginWarningIcon}
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={loginStyles.loginTextContent}>
+                                        {this.props.formValues.usernameTips}
+                                    </Text>
+                                </View>
                             </View>
-                            <View style={loginStyles.loginTextBox}>
+                            {/*密码*/}
+                            <View style={[loginStyles.loginTextBox, loginStyles.loginTextBoxPwd]}>
                                 <TextInput
                                     style={this.props.formValues.focus == 'password' ? loginStyles.loginPasswordActive : loginStyles.loginPassword}
                                     underlineColorAndroid="transparent"
                                     maxLength={20} secureTextEntry={true} placeholder="密码"
-                                    placeholderTextColor="#999999" value={this.props.formValues.password}
+                                    placeholderTextColor="#fff" value={this.props.formValues.password}
                                     onChangeText={this.props.pwdChangeAction}
                                     onFocus={this.props.pwdFoucusinAction}
                                     onBlur={this.props.pwdFoucusoutAction}
                                 />
-                                <Image resizeMethod="resize" style={loginStyles.loginPasswordIcon}
-                                       source={require("@imgPath/login-pwd.png")}></Image>
-                                <View style={loginStyles.loginPasswordLine}></View>
-                                <Image resizeMethod="resize"
-                                       style={this.props.formValues.passwordValid ? loginStyles.hidden : loginStyles.loginWarningIcon}
-                                       source={require("@imgPath/login-warning.png")}></Image>
-                                <Text
-                                    style={this.props.formValues.passwordValid ? loginStyles.hidden : loginStyles.loginTextTips}>
-                                    {this.props.formValues.passwordTips}
-                                </Text>
+                                <Image resizeMethod="resize" style={loginStyles.loginPasswordIcon} source={require("@imgPath/login-pwd.png")}></Image>
+                                <View style={this.props.formValues.passwordValid ? loginStyles.hidden : loginStyles.loginTextTips}>
+                                    <Image resizeMethod="resize"
+                                           style={this.props.formValues.passwordValid ? loginStyles.hidden : loginStyles.loginWarningIcon}
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={loginStyles.loginTextContent}>
+                                        {this.props.formValues.passwordTips}
+                                    </Text>
+                                </View>
+
+                                {/*忘记密码*/}
+                                <TouchableOpacity underlayColor="transparent"
+                                                  hitSlop={{top: 0, left: 5, right: 0, bottom: 15}}
+                                                  style={loginStyles.loginForgetPwd}
+                                                  onPress={() => {
+                                                      AppNavigate.navigate('ResetPwdActivity')
+                                                  }}>
+                                    <Text style={loginStyles.loginForgetPwdTxt}>忘记密码？</Text>
+                                </TouchableOpacity>
                             </View>
-
-                            <TouchableOpacity style={loginStyles.loginButton} onPress={this.props.submitForm}
-                                              underlayColor="#162247">
+                            {/*登录按钮*/}
+                            <TouchableOpacity style={loginStyles.loginButton} onPress={this.props.submitForm} underlayColor="#162247">
                                 <Text style={loginStyles.loginButtonText}>登录</Text>
-
                             </TouchableOpacity>
-                            <TouchableOpacity underlayColor="transparent"
-                                              hitSlop={{top: 0, left: 5, right: 0, bottom: 15}}
-                                              onPress={() => {
-                                                  AppNavigate.navigate('ResetPwdActivity')
-                                              }}>
-                                <Text style={loginStyles.loginForgetPwd}>忘记密码 >></Text>
-                            </TouchableOpacity>
-                            <Text style={loginStyles.copyright}>
-                                2022 © MAGI Business Mgmt System. Ver {systemConfig.version}
-                            </Text>
                         </ImageBackground>
+                        {/*联合品牌*/}
+                        <Image resizeMethod="resize"
+                               style={loginStyles.unionBrands}
+                               source={require("@imgPath/login-brands.png")}></Image>
+                        {/*版权*/}
+                        <Text style={loginStyles.copyright}>
+                            2022 © MAGI Business Mgmt System. Ver {systemConfig.version}
+                        </Text>
                     </ImageBackground>
                 </KeyboardAvoidingView>
             </View>

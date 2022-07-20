@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableHighlight, View} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import {BottomCopyModule, ModalLoadingIndicator} from "../../components";
-import {resetPwdStyles} from '../../styles';
+import {loginStyles, resetPwdStyles} from '../../styles';
 import {resetpwdSendCodeAction, resetpwdSubmitAction} from '../../actions';
 import {AppNavigate} from "../../navigators";
 
@@ -33,7 +33,7 @@ class ResetPwdView extends React.Component {
             checkCodeBtnBg:TextInputData.checkCodeBtnBg.imgUrl,
             inputWarningIcon:TextInputData.inputWarningIcon.imgUrl,
             timerCount: 60,
-            timerTitle: '获取验证码',
+            timerTitle: '获取',
             counting: false
         }
     }
@@ -224,108 +224,129 @@ class ResetPwdView extends React.Component {
             <View style={ resetPwdStyles.container }>
                 <ModalLoadingIndicator loading={ this.props.activityStatus.loading } />
                 <KeyboardAvoidingView behavior="padding" style={resetPwdStyles.keyboardView}>
-                    <ImageBackground style={resetPwdStyles.inputBox} source={this.state.unameBg}>
-                        <TextInput style={resetPwdStyles.textInput}
-                            keyboardType="default"
-                            underlineColorAndroid="transparent"
-                            maxLength={20} placeholder="账户名称"
-                            placeholderTextColor="#9C9C9C"
-                            onFocus={this.changeElemBg.bind(this,'unameBg','in')}
-                            onBlur={this.changeElemBg.bind(this,'unameBg','out')}
-                            onChangeText={this.inputChange.bind(this, 'uname')}>
-                        </TextInput>
-                        <Image resizeMethod="resize"  style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden } source={this.state.inputWarningIcon}/>
-                        <Text style={ this.state.unameError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden }>
-                            账户名称不能为空
-                        </Text>
-                    </ImageBackground>
-                    <ImageBackground style={resetPwdStyles.inputBoxMargin} source={this.state.pwdBg}>
-                        <TextInput style={resetPwdStyles.textInput}
-                            secureTextEntry={ true }
-                            underlineColorAndroid="transparent"
-                            minLength={6}
-                            maxLength={20} placeholder="新密码"
-                            placeholderTextColor="#9C9C9C"
-                            onFocus={this.changeElemBg.bind(this,'pwdBg','in')}
-                            onBlur={this.changeElemBg.bind(this,'pwdBg','out')}
-                            onChangeText={this.inputChange.bind(this, 'pwd')}>
-                        </TextInput>
-                        <Image resizeMethod="resize"  style={ this.state.pwdError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden } source={this.state.inputWarningIcon}></Image>
-                        <Text style={ this.state.pwdError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden }>
-                            {this.state.pwdTips}
-                        </Text>
-                    </ImageBackground>
-                    <ImageBackground style={resetPwdStyles.inputBoxMargin} source={this.state.npwdBg}>
-                        <TextInput style={resetPwdStyles.textInput}
-                            secureTextEntry={ true }
-                            underlineColorAndroid="transparent"
-                            minLength={6}
-                            maxLength={20} placeholder="确认密码"
-                            placeholderTextColor="#9C9C9C"
-                            onFocus={this.changeElemBg.bind(this,'npwdBg','in')}
-                            onBlur={this.changeElemBg.bind(this,'npwdBg','out')}
-                            onChangeText={this.inputChange.bind(this, 'npwd')}>
-                        </TextInput>
-                        <Image resizeMethod="resize"  style={ this.state.npwdError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden } source={this.state.inputWarningIcon}></Image>
-                        <Text style={ this.state.npwdError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden }>
-                            {this.state.samePwd? "确认密码不能为空":"两次密码不一致"}
-                        </Text>
-                    </ImageBackground>
-                    <ImageBackground style={resetPwdStyles.inputBoxMargin} source={this.state.phoneBg}>
-                        <TextInput style={resetPwdStyles.textInput}
-                            keyboardType="phone-pad"
-                            underlineColorAndroid="transparent"
-                            minLength={6}
-                            maxLength={11} placeholder="手机号"
-                            placeholderTextColor="#9C9C9C"
-                            onFocus={this.changeElemBg.bind(this,'phoneBg','in')}
-                            onBlur={this.changeElemBg.bind(this,'phoneBg','out')}
-                            onChangeText={this.inputChange.bind(this, 'phone')}>
-                        </TextInput>
-                        <Image resizeMethod="resize"  style={ this.state.phoneError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden } source={this.state.inputWarningIcon}></Image>
-                        <Text style={ this.state.phoneError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden }>
-                            手机号不能为空
-                        </Text>
-                    </ImageBackground>
-                    <View style={resetPwdStyles.checkCodeBox}>
-                        <ImageBackground style={resetPwdStyles.checkCodeInputBg} source={this.state.checkcodeBg}>
-                            <TextInput style={resetPwdStyles.checkCodeInput}
-                                keyboardType="numeric"
-                                underlineColorAndroid="transparent"
-                                minLength={4}
-                                maxLength={8} placeholder="验证码"
-                                placeholderTextColor="#9C9C9C"
-                                onFocus={this.changeElemBg.bind(this,'checkcodeBg','in')}
-                                onBlur={this.changeElemBg.bind(this,'checkcodeBg','out')}
-                                onChangeText={this.inputChange.bind(this, 'checkcode')}>
-                            </TextInput>
-                            <Image resizeMethod="resize"  style={ this.state.checkcodeError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden } source={this.state.inputWarningIcon}></Image>
-                            <Text style={ this.state.checkcodeError ? resetPwdStyles.textInputTipsCheckCode : resetPwdStyles.hidden }>
-                                验证码不能为空
-                            </Text>
-                        </ImageBackground>
-                        <TouchableHighlight underlayColor="transparent"
-                            onPressIn={this.changeElemBg.bind(this,'checkCodeBtnBg','in')}
-                            onPressOut={this.changeElemBg.bind(this,'checkCodeBtnBg','out')}
-                            onPress={this.sendCheckCode.bind(this)}>
-                            <ImageBackground style={resetPwdStyles.checkCodeBtn}  source={this.state.checkCodeBtnBg}>
-                                <Text style={ resetPwdStyles.checkCodeBtnText }>{this.state.timerTitle}</Text>
+                    <ImageBackground style={resetPwdStyles.loginWrapper} resizeMode={'cover'} source={require("@imgPath/login-background.png")}>
+                        <ImageBackground style={resetPwdStyles.loginBox}>
+                            <TouchableHighlight style={resetPwdStyles.submitBtnBack} underlayColor="#aaaaaa" onPress={()=>{AppNavigate.goBack()}}>
+                                <Text style={resetPwdStyles.submitBtnBackText}>x</Text>
+                            </TouchableHighlight>
+                            <Text style={resetPwdStyles.titleWrap}>重设密码</Text>
+                            <ImageBackground style={[resetPwdStyles.inputBox, resetPwdStyles.inputBoxFirst]}>
+                                <TextInput style={resetPwdStyles.textInput}
+                                           keyboardType="default"
+                                           underlineColorAndroid="transparent"
+                                           maxLength={20}
+                                           placeholder="账户名称"
+                                           placeholderTextColor="#fff"
+                                           onChangeText={this.inputChange.bind(this, 'uname')}>
+                                </TextInput>
+                                <Image resizeMethod="resize" style={resetPwdStyles.textInputIcon} source={require("@imgPath/login-uname.png")}></Image>
+                                <View style={this.state.unameError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden}>
+                                    <Image resizeMethod="resize"
+                                           style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden }
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={resetPwdStyles.inputTextContent}>
+                                        账户名不能为空
+                                    </Text>
+                                </View>
                             </ImageBackground>
-                        </TouchableHighlight>
-                    </View>
+                            <ImageBackground style={[resetPwdStyles.inputBox, resetPwdStyles.inputBoxOthers]}>
+                                <TextInput style={resetPwdStyles.textInput}
+                                           secureTextEntry={ true }
+                                           underlineColorAndroid="transparent"
+                                           minLength={6}
+                                           maxLength={20} placeholder="新密码"
+                                           placeholderTextColor="#fff"
+                                           onChangeText={this.inputChange.bind(this, 'pwd')}>
+                                </TextInput>
 
-                    <View style={resetPwdStyles.submitBox}>
-                        <TouchableHighlight style={resetPwdStyles.submitBtnBack} underlayColor="#aaaaaa" onPress={()=>{
-                            AppNavigate.goBack()
-                        }}>
-                            <Text style={resetPwdStyles.submitBtnBackText}>返回上页</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight style={resetPwdStyles.submitBtnSave} underlayColor="#162247" onPress={this.resetPasswd.bind(this)}>
-                            <Text style={resetPwdStyles.submitBtnSaveText}>重置密码</Text>
-                        </TouchableHighlight>
-                    </View>
+                                <Image resizeMethod="resize" style={resetPwdStyles.textInputIcon} source={require("@imgPath/login-pwd.png")}></Image>
+                                <View style={this.state.pwdError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden}>
+                                    <Image resizeMethod="resize"
+                                           style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden }
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={resetPwdStyles.inputTextContent}>
+                                        {this.state.pwdTips}
+                                    </Text>
+                                </View>
+                            </ImageBackground>
+                            <ImageBackground style={[resetPwdStyles.inputBox, resetPwdStyles.inputBoxOthers]}>
+                                <TextInput style={resetPwdStyles.textInput}
+                                           secureTextEntry={ true }
+                                           underlineColorAndroid="transparent"
+                                           minLength={6}
+                                           maxLength={20} placeholder="确认密码"
+                                           placeholderTextColor="#fff"
+                                           onChangeText={this.inputChange.bind(this, 'npwd')}>
+                                </TextInput>
+                                <Image resizeMethod="resize" style={resetPwdStyles.textInputIcon} source={require("@imgPath/login-cpwd.png")}></Image>
+                                <View style={this.state.npwdError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden}>
+                                    <Image resizeMethod="resize"
+                                           style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden }
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={resetPwdStyles.inputTextContent}>
+                                        {this.state.samePwd? "确认密码不能空":"两次密码不一致"}
+                                    </Text>
+                                </View>
+                            </ImageBackground>
+                            <ImageBackground style={[resetPwdStyles.inputBox, resetPwdStyles.inputBoxOthers]}>
+                                <TextInput style={resetPwdStyles.textInput}
+                                           keyboardType="phone-pad"
+                                           underlineColorAndroid="transparent"
+                                           minLength={6}
+                                           maxLength={11} placeholder="手机号"
+                                           placeholderTextColor="#fff"
+                                           onChangeText={this.inputChange.bind(this, 'phone')}>
+                                </TextInput>
+
+                                <Image resizeMethod="resize" style={resetPwdStyles.textInputIcon} source={require("@imgPath/login-phone.png")}></Image>
+                                <View style={this.state.phoneError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden}>
+                                    <Image resizeMethod="resize"
+                                           style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden }
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={resetPwdStyles.inputTextContent}>
+                                        手机号不能为空
+                                    </Text>
+                                </View>
+                            </ImageBackground>
+                            <View style={[resetPwdStyles.checkCodeBox, resetPwdStyles.inputBoxOthers]}>
+                                <ImageBackground style={resetPwdStyles.checkCodeInputBg}>
+                                    <TextInput style={resetPwdStyles.checkCodeInput}
+                                               keyboardType="numeric"
+                                               underlineColorAndroid="transparent"
+                                               minLength={4}
+                                               maxLength={8} placeholder="验证码"
+                                               placeholderTextColor="#fff"
+                                               onChangeText={this.inputChange.bind(this, 'checkcode')}>
+                                    </TextInput>
+                                </ImageBackground>
+                                <TouchableHighlight underlayColor="transparent"
+                                                    onPress={this.sendCheckCode.bind(this)}>
+                                    <ImageBackground style={resetPwdStyles.checkCodeBtn}>
+                                        <Text style={ resetPwdStyles.checkCodeBtnText }>{this.state.timerTitle}</Text>
+                                    </ImageBackground>
+                                </TouchableHighlight>
+                                <View style={this.state.checkcodeError ? resetPwdStyles.textInputTips : resetPwdStyles.hidden}>
+                                    <Image resizeMethod="resize"
+                                           style={ this.state.unameError ? resetPwdStyles.textInputWarningIcon : resetPwdStyles.hidden }
+                                           source={require("@imgPath/login-warning.png")}></Image>
+                                    <Text style={resetPwdStyles.inputTextContent}>
+                                        验证码不能为空
+                                    </Text>
+                                </View>
+                            </View>
+                            {/*重置*/}
+                            <View style={[resetPwdStyles.submitBox, resetPwdStyles.inputBoxOthers]}>
+                                <TouchableHighlight style={resetPwdStyles.submitBtnSave} underlayColor="#162247" onPress={this.resetPasswd.bind(this)}>
+                                    <Text style={resetPwdStyles.submitBtnSaveText}>重置密码</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </ImageBackground>
+                        {/*联合品牌*/}
+                        <Image resizeMethod="resize"
+                               style={loginStyles.unionBrands}
+                               source={require("@imgPath/login-brands.png")}></Image>
+                    </ImageBackground>
                 </KeyboardAvoidingView>
-                <BottomCopyModule/>
             </View>
         )
     }
@@ -375,7 +396,7 @@ const verfyUserInput = (self, toCheckCode=false)=>{
     if(self.state.pwd.length<1){
         backData.pwdError = true;
         valid = false;
-        backData.pwdTips = "密码不能为空";
+        backData.pwdTips = "新密码不能为空";
     }else if(!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(self.state.pwd)){
         backData.pwdTips = "密码为6-20位字母与数字的组合";
         backData.pwdError = true;
