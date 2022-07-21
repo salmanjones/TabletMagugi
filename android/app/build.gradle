@@ -230,9 +230,9 @@ android {
         }
         release {
             storeFile file('../magi.keystore')
-            storePassword 'magi#android@sysadmin!@#~'
-            keyAlias 'android.keystore'
-            keyPassword 'magi#android@sysadmin!@#~'
+            storePassword 'MAGI@MAGUGI#SUCCED'
+            keyAlias 'magikey'
+            keyPassword 'MAGI@MAGUGI#SUCCED'
         }
     }
     buildTypes {
