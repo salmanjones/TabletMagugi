@@ -132,12 +132,12 @@ class Login extends React.Component {
                         <Image resizeMethod="resize"
                                style={loginStyles.unionBrands}
                                source={require("@imgPath/login-brands.png")}></Image>
-                        {/*版权*/}
-                        <Text style={loginStyles.copyright}>
-                            2022 © MAGI Business Mgmt System. Ver {systemConfig.version}
-                        </Text>
                     </ImageBackground>
                 </KeyboardAvoidingView>
+                {/*版权*/}
+                <Text style={loginStyles.copyright}>
+                    2022 © MAGI Business Mgmt System. Ver {systemConfig.version}
+                </Text>
             </View>
         )
     }
