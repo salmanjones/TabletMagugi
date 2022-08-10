@@ -120,7 +120,7 @@ class CashierBillingView extends React.Component {
         const self = this;
         const {navigation} = this.props;
         const {params} = this.props.route;
-        let userInfo = this.props.auth.userInfo;
+        let userInfo = this.props.auth.userInfo || {};
 
         // 移除缓存的会员识别数据
         AsyncStorage.removeItem("queryMemberInfo")
@@ -562,6 +562,11 @@ class CashierBillingView extends React.Component {
 
     //添加消费项
     addConsumeItem(itemInfo) {
+        if(itemInfo.canUse === false){
+            Alert.alert(`此卡项目不可跨店消费`);
+            return
+        }
+
         this.setState((prevState, props) => {
             //服务人信息
             itemInfo.assistStaffDetail = [defaultServicer(), defaultServicer(), defaultServicer()];
@@ -1771,7 +1776,8 @@ class CashierBillingView extends React.Component {
                                                                           itemNum: 1,
                                                                           itemType: 'proj',
                                                                           isChoosed: false,
-                                                                          unitType: ''
+                                                                          unitType: '',
+                                                                          canUse: true
                                                                       })}>
                                                         <View style={cashierBillingStyle.addServicerLiBox}>
                                                             <Text style={cashierBillingStyle.addServicerName}
@@ -1895,7 +1901,8 @@ class CashierBillingView extends React.Component {
                                                                           itemNum: 1,
                                                                           itemType: 'item',
                                                                           isChoosed: false,
-                                                                          unitType: '1'
+                                                                          unitType: '1',
+                                                                          canUse: true
                                                                       })}>
                                                         <View style={cashierBillingStyle.addServicerLiBox}>
                                                             <Text style={cashierBillingStyle.addServicerName}
@@ -1948,8 +1955,7 @@ class CashierBillingView extends React.Component {
                                             )
                                     }
 
-                                    <View
-                                        style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
+                                    <View style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
                                         <View style={addCardItemStyles.addCardItemStylesTitle}>
                                             <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
                                                 <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
@@ -1958,7 +1964,7 @@ class CashierBillingView extends React.Component {
                                             </TouchableOpacity>
                                             <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
                                                 <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    原价
+                                                    开卡门店
                                                 </Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
@@ -1966,9 +1972,14 @@ class CashierBillingView extends React.Component {
                                                     次卡信息
                                                 </Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
+                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiBalance}>
                                                 <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
                                                     余次
+                                                </Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
+                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                    是否可用
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>
@@ -1976,6 +1987,17 @@ class CashierBillingView extends React.Component {
                                             <ScrollView>
                                                 {
                                                     this.state.timesProjectDatas.map((project, index) => {
+                                                        let isCross = project.isCross  //0允许 1不允许 -1不限定
+                                                        let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(","):[] //跨店消费门店
+                                                        let currStoreId = this.state.storeId
+
+                                                        // 当前卡是否可用
+                                                        let canUse = true
+                                                        let validStores =  crossStores.filter(item=>item==currStoreId)
+                                                        if(isCross != "1" && crossStores.length > 0 && validStores.length < 1){
+                                                            canUse = false
+                                                        }
+
                                                         return (
                                                             <TouchableOpacity
                                                                 style={addCardItemStyles.addCardItemStylesList}
@@ -1989,28 +2011,28 @@ class CashierBillingView extends React.Component {
                                                                     itemType: 'card',
                                                                     isChoosed: false,
                                                                     unitType: '',
-                                                                    vipCardNo: project.vipCardNo
+                                                                    vipCardNo: project.vipCardNo,
+                                                                    canUse
                                                                 })}>
-                                                                <View
-                                                                    style={addCardItemStyles.addCardItemStylesListNameBox}>
-                                                                    <Text
-                                                                        style={addCardItemStyles.addCardItemStylesListName}>
+                                                                <View style={addCardItemStyles.addCardItemStylesListNameBox}>
+                                                                    <Text style={canUse ? addCardItemStyles.addCardItemStylesListName: addCardItemStyles.addCardItemStylesListNameGray}>
                                                                         {project.projName}
                                                                     </Text>
                                                                 </View>
-                                                                <Text
-                                                                    style={addCardItemStyles.addCardItemStylesListPrice}>
-                                                                    {project.price}
+                                                                <Text style={canUse ? addCardItemStyles.addCardItemStylesListTime : addCardItemStyles.addCardItemStylesListTimeGray}>
+                                                                    {project.storeName}
                                                                 </Text>
-                                                                <View
-                                                                    style={addCardItemStyles.addCardItemStylesListInfoBox}>
-                                                                    <Text
-                                                                        style={addCardItemStyles.addCardItemStylesListInfo}>
+                                                                <View style={addCardItemStyles.addCardItemStylesListInfoBox}>
+                                                                    <Text style={canUse ? addCardItemStyles.addCardItemStylesListInfo:addCardItemStyles.addCardItemStylesListInfoGray}>
                                                                         {project.cardName}
                                                                     </Text>
                                                                 </View>
-                                                                <Text
-                                                                    style={addCardItemStyles.addCardItemStylesListTime}>{project.blance}次</Text>
+                                                                <Text style={ canUse ? addCardItemStyles.addCardItemStylesBalance:addCardItemStyles.addCardItemStylesBalanceGray}>
+                                                                    {project.blance}次
+                                                                </Text>
+                                                                <Text style={canUse ? addCardItemStyles.addCardItemStylesListPrice:addCardItemStyles.addCardItemStylesListPriceGray}>
+                                                                    {canUse ? '可用':'不可跨店消费'}
+                                                                </Text>
                                                             </TouchableOpacity>
                                                         )
                                                     })
@@ -2782,18 +2804,32 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
 
         //取次卡项目
         if (cardType == '2') {
+            console.log("############################")
+            console.log("共有会员卡：" + vipcardArray.length)
+            console.log(cardInfo.vipCardName + "有项目:" + cardInfo.attachProjectList.length)
+            console.log("############################")
+
             let projDatas = cardInfo.attachProjectList;
             let projDetails = cardInfo.details;
             if (projDatas && projDatas.length > 0) {
                 for (let m = 0; m < projDatas.length; m++) {
                     let projectInfo = projDatas[m];
                     let showBlock = {};
+
                     showBlock.projId = projectInfo.projectTemplateId;
                     showBlock.projName = projectInfo.projectName;
                     showBlock.cardName = cardInfo.vipCardName;
                     showBlock.vipCardNo = cardInfo.vipCardNo;
                     showBlock.consumeMode = cardInfo.consumeMode;
                     showBlock.remark = cardInfo.remark;
+                    showBlock.storeId = cardInfo.storeId;
+                    showBlock.storeName = cardInfo.storeName;
+
+                    // 是否可以跨店
+                    let detailsMap = cardInfo.detailsMap
+                    showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
+                    showBlock.isCross = detailsMap.isCross;
+
                     // 1套餐卡（服务项目次数）
                     if (cardInfo.consumeMode == '1') {
                         showBlock.blance = projectInfo.balance;
@@ -2823,6 +2859,14 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                         showBlock.vipCardNo = cardInfo.vipCardNo;
                         showBlock.remark = cardInfo.remark;
                         showBlock.consumeMode = cardInfo.consumeMode;
+                        showBlock.storeId = cardInfo.storeId;
+                        showBlock.storeName = cardInfo.storeName;
+
+                        // 是否可以跨店
+                        let detailsMap = cardInfo.detailsMap
+                        showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
+                        showBlock.isCross = detailsMap.isCross;
+
                         if (cardInfo.consumeMode == '1') {
                             showBlock.blance = projectInfo.balance;
                         } else {
@@ -2841,12 +2885,21 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                     for (let k = 0; k < projects.length; k++) {
                         let projectInfo = projects[k];
                         let showBlock = {};
+
                         showBlock.projId = projectInfo.projectId;
                         showBlock.projName = projectInfo.projectName;
                         showBlock.cardName = cardInfo.vipCardName;
                         showBlock.vipCardNo = cardInfo.vipCardNo;
                         showBlock.remark = cardInfo.remark;
                         showBlock.consumeMode = cardInfo.consumeMode;
+                        showBlock.storeId = cardInfo.storeId;
+                        showBlock.storeName = cardInfo.storeName;
+
+                        // 是否可以跨店
+                        let detailsMap = cardInfo.detailsMap
+                        showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
+                        showBlock.isCross = detailsMap.isCross;
+
                         if (cardInfo.consumeMode == '1') {
                             showBlock.blance = projectInfo.balance;
                         } else {
@@ -2885,6 +2938,11 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                         showBlock.remark = searchTimesCardProjectMap.remark;
                         showBlock.blance = searchTimesCardProjectMap.blance;
                         showBlock.consumeMode = searchTimesCardProjectMap.consumeMode;
+                        showBlock.storeId = searchTimesCardProjectMap.storeId;
+                        showBlock.storeName = searchTimesCardProjectMap.storeName;
+                        showBlock.crossConsumeStores = searchTimesCardProjectMap.crossConsumeStores;
+                        showBlock.isCross = searchTimesCardProjectMap.isCross;
+
                         timesCardProjectList.push(showBlock);
                     }
                 }
@@ -3801,17 +3859,6 @@ const showToast = (message) => {
         delay: 0,
     });
 };
-
-//判定对象是否
-const imEmpty = (obj) => {
-    let count = 0;
-    for (let key in obj) {
-        count++;
-        break;
-    }
-
-    return count > 0;
-}
 
 //按配置计算价格小数点
 var priceFixed = function (price) {

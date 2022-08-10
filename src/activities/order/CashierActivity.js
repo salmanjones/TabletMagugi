@@ -323,7 +323,7 @@ class CashierView extends React.Component {
     };
 
     render() {
-        let userInfo = this.props.auth.userInfo;
+        let userInfo = this.props.auth.userInfo || {};
         let isSynthesis = userInfo.isSynthesis; //0专业店 1综合店
         let operatorCategorys = userInfo.operateCategory;
 
@@ -786,12 +786,12 @@ const CategoryViews = props => {
     if (isSynthesis == '0') {
         let totalSize = categorys.length;
         return (
-            <View style={cashierStyles.orderGenreBox}>
+            <View style={ cashierStyles.orderGenreBox}>
                 {categorys.map((item, index) => {
                     let deptId = item.deptId;
                     let operatorId = item.value;
                     let operatorText = item.text;
-                    let operatorStyle = [cashierStyles.orderGenre];
+                    let operatorStyle = totalSize > 3 ? [cashierStyles.orderGenreMin]:[cashierStyles.orderGenre];
                     let operatorType = 'hair';
                     let operatorImg = require('@imgPath/hairdresser.png');
                     let operatorImgStyle = cashierStyles.orderGenreImg;

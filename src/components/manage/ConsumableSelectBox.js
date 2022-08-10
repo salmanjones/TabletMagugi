@@ -25,7 +25,7 @@ class ConsumableSelectBox extends PureComponent {
 	}
 
 	componentDidMount() {
-		let userInfo = this.props.auth.userInfo;
+		let userInfo = this.props.auth.userInfo || {};
         let isSynthesis = userInfo.isSynthesis==='1'; //0专业店 1综合店
 		this.props.LoadData(isSynthesis?'all':this.props.primeCategoryId.toString());
 	}

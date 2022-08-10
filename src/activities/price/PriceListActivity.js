@@ -256,7 +256,7 @@ class PriceList extends React.Component {
                 }
 
                 let operatorText = '开单';
-                let userInfo = this.props.auth.userInfo;
+                let userInfo = this.props.auth.userInfo || {};
 
                 let isSynthesis = userInfo.isSynthesis; //0专业店 1综合店
                 let operatorId = userInfo.operateCategory[0].value; //都先处理为综合店 取第一个分类

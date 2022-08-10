@@ -123,8 +123,23 @@ export const cashierStyles = StyleSheet.create({
         alignItems: 'center',
         width: PixelUtil.rect(240, 100).width,
         height: PixelUtil.rect(240, 100).height,
-        marginLeft: PixelUtil.size(30),
-        marginRight: PixelUtil.size(30),
+        marginLeft: PixelUtil.size(25),
+        marginRight: PixelUtil.size(25),
+        marginBottom: PixelUtil.size(30)
+    },
+    orderGenreMin: {
+        borderWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+        borderColor: '#111C3C',
+        borderRadius: PixelUtil.size(8),
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: PixelUtil.rect(205, 100).width,
+        height: PixelUtil.rect(205, 100).height,
+        marginLeft: PixelUtil.size(25),
+        marginRight: PixelUtil.size(25),
         marginBottom: PixelUtil.size(30)
     },
     orderGenreImg: {

@@ -1,6 +1,8 @@
+// 美界私有化
 const devHost = 'https://magi.magugi.com';
 const prodHost = 'https://magi.magugi.com';
 
+// 自测
 // const devHost = 'http://192.168.1.2:8090/bms';
 // const prodHost = 'http://192.168.1.2:8090/bms';
 

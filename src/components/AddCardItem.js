@@ -23,7 +23,7 @@ export class AddCardItem extends React.PureComponent {
           </TouchableOpacity>
           <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
             <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-              次卡信息
+              次卡信息2
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
