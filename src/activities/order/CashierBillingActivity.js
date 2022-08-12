@@ -164,7 +164,7 @@ class CashierBillingView extends React.Component {
                 this.setState((prevState, props) => {
                     prevState.roundMode = roundMode;
                     prevState.companySetting.isUseCash = resultMap.isUseCash;
-                    prevState.accessRights=resultMap.accessRights;
+                    prevState.accessRights = resultMap.accessRights;
                     return prevState
                 });
                 company_roundMode = roundMode;
@@ -200,11 +200,11 @@ class CashierBillingView extends React.Component {
 
                 let {route} = self.props
                 navigation.setOptions({
-                    headerLeft:  () => (
+                    headerLeft: () => (
                         <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
                     ),
-                    headerRight: () =>  (
-                        <HeadeOrderInfoRight navigation={navigation} router={route} />
+                    headerRight: () => (
+                        <HeadeOrderInfoRight navigation={navigation} router={route}/>
                     )
                 })
             });
@@ -487,7 +487,7 @@ class CashierBillingView extends React.Component {
         } else if (nextProps.orderInfo.propChangeType == 'payEndException') {
             showMessage('支付失败,' + nextProps.orderInfo.message);
             reloadOrderInfo(this);
-        } else if(nextProps.orderInfo.propChangeType == 'reloadOrder'){
+        } else if (nextProps.orderInfo.propChangeType == 'reloadOrder') {
             reloadOrderInfo(this);
         } else if (nextProps.orderInfo.propChangeType == 'editConsumable') {
             let itemWithConsumable = nextProps.orderInfo.itemWithConsumable;
@@ -502,10 +502,10 @@ class CashierBillingView extends React.Component {
             this.setState({
                 consumeItems: [...this.state.consumeItems]
             })
-        } else if (nextProps.orderInfo.propChangeType=='deleteOrder'){
+        } else if (nextProps.orderInfo.propChangeType == 'deleteOrder') {
             showMessage('废单成功');
             this.props.resetToCashier();
-        } else if (nextProps.orderInfo.propChangeType=='deleteOrderError'){
+        } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
             showMessage(nextProps.orderInfo.message);
         }
     }
@@ -559,32 +559,30 @@ class CashierBillingView extends React.Component {
         buildFilterDatas(this, filterType, itemtype, index);
     }
 
-
     //添加消费项
     addConsumeItem(itemInfo) {
-        if(itemInfo.canUse === false){
+        if (itemInfo.canUse === false) {
             Alert.alert(`此卡项目不可跨店消费`);
             return
         }
 
+        // 处理消费项
         this.setState((prevState, props) => {
             //服务人信息
             itemInfo.assistStaffDetail = [defaultServicer(), defaultServicer(), defaultServicer()];
             if (prevState.consumeItems.length > 0) {
                 let prevServicer = prevState.consumeItems[prevState.consumeItems.length - 1].assistStaffDetail;
-
-
                 if (itemInfo.itemType == 'item') {
                     itemInfo.assistStaffDetail = [
-                        this.copyServicer(prevServicer[0],{appoint:"false"})
-                        ,this.copyServicer(prevServicer[1],{appoint:"false"})
-                        ,this.copyServicer(prevServicer[2],{appoint:"false"})
+                        this.copyServicer(prevServicer[0], {appoint: "false"})
+                        , this.copyServicer(prevServicer[1], {appoint: "false"})
+                        , this.copyServicer(prevServicer[2], {appoint: "false"})
                     ];
                 } else {
                     itemInfo.assistStaffDetail = [
                         this.copyServicer(prevServicer[0])
-                        ,this.copyServicer(prevServicer[1])
-                        ,this.copyServicer(prevServicer[2])
+                        , this.copyServicer(prevServicer[1])
+                        , this.copyServicer(prevServicer[2])
                     ];
                 }
             }
@@ -596,13 +594,13 @@ class CashierBillingView extends React.Component {
         });
     }
 
-    copyServicer(preServicer,overrideFields){
-        let servicer= Object.assign({}, preServicer, {
+    copyServicer(preServicer, overrideFields) {
+        let servicer = Object.assign({}, preServicer, {
             //appoint: "false"
             ...overrideFields
-           ,performance:""
-           ,workTypeDesc:preServicer.positionInfo
-           ,workTypeId:preServicer.positionId
+            , performance: ""
+            , workTypeDesc: preServicer.positionInfo
+            , workTypeId: preServicer.positionId
         });
 
         delete servicer['staffPerformance'];
@@ -654,18 +652,21 @@ class CashierBillingView extends React.Component {
     }
 
     //修改价格与数量
-    editConsumeItemInfo(num, paidPrice) {
+    editConsumeItemInfo(num, paidPrice, unitType) {
         this.setState((prevState, props) => {
             let itemIndex = prevState.currentEditConsumeItemIndex;
             let itemInfo = prevState.consumeItems[itemIndex];
             itemInfo.itemNum = num;
             if (itemInfo.itemType == 'card') {
                 itemInfo.consumeTimeAmount = num;
+            } else if(itemInfo.itemType == 'item'){
+                itemInfo.unitType = unitType
+                itemInfo.amount = num;
             } else {
                 itemInfo.amount = num;
             }
-            if (paidPrice == '' || paidPrice == 'NaN') {
 
+            if (paidPrice == '' || paidPrice == 'NaN') {
                 itemInfo.paidPrice = '';
                 itemInfo.totalPrice = itemInfo.costPrice;
                 itemInfo.priceType = 0;
@@ -687,6 +688,7 @@ class CashierBillingView extends React.Component {
                     itemInfo.totalPrice = paidPrice;
                     itemInfo.discountPrice = diffMoney;
                 }
+
                 if ((parseFloat(itemInfo.costPrice) - parseFloat(paidPrice)) < 0) {
                     diffMoney = Math.abs(parseFloat(itemInfo.costPrice) - parseFloat(paidPrice));
 
@@ -767,27 +769,27 @@ class CashierBillingView extends React.Component {
     }
 
     //修改服务人
-    editServicer(){
-        const {currentEditConsumeItemIndex,currentEditConsumeServicerIndex,consumeItems}=this.state;
-        let item=consumeItems[currentEditConsumeItemIndex];
+    editServicer() {
+        const {currentEditConsumeItemIndex, currentEditConsumeServicerIndex, consumeItems} = this.state;
+        let item = consumeItems[currentEditConsumeItemIndex];
 
         this.staffEditModal.show({
             ...item
-            ,assistList:item.assistStaffDetail
-            ,service:Number(item.service)
-        },currentEditConsumeServicerIndex);
+            , assistList: item.assistStaffDetail
+            , service: Number(item.service)
+        }, currentEditConsumeServicerIndex);
     }
 
     //修改服务人完成item
-    onSaveEditServicer(item,staffIndex,staff){
+    onSaveEditServicer(item, staffIndex, staff) {
 
-        const {currentEditConsumeItemIndex,currentEditConsumeServicerIndex,consumeItems}=this.state;
+        const {currentEditConsumeItemIndex, currentEditConsumeServicerIndex, consumeItems} = this.state;
 
-        let curItem=consumeItems[currentEditConsumeItemIndex];
-        curItem.assistStaffDetail[currentEditConsumeServicerIndex]={...staff};
-        curItem.assistStaffDetail=[...curItem.assistStaffDetail];
+        let curItem = consumeItems[currentEditConsumeItemIndex];
+        curItem.assistStaffDetail[currentEditConsumeServicerIndex] = {...staff};
+        curItem.assistStaffDetail = [...curItem.assistStaffDetail];
         this.setState({
-            consumeItems:[...this.state.consumeItems]
+            consumeItems: [...this.state.consumeItems]
         });
 
     }
@@ -971,6 +973,8 @@ class CashierBillingView extends React.Component {
             this.props.initOrderFlowNumber();
         } else if (index != -1) {
             //滚动到具体行数
+
+            console.log("滚动到具体行数" + index)
         }
     }
 
@@ -1001,18 +1005,20 @@ class CashierBillingView extends React.Component {
         }
     }
 
-    onDeleteBilling(){
-        let {id,billingNo}=this.state;
+    onDeleteBilling() {
+        let {id, billingNo} = this.state;
 
-        if(id && billingNo){
+        if (id && billingNo) {
             Alert.alert('系统提示', '确定要作废当前单据么？', [
                 {
                     text: '确定',
-                    onPress: () => {this.props.deleteBilling({id,billingNo});},
+                    onPress: () => {
+                        this.props.deleteBilling({id, billingNo});
+                    },
                 },
-                { text: '取消',},
+                {text: '取消',},
             ]);
-        }else{
+        } else {
             showMessage('请先挂单');
         }
     }
@@ -1037,15 +1043,15 @@ class CashierBillingView extends React.Component {
                     sendMsg: false
                 }
 
-                if(channel=='multiply'){//组合支付
+                if (channel == 'multiply') {//组合支付
                     let prevPage = this.props.route.params.prevPage
                     AppNavigate.navigate('MultiPayActivity', {
-                        companySetting:this.state.companySetting,
-                        saveBillingData:data,
-                        items:payComsumeItems,
-                        memberInfo:this.state.memberInfo,
-                        paymentTimesCard:paymentTimesCard,
-                        goBackKey:prevPage,
+                        companySetting: this.state.companySetting,
+                        saveBillingData: data,
+                        items: payComsumeItems,
+                        memberInfo: this.state.memberInfo,
+                        paymentTimesCard: paymentTimesCard,
+                        goBackKey: prevPage,
                         resetToCashier: this.props.resetToCashier
                     });
 
@@ -1344,7 +1350,7 @@ class CashierBillingView extends React.Component {
             memberId: this.state.memberId
         }
 
-        const accessRights=this.state.accessRights;
+        const accessRights = this.state.accessRights;
 
         return (
             <View style={cashierBillingStyle.container}>
@@ -1492,7 +1498,12 @@ class CashierBillingView extends React.Component {
                                         this.state.consumeItems.map((itemInfo, itemIndex) => {
                                             if (itemInfo.itemType != 'consume' && !itemInfo.delFlag) {
                                                 const isProject = itemInfo.itemType == 'proj';
+                                                const isTakeout = itemInfo.itemType == 'item';
                                                 const isCardProject = itemInfo.itemType == 'card';
+                                                const unitInfo = [itemInfo.unitLev1, itemInfo.unit].filter(item=>item!=undefined && item!=null && item.length>0)
+                                                const unitType = parseInt((itemInfo.unitType || "1")) - 1
+                                                const showUnit = unitInfo[unitType] || ""
+                                                const itemNum = isTakeout ? itemInfo.itemNum + "" + showUnit : itemInfo.itemNum
                                                 const consumeCount = itemInfo.consumables ? itemInfo.consumables.filter(x => !x.delFlag).length : 0;
                                                 return (
                                                     <Swipeout key={itemIndex} autoClose={true} backgroundColor="#fff"
@@ -1509,6 +1520,7 @@ class CashierBillingView extends React.Component {
                                                             <View style={cashierBillingStyle.servicerBodyLiBoxO}>
                                                                 <View key={itemIndex}
                                                                       style={[itemInfo.isChoosed ? cashierBillingStyle.servicerBodyLiActive : cashierBillingStyle.servicerBodyLi, cashierBillingStyle.marginLeft]}>
+                                                                    {/*基本信息*/}
                                                                     <TouchableOpacity
                                                                         style={(this.state.currentEditConsumeItemIndex == itemIndex && this.state.currentEditConsumeServicerIndex == -1) ? cashierBillingStyle.showServicerLiActive : cashierBillingStyle.showServicerLi}
                                                                         onPress={this.showEditConsumeItemModal.bind(this, itemIndex)}>
@@ -1526,11 +1538,12 @@ class CashierBillingView extends React.Component {
                                                                                 <Text
                                                                                     style={cashierBillingStyle.showServicerText}>￥{itemInfo.itemPrice}</Text>
                                                                                 <Text
-                                                                                    style={cashierBillingStyle.showServicerText}>x{itemInfo.itemNum}</Text>
+                                                                                    style={cashierBillingStyle.showServicerText}>x{itemNum}</Text>
                                                                             </View>
                                                                         </View>
                                                                     </TouchableOpacity>
                                                                     {
+                                                                        // 服务人员
                                                                         itemInfo.assistStaffDetail.map((serInfo, serIndex) => {
                                                                             return (
                                                                                 <View key={serIndex}
@@ -1624,22 +1637,31 @@ class CashierBillingView extends React.Component {
 
                             </View>
                             {/* 支付信息 */}
-                            <View style={consumeItemLength < 1 ? [cashierBillingStyle.paymentInfoWarp, cashierBillingStyle.hidden] : [cashierBillingStyle.paymentInfoWarp]}>
+                            <View
+                                style={consumeItemLength < 1 ? [cashierBillingStyle.paymentInfoWarp, cashierBillingStyle.hidden] : [cashierBillingStyle.paymentInfoWarp]}>
                                 {/* 操作区域 */}
                                 <View style={cashierBillingStyle.paymentInfoLeft}>
-                                    <Text style={cashierBillingStyle.showConsumeItemText}>应付：{this.state.totalConsumePrice}</Text>
-                                    <Text style={cashierBillingStyle.showConsumeItemText}>次卡消费：{this.state.totalConsumeNum}项</Text>
+                                    <Text
+                                        style={cashierBillingStyle.showConsumeItemText}>应付：{this.state.totalConsumePrice}</Text>
+                                    <Text
+                                        style={cashierBillingStyle.showConsumeItemText}>次卡消费：{this.state.totalConsumeNum}项</Text>
                                 </View>
                                 <View style={cashierBillingStyle.paymentInfoRight}>
                                     {Boolean(billingInfo.id) && Boolean(billingInfo.billingNo) &&
-                                        <TouchableOpacity style={cashierBillingStyle.paymentScrapList} onPress={this.onDeleteBilling.bind(this)} underlayColor={'transparent'}>
+                                        <TouchableOpacity style={cashierBillingStyle.paymentScrapList}
+                                                          onPress={this.onDeleteBilling.bind(this)}
+                                                          underlayColor={'transparent'}>
                                             <Text style={cashierBillingStyle.consumedBtnText}>废单</Text>
                                         </TouchableOpacity>
                                     }
-                                    <TouchableOpacity style={cashierBillingStyle.paymentSuspendBtn} onPress={this.onSaveOrder.bind(this)} underlayColor={'transparent'}>
+                                    <TouchableOpacity style={cashierBillingStyle.paymentSuspendBtn}
+                                                      onPress={this.onSaveOrder.bind(this)}
+                                                      underlayColor={'transparent'}>
                                         <Text style={cashierBillingStyle.consumedBtnText}>挂单</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={cashierBillingStyle.paymentPayBtn} onPress={this.onCashierOrder.bind(this)} underlayColor={'transparent'}>
+                                    <TouchableOpacity style={cashierBillingStyle.paymentPayBtn}
+                                                      onPress={this.onCashierOrder.bind(this)}
+                                                      underlayColor={'transparent'}>
                                         <Text style={cashierBillingStyle.consumedBtnText}>结单</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -1673,14 +1695,17 @@ class CashierBillingView extends React.Component {
 
                             {/* 项目过滤 */}
                             {this.state.addConsumeType != 'card' && (
-                                <QueryInput onClear={this.searchCancel.bind(this)} maxLength={20} text={this.state.queryInputText} onConfirm={this.searchConfirm.bind(this)} tips={this.state.queryInputTips} type={"cashier"}/>
+                                <QueryInput onClear={this.searchCancel.bind(this)} maxLength={20}
+                                            text={this.state.queryInputText} onConfirm={this.searchConfirm.bind(this)}
+                                            tips={this.state.queryInputTips} type={"cashier"}/>
                             )}
                         </View>
                         {/* 项目/外卖/服务项 */}
                         <View style={cashierBillingStyle.consumeBoxBorder}>
                             {/* 项目价格 */}
                             {this.state.addConsumeType == 'proj' && (
-                                <View style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
+                                <View
+                                    style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
                                     <View style={cashierBillingStyle.priceAllQuery}>
                                         <TouchableOpacity
                                             onPress={this.filterConsumeItem.bind(this, 'price', 'proj', "-1", -1)}
@@ -1890,6 +1915,7 @@ class CashierBillingView extends React.Component {
                                             keyExtractor={item => item}
                                             renderItem={({item}) => {
                                                 let takeItem = this.state.allItemDatas[item];
+
                                                 return (
                                                     <TouchableOpacity style={cashierBillingStyle.addServicerLi}
                                                                       key={item}
@@ -1955,7 +1981,8 @@ class CashierBillingView extends React.Component {
                                             )
                                     }
 
-                                    <View style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
+                                    <View
+                                        style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
                                         <View style={addCardItemStyles.addCardItemStylesTitle}>
                                             <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
                                                 <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
@@ -1988,13 +2015,13 @@ class CashierBillingView extends React.Component {
                                                 {
                                                     this.state.timesProjectDatas.map((project, index) => {
                                                         let isCross = project.isCross  //0允许 1不允许 -1不限定
-                                                        let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(","):[] //跨店消费门店
+                                                        let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(",") : [] //跨店消费门店
                                                         let currStoreId = this.state.storeId
 
                                                         // 当前卡是否可用
                                                         let canUse = true
-                                                        let validStores =  crossStores.filter(item=>item==currStoreId)
-                                                        if(isCross != "1" && crossStores.length > 0 && validStores.length < 1){
+                                                        let validStores = crossStores.filter(item => item == currStoreId)
+                                                        if (isCross != "1" && crossStores.length > 0 && validStores.length < 1) {
                                                             canUse = false
                                                         }
 
@@ -2014,24 +2041,31 @@ class CashierBillingView extends React.Component {
                                                                     vipCardNo: project.vipCardNo,
                                                                     canUse
                                                                 })}>
-                                                                <View style={addCardItemStyles.addCardItemStylesListNameBox}>
-                                                                    <Text style={canUse ? addCardItemStyles.addCardItemStylesListName: addCardItemStyles.addCardItemStylesListNameGray}>
+                                                                <View
+                                                                    style={addCardItemStyles.addCardItemStylesListNameBox}>
+                                                                    <Text
+                                                                        style={canUse ? addCardItemStyles.addCardItemStylesListName : addCardItemStyles.addCardItemStylesListNameGray}>
                                                                         {project.projName}
                                                                     </Text>
                                                                 </View>
-                                                                <Text style={canUse ? addCardItemStyles.addCardItemStylesListTime : addCardItemStyles.addCardItemStylesListTimeGray}>
+                                                                <Text
+                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListTime : addCardItemStyles.addCardItemStylesListTimeGray}>
                                                                     {project.storeName}
                                                                 </Text>
-                                                                <View style={addCardItemStyles.addCardItemStylesListInfoBox}>
-                                                                    <Text style={canUse ? addCardItemStyles.addCardItemStylesListInfo:addCardItemStyles.addCardItemStylesListInfoGray}>
+                                                                <View
+                                                                    style={addCardItemStyles.addCardItemStylesListInfoBox}>
+                                                                    <Text
+                                                                        style={canUse ? addCardItemStyles.addCardItemStylesListInfo : addCardItemStyles.addCardItemStylesListInfoGray}>
                                                                         {project.cardName}
                                                                     </Text>
                                                                 </View>
-                                                                <Text style={ canUse ? addCardItemStyles.addCardItemStylesBalance:addCardItemStyles.addCardItemStylesBalanceGray}>
+                                                                <Text
+                                                                    style={canUse ? addCardItemStyles.addCardItemStylesBalance : addCardItemStyles.addCardItemStylesBalanceGray}>
                                                                     {project.blance}次
                                                                 </Text>
-                                                                <Text style={canUse ? addCardItemStyles.addCardItemStylesListPrice:addCardItemStyles.addCardItemStylesListPriceGray}>
-                                                                    {canUse ? '可用':'不可跨店消费'}
+                                                                <Text
+                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListPrice : addCardItemStyles.addCardItemStylesListPriceGray}>
+                                                                    {canUse ? '可用' : '不可跨店消费'}
                                                                 </Text>
                                                             </TouchableOpacity>
                                                         )
@@ -2083,13 +2117,14 @@ class CashierBillingView extends React.Component {
                                     <SectionList noItems={true}/>
                                 </View>
                             }
-                            <View  style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ? cashierBillingStyle.servicerInfoBodyNew : cashierBillingStyle.hidden}>
+                            <View
+                                style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ? cashierBillingStyle.servicerInfoBodyNew : cashierBillingStyle.hidden}>
                                 <View style={cashierBillingStyle.servicerInfoBodyHeight}>
                                     <StaffSelectBox isFilter={this.state.filterServicer}
-                                        filterServicerKey={this.state.filterServicerKey}
-                                        filterServicerData={this.state.currentShowServicerDatas}
-                                        onSelected={this.onStaffSelected.bind(this)}
-                                        clearServicerGridChoose={this.state.clearServicerGridChoose}/>
+                                                    filterServicerKey={this.state.filterServicerKey}
+                                                    filterServicerData={this.state.currentShowServicerDatas}
+                                                    onSelected={this.onStaffSelected.bind(this)}
+                                                    clearServicerGridChoose={this.state.clearServicerGridChoose}/>
                                 </View>
                                 {/* 指定非指定 */}
                                 {
@@ -2106,16 +2141,19 @@ class CashierBillingView extends React.Component {
                                             <View style={cashierBillingStyle.servicerWrap}>
                                                 {/*个人信息*/}
                                                 <View style={cashierBillingStyle.servicerNameInfo}>
-                                                    <Text style={cashierBillingStyle.servicerNameTxt} numberOfLines={2}>{currentServicerInfo.value}</Text>
+                                                    <Text style={cashierBillingStyle.servicerNameTxt}
+                                                          numberOfLines={2}>{currentServicerInfo.value}</Text>
                                                     <View style={cashierBillingStyle.serviceNumber}>
                                                         <Image resizeMethod="resize"
                                                                source={require('@imgPath/store-staff-No.png')}
                                                                style={cashierBillingStyle.storeStaffImg}
                                                                resizeMode={'contain'}/>
-                                                        <Text style={cashierBillingStyle.serviceNumberText} numberOfLines={1}>{currentServicerInfo.storeStaffNo}</Text>
+                                                        <Text style={cashierBillingStyle.serviceNumberText}
+                                                              numberOfLines={1}>{currentServicerInfo.storeStaffNo}</Text>
                                                     </View>
                                                 </View>
-                                                <View style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>
+                                                <View
+                                                    style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>
                                                     <View style={cashierBillingStyle.servicerWayChooseWay}>
                                                         <TouchableOpacity
                                                             style={currentServicerInfo.appoint == 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
@@ -2138,23 +2176,30 @@ class CashierBillingView extends React.Component {
                                                 </View>
                                                 {/*职位*/}
                                                 <View style={cashierBillingStyle.servicerPosition}>
-                                                    <Text style={cashierBillingStyle.servicerPositionText}>{currentServicerInfo.workTypeDesc}</Text>
+                                                    <Text
+                                                        style={cashierBillingStyle.servicerPositionText}>{currentServicerInfo.workTypeDesc}</Text>
                                                 </View>
                                                 {/*业绩｜提成*/}
-                                                <View style={cashierBillingStyle.servicerYeJi} >
-                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1} ellipsizeMode={'tail'}>业绩 {currentServicerInfo.performance || '--'}</Text>
-                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1} ellipsizeMode={'tail'}>提成 {currentServicerInfo.workerFee || '--'}</Text>
+                                                <View style={cashierBillingStyle.servicerYeJi}>
+                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
+                                                          ellipsizeMode={'tail'}>业绩 {currentServicerInfo.performance || '--'}</Text>
+                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
+                                                          ellipsizeMode={'tail'}>提成 {currentServicerInfo.workerFee || '--'}</Text>
                                                 </View>
                                                 <View style={cashierBillingStyle.servicerOperator}>
                                                     {/*编辑*/}
-                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn} onPress={this.editServicer.bind(this)}>
-                                                        <Image resizeMethod="resize" source={require('@imgPath/edit.png')}
+                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
+                                                                      onPress={this.editServicer.bind(this)}>
+                                                        <Image resizeMethod="resize"
+                                                               source={require('@imgPath/edit.png')}
                                                                style={cashierBillingStyle.servicerOperatorEdit}
                                                                resizeMode={'contain'}/>
                                                     </TouchableOpacity>
                                                     {/*删除*/}
-                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn} onPress={this.removeServicer.bind(this)}>
-                                                        <Image resizeMethod="resize" source={require('@imgPath/delete.png')}
+                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
+                                                                      onPress={this.removeServicer.bind(this)}>
+                                                        <Image resizeMethod="resize"
+                                                               source={require('@imgPath/delete.png')}
                                                                style={cashierBillingStyle.servicerOperatorDelete}
                                                                resizeMode={'contain'}/>
                                                     </TouchableOpacity>
@@ -2175,7 +2220,8 @@ class CashierBillingView extends React.Component {
                     </View>
                 </View>
                 {/* ------------会员卡信息------------ */}
-                <View style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
+                <View
+                    style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
                 {
                     this.props.route.params.member && (
                         <Animated.View
@@ -2270,7 +2316,9 @@ class CashierBillingView extends React.Component {
                         </Animated.View>
                     )}
                 {/*------员工编辑--------*/}
-                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => { this.staffEditModal = ref;}} onSave={this.onSaveEditServicer.bind(this)}/>
+                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => {
+                    this.staffEditModal = ref;
+                }} onSave={this.onSaveEditServicer.bind(this)}/>
             </View>
         );
     }
@@ -3242,7 +3290,6 @@ const buildMemberInfos = (self, prevState, memberInfo) => {
     }
 
     var member = memberInfo;
-
     member.userImgUrl = getImage(
         member.imgUrl,
         ImageQutity.member_small,
@@ -3299,7 +3346,6 @@ const buildSubmitData = (self) => {
         showToast('请添加消费项目');
         return {toSubmit: false, data: null, index: -1};
     } else {
-
         //数据有效性
         for (let h = 0; h < consumeDatas.length; h++) {
             let assistStaffDetail = consumeDatas[h].assistStaffDetail;
@@ -3322,6 +3368,9 @@ const buildSubmitData = (self) => {
         let submitConsumeDatas = [];
         //转换消耗
         consumeDatas.forEach(item => {
+            // 移除用于判定的属性，防止后台报错
+            delete item['canUse'];
+            delete item['unitInfo'];
 
             if (item.consumables && item.consumables.length) {
                 item.consumables.forEach(consumeItem => {
@@ -3450,7 +3499,7 @@ function dealTimesCardProjectPaymentGeneral(self, readyData, paymentTimesCard, p
         let paymentTimesCardInfoMap = {};
         for (let i = 0; i < billingDetail.length; i++) {
             let consumeDetail = billingDetail[i];
-            if (consumeDetail && consumeDetail.projectConsumeType == 1 && consumeDetail.delFlag!==true) {
+            if (consumeDetail && consumeDetail.projectConsumeType == 1 && consumeDetail.delFlag !== true) {
                 let timesProject = timesProjectMap[consumeDetail.projectMirror.index];
                 if (!timesProject) {
                     timesProject = {};
@@ -3579,7 +3628,7 @@ const buildPayComsumeItems = (self, readyData) => {
         for (let i = 0; i < billingDetailList.length; i++) {
             let consume = billingDetailList[i];
             let consumeDetail = {};
-            if (!consume.itemId || consume.delFlag==true) {
+            if (!consume.itemId || consume.delFlag == true) {
                 continue;
             }
             consumeDetail.id = consume.id;
@@ -3723,7 +3772,6 @@ const buildTotalPrice = (prevState) => {
     totalPrice = parseFloat(totalPrice).toFixed(prevState.roundMode);
 
     //此处的totalPrice 需要判断计算
-
     return {...prevState, totalConsumePrice: totalPrice.toString(), totalConsumeNum: totalCardProj}
 }
 
@@ -3851,8 +3899,8 @@ const reloadOrderInfo = (self) => {
 //展示提示信息
 const showToast = (message) => {
     Toast.show(message, {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.BOTTOM,
+        duration: Toast.durations.LONG,
+        position: Toast.positions.CENTER,
         shadow: true,
         animation: true,
         hideOnPress: true,
@@ -3862,7 +3910,7 @@ const showToast = (message) => {
 
 //按配置计算价格小数点
 var priceFixed = function (price) {
-    var roundMode = this && this.state? this.state.roundMode : company_roundMode;
+    var roundMode = this && this.state ? this.state.roundMode : company_roundMode;
     if (price) {
         if (roundMode) {
             return parseFloat(price).toFixed(roundMode);
@@ -3922,7 +3970,7 @@ const mapDispatchToProps = (dispatch, props) => {
         getOrderInfo: (flowNumber) => {
             dispatch(cashierBillingGetAction(flowNumber))
         },
-        deleteBilling: (param)=>{
+        deleteBilling: (param) => {
             dispatch(deleteBillingAction(param))
         },
         submitOrderInfo: (billingData, prePayData, payType, channel) => {
@@ -3938,8 +3986,8 @@ const mapDispatchToProps = (dispatch, props) => {
         checkFlowNumber: (params) => {
             dispatch(cashierCheckFlowNumberAction(params))
         },
-        updateCustomerInfo: (orderInfo)=>{
-            dispatch({ type: CASHIERBILLING_CUSTOMER.SUCCESS , orderInfo: orderInfo});
+        updateCustomerInfo: (orderInfo) => {
+            dispatch({type: CASHIERBILLING_CUSTOMER.SUCCESS, orderInfo: orderInfo});
         }
     };
 };

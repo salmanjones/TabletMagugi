@@ -55,7 +55,7 @@ export const amendItemInfoStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     iteminfoBoxItemOther: {
         display: 'flex',
@@ -90,6 +90,13 @@ export const amendItemInfoStyle = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginBottom: PixelUtil.size(24),
+    },
+    AmendTakeoutUnit: {
+        //修改项目-信息-价格
+        marginLeft: PixelUtil.size(40),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     AmendCardItemPriceText: {
         //修改项目-信息-价格-文字

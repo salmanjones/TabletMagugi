@@ -310,6 +310,10 @@ export const cashierBillingStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        width: PixelUtil.rect(284, 100).width,
+        height: PixelUtil.rect(284, 100).height,
+        marginTop: PixelUtil.size(30),
+        borderRadius: PixelUtil.size(20)
     },
     addServicerBodyLiIcon: {
         // 加服务人列-图标

@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SimulateKeyboard} from '../../components';
 //self
-import {amendItemInfoStyle} from '../../styles';
+import {amendItemInfoStyle, manageConsumablesStyle} from '../../styles';
 import {showMessage} from '../../utils'
 
 export class AmendItemInfo extends React.Component {
@@ -29,7 +29,8 @@ export class AmendItemInfo extends React.Component {
             isOnePress:true,
             isNum:0,
             isReceived:0,
-            changType:0
+            changType:0,
+            unitType: props.itemInfo.unitType
         };
     }
 
@@ -177,6 +178,14 @@ export class AmendItemInfo extends React.Component {
         })
     }
 
+    // 更换规格
+    changeUnitType= (unitType)=>{
+        this.setState((preState, props)=>{
+            return {...preState, unitType}
+        })
+    }
+
+    // 确定
     onConfirm = () => {
         let number = this.state.number;
         number = number.length<1?'1':(parseInt(number)<1?'1':number);
@@ -191,10 +200,13 @@ export class AmendItemInfo extends React.Component {
                 return;
             }
         }
-
         cachePaidPrice = parseFloat(cachePaidPrice).toFixed(this.roundMode);
 
-        this.props.editConsumeItemInfo && this.props.editConsumeItemInfo(number ,cachePaidPrice);
+        // 处理规格单位
+        const unitType = this.state.unitType
+
+        // 确定
+        this.props.editConsumeItemInfo && this.props.editConsumeItemInfo(number, cachePaidPrice, unitType);
     };
 
     onCanel = () => {
@@ -262,11 +274,12 @@ export class AmendItemInfo extends React.Component {
                                                 <Text style={amendItemInfoStyle.AmendCardItemCountMinText}>+</Text>
                                             </TouchableOpacity>
                                         </View>
+
                                         {
                                             this.props.itemInfo.itemType != 'card' && this.props.moduleCode == '1' && (
                                                 <View style={amendItemInfoStyle.iteminfoBoxItemLi}>
                                                     <Text style={amendItemInfoStyle.AmendCardItemCountText}>
-                                                    实收：
+                                                        实收：
                                                     </Text>
                                                     <TouchableOpacity activeOpacity={1} style={this.state.isReceived == 0? amendItemInfoStyle.AmendCardItemCountInpBox:amendItemInfoStyle.AmendCardItemCountInpBoxActive} onPress={this.onChangeReceived.bind(this ,1)}>
                                                         <Text style={amendItemInfoStyle.AmendCardItemCountT}>{this.state.cachePaidPrice}</Text>
@@ -274,7 +287,26 @@ export class AmendItemInfo extends React.Component {
                                                 </View>
                                             )
                                         }
+                                        {
+                                            this.props.itemInfo.itemType == 'item' && (
+                                                <View style={amendItemInfoStyle.AmendTakeoutUnit}>
+                                                    <Text style={amendItemInfoStyle.AmendCardItemPriceText}>规格：</Text>
+                                                    <View style={manageConsumablesStyle.unitBox}>
+                                                        <TouchableOpacity
+                                                            onPress={this.changeUnitType.bind(this, "1")}
+                                                            style={this.state.unitType == '1' ? manageConsumablesStyle.unitItemActive: manageConsumablesStyle.unitItem}>
 
+                                                            <Text style={manageConsumablesStyle.unitItemText}>{itemInfo.unitLev1}</Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity
+                                                            onPress={this.changeUnitType.bind(this, "2")}
+                                                            style={this.state.unitType == '2' ? manageConsumablesStyle.unitItemActive: manageConsumablesStyle.unitItem}>
+                                                            <Text style={manageConsumablesStyle.unitItemText}>{itemInfo.unit}</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            )
+                                        }
                                     </View>
                                 </View>
                                 <View style={amendItemInfoStyle.AmendCardItemKeyboard}>
