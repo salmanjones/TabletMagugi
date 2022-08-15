@@ -62,8 +62,6 @@ export const cashierBillingFlowNumberInitAction = refeshTag => {
 export const cashierBillingInitAction = navParams => {
     return (dispatch, getState) => {
         let cachedOrderData = getState().billingOrder.orderData;
-
-
         if (cachedOrderData && cachedOrderData.projectInfo) {
 
             //0专业店 1综合店

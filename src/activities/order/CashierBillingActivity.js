@@ -192,10 +192,6 @@ class CashierBillingView extends React.Component {
                     //来自于开单
                 } else {
                     this.props.initOrderInfo(params);
-
-                    if (params.member && params.member.id) {
-                        this.onMemberConfirm(params.member);
-                    }
                 }
 
                 let {route} = self.props
@@ -225,6 +221,11 @@ class CashierBillingView extends React.Component {
             }
             var params = nextProps.route.params;
             buildDatas(this, orderData, () => {
+                // 处理会员信息：查询会员-->开单
+                if (params.member && params.member.id) {
+                    this.onMemberConfirm(params.member);
+                }
+
                 //加载传入的项目信息 1755117 1904625 1904630
 
                 //params.preLoadItems=[{type:'project',id:1755117,num:2},{type:'item',id:1904625,num:2},{type:'item',id:1904630,num:3}];
@@ -882,7 +883,6 @@ class CashierBillingView extends React.Component {
             buildCardProjDatas(prevState, member.vipStorageCardList);
 
             if (prevState.timesProjectDatas.length > 0) {
-
                 this.cardCount = prevState.timesProjectDatas.length;
                 this.swipConsumeItem('card');
             }
@@ -2852,11 +2852,6 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
 
         //取次卡项目
         if (cardType == '2') {
-            console.log("############################")
-            console.log("共有会员卡：" + vipcardArray.length)
-            console.log(cardInfo.vipCardName + "有项目:" + cardInfo.attachProjectList.length)
-            console.log("############################")
-
             let projDatas = cardInfo.attachProjectList;
             let projDetails = cardInfo.details;
             if (projDatas && projDatas.length > 0) {

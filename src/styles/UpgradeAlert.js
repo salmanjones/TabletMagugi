@@ -1,12 +1,12 @@
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let boxWidth = PixelUtil.screenSize.width * 0.39;
-let boxHeight = PixelUtil.screenSize.height * 0.58;
+let boxWidth = PixelUtil.screenSize.width * 0.3852;
+let boxHeight = PixelUtil.screenSize.height * 0.571;
 let bgImgWidth = boxWidth;
 let bgImgHeight = boxHeight * 0.45;
 let topTitleMargin = bgImgHeight * 0.30
-let footerHeight = PixelUtil.size(120);
+let footerHeight = PixelUtil.size(180);
 let descHeight = boxHeight - bgImgHeight - footerHeight;
 export const UpgradeAlertStyles = StyleSheet.create({
     hidden: {
@@ -38,7 +38,8 @@ export const UpgradeAlertStyles = StyleSheet.create({
     },
     bgImgItem: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        marginTop: PixelUtil.size(-26)
     },
     descTitle: {
         position: 'absolute',
@@ -107,7 +108,7 @@ export const UpgradeAlertStyles = StyleSheet.create({
         lineHeight: PixelUtil.size(64, 1920),
         fontSize: PixelUtil.size(32, 1920),
         borderRadius: PixelUtil.size(34, 1920),
-        backgroundColor: "#111C3C",
+        backgroundColor: "#9963f9",
         color: "#fff",
         textAlign: 'center',
         marginRight: PixelUtil.size(92, 1920),
@@ -119,7 +120,7 @@ export const UpgradeAlertStyles = StyleSheet.create({
         lineHeight: PixelUtil.size(64, 1920),
         fontSize: PixelUtil.size(32, 1920),
         borderRadius: PixelUtil.size(34, 1920),
-        backgroundColor: "#111C3C",
+        backgroundColor: "#9963f9",
         color: "#fff",
         textAlign: 'center',
         overflow: 'hidden'

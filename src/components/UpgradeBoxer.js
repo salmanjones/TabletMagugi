@@ -51,8 +51,7 @@ export class UpgradeBoxer extends React.Component {
                 <View style={UpgradeAlertStyles.container}>
                     <View style={UpgradeAlertStyles.content}>
                         <View style={UpgradeAlertStyles.bgImgWrap}>
-                            <Image style={UpgradeAlertStyles.bgImgItem} resizeMode={'stretch'} resizeMethod="resize"
-                                   source={require('@imgPath/upgrade-boxer-bg.png')}></Image>
+                            <Image style={UpgradeAlertStyles.bgImgItem} resizeMode={'stretch'} resizeMethod="resize" source={require('@imgPath/upgrade-boxer-bg.png')}></Image>
                             <View style={UpgradeAlertStyles.descTitle}>
                                 <Text style={UpgradeAlertStyles.descTitleText}>发现新版本啦</Text>
                                 <Text style={UpgradeAlertStyles.descTitleNumber}>V {version}</Text>
