@@ -52,13 +52,16 @@ export class UpgradeBoxer extends React.Component {
                     <View style={UpgradeAlertStyles.content}>
                         <View style={UpgradeAlertStyles.bgImgWrap}>
                             <Image style={UpgradeAlertStyles.bgImgItem} resizeMode={'stretch'} resizeMethod="resize" source={require('@imgPath/upgrade-boxer-bg.png')}></Image>
-                            <View style={UpgradeAlertStyles.descTitle}>
-                                <Text style={UpgradeAlertStyles.descTitleText}>发现新版本啦</Text>
-                                <Text style={UpgradeAlertStyles.descTitleNumber}>V {version}</Text>
-                            </View>
+                            {/*<View style={UpgradeAlertStyles.descTitle}>*/}
+                            {/*    <Text style={UpgradeAlertStyles.descTitleText}>发现新版本啦</Text>*/}
+                            {/*    <Text style={UpgradeAlertStyles.descTitleNumber}>V {version}</Text>*/}
+                            {/*</View>*/}
                         </View>
                         <ScrollView style={UpgradeAlertStyles.scrollWrap} showsVerticalScrollIndicator={false}>
-                            <Text style={UpgradeAlertStyles.descCaption}>升级到新版本</Text>
+                            <View style={UpgradeAlertStyles.titleWrap}>
+                                <Text style={UpgradeAlertStyles.descCaption}>升级到新版本</Text>
+                                <Text style={UpgradeAlertStyles.descTitleNumber}>V {version}</Text>
+                            </View>
                             {
                                 updateContentArray.map((item, index) => {
                                     return (

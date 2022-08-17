@@ -51,25 +51,39 @@ export const UpgradeAlertStyles = StyleSheet.create({
         color: "#FFFFFF",
     },
     descTitleNumber: {
-        fontSize: PixelUtil.size(32, 1920),
-        color: "#FFFFFF",
-        marginTop: PixelUtil.size(20, 1920),
+        width: PixelUtil.rect(101, 44, 1920).width,
+        height: PixelUtil.rect(101, 44, 1920).height,
+        marginLeft: PixelUtil.size(22),
+        lineHeight: PixelUtil.size(44, 1920),
+        fontSize: PixelUtil.size(22, 1920),
+        borderRadius: PixelUtil.size(22, 1920),
+        backgroundColor: "#FFDB27",
+        color: "#333",
+        textAlign: 'center',
+        overflow: 'hidden'
     },
     scrollWrap: {
         height: descHeight,
-        paddingTop: PixelUtil.size(5, 1920),
+        // paddingTop: PixelUtil.size(5, 1920),
         paddingLeft: PixelUtil.size(85, 1920),
         paddingRight: PixelUtil.size(85, 1920),
     },
+    titleWrap:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     descCaption: {
-        fontSize: PixelUtil.size(28, 1920),
-        color: "#000",
-        marginTop: PixelUtil.size(40, 1920),
+        fontSize: PixelUtil.size(44, 1920),
+        color: "#333",
+        fontWeight:"500",
+        letterSpacing: 2
     },
     descItem: {
         fontSize: PixelUtil.size(28, 1920),
         lineHeight: PixelUtil.size(45, 1920),
-        color: "#000",
+        color: "#333",
         marginTop: PixelUtil.size(30, 1920),
     },
     footer: {
@@ -80,7 +94,6 @@ export const UpgradeAlertStyles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row'
     },
-
     footerSingle: {
         width: '100%',
         height: footerHeight,
@@ -89,16 +102,15 @@ export const UpgradeAlertStyles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row'
     },
-
     laterBtn: {
         width: PixelUtil.rect(230, 68, 1920).width,
         height: PixelUtil.rect(230, 68, 1920).height,
         lineHeight: PixelUtil.size(64, 1920),
         borderRadius: PixelUtil.size(34, 1920),
-        backgroundColor: "#999",
+        backgroundColor: "#c5c5c5",
         textAlign: 'center',
-        fontSize: PixelUtil.size(32, 1920),
-        color: "#fff",
+        fontSize: PixelUtil.size(26, 1920),
+        color: "#333",
         marginLeft: PixelUtil.size(92, 1920),
         overflow: 'hidden'
     },
@@ -106,7 +118,7 @@ export const UpgradeAlertStyles = StyleSheet.create({
         width: PixelUtil.rect(230, 68, 1920).width,
         height: PixelUtil.rect(230, 68, 1920).height,
         lineHeight: PixelUtil.size(64, 1920),
-        fontSize: PixelUtil.size(32, 1920),
+        fontSize: PixelUtil.size(26, 1920),
         borderRadius: PixelUtil.size(34, 1920),
         backgroundColor: "#9963f9",
         color: "#fff",
@@ -118,7 +130,7 @@ export const UpgradeAlertStyles = StyleSheet.create({
         width: PixelUtil.rect(230, 68, 1920).width,
         height: PixelUtil.rect(230, 68, 1920).height,
         lineHeight: PixelUtil.size(64, 1920),
-        fontSize: PixelUtil.size(32, 1920),
+        fontSize: PixelUtil.size(26, 1920),
         borderRadius: PixelUtil.size(34, 1920),
         backgroundColor: "#9963f9",
         color: "#fff",

@@ -46,4 +46,4 @@ export * from './price/index';
 export * from './Payment';
 export * from './UpgradeBoxer';
 export * from './remind';//温馨提醒
-export * from './AboutBeauty';//关于智美人
+export * from './AboutBeauty';//关于超级美星

@@ -39,7 +39,7 @@ export * from './pendingOrderPay'; //结单-主单
 export * from './priceIndex'; //价目单-首页
 export * from './UpgradeAlert'; //升级提示-登录页面
 export * from './remind'; //温馨提醒
-export * from './aboutBeauty'; //关于智美人
+export * from './aboutBeauty'; //关于超级美星
 export * from './multiplyPayStyle';
 
 

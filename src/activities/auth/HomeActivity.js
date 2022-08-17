@@ -216,7 +216,7 @@ class Home extends React.Component {
                 </View>
                 <View style={homeStyles.footer}>
                     <Image style={homeStyles.footerLogo} source={require('@imgPath/zmr.png')}></Image>
-                    <Text style={homeStyles.footerAbout} onPress={this.toggleAbout.bind(this)}>关于智美人</Text>
+                    <Text style={homeStyles.footerAbout} onPress={this.toggleAbout.bind(this)}>关于超级美星</Text>
                 </View>
             </SafeAreaView>
         );

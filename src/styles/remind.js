@@ -5,7 +5,6 @@ let boxWidth = PixelUtil.screenSize.width * 0.39;
 let boxHeight = PixelUtil.screenSize.height * 0.60;
 let topheight = PixelUtil.size(90, 1920);
 let footerHeight = PixelUtil.size(105, 1920);
-;
 let descheight = boxHeight - topheight - footerHeight;
 
 export const remindStyles = StyleSheet.create({
@@ -94,7 +93,7 @@ export const remindStyles = StyleSheet.create({
         fontSize: PixelUtil.size(30, 1920),
         lineHeight: PixelUtil.size(68, 1920),
         borderRadius: PixelUtil.size(34),
-        backgroundColor: "#111C3C",
+        backgroundColor: "#9963f9",
         color: "#fff",
         textAlign: 'center',
         marginRight: PixelUtil.size(92, 1920),

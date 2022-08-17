@@ -40,9 +40,9 @@ export class RemindBoxer extends React.Component {
 
     openAuthDesc(type){
         if (type == '1'){
-            this.props.openLink('https://www.magugi.com/pv/magugiYS.html', '用户协议与隐私政策');
+            this.props.openLink('https://magi.magugi.com/pv/magugiYS.html', '用户协议与隐私政策');
         }else{
-            this.props.openLink('https://www.magugi.com/pv/appQX.html', '权限声明');
+            this.props.openLink('https://magi.magugi.com/pv/appQX.html', '权限声明');
         }
     }
 

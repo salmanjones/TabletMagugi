@@ -20,11 +20,11 @@ export class AboutBeauty extends React.Component {
 
     openAuthDesc(type){
         if (type == '1'){
-            this.props.openLink('https://www.magugi.com/pv/magugiYS.html', '用户协议与隐私政策');
+            this.props.openLink('https://magi.magugi.com/pv/magugiYS.html', '用户协议与隐私政策');
         }else if (type == '2'){
-            this.props.openLink('https://www.magugi.com/pv/appQX.html', '权限声明');
+            this.props.openLink('https://magi.magugi.com/pv/appQX.html', '权限声明');
         }else if (type == '3'){
-            this.props.openLink('https://bms.magugi.com', '收银系统');
+            this.props.openLink('https://magi.magugi.com', '收银系统');
         }
     }
 
@@ -40,7 +40,7 @@ export class AboutBeauty extends React.Component {
                     <View style={aboutBeautyStyles.content}>
                         {/* 顶部 */}
                         <View style={aboutBeautyStyles.header}>
-                            <Text style={aboutBeautyStyles.title}>关于智美人</Text>
+                            <Text style={aboutBeautyStyles.title}>关于超级美星</Text>
                             <TouchableOpacity style={aboutBeautyStyles.closeable} onPress={this.props.closeEvent}>
                                 <Image style={aboutBeautyStyles.closeIcon} source={require('@imgPath/close.png')}></Image>
                             </TouchableOpacity>
