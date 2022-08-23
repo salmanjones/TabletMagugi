@@ -11,7 +11,7 @@ export class OtherPayFor extends React.Component {
     }
 
     render() {
-        let qcUrlPath = 'https://op.magugi.com/publicDir/billingList?type=wxAppScanStoreQueue&storeId=' + this.props.storeId + '&companyId=' + this.props.companyId + '&billingNo=' + this.props.billingNo;
+        let qcUrlPath = 'https://magi.magugi.com/publicDir/billingList?type=wxAppScanStoreQueue&storeId=' + this.props.storeId + '&companyId=' + this.props.companyId + '&billingNo=' + this.props.billingNo;
         return (
             <View style={vipPayForStyle.modalBackground}>
                 <View style={vipPayForStyle.cashierBillInfoWrapper}>
