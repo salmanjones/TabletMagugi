@@ -37,12 +37,13 @@ export const loginReducer = (state = loginFormValue, action) => {
             currState.loading = action.loading;
             return currState;
         case types.LOGIN_SESSION_SUCCESS:
-            currState.loading = action.loading;
+            currState.loading = false
             return currState;
         case types.LOGIN_FAILURE:
-            currState.loading = action.loading;
+            currState.loading = false
             return currState;
         case types.LOGIN_FORM_CLEAR:
+            currState.loading = false
             return loginFormValue;
         default:
             return state;

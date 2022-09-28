@@ -85,7 +85,8 @@ const verifyInputInfo = (formValues) => {
         usernameValid: true,
         usernameTips: "",
         passwordValid: true,
-        passwordTips: ""
+        passwordTips: "",
+        loading: false
     };
 
     if (formValues.username.length < 1) {
@@ -117,7 +118,7 @@ const loginInputPostAction = () => {
                 let message = convertCodeMsg(code);
                 dispatch(getDataFailureAction(message));
             } else {
-                dispatch(saveUserInfoAction(backData.data));
+                dispatch(saveUserInfoAction(dispatch, backData.data));
             }
         }).catch((e) => {
             dispatch(getDataFailureAction(convertCodeMsg(e.code)));
@@ -160,31 +161,29 @@ const getDataPosting = () => {
 };
 
 //请求成功
-const saveUserInfoAction = (data) => {
-    return function (dispatch, getState) {
-        dispatch(() => {
-            return {
-                type: types.LOGIN_SESSION_SUCCESS,
-                loading: false
-            };
-        })
+const saveUserInfoAction = (dispatch, data) => {
+    //保存用户id
+    AsyncStorage.setItem(AppConfig.sessionStaffId, data.staffId, err => {
+        console.log('保存用户id错误', err);
+    });
 
-        //保存用户id
-        AsyncStorage.setItem(AppConfig.sessionStaffId, data.staffId, err => {
-            console.log('保存用户id错误', err);
-        });
+    //保存用户信息到localStoreage
+    data._loginTime = new Date().getTime()
+    const userInfo = desEncrypt(JSON.stringify(data))
+    AsyncStorage.setItem(AppConfig.staffRStore, userInfo)
 
-        //保存用户信息到localStoreage
-        data._loginTime = new Date().getTime()
-        const userInfo = desEncrypt(JSON.stringify(data))
-        AsyncStorage.setItem(AppConfig.staffRStore, userInfo)
+    //更新store用户信息
+    dispatch(loginSuccessAction(data));
 
-        //更新store用户信息
-        dispatch(loginSuccessAction(data));
-
+    setTimeout(()=>{
         resetNavigationTo('HomeActivity', {
             title: data.storeName
         });
+    }, 100)
+
+    return {
+        type: types.LOGIN_SESSION_SUCCESS,
+        loading: false
     }
 };
 
@@ -210,7 +209,8 @@ export const loginSuccessAction = (data) => {
     return {
         type: types.LOGIN_SUCCESS,
         isLoggedIn: true,
-        userInfo: data
+        userInfo: data,
+        loading: false
     }
 };
 

@@ -2,7 +2,16 @@
 import React from 'react';
 import {connect} from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+    Alert,
+    Image,
+    ImageBackground,
+    KeyboardAvoidingView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 
 import {ModalLoadingIndicator, RemindBoxer} from "../../components";
 import {
@@ -171,14 +180,6 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         submitForm: () => {
             dispatch(loginSubmitAction())
-        },
-        autoLogin: (data)=>{
-            //更新store用户信息
-            dispatch(loginSuccessAction(data));
-
-            resetNavigationTo('HomeActivity', {
-                title: data.storeName
-            });
         }
     }
 };
