@@ -210,9 +210,9 @@ export const staffQueueStyles = StyleSheet.create({
     WorksListBox:{
         width: worksListWidth,
         height: worksListHeight,
-        paddingTop: PixelUtil.size(24, 2048),
         paddingLeft: PixelUtil.size(40, 2048),
         paddingRight: PixelUtil.size(40, 2048),
+        paddingTop: PixelUtil.size(24, 2048),
         paddingBottom: PixelUtil.size(24, 2048)
     },
     workCell: {
@@ -239,9 +239,15 @@ export const staffQueueStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        borderWidth: PixelUtil.size(2, 2048),
+        borderWidth: PixelUtil.size(4, 2048),
         borderRadius: PixelUtil.size(12, 2048),
         borderColor: '#ff770f',
+    },
+    lastChild:{
+        marginBottom: PixelUtil.size(40, 2048)
+    },
+    normalChild:{
+        marginBottom: PixelUtil.size(0, 2048)
     },
     workImg:{
         width: '100%',
