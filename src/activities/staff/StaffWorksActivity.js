@@ -7,6 +7,7 @@ import {AppNavigate} from "../../navigators";
 import Video from "react-native-video";
 import Toast from "react-native-root-toast";
 
+let _mediaPlayer
 export class StaffWorksView extends React.Component {
     constructor(props) {
         super(props);
@@ -15,15 +16,30 @@ export class StaffWorksView extends React.Component {
         let {staffInfo, workInfo} = this.props.route.params;
         this.state = {
             staffInfo,
-            workInfo
+            workInfo,
+            showVideo: true
         }
+
     }
 
     componentDidMount() {
+        this.setState({
+            showVideo: true
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            showVideo: false
+        })
     }
 
     toCashier(){
-        AppNavigate.navigate('CashierActivity')
+        this.setState({
+            showVideo: false
+        }, ()=>{
+            AppNavigate.navigate('CashierActivity')
+        })
     }
 
     videoError(){
@@ -38,14 +54,15 @@ export class StaffWorksView extends React.Component {
     }
 
     render() {
-        let {workInfo, staffInfo} = this.state
+        let {workInfo, staffInfo, showVideo} = this.state
         // 总视图
         return (
             <View style={staffWorksStyles.content}>
                 {
-                    workInfo.contentType == 1 ?
+                    showVideo && workInfo.contentType == 1 ?
                         (
-                            <Video source={{uri: workInfo.videoUrl}}  ref={(ref) => {this.player = ref}}
+                            <Video source={{uri: workInfo.videoUrl}}
+                                   ref={(ref) => {_mediaPlayer = ref}}
                                    onBuffer={this.onBuffer}
                                    onError={this.videoError}
                                    poster={workInfo.showImg}
