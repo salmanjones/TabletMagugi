@@ -137,12 +137,11 @@ export class StaffQueueView extends React.Component {
                             item.videoUrl = originalBlogDetail.videoUrl
                             item.shortVideoUrl = originalBlogDetail.shortVideoUrl
                             item.videoResolution = originalBlogDetail.videoResolution
-                            item.contentType = originalBlogDetail.contentType
                         }
 
                         // 处理图片
-                        item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!800x800r/crop/!800x800a0a0/sharpen/1"
-                        item.imgUrls = item.imgUrls.split(",").map(item=>AppConfig.imageServer + item + "?imageMogr2/auto-orient/thumbnail/!800x800r/crop/!800x800a0a0/sharpen/1")
+                        item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!600x600r/crop/!600x600a0a0/sharpen/1"
+                        item.imgUrls = item.imgUrls.split(",").map(item=>AppConfig.imageServer + item + "?imageView2/0/w/1024/q/95")
                         item.selected = ''
 
                         // 放入数组

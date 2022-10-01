@@ -42,8 +42,7 @@ export * from './remind'; //温馨提醒
 export * from './aboutBeauty'; //关于超级美星
 export * from './multiplyPayStyle';
 export * from './StaffQueue'
-
-
+export * from './StaffWorks'
 
 
 

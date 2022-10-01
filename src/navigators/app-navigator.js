@@ -29,7 +29,8 @@ import {
     RotateSettingStaffActivity,
     SelectCustomerType,
     VipcardActivity,
-    StaffQueueActivity
+    StaffQueueActivity,
+    StaffWorksActivity
 } from '../activities';
 import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
 import Orientation from "react-native-orientation";
@@ -565,6 +566,26 @@ function RootNavigation() {
                             headerShown: true,
                             headerStyle: {
                                 backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="StaffWorksActivity"
+                        component={StaffWorksActivity}
+                        options={{
+                            title: '作品',
+                            headerTitleAlign: 'center',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#000000',
                                 height: PixelUtil.size(132),
                             },
                             headerTintColor: '#fff',
