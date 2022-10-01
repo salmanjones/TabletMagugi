@@ -32,8 +32,8 @@ export const loginStyles = StyleSheet.create({
     },
     // 登录框
     loginBox: {
-        width: PixelUtil.rect(677, 853, 1920).width,
-        height: PixelUtil.rect(677, 853, 1920).height,
+        width: PixelUtil.rect(677, 853, 2048).width,
+        height: PixelUtil.rect(677, 853, 2048).height,
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -46,9 +46,9 @@ export const loginStyles = StyleSheet.create({
     },
     // Logo
     loginLogo: {
-        width: PixelUtil.rect(509, 237, 1920).width,
-        height: PixelUtil.rect(509, 237, 1920).height,
-        marginTop: PixelUtil.size(26, 1920),
+        width: PixelUtil.rect(509, 237, 2048).width,
+        height: PixelUtil.rect(509, 237, 2048).height,
+        marginTop: PixelUtil.size(26, 2048),
     },
     // 文本框区域
     loginTextBox: {
@@ -56,13 +56,13 @@ export const loginStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: "relative",
-        width: PixelUtil.rect(536, 81, 1920).width,
-        height: PixelUtil.rect(536, 81, 1920).height,
-        marginTop: PixelUtil.size(60, 1920),
+        width: PixelUtil.rect(536, 81, 2048).width,
+        height: PixelUtil.rect(536, 81, 2048).height,
+        marginTop: PixelUtil.size(60, 2048),
     },
     // 文本框区域-密码
     loginTextBoxPwd: {
-        marginTop: PixelUtil.size(83, 1920),
+        marginTop: PixelUtil.size(83, 2048),
     },
     // 用户名
     loginUserName: {
@@ -72,11 +72,11 @@ export const loginStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#ffffff',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(61, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(61, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     loginUserNameActive: {
         width: '100%',
@@ -85,18 +85,18 @@ export const loginStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#8244F1',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(61, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(61, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     loginUserNameIcon: {
-        width: PixelUtil.rect(27, 29, 1920).width,
-        height: PixelUtil.rect(27, 29, 1920).height,
+        width: PixelUtil.rect(27, 29, 2048).width,
+        height: PixelUtil.rect(27, 29, 2048).height,
         position: "absolute",
-        top: PixelUtil.size(26, 1920),
-        left: PixelUtil.size(22, 1920)
+        top: PixelUtil.size(26, 2048),
+        left: PixelUtil.size(22, 2048)
     },
     // 密码
     loginPassword: {
@@ -106,11 +106,11 @@ export const loginStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#ffffff',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(61, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(61, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     loginPasswordActive: {
         width: '100%',
@@ -119,24 +119,24 @@ export const loginStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#8244F1',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(61, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(61, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     loginPasswordIcon: {
-        width: PixelUtil.rect(27, 29, 1920).width,
-        height: PixelUtil.rect(27, 29, 1920).height,
+        width: PixelUtil.rect(27, 29, 2048).width,
+        height: PixelUtil.rect(27, 29, 2048).height,
         position: "absolute",
-        top: PixelUtil.size(26, 1920),
-        left: PixelUtil.size(22, 1920)
+        top: PixelUtil.size(26, 2048),
+        left: PixelUtil.size(22, 2048)
     },
     // 警告框
     loginTextTips: {
-        width: PixelUtil.size(536, 1920),
+        width: PixelUtil.size(536, 2048),
         position: "absolute",
-        bottom: PixelUtil.size(-40, 1920),
+        bottom: PixelUtil.size(-40, 2048),
         right: 0,
         display:"flex",
         flexDirection: "row",
@@ -146,19 +146,19 @@ export const loginStyles = StyleSheet.create({
     },
     loginWarningIcon: {
         marginTop: PixelUtil.size(1),
-        width: PixelUtil.rect(18, 18, 1920).width,
-        height: PixelUtil.rect(18, 18, 1920).height,
+        width: PixelUtil.rect(18, 18, 2048).width,
+        height: PixelUtil.rect(18, 18, 2048).height,
     },
     loginTextContent:{
         color: "#F84C4C",
-        fontSize: PixelUtil.size(20, 1920),
+        fontSize: PixelUtil.size(20, 2048),
         marginLeft: PixelUtil.size(8)
     },
     // 忘记密码
     loginForgetPwd: {
-        width: PixelUtil.size(236, 1920),
+        width: PixelUtil.size(236, 2048),
         position: "absolute",
-        bottom: PixelUtil.size(-40, 1920),
+        bottom: PixelUtil.size(-40, 2048),
         left: PixelUtil.size(20),
         display:"flex",
         flexDirection: "row",
@@ -168,13 +168,13 @@ export const loginStyles = StyleSheet.create({
     },
     loginForgetPwdTxt:{
         color: '#fff',
-        fontSize: PixelUtil.size(20, 1920),
+        fontSize: PixelUtil.size(20, 2048),
     },
     // 登录按钮
     loginButton: {
-        width: PixelUtil.rect(536, 81, 1920).width,
-        height: PixelUtil.rect(536, 81, 1920).height,
-        marginTop: PixelUtil.size(100, 1920),
+        width: PixelUtil.rect(536, 81, 2048).width,
+        height: PixelUtil.rect(536, 81, 2048).height,
+        marginTop: PixelUtil.size(100, 2048),
         borderRadius: PixelUtil.size(40),
         backgroundColor: "#8244f1",
         display: 'flex',
@@ -183,13 +183,13 @@ export const loginStyles = StyleSheet.create({
     },
     loginButtonText: {
         color: "#ffffff",
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
     },
     // 品牌
     unionBrands:{
-        marginTop: PixelUtil.size(54, 1920),
-        width: PixelUtil.rect(646, 37, 1920).width,
-        height: PixelUtil.rect(646, 37, 1920).height,
+        marginTop: PixelUtil.size(54, 2048),
+        width: PixelUtil.rect(646, 37, 2048).width,
+        height: PixelUtil.rect(646, 37, 2048).height,
     },
     // 版权
     copyright: {
@@ -197,7 +197,7 @@ export const loginStyles = StyleSheet.create({
         textAlign: 'center',
         position: 'absolute',
         color: "#79787A",
-        fontSize: PixelUtil.size(20, 1920),
-        bottom: PixelUtil.size(50, 1920)
+        fontSize: PixelUtil.size(20, 2048),
+        bottom: PixelUtil.size(50, 2048)
     }
 });

@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {AppNavigate} from "../../navigators";
 
 const initState = {
+    staff: false,
     reserve: false,
     collect: false,
     hairdresser: false,
@@ -114,21 +115,6 @@ class Home extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPressIn={() => this.activeButton('reserve')}>
-                                <ToggleImageBackground
-                                    disable={true}
-                                    isActive={this.state.reserve}
-                                    style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/bill-reverse.png')}
-                                           style={homeStyles.imgStyle}/>
-                                    <Text style={homeStyles.liText}>预约</Text>
-                                </ToggleImageBackground>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={homeStyles.operateBox}>
-                            <TouchableHighlight
-                                underlayColor="white"
                                 onPress={() => AppNavigate.navigate('CashierActivity')}
                                 onPressIn={() => this.activeButton('collect')}>
                                 <ToggleImageBackground
@@ -138,6 +124,38 @@ class Home extends React.Component {
                                            source={require('@imgPath/index-collect.png')}
                                            style={homeStyles.imgStyle}/>
                                     <Text style={homeStyles.liText}>收银</Text>
+                                </ToggleImageBackground>
+                            </TouchableHighlight>
+                        </View>
+                        {/*<View style={homeStyles.operateBox}>*/}
+                        {/*    <TouchableHighlight*/}
+                        {/*        underlayColor="white"*/}
+                        {/*        onPressIn={() => this.activeButton('reserve')}>*/}
+                        {/*        <ToggleImageBackground*/}
+                        {/*            disable={true}*/}
+                        {/*            isActive={this.state.reserve}*/}
+                        {/*            style={homeStyles.operateBoxItem}>*/}
+                        {/*            <Image resizeMethod="resize"*/}
+                        {/*                   source={require('@imgPath/bill-reverse.png')}*/}
+                        {/*                   style={homeStyles.imgStyle}/>*/}
+                        {/*            <Text style={homeStyles.liText}>预约</Text>*/}
+                        {/*        </ToggleImageBackground>*/}
+                        {/*    </TouchableHighlight>*/}
+                        {/*</View>*/}
+                        <View style={homeStyles.operateBox}>
+                            <TouchableHighlight
+                                underlayColor="white"
+                                onPress={() =>
+                                    AppNavigate.navigate('StaffQueueActivity')
+                                }
+                                onPressIn={() => this.activeButton('staff')}>
+                                <ToggleImageBackground
+                                    isActive={this.state.staff}
+                                    style={homeStyles.operateBoxItem}>
+                                    <Image resizeMethod="resize"
+                                           source={require('@imgPath/staff_list.png')}
+                                           style={homeStyles.imgStaffStyle}/>
+                                    <Text style={homeStyles.liTextStaff}>选牌</Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>

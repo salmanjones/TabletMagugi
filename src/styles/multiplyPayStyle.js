@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let headerHeight = PixelUtil.size(120, 1920);
-let footerHeight = PixelUtil.size(150, 1920);
+let headerHeight = PixelUtil.size(120, 2048);
+let footerHeight = PixelUtil.size(150, 2048);
 let borderWidth = PixelUtil.size(2);
 let bodyerHeight = PixelUtil.screenSize.height * 0.95 - headerHeight - footerHeight - borderWidth * 2;
 let footerWidth = PixelUtil.screenSize.width * 0.95;

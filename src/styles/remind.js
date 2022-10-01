@@ -3,8 +3,8 @@ import {PixelUtil} from '../utils';
 
 let boxWidth = PixelUtil.screenSize.width * 0.39;
 let boxHeight = PixelUtil.screenSize.height * 0.60;
-let topheight = PixelUtil.size(90, 1920);
-let footerHeight = PixelUtil.size(105, 1920);
+let topheight = PixelUtil.size(90, 2048);
+let footerHeight = PixelUtil.size(105, 2048);
 let descheight = boxHeight - topheight - footerHeight;
 
 export const remindStyles = StyleSheet.create({
@@ -40,30 +40,30 @@ export const remindStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(18),
     },
     remindTitle: {
-        fontSize: PixelUtil.size(32, 1920),
+        fontSize: PixelUtil.size(32, 2048),
         fontWeight: 'bold'
     },
     //可滚动文字
     scrollWrap: {
         height: descheight,
-        paddingTop: PixelUtil.size(10, 1920),
-        paddingBottom: PixelUtil.size(10, 1920),
-        paddingRight: PixelUtil.size(47, 1920),
-        paddingLeft: PixelUtil.size(47, 1920),
+        paddingTop: PixelUtil.size(10, 2048),
+        paddingBottom: PixelUtil.size(10, 2048),
+        paddingRight: PixelUtil.size(47, 2048),
+        paddingLeft: PixelUtil.size(47, 2048),
     },
     thanksText: {
-        lineHeight: PixelUtil.size(42, 1920),
-        fontSize: PixelUtil.size(28, 1920),
+        lineHeight: PixelUtil.size(42, 2048),
+        fontSize: PixelUtil.size(28, 2048),
         color: "#333",
     },
     notice: {
-        lineHeight: PixelUtil.size(42, 1920),
-        fontSize: PixelUtil.size(28, 1920),
+        lineHeight: PixelUtil.size(42, 2048),
+        fontSize: PixelUtil.size(28, 2048),
         color: "#333",
     },
     highLight: {
-        fontSize: PixelUtil.size(28, 1920),
-        lineHeight: PixelUtil.size(36, 1920),
+        fontSize: PixelUtil.size(28, 2048),
+        lineHeight: PixelUtil.size(36, 2048),
         color: "#2688ED",
         fontWeight: 'bold'
     },
@@ -76,27 +76,27 @@ export const remindStyles = StyleSheet.create({
         flexDirection: 'row'
     },
     laterButtonText: {
-        width: PixelUtil.rect(230, 68, 1920).width,
-        height: PixelUtil.rect(230, 68, 1920).height,
-        fontSize: PixelUtil.size(30, 1920),
-        lineHeight: PixelUtil.size(68, 1920),
+        width: PixelUtil.rect(230, 68, 2048).width,
+        height: PixelUtil.rect(230, 68, 2048).height,
+        fontSize: PixelUtil.size(30, 2048),
+        lineHeight: PixelUtil.size(68, 2048),
         borderRadius: PixelUtil.size(34),
         backgroundColor: "#999999",
         color: "#fff",
         textAlign: 'center',
-        marginLeft: PixelUtil.size(92, 1920),
+        marginLeft: PixelUtil.size(92, 2048),
         overflow: 'hidden'
     },
     nowButtonText: {
-        width: PixelUtil.rect(230, 68, 1920).width,
-        height: PixelUtil.rect(230, 68, 1920).height,
-        fontSize: PixelUtil.size(30, 1920),
-        lineHeight: PixelUtil.size(68, 1920),
+        width: PixelUtil.rect(230, 68, 2048).width,
+        height: PixelUtil.rect(230, 68, 2048).height,
+        fontSize: PixelUtil.size(30, 2048),
+        lineHeight: PixelUtil.size(68, 2048),
         borderRadius: PixelUtil.size(34),
         backgroundColor: "#9963f9",
         color: "#fff",
         textAlign: 'center',
-        marginRight: PixelUtil.size(92, 1920),
+        marginRight: PixelUtil.size(92, 2048),
         overflow: 'hidden'
     },
 });

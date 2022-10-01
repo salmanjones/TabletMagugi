@@ -4,8 +4,6 @@
         <trust-anchors>
             <certificates src="system" overridePins="true" /> <!--信任系统证书-->
             <certificates src="user" overridePins="true" /> <!--信任用户证书-->
-
-            <domain includeSubdomains="true">tablet.magugi.com</domain>
             <domain includeSubdomains="true">magi.magugi.com</domain>
             <domain includeSubdomains="true">img.magugi.com</domain>
             <domain includeSubdomains="true">app.media.magugi.com</domain>

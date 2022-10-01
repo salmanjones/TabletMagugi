@@ -31,8 +31,8 @@ export const resetPwdStyles = StyleSheet.create({
     },
     // 登录框
     loginBox: {
-        width: PixelUtil.rect(677, 1142, 1920).width,
-        height: PixelUtil.rect(677, 1142, 1920).height,
+        width: PixelUtil.rect(677, 1142, 2048).width,
+        height: PixelUtil.rect(677, 1142, 2048).height,
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -46,9 +46,9 @@ export const resetPwdStyles = StyleSheet.create({
     // 标题
     titleWrap:{
         width: '100%',
-        marginTop: PixelUtil.size(60, 1920),
+        marginTop: PixelUtil.size(60, 2048),
         fontWeight: 'bold',
-        fontSize: PixelUtil.size(44, 1920),
+        fontSize: PixelUtil.size(44, 2048),
         color: '#fff',
         display: 'flex',
         justifyContent: 'center',
@@ -61,14 +61,14 @@ export const resetPwdStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: "relative",
-        width: PixelUtil.rect(536, 81, 1920).width,
-        height: PixelUtil.rect(536, 81, 1920).height,
+        width: PixelUtil.rect(536, 81, 2048).width,
+        height: PixelUtil.rect(536, 81, 2048).height,
     },
     inputBoxFirst: {
-        marginTop: PixelUtil.size(61, 1920),
+        marginTop: PixelUtil.size(61, 2048),
     },
     inputBoxOthers: {
-        marginTop: PixelUtil.size(80, 1920),
+        marginTop: PixelUtil.size(80, 2048),
     },
     // 文本框样式
     textInput: {
@@ -78,24 +78,24 @@ export const resetPwdStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#ffffff',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(61, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(61, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     textInputIcon: {
-        width: PixelUtil.rect(27, 29, 1920).width,
-        height: PixelUtil.rect(27, 29, 1920).height,
+        width: PixelUtil.rect(27, 29, 2048).width,
+        height: PixelUtil.rect(27, 29, 2048).height,
         position: "absolute",
-        top: PixelUtil.size(26, 1920),
-        left: PixelUtil.size(22, 1920)
+        top: PixelUtil.size(26, 2048),
+        left: PixelUtil.size(22, 2048)
     },
     // 警告框
     textInputTips: {
-        width: PixelUtil.size(536, 1920),
+        width: PixelUtil.size(536, 2048),
         position: "absolute",
-        bottom: PixelUtil.size(-40, 1920),
+        bottom: PixelUtil.size(-40, 2048),
         right: 0,
         display:"flex",
         flexDirection: "row",
@@ -105,18 +105,18 @@ export const resetPwdStyles = StyleSheet.create({
     },
     textInputWarningIcon: {
         marginTop: PixelUtil.size(1),
-        width: PixelUtil.rect(18, 18, 1920).width,
-        height: PixelUtil.rect(18, 18, 1920).height,
+        width: PixelUtil.rect(18, 18, 2048).width,
+        height: PixelUtil.rect(18, 18, 2048).height,
     },
     inputTextContent:{
         color: "#F84C4C",
-        fontSize: PixelUtil.size(20, 1920),
+        fontSize: PixelUtil.size(20, 2048),
         marginLeft: PixelUtil.size(8)
     },
     // 验证码区域
     checkCodeBox: {
-        width: PixelUtil.rect(536, 81, 1920).width,
-        height: PixelUtil.rect(536, 81, 1920).height,
+        width: PixelUtil.rect(536, 81, 2048).width,
+        height: PixelUtil.rect(536, 81, 2048).height,
         marginTop: PixelUtil.size(80),
         display: 'flex',
         flexDirection: "row",
@@ -124,8 +124,8 @@ export const resetPwdStyles = StyleSheet.create({
         alignItems: 'center'
     },
     checkCodeInputBg: {
-        width: PixelUtil.rect(303, 80, 1920).width,
-        height: PixelUtil.rect(303, 80, 1920).height,
+        width: PixelUtil.rect(303, 80, 2048).width,
+        height: PixelUtil.rect(303, 80, 2048).height,
         position: "relative",
     },
     checkCodeInput: {
@@ -135,15 +135,15 @@ export const resetPwdStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
         borderColor: '#ffffff',
         borderStyle: 'solid',
-        fontSize: PixelUtil.size(24, 1920),
+        fontSize: PixelUtil.size(24, 2048),
         color: '#fff',
         padding: 0,
-        paddingLeft: PixelUtil.size(23, 1920),
-        paddingRight: PixelUtil.size(48, 1920)
+        paddingLeft: PixelUtil.size(23, 2048),
+        paddingRight: PixelUtil.size(48, 2048)
     },
     checkCodeBtn: {
-        width: PixelUtil.rect(200, 80, 1920).width,
-        height: PixelUtil.rect(200, 80, 1920).height,
+        width: PixelUtil.rect(200, 80, 2048).width,
+        height: PixelUtil.rect(200, 80, 2048).height,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -176,8 +176,8 @@ export const resetPwdStyles = StyleSheet.create({
     },
     // 重置
     submitBox: {
-        width: PixelUtil.rect(536, 81, 1920).width,
-        height: PixelUtil.rect(536, 81, 1920).height,
+        width: PixelUtil.rect(536, 81, 2048).width,
+        height: PixelUtil.rect(536, 81, 2048).height,
         display: 'flex',
         flexDirection: "row",
         justifyContent: 'center'
@@ -197,8 +197,8 @@ export const resetPwdStyles = StyleSheet.create({
     },
     // 品牌
     unionBrands:{
-        marginTop: PixelUtil.size(54, 1920),
-        width: PixelUtil.rect(646, 37, 1920).width,
-        height: PixelUtil.rect(646, 37, 1920).height,
+        marginTop: PixelUtil.size(54, 2048),
+        width: PixelUtil.rect(646, 37, 2048).width,
+        height: PixelUtil.rect(646, 37, 2048).height,
     },
 });

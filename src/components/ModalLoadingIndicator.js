@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal} from 'react-native';
 
 //self
-import {LoadingIndicator} from "components";
+import {LoadingIndicator} from "../components";
 
 export const ModalLoadingIndicator = ({
   text = '加载中...',
@@ -13,7 +13,7 @@ export const ModalLoadingIndicator = ({
 }) => (
   <Modal
     transparent={true}
-    animationType='none'
+    animationType='fade'
     visible={loading}
     onRequestClose={() => null}
   >

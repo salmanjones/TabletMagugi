@@ -20,4 +20,5 @@ export * from './manage/BillingModifyActivity';  //单据管理
 export * from './price/PriceListActivity';  //价目单
 export * from './webview/GenWebViewActivity';//H5容器：呈现H5页面
 export * from './analysis/AnalysisHomeView';//分析统计主页
+export * from './staff/StaffQueueActivity';//选牌
 

@@ -180,6 +180,14 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         submitForm: () => {
             dispatch(loginSubmitAction())
+        },
+        autoLogin: (data)=>{
+            //更新store用户信息
+            dispatch(loginSuccessAction(data));
+
+            resetNavigationTo('HomeActivity', {
+                title: data.storeName
+            });
         }
     }
 };

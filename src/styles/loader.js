@@ -9,7 +9,7 @@ export const modalLoadingStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        backgroundColor: '#00000060',
+        backgroundColor: '#00000000',
         zIndex: 65536,
         position: 'absolute',
         width: '100%',

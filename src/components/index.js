@@ -47,3 +47,4 @@ export * from './Payment';
 export * from './UpgradeBoxer';
 export * from './remind';//温馨提醒
 export * from './AboutBeauty';//关于超级美星
+export * from './StarRating' // 星星展示

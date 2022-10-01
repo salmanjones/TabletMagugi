@@ -28,7 +28,8 @@ import {
     RotateSettingIndexActivity,
     RotateSettingStaffActivity,
     SelectCustomerType,
-    VipcardActivity
+    VipcardActivity,
+    StaffQueueActivity
 } from '../activities';
 import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
 import Orientation from "react-native-orientation";
@@ -540,6 +541,26 @@ function RootNavigation() {
                         component={TabNavigation}
                         options={{
                             title: '收银',
+                            headerTitleAlign: 'center',
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#111C3C',
+                                height: PixelUtil.size(132),
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                color: 'white',
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                fontSize: PixelUtil.size(32),
+                            }
+                        }}
+                    />
+                    <RootStack.Screen
+                        name="StaffQueueActivity"
+                        component={StaffQueueActivity}
+                        options={{
+                            title: '选牌',
                             headerTitleAlign: 'center',
                             headerShown: true,
                             headerStyle: {

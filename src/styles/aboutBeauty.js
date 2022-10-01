@@ -7,8 +7,8 @@ let screenSize = {
 }
 let contentWidth = screenSize.width * 0.78;
 let contentHeight = screenSize.height * 0.76;
-let headerHeight = PixelUtil.size(120, 1920);
-let footerHeight = PixelUtil.size(150, 1920);
+let headerHeight = PixelUtil.size(120, 2048);
+let footerHeight = PixelUtil.size(150, 2048);
 let bodyHeight = contentHeight
     - headerHeight
     - footerHeight;
@@ -48,17 +48,17 @@ export const aboutBeautyStyles = StyleSheet.create({
         borderBottomColor: '#cbcbcb'
     },
     title: {
-        fontSize: PixelUtil.size(32, 1920),
+        fontSize: PixelUtil.size(32, 2048),
     },
     closeable: {
-        top: PixelUtil.size(39.9, 1920),
-        right: PixelUtil.size(39.9, 1920),
+        top: PixelUtil.size(39.9, 2048),
+        right: PixelUtil.size(39.9, 2048),
         position: "absolute",
         zIndex: 99999
     },
     closeIcon: {
-        width: PixelUtil.rect(35.1, 35.1, 1920).width,
-        height: PixelUtil.rect(35.1, 35.1, 1920).height
+        width: PixelUtil.rect(35.1, 35.1, 2048).width,
+        height: PixelUtil.rect(35.1, 35.1, 2048).height
     },
     body: {
         height: bodyHeight,
@@ -73,14 +73,14 @@ export const aboutBeautyStyles = StyleSheet.create({
         position: "relative",
     },
     logoImg: {
-        width: PixelUtil.rect(120, 120, 1920).width,
-        height: PixelUtil.rect(120, 120, 1920).height,
+        width: PixelUtil.rect(120, 120, 2048).width,
+        height: PixelUtil.rect(120, 120, 2048).height,
     },
     //滚动区域
     scrollWrap: {
         height: scrollWrapHeight,
-        paddingLeft: PixelUtil.size(140, 1920),
-        paddingRight: PixelUtil.size(140, 1920),
+        paddingLeft: PixelUtil.size(140, 2048),
+        paddingRight: PixelUtil.size(140, 2048),
     },
     scrollItem: {
         height: scrollItemHeight,
@@ -92,30 +92,30 @@ export const aboutBeautyStyles = StyleSheet.create({
     },
 
     descItem: {
-        fontSize: PixelUtil.size(28, 1920),
+        fontSize: PixelUtil.size(28, 2048),
         color: "#000",
-        marginBottom: PixelUtil.size(20, 1920),
+        marginBottom: PixelUtil.size(20, 2048),
     },
 
     descItemRight: {
         display: 'flex',
         textAlign: 'right',
-        fontSize: PixelUtil.size(28, 1920),
+        fontSize: PixelUtil.size(28, 2048),
         color: "#000",
         position: "absolute",
         right: 0,
-        bottom: PixelUtil.size(20, 1920),
+        bottom: PixelUtil.size(20, 2048),
     },
 
     descItemRightIcon: {
-        width: PixelUtil.rect(14, 25.8, 1920).width,
-        height: PixelUtil.rect(14, 25.8, 1920).height,
+        width: PixelUtil.rect(14, 25.8, 2048).width,
+        height: PixelUtil.rect(14, 25.8, 2048).height,
         display: 'flex',
         textAlign: 'right',
         position: "absolute",
         right: 0,
         bottom: 0,
-        marginBottom: PixelUtil.size(20, 1920),
+        marginBottom: PixelUtil.size(20, 2048),
     },
 
     footer: {
@@ -129,7 +129,7 @@ export const aboutBeautyStyles = StyleSheet.create({
 
     // 声明
     statement: {
-        fontSize: PixelUtil.size(28, 1920),
+        fontSize: PixelUtil.size(28, 2048),
         color: "#c9c9c9",
     },
 });

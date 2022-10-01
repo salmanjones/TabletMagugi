@@ -2,8 +2,8 @@
 import {Platform, StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let naviBarHeight = PixelUtil.size(120, 1920);
-let footerHeight = PixelUtil.size(170, 1920);
+let naviBarHeight = PixelUtil.size(120, 2048);
+let footerHeight = PixelUtil.size(170, 2048);
 let bodyHeight = PixelUtil.screenSize.height - naviBarHeight - footerHeight;
 let operateBoxHeight = bodyHeight * 0.30;
 let operateBoxMargin = operateBoxHeight * 0.20;
@@ -78,10 +78,21 @@ export const homeStyles = StyleSheet.create({
         textAlign: 'center',
         marginTop: PixelUtil.size(20),
     },
+    liTextStaff: {
+        //首页版块-文字
+        fontSize: PixelUtil.size(35),
+        color: '#04172B',
+        textAlign: 'center',
+        marginTop: PixelUtil.size(14),
+    },
     imgStyle: {
         //首页版块-图标
         width: PixelUtil.rect(48, 48).width,
         height: PixelUtil.rect(48, 48).height,
+    },
+    imgStaffStyle:{
+        width: PixelUtil.rect(58, 58).width,
+        height: PixelUtil.rect(58, 58).height,
     },
     imgStyleOther: {
         //首页版块-图标
@@ -102,13 +113,13 @@ export const homeStyles = StyleSheet.create({
         flexDirection: 'row'
     },
     footerLogo: {
-        width: PixelUtil.rect(40, 40, 1920).width,
-        height: PixelUtil.rect(40, 40, 1920).height,
+        width: PixelUtil.rect(40, 40, 2048).width,
+        height: PixelUtil.rect(40, 40, 2048).height,
     },
     footerAbout: {
         fontSize: PixelUtil.size(44.79, 2548),
         color: '#4F546C',
-        marginLeft: PixelUtil.size(20, 1920)
+        marginLeft: PixelUtil.size(20, 2048)
     },
 
     //以下样式应用在开下主界面的下方

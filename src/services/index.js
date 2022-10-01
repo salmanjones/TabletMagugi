@@ -5,4 +5,5 @@ export * from './resetpwd';
 export * from './vipcard';
 export * from './duty';
 export * from './common';
+export * from './staff'
 export {getDayCountPager} from './api';

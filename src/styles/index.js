@@ -41,7 +41,7 @@ export * from './UpgradeAlert'; //升级提示-登录页面
 export * from './remind'; //温馨提醒
 export * from './aboutBeauty'; //关于超级美星
 export * from './multiplyPayStyle';
-
+export * from './StaffQueue'
 
 
 
