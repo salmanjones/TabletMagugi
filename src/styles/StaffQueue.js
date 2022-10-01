@@ -255,6 +255,7 @@ export const staffQueueStyles = StyleSheet.create({
         borderWidth: PixelUtil.size(2, 2048),
         borderRadius: PixelUtil.size(12, 2048),
         borderColor: '#00000000',
+        backgroundColor: '#f1f1f1'
     },
     likeCountBox:{
         borderRadius: PixelUtil.size(20, 2048),
