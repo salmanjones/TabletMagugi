@@ -141,7 +141,8 @@ export class StaffQueueView extends React.Component {
                         }
 
                         // 处理图片
-                        item.showImg = AppConfig.imageServer + item.showImg + "?imageView2/1/w/400/h/400"
+                        item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!800x800r/crop/!800x800a0a0/sharpen/1"
+                        item.imgUrls = item.imgUrls.split(",").map(item=>AppConfig.imageServer + item + "?imageMogr2/auto-orient/thumbnail/!800x800r/crop/!800x800a0a0/sharpen/1")
                         item.selected = ''
 
                         // 放入数组
@@ -168,12 +169,22 @@ export class StaffQueueView extends React.Component {
     // 选择作品
     selectedWork(index){
         let self = this
-        let {worksList} = self.state
+        let checkedWork
+        let {worksList, staffSelected} = self.state
         worksList.forEach((item, idx)=>{
             item.selected = idx == index ? 'selected':''
         })
-        this.setState({worksList}, ()=>{
 
+        this.setState({worksList}, ()=>{
+            // 跳转参数
+            let params = {
+                workInfo: worksList[index],
+                staffInfo: staffSelected
+            }
+
+            console.log(JSON.stringify(params.workInfo))
+            // 页面跳转
+            AppNavigate.navigate('StaffWorksActivity', params)
         })
     }
 
@@ -182,7 +193,6 @@ export class StaffQueueView extends React.Component {
         let pageNo = this.state.pageNo + 1
         this.setState({pageNo}, ()=>{
             let {staffSelected} = this.state
-            console.log(staffSelected.staffAppUserId, pageNo)
             staffSelected && this.loadWorks()
         })
     }
