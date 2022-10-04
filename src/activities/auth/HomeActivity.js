@@ -115,6 +115,23 @@ class Home extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
+                                onPress={() =>
+                                    AppNavigate.navigate('StaffQueueActivity')
+                                }
+                                onPressIn={() => this.activeButton('staff')}>
+                                <ToggleImageBackground
+                                    isActive={this.state.staff}
+                                    style={homeStyles.operateBoxItem}>
+                                    <Image resizeMethod="resize"
+                                           source={require('@imgPath/staff_list.png')}
+                                           style={homeStyles.imgStaffStyle}/>
+                                    <Text style={homeStyles.liTextStaff}>选牌</Text>
+                                </ToggleImageBackground>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={homeStyles.operateBox}>
+                            <TouchableHighlight
+                                underlayColor="white"
                                 onPress={() => AppNavigate.navigate('CashierActivity')}
                                 onPressIn={() => this.activeButton('collect')}>
                                 <ToggleImageBackground
@@ -142,23 +159,6 @@ class Home extends React.Component {
                         {/*        </ToggleImageBackground>*/}
                         {/*    </TouchableHighlight>*/}
                         {/*</View>*/}
-                        <View style={homeStyles.operateBox}>
-                            <TouchableHighlight
-                                underlayColor="white"
-                                onPress={() =>
-                                    AppNavigate.navigate('StaffQueueActivity')
-                                }
-                                onPressIn={() => this.activeButton('staff')}>
-                                <ToggleImageBackground
-                                    isActive={this.state.staff}
-                                    style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/staff_list.png')}
-                                           style={homeStyles.imgStaffStyle}/>
-                                    <Text style={homeStyles.liTextStaff}>选牌</Text>
-                                </ToggleImageBackground>
-                            </TouchableHighlight>
-                        </View>
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
