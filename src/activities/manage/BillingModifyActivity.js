@@ -12,7 +12,7 @@ import {
     View,
 } from 'react-native';
 
-import {CashierBillInfo, HeadeOrderInfoLeft, LoadingIndicator, StaffModifyModal, StockTips,} from '../../components';
+import {CashierBillInfo, HeadeOrderInfoLeft, StaffModifyModal, StockTips,} from '../../components';
 import {displayError, getImage, ImageQutity, showMessage, throttle,} from '../../utils';
 import {
     CASHIERBILLING_CUSTOMER,
@@ -24,6 +24,7 @@ import {
 import {fetchModifyBilling} from '../../services';
 import {balanceBillManageStyle, rotateItemStyles} from '../../styles';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const ViewContainer = styled.View`
   flex: 1;
@@ -415,7 +416,13 @@ class BillingModify extends React.Component {
                         onClose={this.onStockModalClose}
                     />
                 )}
-                {isLoading && <LoadingIndicator/>}
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {!loading && showBillEditModal && (
                     <CashierBillInfo
                         datas={{

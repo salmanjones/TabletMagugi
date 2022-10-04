@@ -10,11 +10,10 @@ import {
     payBillingV4,
 } from '../../services';
 import {clone, PaymentResultStatus, showMessage, throttle} from '../../utils';
-import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
     EditCardPay,
-    LoadingIndicator,
     MemberCardList,
     PayTypeList,
     QRCodePaymentCashier,
@@ -25,6 +24,7 @@ import {
 import {CASHIERBILLING_RELOAD_ORDER,} from '../../actions';
 import {multiplyPayStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 class MultiPay extends React.Component {
     constructor(props) {
@@ -234,7 +234,13 @@ class MultiPay extends React.Component {
                 : '';
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                {isLoading && <LoadingIndicator/>}
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {isPaySuccess && (
                     <QRCodePaymentNew
                         paymentStatus={PaymentResultStatus.success}

@@ -1,4 +1,3 @@
-export * from './LoadingIndicator'
 export * from './SearchModule';
 export * from './HeaderLogout';
 export * from './HeaderMoments';

@@ -27,7 +27,6 @@ import {
     CashierPay,
     HeadeOrderInfoLeft,
     HeadeOrderInfoRight,
-    LoadingIndicator,
     ModalMemberIndentify,
     MultiplyPayModal,
     OtherPayFor,
