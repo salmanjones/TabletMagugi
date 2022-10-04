@@ -1,11 +1,32 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {staffWorksStyles} from '../../styles';
 import {connect} from 'react-redux';
 import Swiper from "react-native-web-swiper";
 import {AppNavigate} from "../../navigators";
 import Video from "react-native-video";
 import Toast from "react-native-root-toast";
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    slideContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    slide1: {
+        backgroundColor: 'rgba(20,20,200,0.3)',
+    },
+    slide2: {
+        backgroundColor: 'rgba(20,200,20,0.3)',
+    },
+    slide3: {
+        backgroundColor: 'rgba(200,20,20,0.3)',
+    },
+})
 
 let _mediaPlayer
 export class StaffWorksView extends React.Component {

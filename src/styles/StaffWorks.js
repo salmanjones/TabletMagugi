@@ -12,7 +12,7 @@ export const staffWorksStyles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        position: "relative"
+        position: "relative",
     },
     iconImg: {
         width: PixelUtil.size(130, 2048),
@@ -129,6 +129,10 @@ export const staffWorksStyles = StyleSheet.create({
         left: 0,
         bottom: 0,
         right: 0,
-        zIndex: 1
+        zIndex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });

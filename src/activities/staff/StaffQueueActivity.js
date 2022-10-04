@@ -17,7 +17,7 @@ export class StaffQueueView extends React.Component {
             staffList: [],
             worksList: [],
             platform: Platform.OS === 'ios' ? 'ios' : 'android',
-            pageSize: 20,
+            pageSize: 40,
             pageNo: 1,
             staffSelected: undefined
         };
@@ -112,7 +112,7 @@ export class StaffQueueView extends React.Component {
         let {pageSize, pageNo, worksList, staffSelected} = this.state
 
         if(refresh){
-            pageSize = 20
+            pageSize = 40
             pageNo = 1
             worksList = []
         }
