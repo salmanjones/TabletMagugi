@@ -11,7 +11,7 @@ export class RechargeInputBar extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.card != this.props.card) {
             this.setState({count: nextProps.card.allowRecharge ? 1 : 0, amt: ''});
         }

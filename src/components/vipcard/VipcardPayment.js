@@ -60,7 +60,7 @@ export class VipcardPayment extends React.PureComponent {
             });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             title: nextProps.model === 'vipcard' ? '售卡' : '充值',
             model: nextProps.model,

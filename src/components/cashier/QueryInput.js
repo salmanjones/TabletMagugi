@@ -13,7 +13,7 @@ export class QueryInput extends React.Component {
 		};
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({text: props.text});
     }
 

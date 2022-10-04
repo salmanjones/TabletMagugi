@@ -94,7 +94,7 @@ class CashierBillingView extends React.Component {
         this.cardCount = 0;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.props.clearCacheData();
         // 设置手势的动作
         this._pinchResponder = PanResponder.create({
@@ -207,7 +207,7 @@ class CashierBillingView extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         var that = this;
         if (nextProps.orderInfo.propChangeType == 'initData' && !this.state.isInited) {
             let orderData = nextProps.orderInfo.orderData;
@@ -511,7 +511,7 @@ class CashierBillingView extends React.Component {
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    UNSAFE_componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any) {
         if (nextProps == this.props && !nextState.isgeted) {
             var isAdd = nextState.consumeItems && nextState.consumeItems.length == 1;
             var isEmpty = !nextState.consumeItems || !nextState.consumeItems.length;
@@ -596,6 +596,8 @@ class CashierBillingView extends React.Component {
     }
 
     copyServicer(preServicer, overrideFields) {
+        console.log("===========", JSON.stringify(preServicer))
+
         let servicer = Object.assign({}, preServicer, {
             //appoint: "false"
             ...overrideFields

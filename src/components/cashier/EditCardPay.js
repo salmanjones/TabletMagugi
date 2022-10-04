@@ -18,14 +18,14 @@ export class EditCardPay extends React.PureComponent {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (this.props.card) {
             let cardState = clone(this.props.card);
             this.setState({ card: cardState });
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.card != nextProps.card) {
             let cardState = clone(nextProps.card);
             this.setState({ card: cardState });

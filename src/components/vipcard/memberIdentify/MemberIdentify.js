@@ -64,7 +64,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
         this.selectWaitingMemberResult();
     };
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.clearData) {
             this.setState({ member: {} });
             this.props.reset();

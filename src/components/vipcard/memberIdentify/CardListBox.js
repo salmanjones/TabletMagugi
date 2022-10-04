@@ -29,7 +29,7 @@ export class CardListBox extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { vipStorageCardList } = nextProps;
     this.setState({cardDatas: vipStorageCardList });
   }

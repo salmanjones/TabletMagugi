@@ -13,7 +13,7 @@ export class SimulateKeyboard extends React.PureComponent {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let changType = nextProps.changType;
         this.setState((prevState, props) => {
             return {

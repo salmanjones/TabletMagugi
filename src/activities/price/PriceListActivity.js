@@ -53,7 +53,7 @@ class PriceList extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         InteractionManager.runAfterInteractions(() => {
             this.query();
         });

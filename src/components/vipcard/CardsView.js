@@ -27,7 +27,7 @@ export class CardsView extends React.PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.card) {
       this.setState({
         card: nextProps.card,

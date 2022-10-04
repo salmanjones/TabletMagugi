@@ -214,7 +214,7 @@ class BillingModify extends React.Component {
         this.onConsumePress = throttle(this.onConsumePress, 600);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.editFlag != nextProps.editFlag) {
             this.handleBackEvent(nextProps.editFlag);
         }

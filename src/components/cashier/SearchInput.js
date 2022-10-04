@@ -12,7 +12,7 @@ export class SearchInput extends React.Component {
         };
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({showFilterMsgBoard: props.showFilterMsgBoard});
     }
 

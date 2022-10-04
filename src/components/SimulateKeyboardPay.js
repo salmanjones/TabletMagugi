@@ -15,7 +15,7 @@ export class SimulateKeyboardPay extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ number: nextProps.number || '' });
     }
 

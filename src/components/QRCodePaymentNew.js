@@ -12,12 +12,12 @@ export class QRCodePaymentNew extends React.PureComponent {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.state.paymentStatus = this.props.paymentStatus;
     }
 
     onPaymentClose = () => {
-        
+
         const {navigation, onClose} = this.props;
         const {paymentStatus} = this.state;
         //if (paymentStatus === PaymentResultStatus.success) {

@@ -18,7 +18,7 @@ class ConsumableSelectBox extends PureComponent {
 		};
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (this.props.categoryConsumables) {
 			this.setState(this.buildState(this.props.categoryConsumables));
 		}
@@ -30,7 +30,7 @@ class ConsumableSelectBox extends PureComponent {
 		this.props.LoadData(isSynthesis?'all':this.props.primeCategoryId.toString());
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (this.props.primeCategoryId !== nextProps.primeCategoryId && nextProps.primeCategoryId) {
 			this.props.LoadData(nextProps.primeCategoryId.toString()); //(nextProps.primeCategoryId.toString());
 			return;
@@ -273,7 +273,7 @@ class ConsumableEdit extends PureComponent {
 		};
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (this.props.data && this.props.data.curAmount) {
 			this.setState({ quantity: this.props.data.curAmount.toString() });
 		}
@@ -283,7 +283,7 @@ class ConsumableEdit extends PureComponent {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (nextProps.data && nextProps.data.curAmount) {
 			this.setState({ quantity: nextProps.data.curAmount.toString() });
 		}

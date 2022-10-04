@@ -67,7 +67,7 @@ class RotatePlacard extends React.Component {
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         let that = this;
         this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
             that.query();

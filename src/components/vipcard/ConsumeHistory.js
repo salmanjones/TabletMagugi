@@ -59,7 +59,7 @@ export class ConsumeHistory extends React.PureComponent {
     this.queryData();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.cardId != this.state.cardId) {
       this.setState({
         cardId: nextProps.cardId,

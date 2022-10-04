@@ -100,10 +100,10 @@ class RotateStaffSelect extends React.PureComponent {
             clearAll: false,
         };
     }
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.query();
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const { visible, excludeStaffs, includeStaffs } = nextProps;
 
         let isReset = visible == true && this.props.visible == false;

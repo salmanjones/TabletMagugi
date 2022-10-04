@@ -22,7 +22,7 @@ export class HeadeOrderInfoRight extends React.PureComponent {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         AsyncStorage.getItem("queryMemberInfo").then((args) => {
             if(args !== null && args !== undefined) {
                 let memberInfo = JSON.parse(args)

@@ -37,7 +37,7 @@ class StaffModifyModalClass extends PureComponent {
         });
     }
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		// if (nextProps.projectId != this.props.projectId || nextProps.staffIndex != this.props.staffIndex) {
 		// 	let project = this.props.consumeItems.filter((item) => item.id === nextProps.projectId)[0];
 		// 	let staff = project.staffs[nextProps.staffIndex];
@@ -717,7 +717,7 @@ class EditNumber extends PureComponent {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		// if (this.props.type !== nextProps.type) {
 		// 	this.setState({ num: '' });
 		// }

@@ -10,7 +10,7 @@ export class TabGroup extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.selectedIndex != this.state.selectedIndex) {
             this.setState({
                 selectedIndex: nextProps.selectedIndex,

@@ -53,7 +53,7 @@ export class ModalCreateMember extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const {memberNo} = nextProps;
         this.setState({
             ...initMemberStatus,

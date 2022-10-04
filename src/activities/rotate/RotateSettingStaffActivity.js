@@ -40,11 +40,11 @@ export class RotateSettingStaffActivity extends React.Component {
         buildQueryItems(this, number);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         //this.query();
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
     }
 
     onSelected = (staff) => {

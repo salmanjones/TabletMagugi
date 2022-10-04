@@ -75,7 +75,7 @@ class CashierView extends React.Component {
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         // this.subscribeDidFocus = this.props.navigation.addListener('didFocus', () => {
         //     this.setState({numValue:''})
         // });
@@ -83,7 +83,7 @@ class CashierView extends React.Component {
         this.props.initOrderFlowNumber();
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         let refreshTag = props.orderFlowNmberRefreshTag;
         if (refreshTag) {
             this.initNumValueData();

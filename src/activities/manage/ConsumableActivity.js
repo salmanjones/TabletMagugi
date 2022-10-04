@@ -42,13 +42,13 @@ class Consumable extends React.Component {
         this.staffSelectBox = null;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         let loading = this.props.consumablesComponentData.length === 0 || this.props.staffComponentData.length === 0;
 
         this.setState({loading: loading});
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (
             this.props.consumablesComponentData != nextProps.consumablesComponentData ||
             this.props.staffComponentData != nextProps.staffComponentData

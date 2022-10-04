@@ -38,7 +38,7 @@ export class CardSelectBox extends React.Component {
         this.setState({selectedIndex: 0, card: null, cardDatas: cardData});
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.member.id != this.props.member.id) {
             const {member, showTab} = nextProps;
             const data = member.vipStorageCardList || [];

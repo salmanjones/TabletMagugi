@@ -15,7 +15,7 @@ export class PriceListModal extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.data && nextProps.data.length) {
             this.setState({
                 data: nextProps.data.filter(x => x.priceListType == '0'),

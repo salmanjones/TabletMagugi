@@ -10,7 +10,7 @@ export class PlacardTimer extends PureComponent {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		this.interval && clearInterval(this.interval);
 
 		if (nextProps.startTimeL) {
@@ -28,7 +28,7 @@ export class PlacardTimer extends PureComponent {
 			}, 1000);
 		}
 	}
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		const that = this;
 		const { startTimeL, elapse } = this.props;
 

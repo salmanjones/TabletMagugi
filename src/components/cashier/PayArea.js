@@ -26,7 +26,7 @@ export class PayArea extends PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.selectedChannel == null && nextProps.selectedPayType == null) {
             this.setState({
                 showCoupons: false,

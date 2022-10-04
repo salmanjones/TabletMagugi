@@ -22,7 +22,7 @@ export class VipcardSaleCardListComponent extends React.PureComponent {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setCard(nextProps.card || {});
   }
 

@@ -19,7 +19,7 @@ class StaffSelectBoxV2Class extends React.PureComponent {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (!(this.props.data instanceof Array)) {
             this.setState(this.buildState(this.props.data, this.props.filter));
         }
@@ -32,7 +32,7 @@ class StaffSelectBoxV2Class extends React.PureComponent {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const { clearServicerGridChoose, data, filter } = this.props;
         if (nextProps.clearServicerGridChoose != clearServicerGridChoose) {
             this.setState({ clearServicerGridChoose: true });

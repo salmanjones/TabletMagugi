@@ -26,7 +26,7 @@ export class PlacardGroup extends PureComponent {
         this.staffsBackup = [];
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.staffs) {
             this.setState({
                 staffs: nextProps.staffs,

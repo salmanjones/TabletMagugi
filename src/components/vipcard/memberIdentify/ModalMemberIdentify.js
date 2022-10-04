@@ -13,7 +13,7 @@ export class ModalMemberIndentify extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const {visible} = nextProps;
         this.setState({visible});
     }

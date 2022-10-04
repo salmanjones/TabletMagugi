@@ -67,7 +67,7 @@ class StaffSelectBoxClass extends React.PureComponent {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const {clearServicerGridChoose} = this.props;
         if (nextProps.clearServicerGridChoose != clearServicerGridChoose) {
             this.setState({clearServicerGridChoose: true});

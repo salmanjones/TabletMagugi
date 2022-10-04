@@ -12,7 +12,7 @@ export class RotateSmallTipModal extends React.Component {
 		};
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		let visible;
 		if (this.props.visible === undefined || this.props.visible === null) visible = true;
 		else visible = this.props.visible;

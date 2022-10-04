@@ -54,7 +54,7 @@ class PendingOrder extends React.Component {
         });
     };
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
             this.loadData(true);
         });
