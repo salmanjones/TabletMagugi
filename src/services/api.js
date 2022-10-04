@@ -1,17 +1,10 @@
 // 美界私有化
-const devHostBms = 'https://magi.magugi.com';
-const prodHostBms = 'https://magi.magugi.com';
+const hostBms = 'https://magi.magugi.com';
+const hostApp = 'https://jx-magi.magugi.com/datahandler'
 
-// 自测
-// const devHostBms = 'http://192.168.1.2:8080/bms';
-// const prodHostBms = 'http://192.168.1.2:8080/bms';
-
-//
-const devHostApp = 'https://jx-magi.magugi.com/datahandler'
-const prodHostApp = 'https://jx-magi.magugi.com/datahandler'
-
-const hostBms = __DEV__ ? devHostBms : prodHostBms;
-const hostApp = __DEV__ ? devHostApp : prodHostApp;
+// 测试环境
+// const hostBms = 'http://192.168.1.194:8000/bms';
+// const hostApp = 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler'
 
 //获取BMS令牌
 export const getTokenBms = `${hostBms}/tablet/token/get`;
