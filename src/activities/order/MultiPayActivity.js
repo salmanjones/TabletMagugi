@@ -1082,6 +1082,7 @@ class MultiPay extends React.Component {
                             }
                         })
                         .catch((err) => {
+                            console.error("支付失败", err)
                             showMessage('支付失败', true);
                         })
                         .finally(() => {
@@ -1118,6 +1119,7 @@ class MultiPay extends React.Component {
                             });
                         })
                         .catch((err) => {
+                            console.error("支付失败", err)
                             showMessage('支付失败', true);
                         })
                         .finally(() => {

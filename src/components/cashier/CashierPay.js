@@ -1,5 +1,4 @@
 //libs
-
 import React from 'react';
 import {Icon} from 'react-native-elements';
 import {
@@ -12,14 +11,12 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import {ModalLoadingIndicator} from '../../components';
 
 //self
 import {cashierPayStyle} from '../../styles';
 import {fetchPrePayBilling, getAvailablePaymentInfo} from '../../services';
 import {showMessage} from '../../utils';
-
-const height = 0;
+import Spinner from "react-native-loading-spinner-overlay";
 
 export class CashierPay extends React.Component {
     constructor(props) {
@@ -332,7 +329,7 @@ export class CashierPay extends React.Component {
     }
 
     render() {
-        const {otherPayments, totalCardPrjs, memberType, consumeItems, companySetting} = this.props;
+        const {companySetting} = this.props;
         const {
             channel,
             othersPaymentList,
@@ -353,7 +350,13 @@ export class CashierPay extends React.Component {
         const couponDesc = selectedCoupons.length ? `已选择${selectedCoupons.length}张优惠券` : coupons.length ? `可用优惠券${coupons.length}张` : '暂无可用优惠券';
         return (
             <View style={cashierPayStyle.modalBackground}>
-                {loading && <ModalLoadingIndicator/>}
+                <Spinner
+                    visible={loading}
+                    textContent={'请求中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <View style={cashierPayStyle.cashierBillInfoWrapper}>
                     <View style={cashierPayStyle.timeCradPayWrapper}>
                         <View style={cashierPayStyle.title}>
@@ -471,7 +474,8 @@ export class CashierPay extends React.Component {
                                                 onPress={this.toggleCoupons.bind(this)}>
                                                 <View style={cashierPayStyle.couponTitle}>
                                                     <Text style={cashierPayStyle.couponTitleText}>
-                                                        优惠券：<Text style={cashierPayStyle.couponText}>{couponDesc}</Text>
+                                                        优惠券：<Text
+                                                        style={cashierPayStyle.couponText}>{couponDesc}</Text>
                                                     </Text>
                                                     <View
                                                         style={[cashierPayStyle.couponTitleR, {display: coupons.length ? 'flex' : 'none'}]}>

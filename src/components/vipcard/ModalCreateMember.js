@@ -1,26 +1,12 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    TextInput,
-    ImageBackground,
-    TouchableOpacity,
-    Image,
-    Modal,
-} from 'react-native';
+import {Image, ImageBackground, Modal, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 import {CheckBox} from 'react-native-elements';
-import {ModalLoadingIndicator} from '../../components';
-import {memberFilingStyle, manageConsumablesStyle} from '../../styles';
-import {
-    PixelUtil,
-    isPhone,
-    isValidCardPwd,
-    displayError,
-    showMessage,
-} from '../../utils';
-import {fetchMemberNO, fetchCreateMember, fetchMemberPasswordStat} from '../../services';
+import {manageConsumablesStyle, memberFilingStyle} from '../../styles';
+import {displayError, isPhone, isValidCardPwd, PixelUtil, showMessage,} from '../../utils';
+import {fetchCreateMember, fetchMemberPasswordStat} from '../../services';
 import moment from "moment";
 import DatePicker from "react-native-date-picker";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const initMemberStatus = {
     isCreateMemberPending: false,
@@ -320,8 +306,13 @@ export class ModalCreateMember extends React.Component {
                 animationType={'fade'}
                 onRequestClose={() => null}
             >
-                {loading && <ModalLoadingIndicator/>}
-
+                <Spinner
+                    visible={loading}
+                    textContent={'请求中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {visible && (
                     <View style={memberFilingStyle.modalBackground}>
                         <View style={memberFilingStyle.cashierBillInfoWrapper}>

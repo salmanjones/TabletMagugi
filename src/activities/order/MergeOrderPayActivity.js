@@ -1,19 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Text, View, FlatList, TouchableOpacity, Image, Animated } from 'react-native';
-import { pendingOrderPayStyle } from '../../styles';
+import {connect} from 'react-redux';
+import {Animated, FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {pendingOrderPayStyle} from '../../styles';
 import {
-    mergePayInit,
-    fetchPrePayBilling,
     fetchPayBilling,
+    fetchPrePayBilling,
     getAvailablePaymentInfo,
     mergeBindBilling4App,
-    preCheckStock,
+    mergePayInit,
     payBillingV4,
+    preCheckStock,
 } from '../../services';
-import { ModalLoadingIndicator, QRCodePaymentCashier, VipPayFor, StockTips, OtherPayFor, PayArea ,QRCodePaymentNew} from '../../components';
-import { showMessage,PaymentResultStatus } from '../../utils';
+import {OtherPayFor, PayArea, QRCodePaymentCashier, QRCodePaymentNew, StockTips, VipPayFor} from '../../components';
+import {PaymentResultStatus, showMessage} from '../../utils';
 import Swipeout from 'react-native-swipeout';
+import Spinner from "react-native-loading-spinner-overlay";
+
 const height = 0;
 class MergeOrderPay extends React.Component {
     constructor(props) {
@@ -84,7 +86,13 @@ class MergeOrderPay extends React.Component {
 
         return (
             <View style={pendingOrderPayStyle.timeCradPayWrapper}>
-                <ModalLoadingIndicator text={isLoading ? '请求中' : ''} loading={isLoading} />
+                <Spinner
+                    visible={isLoading}
+                    textContent={isLoading ? '请求中' : ''}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <View style={pendingOrderPayStyle.title}>
                     <View style={pendingOrderPayStyle.titleL}>
                         <View style={pendingOrderPayStyle.titleItemO}>

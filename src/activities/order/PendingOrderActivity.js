@@ -5,12 +5,13 @@ import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
 import {bindActionCreators} from 'redux';
 
-import {ModalLoadingIndicator, PendingOrderItem, PendingOrderSummary, SearchModule} from '../../components';
+import {PendingOrderItem, PendingOrderSummary, SearchModule} from '../../components';
 import {getPendingListAction} from '../../actions';
 import {cashierStyles, pendingStyles} from '../../styles';
 import {PixelUtil, showMessage} from '../../utils';
 import {CheckBox} from 'react-native-elements';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CURRENT_TAB_INDEX = 1;
 
@@ -119,7 +120,13 @@ class PendingOrder extends React.Component {
 
         return (
             <View style={cashierStyles.container}>
-                {isLoading && <ModalLoadingIndicator />}
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <View style={pendingStyles.singleBoxTop}>
                     <View>
                         <SearchModule

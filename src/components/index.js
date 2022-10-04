@@ -1,5 +1,4 @@
 export * from './LoadingIndicator'
-export * from './ModalLoadingIndicator';
 export * from './SearchModule';
 export * from './HeaderLogout';
 export * from './HeaderMoments';

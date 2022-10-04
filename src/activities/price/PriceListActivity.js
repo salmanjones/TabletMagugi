@@ -14,27 +14,16 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import styled from 'styled-components/native/';
 import {getCompanyAutoFlowNumber, priceListInfo} from '../../services';
-import {
-    ModalLoadingIndicator,
-    PriceListContent,
-    PriceListInfoRight,
-    PriceListModal,
-    PriceListShopCart,
-    PriceSwiper
-} from '../../components';
+import {PriceListContent, PriceListInfoRight, PriceListModal, PriceListShopCart, PriceSwiper} from '../../components';
 import {getImage, ImageQutity, PixelUtil, showMessage} from '../../utils';
 import {priceIndexStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 // 获取页面宽度
 const width = Dimensions.get('window').width;
 const left = width - PixelUtil.size(120);
-
-const SwiperContainer = styled.View`
-    flex: 1;
-`;
 
 class PriceList extends React.Component {
     constructor() {
@@ -292,7 +281,14 @@ class PriceList extends React.Component {
         const shopCartTotalCount = shopCartData.reduce((result, item) => result + (item.count || 0), 0);
         return (
             <ImageBackground style={ priceIndexStyle.bgBox } source={ require("@imgPath/p-load-img.png") } resizeMode={'cover'}>
-                <ModalLoadingIndicator text={isLoading ? '加载中' : ''} loading={isLoading} />
+                <Spinner
+                    visible={isLoading}
+                    textContent={isLoading ? '请求中' : ''}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
+
                 {priceData.length ? (
                     <PriceSwiper
                         ref={swiper => {

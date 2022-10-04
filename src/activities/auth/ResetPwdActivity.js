@@ -2,11 +2,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableHighlight, View} from 'react-native';
-import {CommonActions} from '@react-navigation/native';
-import {BottomCopyModule, ModalLoadingIndicator} from "../../components";
 import {loginStyles, resetPwdStyles} from '../../styles';
 import {resetpwdSendCodeAction, resetpwdSubmitAction} from '../../actions';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 class ResetPwdView extends React.Component {
     constructor(props) {
@@ -222,7 +221,13 @@ class ResetPwdView extends React.Component {
         let {navigation} = this.props
         return (
             <View style={ resetPwdStyles.container }>
-                <ModalLoadingIndicator loading={ this.props.activityStatus.loading } />
+                <Spinner
+                    visible={this.props.activityStatus.loading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <KeyboardAvoidingView behavior="padding" style={resetPwdStyles.keyboardView}>
                     <ImageBackground style={resetPwdStyles.loginWrapper} resizeMode={'cover'} source={require("@imgPath/login-background.png")}>
                         <ImageBackground style={resetPwdStyles.loginBox}>

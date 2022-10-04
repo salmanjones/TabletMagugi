@@ -2,28 +2,21 @@
 import React from 'react';
 import {connect} from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {
-    Alert,
-    Image,
-    ImageBackground,
-    KeyboardAvoidingView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-import {ModalLoadingIndicator, RemindBoxer} from "../../components";
+import {RemindBoxer} from "../../components";
 import {
     loginInputChangeAction,
     loginInputFoucusinAction,
     loginInputFoucusoutAction,
-    loginSubmitAction, loginSuccessAction
+    loginSubmitAction,
+    loginSuccessAction
 } from '../../actions';
 import {loginStyles} from '../../styles';
 import {AppConfig, resetNavigationTo, systemConfig} from '../../utils';
 import {desDecrypt} from '../../utils/encrypt/encrypt'
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 class Login extends React.Component {
     constructor(props) {
@@ -72,7 +65,13 @@ class Login extends React.Component {
         const {isShowRemindBoxer} = this.state;
         return (
             <View style={loginStyles.container}>
-                <ModalLoadingIndicator loading={this.props.formValues.loading}/>
+                <Spinner
+                    visible={this.props.formValues.loading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {isShowRemindBoxer && (
                     <RemindBoxer style={RemindBoxer.hidden} openLink={this.openLink.bind(this)}></RemindBoxer>
                 )}

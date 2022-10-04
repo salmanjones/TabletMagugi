@@ -10,14 +10,9 @@ import {
     updateDutyStaffs,
     updateDutyStaffStatus
 } from '../../services';
-import {
-    ModalLoadingIndicator,
-    PlacardGroup,
-    RotateOperateModal,
-    RotateStaffSelectModal,
-    RotateTitleRight
-} from '../../components';
+import {PlacardGroup, RotateOperateModal, RotateStaffSelectModal, RotateTitleRight} from '../../components';
 import {showMessage} from '../../utils';
+import Spinner from "react-native-loading-spinner-overlay";
 
 // 空牌
 class NullRotate extends React.PureComponent {
@@ -401,7 +396,13 @@ class RotatePlacard extends React.Component {
         console.log("Rotate main page render")
         return (
             <View>
-                <ModalLoadingIndicator text={isLoading ? '加载中' : isSaving ? '请求中' : ''} loading={isLoading || isSaving} />
+                <Spinner
+                    visible={isLoading || isSaving}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {hasData ? (
                     <View style={rotateItemStyles.FlatListBox}>
                         <View style={rotateItemStyles.FlatListTitle}>

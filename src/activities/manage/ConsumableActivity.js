@@ -5,7 +5,6 @@ import {InteractionManager, ScrollView, Text, TouchableOpacity, View} from 'reac
 import {
     ConsumableList,
     ConsumableSelectBoxComponent,
-    ModalLoadingIndicator,
     QueryInput,
     StaffEditWidget,
     StaffSelectWidget
@@ -30,6 +29,7 @@ import {
 //self
 import {cashierBillingStyle, manageConsumablesStyle} from '../../styles';
 import {dealyAction, showMessage} from '../../utils';
+import Spinner from "react-native-loading-spinner-overlay";
 
 class Consumable extends React.Component {
     constructor(props) {
@@ -133,7 +133,13 @@ class Consumable extends React.Component {
 
         return (
             <View style={cashierBillingStyle.container}>
-                {(loading || !initFinish) && <ModalLoadingIndicator/>}
+                <Spinner
+                    visible={(loading || !initFinish)}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <View style={manageConsumablesStyle.consumeLeftBox}>
                     <View style={manageConsumablesStyle.consumeLeftHeader}>
                         <Text style={cashierBillingStyle.servicerItemTitle}>消耗品</Text>

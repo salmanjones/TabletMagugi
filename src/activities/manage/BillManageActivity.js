@@ -8,10 +8,11 @@ import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import {PixelUtil, showMessage, throttle} from '../../utils';
 
-import {DatepickerBox, ModalLoadingIndicator, PendingOrderItem, SearchModule,} from '../../components';
+import {DatepickerBox, PendingOrderItem, SearchModule,} from '../../components';
 import {getBillingListAction, resetBillingListAction} from '../../actions';
 import {cashierStyles, pendingStyles} from '../../styles';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CURRENT_TAB_INDEX = 1;
 
@@ -118,7 +119,13 @@ class BillManageOtherView extends React.Component {
 
         return (
             <View style={cashierStyles.container}>
-                {isLoading && <ModalLoadingIndicator/>}
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 <View
                     style={{
                         flex: 0,

@@ -20,6 +20,7 @@ export class ConsumableList extends PureComponent {
                                     item={item}
                                     onStaffSelected={(staffIndex, staff) => onStaffSelected({ staff, index, staffIndex })}
                                     onItemSelected={() => onConsumableSelected({ item, index })}
+                                    key={index}
                                     onDelete={() => {
                                         onDelete({ item, index });
                                     }}

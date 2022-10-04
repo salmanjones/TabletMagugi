@@ -8,10 +8,9 @@ import {
     HeadeOrderInfoRight,
     MemberListItem,
     MemberWaitListItem,
-    ModalLoadingIndicator,
     SearchModule,
 } from '../../components';
-import {getImage, ImageQutity, ListStatus, PixelUtil} from '../../utils';
+import {getImage, ImageQutity, ListStatus, PixelUtil, showMessage} from '../../utils';
 
 import {
     fetchMemberCardList,
@@ -24,8 +23,8 @@ import {cashierBillingFlowNumberInitAction, getMemberInfoAction, resetMemberActi
 
 //self
 import {cashierStyles, memberIdentifyStyle} from '../../styles';
-import { showMessage } from '../../utils';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
@@ -825,7 +824,13 @@ const CategoryViews = props => {
                             }}>
                             <Image resizeMethod="resize" source={operatorImg} style={operatorImgStyle}/>
                             <Text style={cashierStyles.orderGenreText}>{operatorText}</Text>
-                            <ModalLoadingIndicator loading={isLoading}/>
+                            <Spinner
+                                visible={isLoading}
+                                textContent={'加载中'}
+                                textStyle={{
+                                    color: '#FFF'
+                                }}
+                            />
                         </TouchableOpacity>
                     );
                 })}
@@ -859,7 +864,13 @@ const CategoryViews = props => {
                 >
                     <Image resizeMethod="resize" source={operatorImg} style={operatorImgStyle}/>
                     <Text style={cashierStyles.orderGenreText}>{operatorText}</Text>
-                    <ModalLoadingIndicator loading={isLoading}/>
+                    <Spinner
+                        visible={isLoading}
+                        textContent={'加载中'}
+                        textStyle={{
+                            color: '#FFF'
+                        }}
+                    />
                 </TouchableOpacity>
             </View>
         );

@@ -4,17 +4,11 @@ import {bindActionCreators} from 'redux';
 import {FlatList, Image, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
 import {memberIdentifyStyle} from '../../../styles';
-import {
-    CardSelectBox,
-    FlatListFooter,
-    MemberListItem,
-    MemberWaitListItem,
-    ModalLoadingIndicator,
-    SearchModule,
-} from '../../../components';
+import {CardSelectBox, FlatListFooter, MemberListItem, MemberWaitListItem, SearchModule,} from '../../../components';
 import {ListStatus} from '../../../utils';
 import {getMemberInfoAction, resetMemberAction} from '../../../actions';
 import {fetchWaitingMembersResult} from '../../../services';
+import Spinner from "react-native-loading-spinner-overlay";
 
 export class MemberIdentifyComponent extends React.PureComponent {
     constructor(props) {
@@ -167,7 +161,13 @@ export class MemberIdentifyComponent extends React.PureComponent {
                                         <Image resizeMethod="resize"  source={require('@imgPath/refresh_icon.png')} style={memberIdentifyStyle.waitRefreshTextImage} />
                                         <Text style={memberIdentifyStyle.waitRefreshText}>刷新</Text>
                                     </TouchableOpacity>
-                                    <ModalLoadingIndicator loading={ this.state.loading } />
+                                    <Spinner
+                                        visible={this.state.loading}
+                                        textContent={'请求中'}
+                                        textStyle={{
+                                            color: '#FFF'
+                                        }}
+                                    />
                                 </View>
                                 <FlatList
                                     data={memberList}

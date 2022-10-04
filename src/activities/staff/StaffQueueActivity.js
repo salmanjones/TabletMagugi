@@ -196,6 +196,10 @@ export class StaffQueueView extends React.Component {
         })
     }
 
+    toCashier(){
+        AppNavigate.navigate('CashierActivity')
+    }
+
     render() {
         const {isLoading, staffList, worksList} = this.state
 
@@ -296,6 +300,19 @@ export class StaffQueueView extends React.Component {
                                 // 无作品
                                 <View style={staffQueueStyles.WorksEmptyBox}>
                                     <Image resizeMethod="resize" source={require('@imgPath/works_empty.png')} style={staffQueueStyles.WorksEmptyImg}/>
+
+                                    {
+                                        !isLoading && (
+                                            <TouchableOpacity onPress={()=>{
+                                                this.toCashier()
+                                            }}>
+                                                <View style={staffQueueStyles.cashierBtn}>
+                                                    <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        )
+                                    }
+
                                 </View>
                             )
                             :

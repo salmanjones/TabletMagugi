@@ -57,6 +57,7 @@ import {
 import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
+import Spinner from "react-native-loading-spinner-overlay";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -1355,7 +1356,13 @@ class CashierBillingView extends React.Component {
         return (
             <View style={cashierBillingStyle.container}>
                 {/* 页面loading */}
-                {isLoading && <LoadingIndicator/>}
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {
                     this.state.showEditConsumeItemModal && (
                         <AmendItemInfo

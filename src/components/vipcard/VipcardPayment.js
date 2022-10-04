@@ -2,17 +2,11 @@ import React from 'react';
 import {Image, Modal, ScrollView, Text, TouchableOpacity, View,} from 'react-native';
 
 import {cashierPayStyle, openCardAccountStyle} from '../../styles';
-import {
-    DeptList,
-    MemberInfo,
-    ModalLoadingIndicator,
-    QRCodePayment,
-    QRCodePaymentNew,
-    SaleCardItem,
-} from '../../components';
+import {DeptList, MemberInfo, QRCodePayment, QRCodePaymentNew, SaleCardItem,} from '../../components';
 
 import {displayError, showMessage} from '../../utils';
 import {fetchCreateCardOrder, fetchOtherPayment, fetchOtherPayType} from '../../services';
+import Spinner from "react-native-loading-spinner-overlay";
 
 export class VipcardPayment extends React.PureComponent {
     constructor(props) {
@@ -226,8 +220,13 @@ export class VipcardPayment extends React.PureComponent {
                 visible={visible}
                 onRequestClose={() => null}
             >
-                {isPaying && <ModalLoadingIndicator/>}
-
+                <Spinner
+                    visible={isPaying}
+                    textContent={'请求中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
                 {visible && (
                     <View style={openCardAccountStyle.modalBackground}>
                         <View style={openCardAccountStyle.cashierBillInfoWrapper}>

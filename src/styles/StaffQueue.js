@@ -207,6 +207,21 @@ export const staffQueueStyles = StyleSheet.create({
         width: PixelUtil.size(403, 2048),
         height: PixelUtil.size(426, 2048),
     },
+    cashierBtn: {
+        marginTop: PixelUtil.size(20, 2048),
+        paddingLeft: PixelUtil.size(40, 2048),
+        paddingRight: PixelUtil.size(40, 2048),
+        paddingTop: PixelUtil.size(20, 2048),
+        paddingBottom: PixelUtil.size(20, 2048),
+        backgroundColor: '#ffffff40',
+        borderWidth: PixelUtil.size(3, 2048),
+        borderColor: '#999',
+        borderRadius: PixelUtil.size(40, 2048),
+    },
+    cashierBtnTxt:{
+        fontSize: PixelUtil.size(30, 2048),
+        color: '#666',
+    },
     WorksListBox:{
         width: worksListWidth,
         height: worksListHeight,
