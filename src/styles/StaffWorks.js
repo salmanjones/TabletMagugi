@@ -122,8 +122,6 @@ export const staffWorksStyles = StyleSheet.create({
         color: '#fff',
     },
     videoBox:{
-        width: '100%',
-        height: '100%',
         position: 'absolute',
         top: 0,
         left: 0,
@@ -134,5 +132,6 @@ export const staffWorksStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#000'
     }
 });

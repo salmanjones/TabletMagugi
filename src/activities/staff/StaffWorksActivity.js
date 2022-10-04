@@ -88,6 +88,8 @@ export class StaffWorksView extends React.Component {
                                    onError={this.videoError}
                                    poster={workInfo.showImg}
                                    repeat={true}
+                                   resizeMode={'contain'}
+                                   posterResizeMode={'contain'}
                                    style={staffWorksStyles.videoBox}/>
                         )
                         :
