@@ -596,8 +596,6 @@ class CashierBillingView extends React.Component {
     }
 
     copyServicer(preServicer, overrideFields) {
-        console.log("===========", JSON.stringify(preServicer))
-
         let servicer = Object.assign({}, preServicer, {
             //appoint: "false"
             ...overrideFields
