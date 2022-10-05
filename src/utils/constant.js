@@ -59,7 +59,7 @@ export const ImageQutity = {
 
 
 export const systemConfig = {
-    version: '3.0.0',
+    version: '3.1.0',
     updateVersionLimitTime: 180000,
 };
 
