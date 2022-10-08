@@ -4,7 +4,7 @@ import {staffQueueStyles} from '../../styles';
 import {connect} from 'react-redux';
 import {AppConfig} from "../../utils";
 import {fetchStaffList, fetchWorksList} from '../../services';
-import {StarRating} from "../../components";
+import {HeadeOrderInfoRight, StarRating} from "../../components";
 import Toast from "react-native-root-toast";
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
@@ -24,6 +24,19 @@ export class StaffQueueView extends React.Component {
     }
 
     componentDidMount() {
+        // 右侧按钮
+        let {navigation} = this.props
+        navigation.setOptions({
+            headerRight: () =>  (
+                <TouchableOpacity onPress={()=>{
+                    this.toCashier()
+                }}>
+                    <View style={staffQueueStyles.cashierBtn}>
+                        <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        })
         // 获取员工信息
         this.loadStaffs()
     }
@@ -300,19 +313,6 @@ export class StaffQueueView extends React.Component {
                                 // 无作品
                                 <View style={staffQueueStyles.WorksEmptyBox}>
                                     <Image resizeMethod="resize" source={require('@imgPath/works_empty.png')} style={staffQueueStyles.WorksEmptyImg}/>
-
-                                    {
-                                        !isLoading && (
-                                            <TouchableOpacity onPress={()=>{
-                                                this.toCashier()
-                                            }}>
-                                                <View style={staffQueueStyles.cashierBtn}>
-                                                    <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        )
-                                    }
-
                                 </View>
                             )
                             :

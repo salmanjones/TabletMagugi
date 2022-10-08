@@ -17,10 +17,9 @@ export const homeStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        height: naviBarHeight,
+        height: '100%',
         marginLeft: PixelUtil.size(75, 2548),
         marginRight: PixelUtil.size(75, 2548),
-        marginTop: Platform.OS === 'ios' ? -20:0
     },
     logoutText: {
         //首页头部

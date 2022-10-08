@@ -1009,7 +1009,7 @@ class CashierBillingView extends React.Component {
         let {id, billingNo} = this.state;
 
         if (id && billingNo) {
-            Alert.alert('系统提示', '确定要作废当前单据么？', [
+            Alert.alert('系统提示', '确定要作废当前单据吗？', [
                 {
                     text: '确定',
                     onPress: () => {

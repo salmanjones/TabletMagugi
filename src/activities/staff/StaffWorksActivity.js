@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View, StyleSheet} from 'react-native';
-import {staffWorksStyles} from '../../styles';
+import {staffQueueStyles, staffWorksStyles} from '../../styles';
 import {connect} from 'react-redux';
 import Swiper from "react-native-web-swiper";
 import {AppNavigate} from "../../navigators";
@@ -46,6 +46,20 @@ export class StaffWorksView extends React.Component {
     componentDidMount() {
         this.setState({
             showVideo: true
+        })
+
+        // 右侧按钮
+        let {navigation} = this.props
+        navigation.setOptions({
+            headerRight: () =>  (
+                <TouchableOpacity onPress={()=>{
+                    this.toCashier()
+                }}>
+                    <View style={staffQueueStyles.cashierBtn}>
+                        <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
+                    </View>
+                </TouchableOpacity>
+            )
         })
     }
 
@@ -138,15 +152,6 @@ export class StaffWorksView extends React.Component {
                         <Text style={staffWorksStyles.staffName}>{staffInfo.positionName}</Text>
                         <Image resizeMethod="resize" source={require('@imgPath/icon-like.png')} style={staffWorksStyles.likeCountImg}/>
                         <Text style={staffWorksStyles.likeCountTxt}>{workInfo.countOfLike}</Text>
-                    </View>
-                    <View style={staffWorksStyles.footerRight}>
-                        <TouchableOpacity onPress={()=>{
-                            this.toCashier()
-                        }}>
-                            <View style={staffWorksStyles.cashierBtn}>
-                                <Text style={staffWorksStyles.cashierBtnTxt}>立即开单</Text>
-                            </View>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
