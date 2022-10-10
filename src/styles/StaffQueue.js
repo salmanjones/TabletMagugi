@@ -126,9 +126,10 @@ export const staffQueueStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(24, 2048)
     },
     NickName: {
+        width: staffRightWidth - PixelUtil.size(230,2048),
         fontSize: PixelUtil.size(28, 2048),
         color: '#333',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     PositionName:{
         fontSize: PixelUtil.size(18, 2048),

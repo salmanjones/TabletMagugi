@@ -153,7 +153,7 @@ export class StaffQueueView extends React.Component {
                         }
 
                         // 处理图片
-                        item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!600x600r/crop/!600x600a0a0/sharpen/1"
+                        item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!400x400r/crop/!400x400a0a0/sharpen/1"
                         item.imgUrls = item.imgUrls.split(",").map(item=>AppConfig.imageServer + item + "?imageView2/0/w/1024/q/95")
                         item.selected = ''
                         // 处理点赞数展示

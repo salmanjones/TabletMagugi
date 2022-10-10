@@ -40,7 +40,6 @@ export class StaffWorksView extends React.Component {
             workInfo,
             showVideo: true
         }
-
     }
 
     componentDidMount() {
