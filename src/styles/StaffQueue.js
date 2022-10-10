@@ -53,6 +53,13 @@ export const staffQueueStyles = StyleSheet.create({
         width: '100%',
         height: listHeight
     },
+    ListEmptyBox:{
+        width: '100%',
+        height: listHeight,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     itemCell: {
         paddingLeft: PixelUtil.size(40, 2048),
         paddingRight: PixelUtil.size(40, 2048),

@@ -134,13 +134,13 @@ export class StaffQueueView extends React.Component {
             isLoading: true,
             pageNo
         }, ()=>{
-            fetchWorksList(staffSelected.staffAppUserId, pageNo, pageSize).then(res=>{
+            staffSelected && fetchWorksList(staffSelected.staffAppUserId, pageNo, pageSize).then(res=>{
                 let {code, data} = res
                 if(code == '6000'){ // 数据请求成功
                     let worksData = data.result
 
                     // 处理员工信息
-                    worksData.forEach((item, idx)=>{
+                    worksData && worksData.forEach((item, idx)=>{
                         let originalBlogDetail = item.originalBlogDetail
                         if(originalBlogDetail){
                             let imgUrls = originalBlogDetail.imgUrls || ""
@@ -156,9 +156,13 @@ export class StaffQueueView extends React.Component {
                         item.showImg = AppConfig.imageServer + item.showImg + "?imageMogr2/auto-orient/thumbnail/!600x600r/crop/!600x600a0a0/sharpen/1"
                         item.imgUrls = item.imgUrls.split(",").map(item=>AppConfig.imageServer + item + "?imageView2/0/w/1024/q/95")
                         item.selected = ''
+                        // 处理点赞数展示
+                        item.countOfLike = this.convertNum(item.countOfLike)
 
-                        // 放入数组
-                        worksList.push(item)
+                        // 放入数组,过滤勋章类动态
+                        if(!item.systemSource){
+                            worksList.push(item)
+                        }
                     })
 
                     this.setState({
@@ -193,8 +197,6 @@ export class StaffQueueView extends React.Component {
                 workInfo: worksList[index],
                 staffInfo: staffSelected
             }
-
-            console.log(JSON.stringify(params.workInfo))
             // 页面跳转
             AppNavigate.navigate('StaffWorksActivity', params)
         })
@@ -211,6 +213,23 @@ export class StaffQueueView extends React.Component {
 
     toCashier(){
         AppNavigate.navigate('CashierActivity')
+    }
+
+    // 转换点赞
+    convertNum = (num) =>{
+        let rs = '';
+        num = num.toString();
+        if (num.length > 3) {
+            let nums = num.split('');
+            if (nums[nums.length - 3] == '0') {
+                rs = num.substr(0, nums.length - 3) + 'k';
+            } else {
+                rs = num.substr(0, nums.length - 3) + '.' + num.substr(nums.length - 3, 1) + 'k';
+            }
+            return rs;
+        } else {
+            return num;
+        }
     }
 
     render() {
@@ -298,6 +317,13 @@ export class StaffQueueView extends React.Component {
                         ItemSeparatorComponent={()=>{
                             return (
                                 <View></View>
+                            )
+                        }}
+                        ListEmptyComponent={()=>{
+                            return (
+                                <View style={staffQueueStyles.ListEmptyBox}>
+                                    <Text>请配置发型师预约时间</Text>
+                                </View>
                             )
                         }}
                     />
