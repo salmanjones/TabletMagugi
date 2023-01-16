@@ -115,6 +115,21 @@ class Home extends React.Component {
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
+                                onPress={() => AppNavigate.navigate('CashierActivity')}
+                                onPressIn={() => this.activeButton('collect')}>
+                                <ToggleImageBackground
+                                    isActive={this.state.collect}
+                                    style={homeStyles.operateBoxItem}>
+                                    <Image resizeMethod="resize"
+                                           source={require('@imgPath/index-collect.png')}
+                                           style={homeStyles.imgStyle}/>
+                                    <Text style={homeStyles.liText}>收银</Text>
+                                </ToggleImageBackground>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={homeStyles.operateBox}>
+                            <TouchableHighlight
+                                underlayColor="white"
                                 onPress={() =>
                                     AppNavigate.navigate('StaffQueueActivity')
                                 }
@@ -126,21 +141,6 @@ class Home extends React.Component {
                                            source={require('@imgPath/staff_list.png')}
                                            style={homeStyles.imgStaffStyle}/>
                                     <Text style={homeStyles.liTextStaff}>选牌</Text>
-                                </ToggleImageBackground>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={homeStyles.operateBox}>
-                            <TouchableHighlight
-                                underlayColor="white"
-                                onPress={() => AppNavigate.navigate('CashierActivity')}
-                                onPressIn={() => this.activeButton('collect')}>
-                                <ToggleImageBackground
-                                    isActive={this.state.collect}
-                                    style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/index-collect.png')}
-                                           style={homeStyles.imgStyle}/>
-                                    <Text style={homeStyles.liText}>收银</Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>
@@ -159,6 +159,8 @@ class Home extends React.Component {
                         {/*        </ToggleImageBackground>*/}
                         {/*    </TouchableHighlight>*/}
                         {/*</View>*/}
+                    </View>
+                    <View style={homeStyles.operateWrap}>
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
@@ -173,25 +175,6 @@ class Home extends React.Component {
                                            source={require('@imgPath/index-rotate.png')}
                                            style={homeStyles.imgStyle}/>
                                     <Text style={homeStyles.liText}>轮牌</Text>
-                                </ToggleImageBackground>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                    <View style={homeStyles.operateWrap}>
-                        <View style={homeStyles.operateBox}>
-                            <TouchableHighlight
-                                underlayColor="white"
-                                onPress={() =>
-                                    AppNavigate.navigate('BillManageActivity')
-                                }
-                                onPressIn={() => this.activeButton('consumables')}>
-                                <ToggleImageBackground
-                                    isActive={this.state.consumables}
-                                    style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/bill-manage.png')}
-                                           style={homeStyles.imgStyleOther}/>
-                                    <Text style={homeStyles.liText}>结单管理</Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>
@@ -212,24 +195,42 @@ class Home extends React.Component {
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>
-                        <View style={homeStyles.operateBox}>
-                            <TouchableHighlight
-                                underlayColor="white"
-                                onPress={() =>
-                                    AppNavigate.navigate('AnalysisHome')
-                                }
-                                onPressIn={() => this.activeButton('count')}>
-                                <ToggleImageBackground
-                                    // disable={true}
-                                    isActive={this.state.count}
-                                    style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/bill-count.png')}
-                                           style={homeStyles.imgStyleCount}/>
-                                    <Text style={homeStyles.liText}>统计</Text>
-                                </ToggleImageBackground>
-                            </TouchableHighlight>
-                        </View>
+                        {/*<View style={homeStyles.operateBox}>*/}
+                        {/*    <TouchableHighlight*/}
+                        {/*        underlayColor="white"*/}
+                        {/*        onPress={() =>*/}
+                        {/*            AppNavigate.navigate('BillManageActivity')*/}
+                        {/*        }*/}
+                        {/*        onPressIn={() => this.activeButton('consumables')}>*/}
+                        {/*        <ToggleImageBackground*/}
+                        {/*            isActive={this.state.consumables}*/}
+                        {/*            style={homeStyles.operateBoxItem}>*/}
+                        {/*            <Image resizeMethod="resize"*/}
+                        {/*                   source={require('@imgPath/bill-manage.png')}*/}
+                        {/*                   style={homeStyles.imgStyleOther}/>*/}
+                        {/*            <Text style={homeStyles.liText}>结单管理</Text>*/}
+                        {/*        </ToggleImageBackground>*/}
+                        {/*    </TouchableHighlight>*/}
+                        {/*</View>*/}
+
+                        {/*<View style={homeStyles.operateBox}>*/}
+                        {/*    <TouchableHighlight*/}
+                        {/*        underlayColor="white"*/}
+                        {/*        onPress={() =>*/}
+                        {/*            AppNavigate.navigate('AnalysisHome')*/}
+                        {/*        }*/}
+                        {/*        onPressIn={() => this.activeButton('count')}>*/}
+                        {/*        <ToggleImageBackground*/}
+                        {/*            // disable={true}*/}
+                        {/*            isActive={this.state.count}*/}
+                        {/*            style={homeStyles.operateBoxItem}>*/}
+                        {/*            <Image resizeMethod="resize"*/}
+                        {/*                   source={require('@imgPath/bill-count.png')}*/}
+                        {/*                   style={homeStyles.imgStyleCount}/>*/}
+                        {/*            <Text style={homeStyles.liText}>统计</Text>*/}
+                        {/*        </ToggleImageBackground>*/}
+                        {/*    </TouchableHighlight>*/}
+                        {/*</View>*/}
                     </View>
                 </View>
                 <View style={homeStyles.footer}>

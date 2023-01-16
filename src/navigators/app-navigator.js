@@ -436,26 +436,26 @@ function RootNavigation() {
                             }
                         }}
                     />
-                    <RootStack.Screen
-                        name="BillManageActivity"
-                        component={BillManageActivity}
-                        options={{
-                            title: '结单列表',
-                            headerTitleAlign: 'center',
-                            headerShown: true,
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            }
-                        }}
-                    />
+                    {/*<RootStack.Screen*/}
+                    {/*    name="BillManageActivity"*/}
+                    {/*    component={BillManageActivity}*/}
+                    {/*    options={{*/}
+                    {/*        title: '结单列表',*/}
+                    {/*        headerTitleAlign: 'center',*/}
+                    {/*        headerShown: true,*/}
+                    {/*        headerStyle: {*/}
+                    {/*            backgroundColor: '#111C3C',*/}
+                    {/*            height: PixelUtil.size(132),*/}
+                    {/*        },*/}
+                    {/*        headerTintColor: '#fff',*/}
+                    {/*        headerTitleStyle: {*/}
+                    {/*            color: 'white',*/}
+                    {/*            textAlign: 'center',*/}
+                    {/*            alignSelf: 'center',*/}
+                    {/*            fontSize: PixelUtil.size(32),*/}
+                    {/*        }*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <RootStack.Screen
                         name="MergeOrderPayActivity"
                         component={MergeOrderPayActivity}
@@ -646,6 +646,9 @@ function TabNavigation() {
             <TabStack.Screen name="SelectCustomerType"
                              component={SelectCustomerType}
                              options={{tabBarLabel: '开卡'}}/>
+            <TabStack.Screen name="BillManageActivity"
+                             component={BillManageActivity}
+                             options={{tabBarLabel: '已结单据'}}/>
         </TabStack.Navigator>
     );
 }
