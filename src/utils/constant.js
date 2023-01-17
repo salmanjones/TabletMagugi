@@ -1,4 +1,5 @@
-import env from '/env'
+import env from '../../env.js'
+
 export const AppConfig = {
     appName: '门店小助手',
     initStoreName: '美界演示门店',

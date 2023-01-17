@@ -1,4 +1,4 @@
-import env from '/env'
+import env from '../../env.js'
 // 美界私有化
 const hostBms = env.api.bms;
 const hostApp = env.api.app;
