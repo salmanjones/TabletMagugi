@@ -1,5 +1,5 @@
 export default {
-    ver: '3.1.2',
+    ver: '3.1.3',
     api: {
         bms: 'https://magi.magugi.com',
         app: 'https://jx-magi.magugi.com/datahandler',
