@@ -1,3 +1,4 @@
+import env from '/env'
 export const AppConfig = {
     appName: '门店小助手',
     initStoreName: '美界演示门店',
@@ -59,7 +60,7 @@ export const ImageQutity = {
 
 
 export const systemConfig = {
-    version: '3.1.0',
+    version: env.ver,
     updateVersionLimitTime: 180000,
 };
 

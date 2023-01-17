@@ -1,10 +1,7 @@
+import env from '/env'
 // 美界私有化
-const hostBms = 'https://magi.magugi.com';
-const hostApp = 'https://jx-magi.magugi.com/datahandler';
-
-// // 测试环境
-// const hostBms = 'http://192.168.1.194:8000/bms';
-// const hostApp = 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler';
+const hostBms = env.api.bms;
+const hostApp = env.api.app;
 
 //获取BMS令牌
 export const getTokenBms = `${hostBms}/tablet/token/get`;
