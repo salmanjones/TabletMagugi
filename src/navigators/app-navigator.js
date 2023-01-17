@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {AppState, BackHandler, Platform, StatusBar, View} from 'react-native';
-import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native'
+import {
+    createNavigationContainerRef,
+    NavigationContainer,
+} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AppConfig, clearFetchCache, PixelUtil, resetNavigationTo, systemConfig} from '../utils';
+import {
+    AppConfig,
+    clearFetchCache,
+    PixelUtil,
+    resetNavigationTo,
+    systemConfig,
+} from '../utils';
 
 import {
     AnalysisHome,
@@ -30,18 +39,18 @@ import {
     SelectCustomerType,
     VipcardActivity,
     StaffQueueActivity,
-    StaffWorksActivity
+    StaffWorksActivity,
 } from '../activities';
-import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
-import Orientation from "react-native-orientation";
-import {fetchFindVersionResult} from "../services";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {UpgradeBoxer} from "../components";
-import Toast from "react-native-root-toast";
+import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
+import Orientation from 'react-native-orientation';
+import {fetchFindVersionResult} from '../services';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UpgradeBoxer} from '../components';
+import Toast from 'react-native-root-toast';
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
-const navigationRef = createNavigationContainerRef()
+const navigationRef = createNavigationContainerRef();
 
 /**
  * 页面结构
@@ -50,146 +59,164 @@ const navigationRef = createNavigationContainerRef()
  */
 function RootNavigation() {
     // 版本号
-    const currentVersion = systemConfig.version
+    const currentVersion = systemConfig.version;
     // 是否需要更新
-    const [needUpdate, setNeedUpdate] = useState(false)
+    const [needUpdate, setNeedUpdate] = useState(false);
     const [versionInfo, setVersionInfo] = useState({
         checkVersion: '',
         updateContents: '',
         updateUrl: '',
-        forceUpdateValue: '0'
-    })
+        forceUpdateValue: '0',
+    });
     // 当前APP活动状态
-    let appState = AppState.currentState
+    let appState = AppState.currentState;
     // 进入后台的时间
-    let backgroundTime = -1
+    let backgroundTime = -1;
     // 按下物理返回键的时间
-    let lastBackTime = undefined
+    let lastBackTime;
 
     // 检查版本
-    const checkAppVersion = (operType)=>{
+    const checkAppVersion = operType => {
         const systemType = Platform.OS === 'ios' ? 'ios' : 'android';
-        fetchFindVersionResult(systemType).then(data => {
-            let versionMap = data.data;
-            if (versionMap) {
-                let nextVersion = versionMap.versionName
-                let nextType = versionMap.type
-                let versionDesc = versionMap.versionDesc
-                let downloadUrl = versionMap.downloadUrl
-                let forceUpdate = '0'
-                let showUpdate = false
+        fetchFindVersionResult(systemType)
+            .then(data => {
+                let versionMap = data.data;
+                if (versionMap) {
+                    let nextVersion = versionMap.versionName;
+                    let nextType = versionMap.type;
+                    let versionDesc = versionMap.versionDesc;
+                    let downloadUrl = versionMap.downloadUrl;
+                    let forceUpdate = '0';
+                    let showUpdate = false;
 
-                // 是否强制更新
-                if (operType == '1') {
-                    if (nextVersion != currentVersion && nextType == 'unique') {
-                        if(nextType == 'unique'){
-                            clearFetchCache()
-                            AsyncStorage.removeItem(AppConfig.staffRStore)
-                            AsyncStorage.removeItem(AppConfig.sessionStaffId)
+                    // 是否强制更新
+                    if (operType == '1') {
+                        if (
+                            nextVersion != currentVersion &&
+                            nextType == 'unique'
+                        ) {
+                            if (nextType == 'unique') {
+                                clearFetchCache();
+                                AsyncStorage.removeItem(AppConfig.staffRStore);
+                                AsyncStorage.removeItem(
+                                    AppConfig.sessionStaffId,
+                                );
 
-                            resetNavigationTo('LoginActivity');
-                        }else if(nextType == 'recommend'){
-                            showUpdate = true
+                                resetNavigationTo('LoginActivity');
+                            } else if (nextType == 'recommend') {
+                                showUpdate = true;
+                            }
+                        }
+                    } else if (operType == '0') {
+                        if (nextVersion != currentVersion) {
+                            showUpdate = true;
+
+                            if (nextType == 'unique') {
+                                forceUpdate = '1';
+                            }
                         }
                     }
-                }else if (operType == '0') {
-                    if (nextVersion != currentVersion) {
-                        showUpdate = true
 
-                        if(nextType == 'unique'){
-                            forceUpdate = '1'
-                        }
-                    }
+                    // 更新信息
+                    setVersionInfo({
+                        ...versionInfo,
+                        checkVersion: nextVersion,
+                        updateContents: versionDesc,
+                        updateUrl: downloadUrl,
+                        forceUpdateValue: forceUpdate,
+                    });
+
+                    // 是否展示更新弹窗
+                    setNeedUpdate(showUpdate);
                 }
-
-                // 更新信息
-                setVersionInfo({
-                    ...versionInfo,
-                    checkVersion: nextVersion,
-                    updateContents: versionDesc,
-                    updateUrl: downloadUrl,
-                    forceUpdateValue: forceUpdate
-                })
-
-                // 是否展示更新弹窗
-                setNeedUpdate(showUpdate)
-            }
-        }).catch(err => {
-            console.error("-----------------", err);
-        });
-    }
+            })
+            .catch(err => {
+                console.error('-----------------', err);
+            });
+    };
 
     // 处理事件监听
     React.useEffect(() => {
         // 锁定横屏
-        Orientation.lockToLandscape()
+        Orientation.lockToLandscape();
 
         // 检查版本
-        checkAppVersion("0")
+        checkAppVersion('0');
 
         // 物理返回键监听
-        const backPressListener = BackHandler.addEventListener("hardwareBackPress", ()=>{
-            const {route} = this.props
-            if (route.index !== 0) {
-                AppNavigate.goBack()
-            } else {
-                if (lastBackTime && lastBackTime + 2000 >= Date.now()) {
-                    return false;
-                }
+        const backPressListener = BackHandler.addEventListener(
+            'hardwareBackPress',
+            () => {
+                const {route} = this.props;
+                if (route.index !== 0) {
+                    AppNavigate.goBack();
+                } else {
+                    if (lastBackTime && lastBackTime + 2000 >= Date.now()) {
+                        return false;
+                    }
 
-                lastBackTime = Date.now();
-                Toast.show("再按一次退出应用", {
-                    duration: Toast.durations.SHORT,
-                    position: Toast.positions.BOTTOM,
-                    shadow: true,
-                    animation: true,
-                    hideOnPress: true,
-                    delay: 0,
-                });
-            }
-            return true;
-        });
+                    lastBackTime = Date.now();
+                    Toast.show('再按一次退出应用', {
+                        duration: Toast.durations.SHORT,
+                        position: Toast.positions.BOTTOM,
+                        shadow: true,
+                        animation: true,
+                        hideOnPress: true,
+                        delay: 0,
+                    });
+                }
+                return true;
+            },
+        );
 
         // APP前后台状态变更监听
-        const stateChangeListener = AppState.addEventListener("change", (nextState)=>{
-            if(appState.match(/inactive|background/) && nextState === 'active'){ // 后台切换至前台
-                let swipeTime = new Date().getTime();
-                let wasteTime = swipeTime - backgroundTime;
-                if(wasteTime > systemConfig.updateVersionLimitTime){
-                    checkAppVersion("1")
+        const stateChangeListener = AppState.addEventListener(
+            'change',
+            nextState => {
+                if (
+                    appState.match(/inactive|background/) &&
+                    nextState === 'active'
+                ) {
+                    // 后台切换至前台
+                    let swipeTime = new Date().getTime();
+                    let wasteTime = swipeTime - backgroundTime;
+                    if (wasteTime > systemConfig.updateVersionLimitTime) {
+                        checkAppVersion('1');
+                    }
+                } else {
+                    //前台切换至后台
+                    backgroundTime = new Date().getTime();
                 }
-            }else{
-                //前台切换至后台
-                backgroundTime = new Date().getTime()
-            }
 
-            // 缓存本次状态
-            appState = nextState
-        })
+                // 缓存本次状态
+                appState = nextState;
+            },
+        );
 
-        return ()=>{
-            backPressListener.remove()
-            stateChangeListener.remove()
-        }
-    }, [])
+        return () => {
+            backPressListener.remove();
+            stateChangeListener.remove();
+        };
+    }, []);
 
     return (
         <SafeAreaProvider>
             {/*状态栏*/}
-            <StatusBar hidden={true}
-                       translucent={true}
-                       barStyle="light-content"
-                       backgroundColor="#111c3c"/>
+            <StatusBar
+                hidden={true}
+                translucent={true}
+                barStyle="light-content"
+                backgroundColor="#111c3c"
+            />
             {/*版本更新*/}
-            {
-                needUpdate && (
-                    <UpgradeBoxer version={versionInfo.checkVersion}
-                                  isForceUpdateValue={versionInfo.forceUpdateValue}
-                                  updateContents={versionInfo.updateContents}
-                                  updateUrl={versionInfo.updateUrl}>
-                    </UpgradeBoxer>
-                )
-            }
+            {needUpdate && (
+                <UpgradeBoxer
+                    version={versionInfo.checkVersion}
+                    isForceUpdateValue={versionInfo.forceUpdateValue}
+                    updateContents={versionInfo.updateContents}
+                    updateUrl={versionInfo.updateUrl}
+                />
+            )}
             {/*路由*/}
             <NavigationContainer ref={navigationRef}>
                 <RootStack.Navigator
@@ -197,10 +224,9 @@ function RootNavigation() {
                     options={{
                         headerBackTitle: null,
                         headerRight: () => {
-                            return <View/>
-                        }
-                    }}
-                >
+                            return <View />;
+                        },
+                    }}>
                     <RootStack.Screen
                         name="LoginActivity"
                         component={LoginActivity}
@@ -234,8 +260,9 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
-                        })}/>
+                            },
+                        })}
+                    />
                     <RootStack.Screen
                         name="HomeActivity"
                         component={HomeActivity}
@@ -273,7 +300,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -293,7 +320,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -313,7 +340,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -333,7 +360,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -353,7 +380,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -373,7 +400,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -393,7 +420,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -413,7 +440,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -433,7 +460,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     {/*<RootStack.Screen*/}
@@ -473,7 +500,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -493,7 +520,7 @@ function RootNavigation() {
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
                             },
-                            headerShown: false
+                            headerShown: false,
                         }}
                         screenOptions={{presentation: 'modal'}}
                     />
@@ -514,7 +541,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -534,7 +561,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -554,7 +581,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -574,7 +601,7 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                     <RootStack.Screen
@@ -594,13 +621,13 @@ function RootNavigation() {
                                 textAlign: 'center',
                                 alignSelf: 'center',
                                 fontSize: PixelUtil.size(32),
-                            }
+                            },
                         }}
                     />
                 </RootStack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
-    )
+    );
 }
 
 /**
@@ -626,29 +653,39 @@ function TabNavigation() {
                     shadowOpacity: 0,
                     height: PixelUtil.size(86),
                     borderBottomWidth: PixelUtil.size(2),
-                    borderBottomColor: '#cbcbcb'
+                    borderBottomColor: '#cbcbcb',
                 },
                 tabBarLabelStyle: {
                     fontSize: PixelUtil.size(32),
                     height: PixelUtil.size(45),
                     marginTop: PixelUtil.size(0),
-                }
+                },
             }}>
-            <TabStack.Screen name="CashierActivity"
-                             component={CashierActivity}
-                             options={{tabBarLabel: '开单'}}/>
-            <TabStack.Screen name="PendingOrderActivity"
-                             component={PendingOrderActivity}
-                             options={{tabBarLabel: '取单'}}/>
-            <TabStack.Screen name="IdentifyActivity"
-                             component={IdentifyActivity}
-                             options={{tabBarLabel: '充值'}}/>
-            <TabStack.Screen name="SelectCustomerType"
-                             component={SelectCustomerType}
-                             options={{tabBarLabel: '开卡'}}/>
-            <TabStack.Screen name="BillManageActivity"
-                             component={BillManageActivity}
-                             options={{tabBarLabel: '已结单据'}}/>
+            <TabStack.Screen
+                name="CashierActivity"
+                component={CashierActivity}
+                options={{tabBarLabel: '开单'}}
+            />
+            <TabStack.Screen
+                name="PendingOrderActivity"
+                component={PendingOrderActivity}
+                options={{tabBarLabel: '取单'}}
+            />
+            <TabStack.Screen
+                name="IdentifyActivity"
+                component={IdentifyActivity}
+                options={{tabBarLabel: '充值'}}
+            />
+            <TabStack.Screen
+                name="SelectCustomerType"
+                component={SelectCustomerType}
+                options={{tabBarLabel: '开卡'}}
+            />
+            <TabStack.Screen
+                name="BillManageActivity"
+                component={BillManageActivity}
+                options={{tabBarLabel: '已结单据'}}
+            />
         </TabStack.Navigator>
     );
 }
@@ -657,7 +694,7 @@ function TabNavigation() {
  * 页面路由
  */
 const mapStateToProps = state => ({
-    userInfo: state.auth.userInfo
+    userInfo: state.auth.userInfo,
 });
 export const AppNavigation = connect(mapStateToProps)(RootNavigation);
 
@@ -682,12 +719,12 @@ export const AppNavigate = {
                         params,
                     },
                 ],
-            })
+            });
         }
     },
     redirect: (name, params = {}) => {
         if (navigationRef.isReady()) {
-            let state = navigationRef.getState()
+            let state = navigationRef.getState();
             const routes = [
                 ...state.routes.slice(0, -1),
                 {name, params},
@@ -703,7 +740,7 @@ export const AppNavigate = {
     },
     goBack: () => {
         if (navigationRef.isReady()) {
-            navigationRef.goBack()
+            navigationRef.goBack();
         }
-    }
-}
+    },
+};

@@ -1,11 +1,23 @@
 import React from 'react';
-import {Image, Platform, SafeAreaView, Text, TouchableHighlight, View} from 'react-native';
-import {homeStyles,} from '../../styles';
-import {AboutBeauty, HeaderLogout, HeaderMoments, ToggleImageBackground} from '../../components';
+import {
+    Image,
+    Platform,
+    SafeAreaView,
+    Text,
+    TouchableHighlight,
+    View,
+} from 'react-native';
+import {homeStyles} from '../../styles';
+import {
+    AboutBeauty,
+    HeaderLogout,
+    HeaderMoments,
+    ToggleImageBackground,
+} from '../../components';
 import {systemConfig} from '../../utils';
 import {fetchFindVersionResult} from '../../services';
-import {connect} from "react-redux";
-import {AppNavigate} from "../../navigators";
+import {connect} from 'react-redux';
+import {AppNavigate} from '../../navigators';
 
 const initState = {
     staff: false,
@@ -19,7 +31,7 @@ const initState = {
     showAbout: false,
     updateResult: '',
     updateResultStatus: '0',
-    downloadUrl: ''
+    downloadUrl: '',
 };
 
 class Home extends React.Component {
@@ -30,15 +42,13 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        let {navigation, dispatch} = this.props
+        let {navigation, dispatch} = this.props;
         navigation.setOptions({
-            headerLeft: () => (
-                <HeaderMoments/>
-            ),
+            headerLeft: () => <HeaderMoments />,
             headerRight: () => {
-                return  (<HeaderLogout dispatch={dispatch}/>)
-            }
-        })
+                return <HeaderLogout dispatch={dispatch} />;
+            },
+        });
     }
 
     activeButton(field) {
@@ -75,54 +85,69 @@ class Home extends React.Component {
                             showAbout: !prevState.showAbout,
                             updateResult: updateResult,
                             updateResultStatus: updateResultStatus,
-                            downloadUrl: downloadUrl
+                            downloadUrl: downloadUrl,
                         };
                     });
                 } else {
                     updateResult = '已是最新版本';
                     this.setState((prevState, props) => {
-                        return {...prevState, showAbout: !prevState.showAbout, updateResult: updateResult};
+                        return {
+                            ...prevState,
+                            showAbout: !prevState.showAbout,
+                            updateResult: updateResult,
+                        };
                     });
                 }
-            }).catch(err => {
-            updateResult = '已是最新版本';
-            this.setState((prevState, props) => {
-                return {...prevState, showAbout: !prevState.showAbout, updateResult: updateResult};
+            })
+            .catch(err => {
+                updateResult = '已是最新版本';
+                this.setState((prevState, props) => {
+                    return {
+                        ...prevState,
+                        showAbout: !prevState.showAbout,
+                        updateResult: updateResult,
+                    };
+                });
+
+                console.log('-----------------');
             });
-
-            console.log("-----------------");
-        });
-
     }
 
     //打开隐私声明
     openLink(url, title) {
-        AppNavigate.navigate('GenWebViewActivity', {'url': url, "title": title});
+        AppNavigate.navigate('GenWebViewActivity', {url: url, title: title});
     }
 
     render() {
-        const {showAbout, updateResult, updateResultStatus, downloadUrl} = this.state;
+        const {showAbout, updateResult, updateResultStatus, downloadUrl} =
+            this.state;
         return (
             <SafeAreaView style={homeStyles.container}>
-                <AboutBeauty isShow={showAbout}
-                             closeEvent={this.toggleAbout.bind(this)}
-                             updateResult={updateResult}
-                             updateResultStatus={updateResultStatus}
-                             downloadUrl={downloadUrl}
-                             openLink={this.openLink.bind(this)}></AboutBeauty>
+                <AboutBeauty
+                    isShow={showAbout}
+                    closeEvent={this.toggleAbout.bind(this)}
+                    updateResult={updateResult}
+                    updateResultStatus={updateResultStatus}
+                    downloadUrl={downloadUrl}
+                    openLink={this.openLink.bind(this)}
+                />
                 <View style={homeStyles.content}>
                     <View style={homeStyles.operateWrap}>
                         <View style={homeStyles.operateBox}>
                             <TouchableHighlight
                                 underlayColor="white"
-                                onPress={() => AppNavigate.navigate('CashierActivity')}
+                                onPress={() =>
+                                    AppNavigate.navigate('CashierActivity')
+                                }
                                 onPressIn={() => this.activeButton('collect')}>
                                 <ToggleImageBackground
                                     isActive={this.state.collect}
                                     style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/index-collect.png')}
-                                           style={homeStyles.imgStyle}/>
+                                    <Image
+                                        resizeMethod="resize"
+                                        source={require('@imgPath/index-collect.png')}
+                                        style={homeStyles.imgStyle}
+                                    />
                                     <Text style={homeStyles.liText}>收银</Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
@@ -137,10 +162,14 @@ class Home extends React.Component {
                                 <ToggleImageBackground
                                     isActive={this.state.staff}
                                     style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/staff_list.png')}
-                                           style={homeStyles.imgStaffStyle}/>
-                                    <Text style={homeStyles.liTextStaff}>选牌</Text>
+                                    <Image
+                                        resizeMethod="resize"
+                                        source={require('@imgPath/staff_list.png')}
+                                        style={homeStyles.imgStaffStyle}
+                                    />
+                                    <Text style={homeStyles.liTextStaff}>
+                                        选牌
+                                    </Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>
@@ -165,15 +194,19 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    AppNavigate.navigate('RotatePlacardActivity')
+                                    AppNavigate.navigate(
+                                        'RotatePlacardActivity',
+                                    )
                                 }
                                 onPressIn={() => this.activeButton('rotate')}>
                                 <ToggleImageBackground
                                     isActive={this.state.rotate}
                                     style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/index-rotate.png')}
-                                           style={homeStyles.imgStyle}/>
+                                    <Image
+                                        resizeMethod="resize"
+                                        source={require('@imgPath/index-rotate.png')}
+                                        style={homeStyles.imgStyle}
+                                    />
                                     <Text style={homeStyles.liText}>轮牌</Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
@@ -188,10 +221,17 @@ class Home extends React.Component {
                                 <ToggleImageBackground
                                     isActive={this.state.price}
                                     style={homeStyles.operateBoxItem}>
-                                    <Image resizeMethod="resize"
-                                           source={require('@imgPath/index-jmb.png')}
-                                           style={[homeStyles.imgStyle, {resizeMode: 'contain'}]}/>
-                                    <Text style={homeStyles.liText}>价目表</Text>
+                                    <Image
+                                        resizeMethod="resize"
+                                        source={require('@imgPath/index-jmb.png')}
+                                        style={[
+                                            homeStyles.imgStyle,
+                                            {resizeMode: 'contain'},
+                                        ]}
+                                    />
+                                    <Text style={homeStyles.liText}>
+                                        价目表
+                                    </Text>
                                 </ToggleImageBackground>
                             </TouchableHighlight>
                         </View>
@@ -234,8 +274,15 @@ class Home extends React.Component {
                     </View>
                 </View>
                 <View style={homeStyles.footer}>
-                    <Image style={homeStyles.footerLogo} source={require('@imgPath/zmr.png')}></Image>
-                    <Text style={homeStyles.footerAbout} onPress={this.toggleAbout.bind(this)}>关于超级美星</Text>
+                    <Image
+                        style={homeStyles.footerLogo}
+                        source={require('@imgPath/zmr.png')}
+                    />
+                    <Text
+                        style={homeStyles.footerAbout}
+                        onPress={this.toggleAbout.bind(this)}>
+                        关于超级美星
+                    </Text>
                 </View>
             </SafeAreaView>
         );
@@ -243,5 +290,5 @@ class Home extends React.Component {
 }
 
 export const HomeActivity = connect(state => ({
-    userInfo: state.auth.userInfo
+    userInfo: state.auth.userInfo,
 }))(Home);

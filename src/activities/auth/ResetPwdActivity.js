@@ -1,6 +1,6 @@
 //libs
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import {Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableHighlight, View} from 'react-native';
 import {loginStyles, resetPwdStyles} from '../../styles';
 import {resetpwdSendCodeAction, resetpwdSubmitAction} from '../../actions';

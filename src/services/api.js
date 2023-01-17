@@ -1,10 +1,10 @@
 // 美界私有化
 const hostBms = 'https://magi.magugi.com';
-const hostApp = 'https://jx-magi.magugi.com/datahandler'
+const hostApp = 'https://jx-magi.magugi.com/datahandler';
 
 // // 测试环境
 // const hostBms = 'http://192.168.1.194:8000/bms';
-// const hostApp = 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler'
+// const hostApp = 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler';
 
 //获取BMS令牌
 export const getTokenBms = `${hostBms}/tablet/token/get`;
@@ -123,7 +123,7 @@ export const getRights = `${hostBms}/tablet/rights/info`;
 //获取BMS令牌
 export const getTokenApp = `${hostApp}/safe/code/get`;
 //轮牌:门店员工列表
-export const staffQueues = `${hostApp}/customerapp/staffinfo/findbypagerforstore`
+export const staffQueues = `${hostApp}/customerapp/staffinfo/findbypagerforstore`;
 //轮牌:员工作品列表
-export const staffWorks = `${hostApp}/staff/homepage/data/list`
+export const staffWorks = `${hostApp}/staff/homepage/data/list`;
 
