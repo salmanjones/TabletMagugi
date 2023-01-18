@@ -100,7 +100,8 @@ export const fetchPendingList = flowNumber => {
                 phone: (x.billing.phone && x.billing.phone != '19800002015') ? x.billing.phone : '-',
                 totalPrice: x.totalPrice,
                 createTime: x.billing.createTime,
-                staffName: x.staffName || ''
+                staffName: x.staffName || '',
+                payWay: x.billing.phoneLockStatus
             };
         });
         backData.rights = backData.data.rights || null;

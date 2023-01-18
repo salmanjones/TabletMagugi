@@ -181,6 +181,7 @@ class PendingOrder extends React.Component {
                                                 showCheckBox={isMergePay}
                                                 isSelected={isSelected}
                                                 staffName={dItem.staffName}
+                                                payWay={dItem.payWay}
                                             />
                                         );
                                     })}

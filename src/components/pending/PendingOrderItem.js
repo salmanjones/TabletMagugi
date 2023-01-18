@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Image, ImageBackground, Platform, Text, TouchableOpacity, View} from 'react-native';
-import {manageConsumablesStyle, pendingStyles} from '../../styles';
+import {aboutBeautyStyles, manageConsumablesStyle, multiplyPayStyle, pendingStyles} from '../../styles';
 
 import {CheckBox} from 'react-native-elements';
 import moment from 'moment';
@@ -23,6 +23,7 @@ export class PendingOrderItem extends PureComponent {
             isSelected,
             paidIn,
             staffName,
+            payWay
         } = this.props;
 
         const formatCreateTime = moment(createTime).format('MM月DD日 HH:mm');
@@ -30,7 +31,14 @@ export class PendingOrderItem extends PureComponent {
         const showKeyNumber = keyNumber.length > 0;
 
         return (
-            <TouchableOpacity style={pendingStyles.swiperLi} onPress={onPress}>
+            <TouchableOpacity style={payWay == 0 ? pendingStyles.swiperLiPhone: pendingStyles.swiperLi} onPress={onPress}>
+                {
+                    payWay == 0 && (
+                        <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
+                            <Text style={pendingStyles.swiperLiPhoneTipsText}>已推送小程序</Text>
+                        </ImageBackground>
+                    )
+                }
                 <View
                     style={{
                         flex: 0,
