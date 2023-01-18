@@ -511,7 +511,7 @@ class CashierBillingView extends React.Component {
         }
     }
 
-    UNSAFE_componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any) {
+    UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
         if (nextProps == this.props && !nextState.isgeted) {
             var isAdd = nextState.consumeItems && nextState.consumeItems.length == 1;
             var isEmpty = !nextState.consumeItems || !nextState.consumeItems.length;
@@ -1522,7 +1522,7 @@ class CashierBillingView extends React.Component {
                                                                       onPress: this.removeItem.bind(this, itemIndex)
                                                                   }]
                                                               }>
-                                                        <View style style={cashierBillingStyle.servicerBodyBox}>
+                                                        <View style={cashierBillingStyle.servicerBodyBox}>
                                                             <View style={cashierBillingStyle.servicerBodyLiBoxO}>
                                                                 <View key={itemIndex}
                                                                       style={[itemInfo.isChoosed ? cashierBillingStyle.servicerBodyLiActive : cashierBillingStyle.servicerBodyLi, cashierBillingStyle.marginLeft]}>
