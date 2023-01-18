@@ -66,12 +66,12 @@ class BillManageOtherView extends React.Component {
         });
     }
 
-    // componentDidMount() {
-    //     this.props.navigation.setParams({loadData: this.loadData});
-    //     const formatNowTime = moment().format('YYYY-MM-DD');
-    //     this.setState({selectTime: formatNowTime});
-    //     this.loadData();
-    // }
+    componentDidMount() {
+        this.props.navigation.setParams({loadData: this.loadData});
+        const formatNowTime = moment().format('YYYY-MM-DD');
+        this.setState({selectTime: formatNowTime});
+        this.loadData();
+    }
 
     componentWillUnmount() {
         this.props.reset && this.props.reset();
