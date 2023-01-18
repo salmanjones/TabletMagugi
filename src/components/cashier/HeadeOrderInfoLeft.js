@@ -18,23 +18,25 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
         let beautifyIcon = require('@imgPath/order-genre-mr.png');
         let broderRight = require('@imgPath/border-right.png');
         let showModifyBill = null;
-        let orderInfoData = this.props.orderInfo.orderData;
+        let orderInfoData = {};
         let {router} = this.props
 
+        // 处理数据展示:不同页面有不通的数据来源
+        let orderData = this.props.orderInfo.orderData
+        let leftData = router.params.orderInfoLeftData
+        let pendingData = this.props.pendingData
+        if(orderData && orderData.flowNumber && orderData.flowNumber.length > 0){
+            orderInfoData = orderData
+        } else if(leftData && leftData.flowNumber && leftData.flowNumber.length > 0){
+            orderInfoData = leftData
+        }else if(pendingData && pendingData.flowNumber && pendingData.flowNumber.length > 0){
+            orderInfoData = pendingData
+        }
+
+        // 处理点击事件
         if (this.props.navigation) {
             showModifyBill = router.params.showModifyBill;
-            orderInfoData = this.props.orderInfo.orderData || router.params.orderInfoLeftData;
-
-            if (this.props.orderInfo.orderData && this.props.orderInfo.orderData.flowNumber) {
-                orderInfoData.flowNumber = this.props.orderInfo.orderData.flowNumber;
-            }
         }
-
-        var flowNumber = orderInfoData.flowNumber;
-        if (flowNumber == '') {
-            flowNumber = this.props.orderInfo.orderData.flowNumber;
-        }
-        orderInfoData.flowNumber = flowNumber;
 
         let iconShow = hairIcon;
         if (router.params.operatorText == '美容') {
@@ -98,7 +100,8 @@ class HeadeOrderInfoLeftCmpt extends React.PureComponent {
 //mapping props
 const mapStateToProps = (state) => {
     return {
-        orderInfo: state.billingOrder
+        orderInfo: state.billingOrder,
+        pendingData: state.editBilling.orderData
     };
 };
 const mapDispatchToProps = (dispatch, props) => {
