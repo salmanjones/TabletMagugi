@@ -232,7 +232,7 @@ class BillingModify extends React.Component {
         return true;
     }
 
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         const self = this;
         const {loadData, navigation, dispatch} = this.props;
         const {params} = this.props.route;
