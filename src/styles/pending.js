@@ -68,7 +68,7 @@ export const pendingStyles = StyleSheet.create({
     swiperLiPhoneTips:{
         position: "absolute",
         right: PixelUtil.size(-15),
-        top: PixelUtil.size(20),
+        bottom: PixelUtil.size(10),
         width: PixelUtil.size(160),
         height: PixelUtil.size(62),
         display: "flex",
