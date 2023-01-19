@@ -1,5 +1,5 @@
 export default {
-    ver: '3.1.3',
+    ver: '3.1.4',
     api: {
         // online
         bms: 'https://magi.magugi.com',
