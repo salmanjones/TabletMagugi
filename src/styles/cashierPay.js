@@ -257,7 +257,8 @@ export const cashierPayStyle = StyleSheet.create({
     },
     btmFontColor: {
         fontSize: PixelUtil.size(36),
-        color: '#333',
+        fontWeight: "bold",
+        color: '#ff0000',
         marginLeft: PixelUtil.size(40),
     },
     timePayBtnBox: {

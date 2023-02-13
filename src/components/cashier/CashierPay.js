@@ -95,26 +95,45 @@ export class CashierPay extends React.Component {
 
     //选择优惠券
     onToggleSeleted(coupon) {
-        let selectedCoupons = this.state.selectedCoupons;
+        let {selectedCoupons} = this.state;
         let index = selectedCoupons.indexOf(coupon);
-        if (index != -1) selectedCoupons.splice(index, 1);
-        else selectedCoupons.push(coupon);
+        if (index != -1) {
+            selectedCoupons.splice(index, 1)
+        }else{
+            selectedCoupons.push(coupon);
+        }
 
         this.calculateBilling((data) => {
-            if (data.data.payResultCode === '1' && !data.data.payTypeErrorList) {
+            if (!data.data.payTypeErrorList && data.data.payResultCode === '1') {
                 let totalCouponPrice = (data.data.payTypeUsedList || []).reduce(
                     (result, x) => result + (x.payType == 5 ? x.consumeActualMoney : 0),
                     0
                 );
 
+                // 处理优惠券多选的情况
+                const checkedCoupons = []
+                const payTypeUsedList = data.data.payTypeUsedList || []
+                payTypeUsedList.forEach(itemPay=>{
+                    if(itemPay.couponInfo && itemPay.payType == '5'){ // 优惠券支付
+                        const selCoupon = itemPay.couponInfo
+                        checkedCoupons.push(selCoupon.couponNo)
+                    }
+                })
+                selectedCoupons = selectedCoupons.filter(item=>{
+                    return checkedCoupons.indexOf(item.couponNo) != -1
+                })
+
                 this.setState({
+                    selectedCoupons,
                     couponDiscountPrice: totalCouponPrice,
                     wait4PayAmt: data.data.alreadyWaitPayPrice,
                 });
             } else {
-                if (selectedCoupons.indexOf(coupon) != -1) selectedCoupons.splice(index, 1);
-                else selectedCoupons.push(coupon);
-
+                if (selectedCoupons.indexOf(coupon) != -1) {
+                    selectedCoupons.splice(index, 1);
+                }else{
+                    selectedCoupons.push(coupon);
+                }
                 showMessage('优惠券不支持消费项目，或抵扣金额已达到最大值');
             }
 
@@ -198,7 +217,7 @@ export class CashierPay extends React.Component {
 
     buildPayTypeParams = (payAmt) => {
         let payTypes = [];
-        let {selectedOtherPayment, selectedPayType, coupons, selectedCoupons} = this.state;
+        let {selectedOtherPayment, selectedPayType, selectedCoupons} = this.state;
         if (selectedPayType) {
             switch (selectedPayType) {
                 case 'wx':
@@ -268,6 +287,7 @@ export class CashierPay extends React.Component {
             });
             payTypes = payTypes.concat(couponItems);
         }
+
         return payTypes;
     };
 
@@ -304,7 +324,9 @@ export class CashierPay extends React.Component {
 
     toggleCoupons() {
         if (!this.state.coupons.length && !this.state.showCoupons) return;
-        this.setState({showCoupons: !this.state.showCoupons});
+        this.setState({
+            showCoupons: !this.state.showCoupons
+        });
     }
 
     getAvailableChannels() {
@@ -378,7 +400,7 @@ export class CashierPay extends React.Component {
                                 </View>
                             </View>
                             <View style={cashierPayStyle.titleR}>
-                                <Text style={cashierPayStyle.titleText}>支付信息</Text>
+                                <Text style={cashierPayStyle.titleText}>支付信息1</Text>
                             </View>
                         </View>
                         <View style={cashierPayStyle.billInfoBox}>
