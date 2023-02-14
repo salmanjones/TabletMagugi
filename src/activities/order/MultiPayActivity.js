@@ -732,6 +732,12 @@ class MultiPay extends React.Component {
 
                 let couponItems = payTypeUsedList && payTypeUsedList.length ? payTypeUsedList.filter((x) => x.payType == 5) : [];
                 let totalCouponPrice = couponItems.length ? couponItems.reduce((rs, x) => rs + x.consumeActualMoney, 0) : null;
+                let checkedCoupons = couponItems.map(item=>{
+                    return item.couponInfo.couponNo
+                })
+                selectedCoupons = selectedCoupons.filter(item=>{
+                    return checkedCoupons.indexOf(item.couponNo) != -1
+                })
 
                 let couponPayType = preState.payTypes.find((x) => x.payType == 5);
                 let couponPayTypeIndex = preState.payTypes.indexOf(couponPayType);
@@ -740,6 +746,7 @@ class MultiPay extends React.Component {
                 let paymentInfo = this.getPaymentInfo(preState, data.data.alreadyWaitPayPrice);
                 this.setState({
                     ...preState,
+                    selectedCoupons,
                     paymentInfo: {...this.state.paymentInfo, ...paymentInfo},
                 });
             } catch (e) {

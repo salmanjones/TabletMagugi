@@ -61,12 +61,12 @@ export class CashierPay extends React.Component {
         getAvailablePaymentInfo(params)
             .then((o) => {
                 if (o.data) {
-
                     let channels = this.getAvailableChannels();
                     let first = Object.keys(channels).map(key => ({
                         key: key,
                         value: channels[key]
                     })).find(x => x.value).key;
+
                     this.setState({
                         channel: first,
                         coupons: o.data.coupons || [],
@@ -496,13 +496,10 @@ export class CashierPay extends React.Component {
                                                 onPress={this.toggleCoupons.bind(this)}>
                                                 <View style={cashierPayStyle.couponTitle}>
                                                     <Text style={cashierPayStyle.couponTitleText}>
-                                                        优惠券：<Text
-                                                        style={cashierPayStyle.couponText}>{couponDesc}</Text>
+                                                        优惠券：<Text style={cashierPayStyle.couponText}>{couponDesc}</Text>
                                                     </Text>
-                                                    <View
-                                                        style={[cashierPayStyle.couponTitleR, {display: coupons.length ? 'flex' : 'none'}]}>
-                                                        <Text
-                                                            style={cashierPayStyle.dangerText}>抵扣-￥{couponDiscountPrice}</Text>
+                                                    <View style={[cashierPayStyle.couponTitleR, {display: coupons.length ? 'flex' : 'none'}]}>
+                                                        <Text style={cashierPayStyle.dangerText}>抵扣-￥{couponDiscountPrice}</Text>
                                                         <Icon
                                                             name={showCoupons ? 'chevron-down' : 'chevron-up'} //收起
                                                             //name='chevron-up'    展开
@@ -528,11 +525,22 @@ export class CashierPay extends React.Component {
                                                                         resizeMode={'contain'}>
                                                                         <View style={cashierPayStyle.couponLiBox}>
                                                                             <View style={cashierPayStyle.couponLiL}>
-                                                                                <Text
-                                                                                    style={cashierPayStyle.couponUnit}>
-                                                                                    ￥<Text
-                                                                                    style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
-                                                                                </Text>
+                                                                                {item.couponType == '6' &&(
+                                                                                    <Text style={cashierPayStyle.couponUnit}>
+                                                                                        <Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>折
+                                                                                    </Text>
+                                                                                )}
+                                                                                {item.couponType == '7' &&(
+                                                                                    <Text style={cashierPayStyle.couponUnit}>
+                                                                                        <Text style={cashierPayStyle.couponPrice}>抵</Text>
+                                                                                    </Text>
+                                                                                )}
+                                                                                {item.couponType != '6' && item.couponType != '7' &&(
+                                                                                    <Text style={cashierPayStyle.couponUnit}>
+                                                                                        ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
+                                                                                    </Text>
+                                                                                )}
+
                                                                             </View>
                                                                             <View style={cashierPayStyle.couponLiR}>
                                                                                 <View

@@ -32,10 +32,29 @@ export class CouponList extends PureComponent {
                                 resizeMode={'stretch'}
                             >
                                 <View style={multiplyPayStyle.rightWrapperCouponDesc}>
-                                    <View style={multiplyPayStyle.rightWrapperCouponDiscount}>
-                                        <Text style={multiplyPayStyle.rightWrapperCouponPrefix}>¥</Text>
-                                        <Text style={multiplyPayStyle.rightWrapperCouponValue}>{item.couponPrice}</Text>
-                                    </View>
+                                    {
+                                        item.couponType == '6' && (
+                                            <View style={multiplyPayStyle.rightWrapperCouponDiscount}>
+                                                <Text style={multiplyPayStyle.rightWrapperCouponValue}>{item.couponPrice}</Text>
+                                                <Text style={multiplyPayStyle.rightWrapperCouponPrefix}>折</Text>
+                                            </View>
+                                        )
+                                    }
+                                    {
+                                        item.couponType == '7' && (
+                                            <View style={multiplyPayStyle.rightWrapperCouponDiscount}>
+                                                <Text style={multiplyPayStyle.rightWrapperCouponValue}>抵</Text>
+                                            </View>
+                                        )
+                                    }
+                                    {
+                                        item.couponType != '6' && item.couponType != '7' && (
+                                            <View style={multiplyPayStyle.rightWrapperCouponDiscount}>
+                                                <Text style={multiplyPayStyle.rightWrapperCouponPrefix}>¥</Text>
+                                                <Text style={multiplyPayStyle.rightWrapperCouponValue}>{item.couponPrice}</Text>
+                                            </View>
+                                        )
+                                    }
                                     <View style={multiplyPayStyle.rightWrapperCouponWhite}></View>
                                     <Text style={multiplyPayStyle.rightWrapperCouponName} ellipsizeMode={'tail'} numberOfLines={2}>
                                         {item.name}
