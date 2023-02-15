@@ -251,7 +251,7 @@ export const pendingOrderPayStyle = StyleSheet.create({
     },
     btmFontColor: {
         fontSize: PixelUtil.size(36),
-        color: '#333',
+        color: '#ff0000',
     },
     timePayBtnBox: {
         // 顾客识别-按钮组框

@@ -472,7 +472,21 @@ class MergeOrderPay extends React.Component {
                     0
                 );
 
+                // 处理优惠券多选的情况
+                const checkedCoupons = []
+                const payTypeUsedList = data.data.payTypeUsedList || []
+                payTypeUsedList.forEach(itemPay=>{
+                    if(itemPay.couponInfo && itemPay.payType == '5'){ // 优惠券支付
+                        const selCoupon = itemPay.couponInfo
+                        checkedCoupons.push(selCoupon.couponNo)
+                    }
+                })
+                selectedCoupons = selectedCoupons.filter(item=>{
+                    return checkedCoupons.indexOf(item.couponNo) != -1
+                })
+
                 this.setState({
+                    selectedCoupons,
                     couponDiscountPrice: totalCouponPrice,
                     wait4PayAmt: data.data.alreadyWaitPayPrice,
                 });

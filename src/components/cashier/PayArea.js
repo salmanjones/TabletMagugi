@@ -173,9 +173,21 @@ export class PayArea extends PureComponent {
                                             >
                                                 <View style={cashierPayStyle.couponLiBox}>
                                                     <View style={cashierPayStyle.couponLiL}>
-                                                        <Text style={cashierPayStyle.couponUnit}>
-                                                            ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
-                                                        </Text>
+                                                        {item.couponType == '6' &&(
+                                                            <Text style={cashierPayStyle.couponUnit}>
+                                                                <Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>折
+                                                            </Text>
+                                                        )}
+                                                        {item.couponType == '7' &&(
+                                                            <Text style={cashierPayStyle.couponUnit}>
+                                                                <Text style={cashierPayStyle.couponPrice}>抵</Text>
+                                                            </Text>
+                                                        )}
+                                                        {item.couponType != '6' && item.couponType != '7' &&(
+                                                            <Text style={cashierPayStyle.couponUnit}>
+                                                                ￥<Text style={cashierPayStyle.couponPrice}>{item.couponPrice}</Text>
+                                                            </Text>
+                                                        )}
                                                     </View>
                                                     <View style={cashierPayStyle.couponLiR}>
                                                         <View style={cashierPayStyle.couponLiRL}>
