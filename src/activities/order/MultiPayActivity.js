@@ -111,7 +111,7 @@ class MultiPay extends React.Component {
     componentDidMount() {
         let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
-        this.getInitialData(memberInfo, items, (data) => {
+        this.getInitialData(billingInfo, memberInfo, items, (data) => {
             let stateData = {...this.state, paymentTimesCard};
             if (data) {
                 let {othersPaymentList, coupons} = data;
@@ -422,15 +422,14 @@ class MultiPay extends React.Component {
     }
 
     //请求页面基础数据
-    getInitialData(memberInfo, items, callback) {
-        var params = {
-            items: JSON.stringify(
-                items.map((x) => {
-                    return {itemId: x.itemId, itemType: x.service};
-                })
-            ),
-        };
-        if (memberInfo) params.member = JSON.stringify(memberInfo);
+    getInitialData(billingInfo, memberInfo, items, callback) {
+        const params = {
+            billingNo: billingInfo.billingNo,
+            phone: ''
+        }
+        if(memberInfo && memberInfo.phone){
+            params.phone = memberInfo.phone
+        }
 
         this.setState({isLoading: true});
         return getAvailablePaymentInfo(params)

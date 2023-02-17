@@ -110,7 +110,7 @@ export const priceListInfo = `${hostBms}/tablet/priceset/find/priceset/info`;
 //项目明细
 export const priceListItemDetail = `${hostBms}/tablet/priceset/find/priceset/detail/info`;
 //获取可用优惠券
-export const getAvailablePaymentInfo = `${hostBms}/tablet/billing/available/payments`;
+export const getAvailablePaymentInfo = `${hostApp}/billing/prepay/payment`;
 //营业收入页面地址
 export const getDayCountPager = `${hostBms}/tablet/h5/statistics/pager`;
 //相关设置信息

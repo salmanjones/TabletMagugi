@@ -375,14 +375,15 @@ class MergeOrderPay extends React.Component {
                 let hasTimeCardProject = billings.find((billing) => {
                     return billing.consumeList && billing.consumeList.find((item) => item.projectConsumeType == '1');
                 });
-                var params = {
-                    items: JSON.stringify(
-                        allItems.map((x) => {
-                            return { itemId: x.itemId.toString(), itemType: x.service.toString() };
-                        })
-                    ),
-                };
-                if (member) params.member = JSON.stringify(member);
+
+                const params = {
+                    billingNo: [mainBilling, ...billings].map(item=>item.billingNo).join(","),
+                    phone: ''
+                }
+                if (member && member.phone) {
+                    params.phone = member.phone
+                }
+
                 let totalPrice = allItems
                     .reduce((result, consume) => result + (consume.projectConsumeType == 1 ? 0 : consume.paidIn - (consume.discountPrice || 0)), 0)
                     .toFixed(2);

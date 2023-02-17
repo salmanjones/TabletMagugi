@@ -14,7 +14,7 @@ export const AppConfig = {
     sessionTimeOut: 10770000, //设置为小于3小时(3*60*60*1000-30*1000)，请根据服务器session时间设置
     imageServer: 'https://img.magugi.com/',
     defaultAvatar: 'https://pic.magugi.com/4c0b42d504863dcaf8af22a2c83179f9',
-    requestTimeout: 11000,
+    requestTimeout: 300000,
     client: 'tablet_magi',
     appId: 'Magugi715758&!%=&ARG-Tablet='
 };

@@ -44,14 +44,13 @@ export class CashierPay extends React.Component {
 
     initialData() {
         //that.setState({ isLoading:true });
-        var params = {
-            items: JSON.stringify(
-                this.props.consumeItems.map((x) => {
-                    return {itemId: x.itemId, itemType: x.service};
-                })
-            ),
-        };
-        if (this.props.member) params.member = JSON.stringify(this.props.member);
+        const params = {
+            billingNo: this.props.billingInfo.billingNo,
+            phone: ''
+        }
+        if(this.props.member && this.props.member.phone){
+            params.phone = this.props.member.phone
+        }
 
         let totalPrice = this.props.consumeItems.reduce((result, x) => {
             return result + (Number(x.totalPrice) || 0);
@@ -76,7 +75,7 @@ export class CashierPay extends React.Component {
                 }
             })
             .catch((err) => {
-                showMessage('获取支付信息异常');
+                showMessage('获取支付信息异常', err);
             }).finally(() => {
             this.setState({loading: false});
         });

@@ -1,4 +1,4 @@
-import {callService} from '../utils';
+import {AppConfig, callService} from '../utils';
 import * as api from './api';
 
 /**
@@ -221,5 +221,5 @@ export const priceListItemDetail = params => {
 }
 
 export const getAvailablePaymentInfo = params => {
-    return callService(api.getAvailablePaymentInfo, params);
+    return callService(api.getAvailablePaymentInfo, params, AppConfig.platform.app);
 }

@@ -178,6 +178,8 @@ function _fetch(url, params, resolve, reject) {
             headers: {
                 Accept: 'application/json,text/plain, */*',
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                client: AppConfig.client,
+                appId: desEncrypt(AppConfig.appId)
             },
             body: qs.stringify(bodyData),
         };
@@ -208,7 +210,7 @@ function _fetch(url, params, resolve, reject) {
                 }
             }
         }).catch(err => {
-            console.log('请求服务异常', err);
+            console.log('请求服务异常', _platform, err);
             reject({
                 code: StateCode.networkError,
                 exceptions: Msg[StateCode.networkError],
