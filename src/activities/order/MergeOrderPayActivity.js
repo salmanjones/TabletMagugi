@@ -377,6 +377,7 @@ class MergeOrderPay extends React.Component {
                 });
 
                 const params = {
+                    companyId: mainBilling.companyId,
                     billingNo: [mainBilling, ...billings].map(item=>item.billingNo).join(","),
                     phone: ''
                 }
@@ -411,6 +412,7 @@ class MergeOrderPay extends React.Component {
                         }
                     })
                     .catch((err) => {
+                        console.error("获取支付信息异常", err)
                         showMessage('获取支付信息异常');
                     });
             }

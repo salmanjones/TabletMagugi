@@ -45,6 +45,7 @@ export class CashierPay extends React.Component {
     initialData() {
         //that.setState({ isLoading:true });
         const params = {
+            companyId: this.props.billingInfo.companyId,
             billingNo: this.props.billingInfo.billingNo,
             phone: ''
         }
@@ -59,6 +60,7 @@ export class CashierPay extends React.Component {
         this.setState({loading: true});
         getAvailablePaymentInfo(params)
             .then((o) => {
+
                 if (o.data) {
                     let channels = this.getAvailableChannels();
                     let first = Object.keys(channels).map(key => ({
@@ -75,10 +77,11 @@ export class CashierPay extends React.Component {
                 }
             })
             .catch((err) => {
+                console.error('获取支付信息异常', err)
                 showMessage('获取支付信息异常', err);
             }).finally(() => {
-            this.setState({loading: false});
-        });
+                this.setState({loading: false});
+            });
     }
 
     //选择支付通道
@@ -399,7 +402,7 @@ export class CashierPay extends React.Component {
                                 </View>
                             </View>
                             <View style={cashierPayStyle.titleR}>
-                                <Text style={cashierPayStyle.titleText}>支付信息1</Text>
+                                <Text style={cashierPayStyle.titleText}>支付信息</Text>
                             </View>
                         </View>
                         <View style={cashierPayStyle.billInfoBox}>

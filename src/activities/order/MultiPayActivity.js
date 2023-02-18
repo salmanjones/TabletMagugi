@@ -424,6 +424,7 @@ class MultiPay extends React.Component {
     //请求页面基础数据
     getInitialData(billingInfo, memberInfo, items, callback) {
         const params = {
+            companyId: billingInfo.companyId,
             billingNo: billingInfo.billingNo,
             phone: ''
         }
