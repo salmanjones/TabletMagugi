@@ -60,7 +60,6 @@ export class CashierPay extends React.Component {
         this.setState({loading: true});
         getAvailablePaymentInfo(params)
             .then((o) => {
-
                 if (o.data) {
                     let channels = this.getAvailableChannels();
                     let first = Object.keys(channels).map(key => ({
