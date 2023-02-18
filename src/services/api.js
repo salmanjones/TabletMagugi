@@ -109,14 +109,14 @@ export const changeOwner = `${hostBms}/tablet/billing/changeOwner`;
 export const priceListInfo = `${hostBms}/tablet/priceset/find/priceset/info`;
 //项目明细
 export const priceListItemDetail = `${hostBms}/tablet/priceset/find/priceset/detail/info`;
-//获取可用优惠券
-export const getAvailablePaymentInfo = `${hostApp}/billing/prepay/payment`;
 //营业收入页面地址
 export const getDayCountPager = `${hostBms}/tablet/h5/statistics/pager`;
 //相关设置信息
 export const getCommonSetting = `${hostBms}/tablet/common/settings`;
 //权限信息
 export const getRights = `${hostBms}/tablet/rights/info`;
+//获取可用优惠券
+export const getAvailablePaymentInfo = `${hostApp}/billing/prepay/payment`;
 //获取BMS令牌
 export const getTokenApp = `${hostApp}/safe/code/get`;
 //轮牌:门店员工列表
