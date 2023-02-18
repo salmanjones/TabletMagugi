@@ -30,32 +30,26 @@ const Msg = {
 
 // 获取token名称
 const getTokenName = function () {
-    let tokenName = _platform ==  AppConfig.platform.bms ? AppConfig.tokenBms:AppConfig.tokenApp
-    return tokenName
+    return AppConfig.tokenBms
 }
 
 // 构建获取vcode的promise
 const buildVcodePromise = (url)=>{
     return new Promise(function (resolve, reject) {
-        _fetch(
-            url,
-            null,
-            function (res) {
-                if (res.code === StateCode.reqSuccess) {
-                    setVcodeStorage(res.data);
-                    resolve(res.data);
-                } else {
-                    reject({
-                        code: StateCode.failToGetToken,
-                        exceptions: Msg[StateCode.failToGetToken],
-                    });
-                }
-            },
-            function (res) {
-                reject(res);
+        _fetch(url, null, function (res) {
+            if (res.code === StateCode.reqSuccess) {
+                setVcodeStorage(res.data);
+                resolve(res.data);
+            } else {
+                reject({
+                    code: StateCode.failToGetToken,
+                    exceptions: Msg[StateCode.failToGetToken],
+                })
             }
-        );
-    });
+        },function (res) {
+            reject(res);
+        })
+    })
 }
 
 function setVcodeStorage(key) {
@@ -63,7 +57,8 @@ function setVcodeStorage(key) {
     if (key) {
         let tokenName = getTokenName()
         AsyncStorage.setItem(tokenName, key, err => {
-            console.log('保存vCode异常', err)
+            console.error('#######################################', tokenName, key, err)
+            console.error('保存vCode异常', err)
         })
     }
 }
@@ -77,37 +72,31 @@ function getStorage(key) {
 }
 
 function _callRealService(path, params, resolve, reject, retryCount) {
-    _fetch(
-        path,
-        params,
-        function (res) {
-            if (res.code !== StateCode.reqSuccess) {
-                reject(res);
-            } else {
-                resolve(res);
-            }
-        },
-        res => {
-            if (res.code === StateCode.invalidToken) {
-                vCode = null;
-
-                let tokenName = getTokenName()
-                AsyncStorage.removeItem(tokenName).then(() => {
-                    retryCount = (retryCount || 0) + 1;
-                    console.log('vCode失效! 尝试重新获取:' + retryCount);
-                    _callService(path, params, resolve, reject, retryCount);
-                }).catch(err => {
-                    console.log('移除vCode缓存异常', err);
-                    reject({
-                        code: StateCode.failToRemoveTokenCache,
-                        exceptions: Msg[StateCode.failToRemoveTokenCache],
-                    });
-                });
-            } else {
-                reject(res);
-            }
+    _fetch(path, params, function (res) {
+        if (res.code !== StateCode.reqSuccess) {
+            reject(res);
+        } else {
+            resolve(res);
         }
-    );
+    }, res => {
+        if (res.code === StateCode.invalidToken) {
+            vCode = null;
+            let tokenName = getTokenName()
+            AsyncStorage.removeItem(tokenName).then(() => {
+                retryCount = (retryCount || 0) + 1;
+                console.log('vCode失效! 尝试重新获取:' + retryCount);
+                _callService(path, params, resolve, reject, retryCount);
+            }).catch(err => {
+                console.log('移除vCode缓存异常', err);
+                reject({
+                    code: StateCode.failToRemoveTokenCache,
+                    exceptions: Msg[StateCode.failToRemoveTokenCache],
+                });
+            });
+        } else {
+            reject(res);
+        }
+    })
 }
 
 function _callService(url, reqParams, resolve, reject, retryCount) {
@@ -119,13 +108,11 @@ function _callService(url, reqParams, resolve, reject, retryCount) {
         return false;
     }
 
-    _getVCodePromise()
-        .then(function () {
-            _callRealService(url, reqParams, resolve, reject, retryCount);
-        })
-        .catch(function (res) {
-            reject(res);
-        });
+    _getVCodePromise().then(function () {
+        _callRealService(url, reqParams, resolve, reject, retryCount);
+    }).catch(function (res) {
+        reject(res);
+    });
 }
 
 async function _getVCodePromise() {
@@ -135,12 +122,12 @@ async function _getVCodePromise() {
         return Promise.resolve(vCode);
     }
 
-    return _platform ==  AppConfig.platform.bms ? buildVcodePromise(Api.getTokenBms) : buildVcodePromise(Api.getTokenApp)
+    return buildVcodePromise(Api.getTokenBms)
 }
 
 function _fetch(url, params, resolve, reject) {
     try {
-        let bodyData
+        let bodyData = {}
         if(_platform == AppConfig.platform.bms){
             bodyData = {
                 bodyData: desEncrypt(
@@ -158,16 +145,14 @@ function _fetch(url, params, resolve, reject) {
         }else{
             let args = Object.assign({}, params, {
                 appId: AppConfig.appId,
-                accessToken: vCode,
-                vcode: vCode,
                 unique: AppConfig.appId,
                 client: AppConfig.client
             })
 
-            bodyData = {}
-            Object.keys(args).forEach(key=>{
+            const keys = Object.keys(args)
+            keys.forEach(key=>{
                 let value = args[key]
-                bodyData[key] = desEncrypt(value)
+                bodyData[key] = desEncrypt(value.toString())
             })
         }
 
@@ -217,6 +202,7 @@ function _fetch(url, params, resolve, reject) {
             });
         });
     } catch (err) {
+        console.error("错误的请求参数", url, err)
         reject({
             code: StateCode.badRequestData,
             exceptions: Msg[StateCode.badRequestData],
@@ -251,7 +237,7 @@ export const callService = async (url, params, platform =  AppConfig.platform.bm
     _staffId = _staffId || (await getStorage(AppConfig.sessionStaffId)) || '';
     return new Promise((resolve, reject) => {
         params = Object.assign({}, params, {_staffId: _staffId});
-        if (!vCode) {
+        if (platform == AppConfig.platform.bms && !vCode) {
             _callService(url, params, resolve, reject);
         } else {
             _callRealService(url, params, resolve, reject);
