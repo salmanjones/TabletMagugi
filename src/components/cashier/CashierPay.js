@@ -46,8 +46,10 @@ export class CashierPay extends React.Component {
         //that.setState({ isLoading:true });
         const params = {
             companyId: this.props.billingInfo.companyId,
+            storeId: this.props.billingInfo.storeId,
             billingNo: this.props.billingInfo.billingNo,
-            phone: ''
+            phone: '',
+            consumeItems: JSON.stringify(this.props.consumeItems)
         }
         if(this.props.member && this.props.member.phone){
             params.phone = this.props.member.phone

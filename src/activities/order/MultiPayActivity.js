@@ -425,8 +425,10 @@ class MultiPay extends React.Component {
     getInitialData(billingInfo, memberInfo, items, callback) {
         const params = {
             companyId: billingInfo.companyId,
+            storeId: billingInfo.storeId,
             billingNo: billingInfo.billingNo,
-            phone: ''
+            phone: '',
+            consumeItems: JSON.stringify(items)
         }
         if(memberInfo && memberInfo.phone){
             params.phone = memberInfo.phone

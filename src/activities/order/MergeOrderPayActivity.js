@@ -378,8 +378,10 @@ class MergeOrderPay extends React.Component {
 
                 const params = {
                     companyId: mainBilling.companyId,
+                    storeId: mainBilling.storeId,
                     billingNo: [mainBilling, ...billings].map(item=>item.billingNo).join(","),
-                    phone: ''
+                    phone: '',
+                    consumeItems: JSON.stringify(allItems)
                 }
                 if (member && member.phone) {
                     params.phone = member.phone
