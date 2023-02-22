@@ -616,10 +616,11 @@ class MultiPay extends React.Component {
     };
 
     checkResult(data) {
-        let {payResultCode, payTypeErrorList, payTypeUsedList, payTypeMoreList, msg} = data.data;
+        let {payResultCode, payTypeErrorList, payTypeMoreList, msg} = data.data;
         if (payResultCode === '1') {
             if (payTypeErrorList) {
                 let sample = payTypeErrorList[0];
+
                 let payCode = sample.payCode;
                 let msg = '';
                 if (payCode == '-7') {
@@ -729,7 +730,27 @@ class MultiPay extends React.Component {
             paySequence = this.buildPayTypeParams(paySequence, 'add', 'coupon', coupon);
         }
 
-        let preState = {...this.state, selectedCoupons, payTypes: [...this.state.payTypes], paySequence};
+        // 如果优惠券支付选中，自动补齐卡扣金额
+        const usedCoupon = selectedCoupons.length > 0
+        let cards = JSON.parse(JSON.stringify(this.state.cards))
+        if(usedCoupon){
+            cards.forEach(card=>{
+                card.paidAmt = null
+                if(card.attachMoneyList){
+                    card.attachMoneyList.forEach(attch=>{
+                        attch.paidAmt = null
+                    })
+                }
+            })
+            paySequence.forEach(item=>{
+                let {payType}  = item.value
+                if(payType == '2'){
+                    item.value['payAmount'] = ''
+                }
+            })
+        }
+
+        let preState = {...this.state, cards, selectedCoupons, payTypes: [...this.state.payTypes], paySequence};
         this.calculateBilling(preState, (data) => {
             let {payTypeUsedList} = data.data;
             try {
