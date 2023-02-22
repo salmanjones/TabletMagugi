@@ -37,7 +37,7 @@ class MultiPay extends React.Component {
 
             coupons: [], //优惠券
             cards: [], //卡信息
-
+            usedOtherPay: 'used',
             selectedCoupons: [], //已选优惠券
             selectedCardsId: [], //已选卡
             selectedPayTypeIndex: null,
@@ -221,6 +221,7 @@ class MultiPay extends React.Component {
             qrCode,
             isPaySuccess,
             errorStockList,
+            usedOtherPay
         } = this.state;
         let selectedPayType = payTypes[selectedPayTypeIndex];
         let selectedItemAmtInfo =
@@ -326,6 +327,8 @@ class MultiPay extends React.Component {
                                         }
                                         {selectedPayType && selectedPayType.payType == 2 && editCard && (
                                             <EditCardPay card={editCard}
+                                                         waitPayMoney={paymentInfo.wait4PayAmt}
+                                                         usedOtherPay={usedOtherPay}
                                                          onCancel={this.onEditCardCancel}
                                                          onConfirm={this.onEditCardConfirm}/>
                                         )}
@@ -1333,6 +1336,7 @@ class MultiPay extends React.Component {
             })
             state.cards = cards
         }
+        state.usedOtherPay = usedOtherPay ? 'used':'unused'
 
         // 返回汇总项
         return {

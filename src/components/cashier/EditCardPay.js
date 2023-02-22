@@ -21,7 +21,11 @@ export class EditCardPay extends React.PureComponent {
     UNSAFE_componentWillMount() {
         if (this.props.card) {
             let cardState = clone(this.props.card);
-            this.setState({ card: cardState });
+            this.setState({
+                card: cardState,
+                waitPayMoney: this.props.waitPayMoney,
+                usedOtherPay: this.props.usedOtherPay
+            });
         }
     }
 
@@ -30,6 +34,11 @@ export class EditCardPay extends React.PureComponent {
             let cardState = clone(nextProps.card);
             this.setState({ card: cardState });
         }
+
+        this.setState({
+            waitPayMoney: this.props.waitPayMoney,
+            usedOtherPay: this.props.usedOtherPay
+        });
     }
     onCardBalanceEdit = () => {
         this.setState({
@@ -79,7 +88,13 @@ export class EditCardPay extends React.PureComponent {
 
         if (this.state.currentEditItem.id == -1) {
             //本金支付
-            let card = { ...this.state.card, paidAmt: amt };
+            let card
+            if(this.state.waitPayMoney > 0 || this.state.usedOtherPay == 'used'){
+                card = { ...this.state.card, paidAmt: amt };
+            }else{
+                card = { ...this.state.card, paidAmt: 0}
+            }
+
             this.props.onConfirm(clone(card));
             this.setState({
                 currentEditItem: null,
@@ -88,7 +103,11 @@ export class EditCardPay extends React.PureComponent {
             //赠金支付
             let card = clone(this.state.card);
             let newAttach = card.attachMoneyList.find((x) => x.id == this.state.currentEditItem.id);
-            newAttach.paidAmt = amt;
+            if(this.state.waitPayMoney > 0 || this.state.usedOtherPay == 'used'){
+                newAttach.paidAmt = amt;
+            }else{
+                newAttach.paidAmt = 0
+            }
             this.props.onConfirm(card);
             this.setState({
                 currentEditItem: null,
