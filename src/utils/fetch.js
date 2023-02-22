@@ -1,18 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {AppConfig, StateCode} from './constant';
 import {desDecrypt, desEncrypt} from './encrypt/encrypt';
-import * as Api from '../services/api';
 const qs = require('qs');
 
-let vCode = null
 let _staffId = ''
-let _platform =  AppConfig.platform.bms
-let _magugiFetch = fetch
-
-const _timeoutFetch = (url, header) => {
-    return timeout(AppConfig.requestTimeout, _magugiFetch(url, header));
-}
-
 const Msg = {
     '7001': '无效的客户端',
     '7002': '无效的Token',
@@ -28,41 +19,6 @@ const Msg = {
     default: '网络出小差，请稍后再试',
 }
 
-// 获取token名称
-const getTokenName = function () {
-    return AppConfig.tokenBms
-}
-
-// 构建获取vcode的promise
-const buildVcodePromise = (url)=>{
-    return new Promise(function (resolve, reject) {
-        _fetch(url, null, function (res) {
-            if (res.code === StateCode.reqSuccess) {
-                setVcodeStorage(res.data);
-                resolve(res.data);
-            } else {
-                reject({
-                    code: StateCode.failToGetToken,
-                    exceptions: Msg[StateCode.failToGetToken],
-                })
-            }
-        },function (res) {
-            reject(res);
-        })
-    })
-}
-
-function setVcodeStorage(key) {
-    vCode = key;
-    if (key) {
-        let tokenName = getTokenName()
-        AsyncStorage.setItem(tokenName, key, err => {
-            console.error('#######################################', tokenName, key, err)
-            console.error('保存vCode异常', err)
-        })
-    }
-}
-
 function getStorage(key) {
     return AsyncStorage.getItem(key).then(value => {
         return value
@@ -71,71 +27,15 @@ function getStorage(key) {
     });
 }
 
-function _callRealService(path, params, resolve, reject, retryCount) {
-    _fetch(path, params, function (res) {
-        if (res.code !== StateCode.reqSuccess) {
-            reject(res);
-        } else {
-            resolve(res);
-        }
-    }, res => {
-        if (res.code === StateCode.invalidToken) {
-            vCode = null;
-            let tokenName = getTokenName()
-            AsyncStorage.removeItem(tokenName).then(() => {
-                retryCount = (retryCount || 0) + 1;
-                console.log('vCode失效! 尝试重新获取:' + retryCount);
-                _callService(path, params, resolve, reject, retryCount);
-            }).catch(err => {
-                console.log('移除vCode缓存异常', err);
-                reject({
-                    code: StateCode.failToRemoveTokenCache,
-                    exceptions: Msg[StateCode.failToRemoveTokenCache],
-                });
-            });
-        } else {
-            reject(res);
-        }
-    })
-}
-
-function _callService(url, reqParams, resolve, reject, retryCount) {
-    if (retryCount >= 3) {
-        reject({
-            code: StateCode.tooTimesGetToken,
-            exceptions: Msg[StateCode.tooTimesGetToken],
-        });
-        return false;
-    }
-
-    _getVCodePromise().then(function () {
-        _callRealService(url, reqParams, resolve, reject, retryCount);
-    }).catch(function (res) {
-        reject(res);
-    });
-}
-
-async function _getVCodePromise() {
-    let tokenName = getTokenName()
-    vCode = vCode || (await getStorage(tokenName));
-    if (vCode) {
-        return Promise.resolve(vCode);
-    }
-
-    return buildVcodePromise(Api.getTokenBms)
-}
-
-function _fetch(url, params, resolve, reject) {
+function _fetch(url, params, platform, resolve, reject) {
     try {
         let bodyData = {}
-        if(_platform == AppConfig.platform.bms){
+        if(platform == AppConfig.platform.bms){
             bodyData = {
                 bodyData: desEncrypt(
                     JSON.stringify(
                         Object.assign({}, params, {
                             appId: AppConfig.appId,
-                            accessToken: vCode,
-                            vcode: vCode,
                             unique: AppConfig.appId,
                             client: AppConfig.client
                         })
@@ -152,7 +52,7 @@ function _fetch(url, params, resolve, reject) {
             const keys = Object.keys(args)
             keys.forEach(key=>{
                 let value = args[key]
-                bodyData[key] = desEncrypt(value.toString())
+                bodyData[key] = desEncrypt(value + '')
             })
         }
 
@@ -169,10 +69,10 @@ function _fetch(url, params, resolve, reject) {
             body: qs.stringify(bodyData),
         };
 
-        _timeoutFetch(url, header).then(response => {
+        fetch(url, header).then(response => {
             return response.json();
         }).then(textData => {
-            if(_platform ==  AppConfig.platform.bms){ // bms服务请求
+            if(platform ==  AppConfig.platform.bms){ // bms服务请求
                 try {
                     const reqData = JSON.parse(desDecrypt(textData));
                     resolve(reqData.backData);
@@ -183,11 +83,13 @@ function _fetch(url, params, resolve, reject) {
                         exceptions: Msg[backData.code] || Msg.default,
                     });
                 }
-            }else if(_platform ==  AppConfig.platform.app){ // app服务请求
+            }else if(platform ==  AppConfig.platform.app){ // app服务请求
                 const {code} = textData
                 if(code == StateCode.reqSuccess){
                     resolve(textData);
                 }else{
+                    console.error(Msg[code], JSON.stringify(textData))
+                    console.error(Msg[code], url, JSON.stringify(desDecrypt(textData)))
                     reject({
                         code,
                         exceptions: Msg[code] || Msg.default,
@@ -211,37 +113,18 @@ function _fetch(url, params, resolve, reject) {
 }
 
 /**
- * 超时处理
- * @param {*} ms
- * @param {*} promise
- */
-function timeout(ms, promise) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            reject({
-                code: StateCode.requestTimeout,
-                exceptions: Msg[StateCode.requestTimeout],
-            });
-        }, ms);
-        promise.then(resolve, reject);
-    });
-}
-
-/**
  *
  * @param {*} url
  * @param {*} params
  */
-export const callService = async (url, params, platform =  AppConfig.platform.bms) => {
-    _platform = platform
-    _staffId = _staffId || (await getStorage(AppConfig.sessionStaffId)) || '';
+export const callService = (url, params ,  platform =  AppConfig.platform.bms) => {
     return new Promise((resolve, reject) => {
-        params = Object.assign({}, params, {_staffId: _staffId});
-        if (platform == AppConfig.platform.bms && !vCode) {
-            _callService(url, params, resolve, reject);
-        } else {
-            _callRealService(url, params, resolve, reject);
-        }
+        getStorage(AppConfig.sessionStaffId).then(_staffId => {
+            params = Object.assign({}, params, {_staffId: _staffId});
+            _fetch(url, params, platform, resolve, reject);
+        }).catch(e=>{
+            reject(e)
+        })
     });
 };
 
