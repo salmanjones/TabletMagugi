@@ -42,7 +42,7 @@ export class PayTypeList extends PureComponent {
         const { payType, payTypeId, paidAmt, icon, name, disable,itemAmt } = item;
         const { onSelected, onChecked ,selectedIndex} = this.props;
         let selected=index==selectedIndex;
-        let checked = paidAmt!==null && paidAmt!==undefined;
+        let checked = paidAmt!==null && paidAmt!==undefined && paidAmt != 0;
         let info = this.getInfo(payType, paidAmt);
         let amtInfo=itemAmt?'('+itemAmt+')':'';
         return (
@@ -51,9 +51,7 @@ export class PayTypeList extends PureComponent {
                     disable != true && onSelected(index);
                 }}
             >
-                <View
-                    style={
-                        disable == true
+                <View style={ disable == true
                             ? multiplyPayStyle.bodyLeftItemDisable
                             : selected
                             ? multiplyPayStyle.bodyLeftItemActive
