@@ -1249,6 +1249,10 @@ class MultiPay extends React.Component {
                         return paidAmt + discountPrice
                     }
                 }else if(item.payType == '2'){ // 储值卡抵扣
+
+
+
+
                     return paidAmt + consumeActualMoney
                 }else if(item.payType == '6'){ // 微信或支付宝
                     if(item.payTypeId == payway.payTypeId){ // 区别微信与支付宝
@@ -1340,13 +1344,14 @@ class MultiPay extends React.Component {
         })
         state.paySequence = paidSequence
 
-        // 如果抵扣券已完成扣费，则会员卡还原扣费金额
+        // 处理会员卡实际扣费金额
+        let cards = JSON.parse(JSON.stringify(state.cards))
         const usedOtherPay = paidSequence.filter(item => {
             let payType = item.value.payType
             return (payType != '5' && payType != '4')
         }).length > 0
-        if(!usedOtherPay){
-            let cards = JSON.parse(JSON.stringify(state.cards))
+        if(!usedOtherPay){ // 仅优惠券支付及次卡支付
+            // 如果抵扣券已完成扣费，则会员卡还原扣费金额
             cards.forEach(card=>{
                 card.paidAmt = null
                 if(card.attachMoneyList){
@@ -1355,8 +1360,31 @@ class MultiPay extends React.Component {
                     })
                 }
             })
-            state.cards = cards
+        }else{ // 使用了卡、现金、支付宝等支付方式
+            // 处理最终会员卡的抵扣金额:会员卡实际扣费由后台决定，因为券抵扣金额未知，故会员卡是浮动金额
+            paidSequence.filter(item => {
+                let payType = item.value.payType
+                return (payType == '2')
+            }).forEach(item=>{
+                let cardId = item.value.payTypeId
+                let payAmount = item.value.payAmount
+                let attachId = item.value.payModeId || ''
+                cards.forEach(card=>{
+                    if(card.id == cardId){ // 处理当前会员卡的值
+                        if(attachId && attachId.length > 0){ // 当前为赠金扣费
+                            card.attachMoneyList.forEach(attachMoney=>{
+                                if(attachMoney.id == attachId){
+                                    attachMoney.paidAmt = payAmount
+                                }
+                            })
+                        }else{ // 当前为本金扣费
+                            card.paidAmt = payAmount
+                        }
+                    }
+                })
+            })
         }
+        state.cards = cards
         state.usedOtherPay = usedOtherPay ? 'used':'unused'
 
         // 返回汇总项
