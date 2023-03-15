@@ -278,16 +278,16 @@ export class VipcardPayment extends React.PureComponent {
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>微信支付</Text>
                                                     </TouchableOpacity>
-                                                    <TouchableOpacity
-                                                        style={payTypeId == '18' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList}
-                                                        onPress={this.onPayTypeSelect.bind(this, 'ali', '18', '支付宝')}
-                                                    >
-                                                        <Image resizeMethod="resize"
-                                                               source={require('@imgPath/alipay.png')}
-                                                               style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
-                                                        />
-                                                        <Text style={cashierPayStyle.titleText}>支付宝支付</Text>
-                                                    </TouchableOpacity>
+                                                    {/*<TouchableOpacity*/}
+                                                    {/*    style={payTypeId == '18' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList}*/}
+                                                    {/*    onPress={this.onPayTypeSelect.bind(this, 'ali', '18', '支付宝')}*/}
+                                                    {/*>*/}
+                                                    {/*    <Image resizeMethod="resize"*/}
+                                                    {/*           source={require('@imgPath/alipay.png')}*/}
+                                                    {/*           style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}*/}
+                                                    {/*    />*/}
+                                                    {/*    <Text style={cashierPayStyle.titleText}>支付宝支付</Text>*/}
+                                                    {/*</TouchableOpacity>*/}
                                                     {isUseCash &&
                                                         <React.Fragment>
                                                             <TouchableOpacity

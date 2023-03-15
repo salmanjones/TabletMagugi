@@ -227,17 +227,17 @@ export class PayArea extends PureComponent {
                                 />
                                 <Text style={cashierPayStyle.titleText}>微信支付</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                style={selectedPayType == 'ali' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}
-                                onPress={this.choosePayWay.bind(this, 'ali')}
-                            >
-                                <Image
-                                    resizeMethod="resize"
-                                    source={require('@imgPath/alipay.png')}
-                                    style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
-                                />
-                                <Text style={cashierPayStyle.titleText}>支付宝支付</Text>
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity*/}
+                            {/*    style={selectedPayType == 'ali' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}*/}
+                            {/*    onPress={this.choosePayWay.bind(this, 'ali')}*/}
+                            {/*>*/}
+                            {/*    <Image*/}
+                            {/*        resizeMethod="resize"*/}
+                            {/*        source={require('@imgPath/alipay.png')}*/}
+                            {/*        style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}*/}
+                            {/*    />*/}
+                            {/*    <Text style={cashierPayStyle.titleText}>支付宝支付</Text>*/}
+                            {/*</TouchableOpacity>*/}
                             {companySetting.isUseCash && <TouchableOpacity
                                 style={selectedPayType == 'cash' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}
                                 onPress={this.choosePayWay.bind(this, 'cash')}

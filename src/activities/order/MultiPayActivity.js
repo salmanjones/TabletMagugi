@@ -64,14 +64,14 @@ class MultiPay extends React.Component {
                     payMode: 0,
                     icon: require('@imgPath/pay-multiply-wechat.png'),
                 },
-                {
-                    payType: 6,
-                    payTypeId: 18,
-                    payTypeNo: 18,
-                    name: '支付宝支付',
-                    payMode: 0,
-                    icon: require('@imgPath/pay-multiply-ali.png'),
-                },
+                // {
+                //     payType: 6,
+                //     payTypeId: 18,
+                //     payTypeNo: 18,
+                //     name: '支付宝支付',
+                //     payMode: 0,
+                //     icon: require('@imgPath/pay-multiply-ali.png'),
+                // },
                 {
                     payType: 1,
                     payTypeId: -1,

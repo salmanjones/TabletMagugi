@@ -588,19 +588,19 @@ export class CashierPay extends React.Component {
                                                         />
                                                         <Text style={cashierPayStyle.titleText}>微信支付</Text>
                                                     </TouchableOpacity>
-                                                    <TouchableOpacity
-                                                        style={
-                                                            selectedPayType == 'ali' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList
-                                                        }
-                                                        onPress={this.choosePayWay.bind(this, 'ali')}
-                                                    >
-                                                        <Image
-                                                            resizeMethod="resize"
-                                                            source={require('@imgPath/alipay.png')}
-                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
-                                                        />
-                                                        <Text style={cashierPayStyle.titleText}>支付宝支付</Text>
-                                                    </TouchableOpacity>
+                                                    {/*<TouchableOpacity*/}
+                                                    {/*    style={*/}
+                                                    {/*        selectedPayType == 'ali' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList*/}
+                                                    {/*    }*/}
+                                                    {/*    onPress={this.choosePayWay.bind(this, 'ali')}*/}
+                                                    {/*>*/}
+                                                    {/*    <Image*/}
+                                                    {/*        resizeMethod="resize"*/}
+                                                    {/*        source={require('@imgPath/alipay.png')}*/}
+                                                    {/*        style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}*/}
+                                                    {/*    />*/}
+                                                    {/*    <Text style={cashierPayStyle.titleText}>支付宝支付</Text>*/}
+                                                    {/*</TouchableOpacity>*/}
                                                     {companySetting.isUseCash && <TouchableOpacity
                                                         style={
                                                             selectedPayType == 'cash' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList
