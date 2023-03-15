@@ -531,7 +531,7 @@ class MergeOrderPay extends React.Component {
             if (!payType) return;
 
             //优惠券大于等于应付
-            payTypeParams = this.buildPayTypeParams(wait4PayAmt);
+            let payTypeParams = this.buildPayTypeParams(wait4PayAmt);
 
             let hasCoupons=payTypeParams.filter((x) =>x.payType==5).length>0;
             if(hasCoupons){

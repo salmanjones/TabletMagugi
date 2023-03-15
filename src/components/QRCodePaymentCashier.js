@@ -41,39 +41,40 @@ export class QRCodePaymentCashier extends React.PureComponent {
     checkPaymentResult = () => {
         const {tradeNo, payType} = this.props;
         let that = this;
-        fetchPaymentResult(tradeNo, payType)
-            .then(res => {
+        fetchPaymentResult(tradeNo, payType).then(res => {
+            const {code, data} = res;
+            // console.error("######################################", JSON.stringify(res))
+            let retry = false;
+            if (code === '6000') {
                 that.setPaymentResult(PaymentResultStatus.success);
-            })
-            .catch(err => {
-                const {code, data} = err;
-                let retry = false;
-                if (code === '9002') {
-                    if (data.buildStat || data.executeStat == 'close') {
-                        that.setPaymentResult(PaymentResultStatus.error);
-                    } else if (data.executeStat == 'thirdPayEnd') {
-                        that.setPaymentResult(PaymentResultStatus.partial);
-                    } else {
-                        retry = true;
-                    }
-                } else if (code === '9004') {
+            }else if (code === '9002') {
+                if (data.buildStat || data.executeStat == 'close') {
                     that.setPaymentResult(PaymentResultStatus.error);
-                } else if (that.retryCount >= MAX_RETRY_COUNT) {
-                    that.setPaymentResult(PaymentResultStatus.timeout);
+                } else if (data.executeStat == 'thirdPayEnd') {
+                    that.setPaymentResult(PaymentResultStatus.partial);
+                } else {
+                    retry = true;
                 }
+            } else if (code === '9004') {
+                that.setPaymentResult(PaymentResultStatus.error);
+            } else if (that.retryCount >= MAX_RETRY_COUNT) {
+                that.setPaymentResult(PaymentResultStatus.timeout);
+            }
 
-                if (retry) {
-                    if (that.retryCount >= MAX_RETRY_COUNT) {
-                        that.setPaymentResult(PaymentResultStatus.timeout);
-                    } else {
-                        that.retryCount++;
-                    }
+            if (retry) {
+                if (that.retryCount >= MAX_RETRY_COUNT) {
+                    that.setPaymentResult(PaymentResultStatus.timeout);
+                } else {
+                    that.retryCount++;
                 }
-            });
+            }
+        }).catch(err => {
+            // console.error("=================================", err)
+            that.setPaymentResult(PaymentResultStatus.error);
+        });
     };
 
     toClosePay() {
-
         const {paymentStatus} = this.state;
         if (paymentStatus === PaymentResultStatus.success) {
             this.props.onClosePay(0);

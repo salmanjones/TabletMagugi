@@ -234,22 +234,20 @@ export const cashierBillingPayAction = (billingData, prePayData, payType, channe
             billingNo: billingInfo.billingNo,
             storeId: billingInfo.storeId,
             companyId: billingInfo.companyId,
-        })
-            .then(backData => {
-                dispatch({type: CASHIERBILLING_FLOWNUMBER.SUCCESS});
-                let checkStat = backData.data.checkStatus;
-                if (checkStat == '0') {
-                    dispatch(cashierBillingPay(billingData, prePayData, payType, channel));
-                } else {
-                    displayError('', '水单号已存在', true);
-                }
-            })
-            .catch(err => {
-                displayError(err, '校验水单号失败，请稍后再试');
-                dispatch({
-                    type: CASHIERBILLING_FLOWNUMBER.ERROR,
-                });
+        }).then(backData => {
+            dispatch({type: CASHIERBILLING_FLOWNUMBER.SUCCESS});
+            let checkStat = backData.data.checkStatus;
+            if (checkStat == '0') {
+                dispatch(cashierBillingPay(billingData, prePayData, payType, channel));
+            } else {
+                displayError('', '水单号已存在', true);
+            }
+        }).catch(err => {
+            displayError(err, '校验水单号失败，请稍后再试');
+            dispatch({
+                type: CASHIERBILLING_FLOWNUMBER.ERROR,
             });
+        });
     };
 };
 
@@ -258,19 +256,15 @@ const cashierBillingPay = (billingData, prePayData, payType, channel) => {
     return (dispatch, getState) => {
         //loading
         dispatch({type: CASHIERBILLING_PAY.PENDING});
-
-        return fetchSaveBilling(billingData)
-            .then(backData => {
-
-                dispatch(
-                    submitBillingSuccess(backData.data.billing, backData.data.consumeDetails, prePayData, payType, channel)
-                );
-            })
-            .catch(err => {
-                dispatch({
-                    type: CASHIERBILLING_PAY.ERROR,
-                });
+        return fetchSaveBilling(billingData).then(backData => {
+            dispatch(
+                submitBillingSuccess(backData.data.billing, backData.data.consumeDetails, prePayData, payType, channel)
+            );
+        }).catch(err => {
+            dispatch({
+                type: CASHIERBILLING_PAY.ERROR,
             });
+        });
     };
 };
 
@@ -279,49 +273,41 @@ const submitBillingSuccess = (orderInfo, consumeDetails, prePayData, payType, ch
     return (dispatch, getState) => {
         if (channel == 'tablet') {//平板支付
             let paymentList = prePayData.paymentList || [];
-
             if (payType == 'cash' || payType == 'bank' || payType == 'other') {
-                //开始支付
-
                 //检查库存
-                fetchStockBilling({billingNo: orderInfo.billingNo})
-                    .then(backData => {
-
-                        return payBillingV4({
-                            billingInfo: JSON.stringify(orderInfo),
-                            billingNo: orderInfo.billingNo,
-                            itemList: JSON.stringify(consumeDetails.filter(x => x.service != 2)),//排除消耗
-                            paymentList: JSON.stringify(paymentList),
-                            realPay: 'true',
-                            sendMsg: '0',
-                        }).then((backData) => {
-                            let resultCode = backData.data.payResultCode;
-                            if (resultCode === '1')
-                                dispatch({type: CASHIERBILLING_PAY_REAL_V4.SUCCESS});
-                            else {
-                                dispatch({type: CASHIERBILLING_PAY_REAL_V4.ERROR, data: backData.data});
-                            }
-                        }).catch((err) => {
-                            dispatch({type: CASHIERBILLING_PAY_REAL_V4.ERROR, data: {msg: '网络异常'}});
-                        });
-
-                    })
-                    .catch(err => {
-                        let backData = err.data;
-                        if (backData && backData.payResultCode == '6') {
-                            let stockData = JSON.parse(backData.payMsg);
-                            dispatch({type: CASHIERBILLING_STOCK.PENDING, data: stockData});
-                        } else {
-                            dispatch({type: CASHIERBILLING_STOCK.ERROR,});
+                fetchStockBilling({billingNo: orderInfo.billingNo}).then(backData => {
+                    return payBillingV4({
+                        billingInfo: JSON.stringify(orderInfo),
+                        billingNo: orderInfo.billingNo,
+                        itemList: JSON.stringify(consumeDetails.filter(x => x.service != 2)),//排除消耗
+                        paymentList: JSON.stringify(paymentList),
+                        realPay: 'true',
+                        sendMsg: '0',
+                    }).then((backData) => {
+                        let resultCode = backData.data.payResultCode;
+                        if (resultCode === '1')
+                            dispatch({type: CASHIERBILLING_PAY_REAL_V4.SUCCESS});
+                        else {
+                            dispatch({type: CASHIERBILLING_PAY_REAL_V4.ERROR, data: backData.data});
                         }
+                    }).catch((err) => {
+                        dispatch({type: CASHIERBILLING_PAY_REAL_V4.ERROR, data: {msg: '网络异常'}});
                     });
 
+                }).catch(err => {
+                    let backData = err.data;
+                    if (backData && backData.payResultCode == '6') {
+                        let stockData = JSON.parse(backData.payMsg);
+                        dispatch({type: CASHIERBILLING_STOCK.PENDING, data: stockData});
+                    } else {
+                        dispatch({type: CASHIERBILLING_STOCK.ERROR,});
+                    }
+                });
             } else if (payType == 'wx' || payType == 'ali') {
                 //开始预算
                 //let paymentList = prePayData.paymentList//prePayData.paymentList[payType];
                 //paymentList.payAmount = orderInfo.totalPrice;
                 let roundMode = prePayData.roundMode;
-
                 return fetchPrePayBilling({
                     billingInfo: JSON.stringify(orderInfo),
                     billingNo: orderInfo.billingNo,
@@ -344,25 +330,23 @@ const submitBillingSuccess = (orderInfo, consumeDetails, prePayData, payType, ch
         } else {//小程序或者app支付
             let isPayByApp = channel == 'app';
             //转为app订单
-            return fetchAppBilling({billingNo: orderInfo.billingNo})
-                .then((backData) => {
-                    let resData = backData.data;
-                    if (resData.bindingStatus == '0') {
-                        dispatch({
-                            type: isPayByApp ? CASHIERBILLING_TOAPP.SUCCESS : CASHIERBILLING_WXAPP.SUCCESS,
-                            billingNo: orderInfo.billingNo
-                        });
-                    } else {
-                        dispatch({
-                            type: isPayByApp ? CASHIERBILLING_TOAPP.ERROR : CASHIERBILLING_WXAPP.ERROR,
-                        });
-                    }
-                })
-                .catch((err) => {
+            return fetchAppBilling({billingNo: orderInfo.billingNo}).then((backData) => {
+                let resData = backData.data;
+                if (resData.bindingStatus == '0') {
+                    dispatch({
+                        type: isPayByApp ? CASHIERBILLING_TOAPP.SUCCESS : CASHIERBILLING_WXAPP.SUCCESS,
+                        billingNo: orderInfo.billingNo
+                    });
+                } else {
                     dispatch({
                         type: isPayByApp ? CASHIERBILLING_TOAPP.ERROR : CASHIERBILLING_WXAPP.ERROR,
                     });
+                }
+            }).catch((err) => {
+                dispatch({
+                    type: isPayByApp ? CASHIERBILLING_TOAPP.ERROR : CASHIERBILLING_WXAPP.ERROR,
                 });
+            });
         }
     };
 };
@@ -371,15 +355,13 @@ const submitBillingSuccess = (orderInfo, consumeDetails, prePayData, payType, ch
 const prePayBillingSuccess = (orderInfo, payType, paymentList, backData, roundMode) => {
     //散客优惠处理
     if (backData) {
-        var payResultCode = backData.data.payResultCode;
-        var payTypeMoreList = backData.data.payTypeMoreList;
-
+        const payResultCode = backData.data.payResultCode;
+        const payTypeMoreList = backData.data.payTypeMoreList;
         if (payResultCode == '2') {
-            var payTypeMaster = '';
-            var payTypeId = '';
+            let payTypeMaster = '';
+            let payTypeId = '';
             for (var i = 0; i < payTypeMoreList.length; i++) {
                 var element = payTypeMoreList[i];
-
                 payTypeMaster = element.payType;
                 payTypeId = element.payTypeId;
             }
@@ -389,47 +371,40 @@ const prePayBillingSuccess = (orderInfo, payType, paymentList, backData, roundMo
                 var payAmount = 0.0;
                 for (var i = 0; i < payTypeMoreList.length; i++) {
                     var element = payTypeMoreList[i];
-
                     payAmount += element.beforeConsumeBalance - element.morePayAmount;
                 }
-
                 payAmount = payAmount.toFixed(roundMode);
-
                 paymentList.payAmount = payAmount;
                 paymentList[0].payAmount = payAmount;
-
                 orderInfo.totalPrice = payAmount;
             }
         }
     }
 
     return (dispatch, getState) => {
-        //loading
-        return fetchStockBilling({billingNo: orderInfo.billingNo})
-            .then(backData => {
-                dispatch(reStockBillingSuccess(orderInfo, payType, paymentList));
-            })
-            .catch(err => {
-                let backData = err.data;
-                if (backData) {
-                    let code = backData.payResultCode;
-                    if (code == '6') {
-                        let stockData = JSON.parse(backData.payMsg);
-                        dispatch({
-                            type: CASHIERBILLING_STOCK.PENDING,
-                            data: stockData
-                        });
-                    } else {
-                        dispatch({
-                            type: CASHIERBILLING_STOCK.ERROR,
-                        });
-                    }
+        return fetchStockBilling({billingNo: orderInfo.billingNo}).then(backData => {
+            dispatch(reStockBillingSuccess(orderInfo, payType, paymentList));
+        }).catch(err => {
+            let backData = err.data;
+            if (backData) {
+                let code = backData.payResultCode;
+                if (code == '6') {
+                    let stockData = JSON.parse(backData.payMsg);
+                    dispatch({
+                        type: CASHIERBILLING_STOCK.PENDING,
+                        data: stockData
+                    });
                 } else {
                     dispatch({
                         type: CASHIERBILLING_STOCK.ERROR,
                     });
                 }
-            });
+            } else {
+                dispatch({
+                    type: CASHIERBILLING_STOCK.ERROR,
+                });
+            }
+        });
     };
 };
 
@@ -443,27 +418,22 @@ const reStockBillingSuccess = (orderInfo, payType, paymentList) => {
             pls: JSON.stringify(paymentList),
             billingNo: orderInfo.billingNo,
             companyId: orderInfo.companyId,
-        })
-            .then(backData => {
-
-                //第三方支付金额计算
-                let actaulPrice = paymentList
-                    .filter(x => x.payTypeId == 18 || x.payTypeId == 19)
-                    .reduce((result, x) => result + Number(x.payAmount), 0.0);
-
-                backData.data.actaulPrice = actaulPrice;// orderInfo.totalPrice;
-
-                dispatch({
-                    type: CASHIERBILLING_PAY.SUCCESS,
-                    data: backData.data,
-                });
-            })
-            .catch(err => {
-                dispatch({
-                    type: CASHIERBILLING_PAY.ERROR,
-                });
-                dealyAction(() => displayError(err, '支付失败', true));
+        }).then(backData => {
+            //第三方支付金额计算
+            let actaulPrice = paymentList
+                .filter(x => x.payTypeId == 18 || x.payTypeId == 19)
+                .reduce((result, x) => result + Number(x.payAmount), 0.0);
+            backData.data.actaulPrice = actaulPrice;// orderInfo.totalPrice;
+            dispatch({
+                type: CASHIERBILLING_PAY.SUCCESS,
+                data: backData.data,
             });
+        }).catch(err => {
+            dispatch({
+                type: CASHIERBILLING_PAY.ERROR,
+            });
+            dealyAction(() => displayError(err, '支付失败', true));
+        });
     };
 };
 
