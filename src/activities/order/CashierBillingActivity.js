@@ -2020,19 +2020,20 @@ class CashierBillingView extends React.Component {
                                             <ScrollView>
                                                 {
                                                     this.state.timesProjectDatas.map((project, index) => {
-                                                        if(index > 0){
-                                                            return <View></View>
-                                                        }
                                                         let currStoreId = this.state.storeId
                                                         let isCross = project.isCross  //0允许 1不允许 -1不限定
                                                         let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(",") : [] //跨店消费门店
                                                         crossStores = crossStores.filter(item=>item.trim().length > 1)
-                                                        crossStores.push(project.storeId)
+                                                        crossStores.push(project.storeId + "")
 
                                                         // 当前卡是否可用
-                                                        let canUse = true
-                                                        let validStores = crossStores.filter(item => item == currStoreId)
-                                                        if (isCross != "1" && crossStores.length > 0 && validStores.length < 1) {
+                                                        let canUse
+                                                        let validStores = crossStores.filter(item => item + '' == currStoreId + '')
+                                                        if(isCross == -1){
+                                                            canUse = true
+                                                        }else if(isCross == 1){
+                                                            canUse = false
+                                                        }else if (crossStores.length > 0 && validStores.length < 1) {
                                                             canUse = false
                                                         }
 
