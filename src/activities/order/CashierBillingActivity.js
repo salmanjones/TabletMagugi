@@ -2023,12 +2023,11 @@ class CashierBillingView extends React.Component {
                                                         let isCross = project.isCross  //0允许 1不允许 -1不限定
                                                         let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(",") : [] //跨店消费门店
                                                         let currStoreId = this.state.storeId
-                                                        crossStores.push(currStoreId)
 
                                                         // 当前卡是否可用
                                                         let canUse = true
                                                         let validStores = crossStores.filter(item => item == currStoreId)
-                                                        if (isCross != "1" && crossStores.length > 0 && validStores.length < 1) {
+                                                        if (isCross != "1" && crossStores.length > 0 && validStores.length < 0) {
                                                             canUse = false
                                                         }
 
