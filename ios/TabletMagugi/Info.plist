@@ -23,16 +23,16 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
+    <dict>
+      <key>NSExceptionDomains</key>
+        <dict>
+           <key>localhost</key>
+          <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+         </dict>
+        </dict>
+    </dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>允许才能始终访问位置,以便于您寻找附近门店,如果不允许,你将无法使用位置功能</string>
 	<key>UIAppFonts</key>
