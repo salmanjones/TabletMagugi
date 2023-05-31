@@ -43,7 +43,7 @@ export class RotateTitleRight extends React.PureComponent {
 
 		InteractionManager.runAfterInteractions(() => {
 			resetDutyStaffs().then((backData) => {
-				that.props.navigation.replace('RotatePlacardActivity');
+				that.props.navigation.navigate('RotatePlacardActivity');
 			}).catch(() => {});
 		});
 	};

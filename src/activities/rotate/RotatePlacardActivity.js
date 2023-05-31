@@ -506,7 +506,10 @@ class RotatePlacard extends React.Component {
     }
 
     onGoToSetting=() => {
-        this.props.navigation.replace('RotateSettingStaffActivity');
+        this.setState({
+            showStaffSelectModal: false,
+        });
+        this.props.navigation.navigate('RotateSettingStaffActivity');
     }
 
     query() {
