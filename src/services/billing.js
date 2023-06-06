@@ -223,3 +223,8 @@ export const priceListItemDetail = params => {
 export const getAvailablePaymentInfo = params => {
     return callService(api.getAvailablePaymentInfo, params, AppConfig.platform.app);
 }
+
+// 获取限购项目信息
+export const getLimitItems = params => {
+    return callService(api.getLimitItems, params);
+}

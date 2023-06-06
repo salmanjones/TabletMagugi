@@ -115,6 +115,8 @@ export const getDayCountPager = `${hostBms}/tablet/h5/statistics/pager`;
 export const getCommonSetting = `${hostBms}/tablet/common/settings`;
 //权限信息
 export const getRights = `${hostBms}/tablet/rights/info`;
+//获取限购信息
+export const getLimitItems = `${hostBms}/tablet/billing/mkt/userBuyLimit`
 //获取可用优惠券
 export const getAvailablePaymentInfo = `${hostApp}/billing/prepay/payment`;
 //获取BMS令牌

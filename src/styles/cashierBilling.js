@@ -201,6 +201,24 @@ export const cashierBillingStyle = StyleSheet.create({
         paddingRight: PixelUtil.size(6),
         paddingBottom: PixelUtil.size(6),
     },
+    limitItemInfo:{
+        display: 'flex',
+        position: "absolute",
+        top: PixelUtil.size(60),
+        left: PixelUtil.size(10),
+    },
+    limitItemInfoText:{
+        //加项目内容-列-其他
+        fontSize: PixelUtil.size(20),
+        color: '#fff',
+        backgroundColor: '#ffbf6b',
+        paddingLeft: PixelUtil.size(5),
+        paddingTop: PixelUtil.size(1),
+        paddingBottom: PixelUtil.size(1),
+        paddingRight: PixelUtil.size(5),
+        borderRadius: PixelUtil.size(4),
+        overflow: 'hidden',
+    },
     showServicerText: {
         // 服务项-产品-文字
         fontSize: PixelUtil.size(28),
@@ -773,6 +791,18 @@ export const cashierBillingStyle = StyleSheet.create({
         marginTop: PixelUtil.size(22),
         paddingLeft: PixelUtil.size(6),
         paddingRight: PixelUtil.size(6),
+    },
+    addServicerLimit: {
+        //加项目内容-列-其他
+        fontSize: PixelUtil.size(20),
+        color: '#fff',
+        backgroundColor: '#ffbf6b',
+        paddingLeft: PixelUtil.size(5),
+        paddingTop: PixelUtil.size(1),
+        paddingBottom: PixelUtil.size(1),
+        paddingRight: PixelUtil.size(5),
+        borderRadius: PixelUtil.size(4),
+        overflow: 'hidden',
     },
     addServicerNumber: {
         //加项目内容-列-编号

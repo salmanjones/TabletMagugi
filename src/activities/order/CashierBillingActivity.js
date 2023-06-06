@@ -40,7 +40,7 @@ import {
     StockTips,
     VipPayFor
 } from '../../components';
-import {changeBillingOwner, selectStaffAclInfoResult} from '../../services';
+import {changeBillingOwner, selectStaffAclInfoResult, getLimitItems} from '../../services';
 import {
     CASHIERBILLING_CUSTOMER, CASHIERBILLING_SAVE,
     cashierBillingFlowNumberInitAction,
@@ -60,7 +60,6 @@ import Spinner from "react-native-loading-spinner-overlay";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
-
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
 class CashierBillingView extends React.Component {
@@ -158,9 +157,7 @@ class CashierBillingView extends React.Component {
             selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
                 var resultMap = data.data;
                 var staffAclMap = resultMap.staffAclMap;
-
                 roundMode = resultMap.roundMode;
-
                 this.setState((prevState, props) => {
                     prevState.roundMode = roundMode;
                     prevState.companySetting.isUseCash = resultMap.isUseCash;
@@ -176,7 +173,7 @@ class CashierBillingView extends React.Component {
                     this.moduleCode = "0";
                 }
 
-                if (params.page == 'pendingOrder') {
+                if (params.page == 'pendingOrder') { // 来自于取单
                     let queryParams = {
                         companyId: userInfo.companyId,
                         storeId: userInfo.storeId,
@@ -188,9 +185,7 @@ class CashierBillingView extends React.Component {
                     }
 
                     this.props.getOrderInfo(queryParams);
-
-                    //来自于开单
-                } else {
+                } else { //来自于开单
                     this.props.initOrderInfo(params);
                 }
 
@@ -209,7 +204,7 @@ class CashierBillingView extends React.Component {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         var that = this;
-        if (nextProps.orderInfo.propChangeType == 'initData' && !this.state.isInited) {
+        if (nextProps.orderInfo.propChangeType == 'initData' && !this.state.isInited) { // 开单
             let orderData = nextProps.orderInfo.orderData;
 
             orderData.memberInfo = null;
@@ -227,11 +222,10 @@ class CashierBillingView extends React.Component {
                 }
 
                 //加载传入的项目信息 1755117 1904625 1904630
-
                 //params.preLoadItems=[{type:'project',id:1755117,num:2},{type:'item',id:1904625,num:2},{type:'item',id:1904630,num:3}];
                 if (params && params.preLoadItems && params.preLoadItems.length) {
-                    var consumeItems = params.preLoadItems.reduce((result, x) => {
-                        var consumeItem;
+                    const consumeItems = params.preLoadItems.reduce((result, x) => {
+                        let consumeItem;
                         if (x.type == 'project') {
                             let theProject = that.state.allProjDatas[x.id];
                             consumeItem = theProject ? {
@@ -243,7 +237,8 @@ class CashierBillingView extends React.Component {
                                 itemType: 'proj',
                                 isChoosed: false,
                                 unitType: '',
-                                assistStaffDetail: [defaultServicer(), defaultServicer(), defaultServicer()]
+                                assistStaffDetail: [defaultServicer(), defaultServicer(), defaultServicer()],
+                                limitBuy: theProject.limitBuy || null,
                             } : null;
                         } else if (x.type == 'item') {
                             let theTakeItem = that.state.allItemDatas[x.id];
@@ -256,12 +251,12 @@ class CashierBillingView extends React.Component {
                                 itemType: 'item',
                                 isChoosed: false,
                                 unitType: '1',
-                                assistStaffDetail: [defaultServicer(), defaultServicer(), defaultServicer()]
+                                assistStaffDetail: [defaultServicer(), defaultServicer(), defaultServicer()],
+                                limitBuy: theTakeItem.limitBuy || null
                             } : null;
                         }
 
                         consumeItem && result.push(convertToBackendData.call(that, that.state, consumeItem))
-
                         return result;
                     }, []);
 
@@ -274,11 +269,10 @@ class CashierBillingView extends React.Component {
                 }
             });
 
-        } else if (nextProps.orderInfo.propChangeType == 'getData' && !this.state.isgeted) {
+        } else if (nextProps.orderInfo.propChangeType == 'getData' && !this.state.isgeted) { // 取单
             if (nextProps.orderInfo.orderData.flowNumber == '-1') {
                 this.setState((prevState, props) => {
                     prevState.isgeted = true;
-
                     return prevState;
                 });
 
@@ -575,19 +569,41 @@ class CashierBillingView extends React.Component {
                 let prevServicer = prevState.consumeItems[prevState.consumeItems.length - 1].assistStaffDetail;
                 if (itemInfo.itemType == 'item') {
                     itemInfo.assistStaffDetail = [
-                        this.copyServicer(prevServicer[0], {appoint: "false"})
-                        , this.copyServicer(prevServicer[1], {appoint: "false"})
-                        , this.copyServicer(prevServicer[2], {appoint: "false"})
+                        this.copyServicer(prevServicer[0], {appoint: "false"}),
+                        this.copyServicer(prevServicer[1], {appoint: "false"}),
+                        this.copyServicer(prevServicer[2], {appoint: "false"})
                     ];
                 } else {
                     itemInfo.assistStaffDetail = [
-                        this.copyServicer(prevServicer[0])
-                        , this.copyServicer(prevServicer[1])
-                        , this.copyServicer(prevServicer[2])
+                        this.copyServicer(prevServicer[0]),
+                        this.copyServicer(prevServicer[1]),
+                        this.copyServicer(prevServicer[2])
                     ];
                 }
             }
 
+            if(itemInfo.limitBuy){ // 属于限购项
+                const limitBuy = itemInfo.limitBuy
+                limitBuy.canBuyCount = limitBuy.canBuyCount - 1
+                limitBuy.buyCount = limitBuy.buyCount + 1 // 添加处展示
+                if(limitBuy.canBuyCount < 0){
+                    limitBuy.canBuyCount = 0
+                    itemInfo.limitBuy = null
+                }else{
+                    // 购买项赋值
+                    itemInfo.limitBuy = Object.assign({}, limitBuy)
+                    itemInfo.limitBuy.buyCount = 1 // 购物车展示
+                }
+
+                // 处理限购项目展示
+                if (itemInfo.itemType == 'proj') { // 项目
+                    prevState.allProjDatas[itemInfo.itemId].limitBuy = limitBuy
+                } else if (itemInfo.itemType == 'item') { // 外卖
+                    prevState.allItemDatas[itemInfo.itemId].limitBuy = limitBuy
+                }
+            }
+
+            // 构建消费项
             prevState.consumeItems.push(convertToBackendData(prevState, itemInfo));
             //计算价格
             prevState = buildTotalPrice(prevState);
@@ -637,10 +653,16 @@ class CashierBillingView extends React.Component {
     //展示修改价格与数量弹出框
     showEditConsumeItemModal(index) {
         this.setState((prevState, props) => {
-            prevState.showEditConsumeItemModal = true;
-            prevState.currentEditConsumeItemIndex = index;
-            prevState.currentEditConsumeServicerIndex = -1;
-            return prevState;
+            let limitBuy = prevState.consumeItems[index].limitBuy
+            if(limitBuy){
+                showMessage('限购商品不允许修改信息', true);
+                return prevState;
+            }else{
+                prevState.showEditConsumeItemModal = true;
+                prevState.currentEditConsumeItemIndex = index;
+                prevState.currentEditConsumeServicerIndex = -1;
+                return prevState;
+            }
         });
     }
 
@@ -783,9 +805,7 @@ class CashierBillingView extends React.Component {
 
     //修改服务人完成item
     onSaveEditServicer(item, staffIndex, staff) {
-
         const {currentEditConsumeItemIndex, currentEditConsumeServicerIndex, consumeItems} = this.state;
-
         let curItem = consumeItems[currentEditConsumeItemIndex];
         curItem.assistStaffDetail[currentEditConsumeServicerIndex] = {...staff};
         curItem.assistStaffDetail = [...curItem.assistStaffDetail];
@@ -843,7 +863,6 @@ class CashierBillingView extends React.Component {
 
         var cardBalanceCount = 0.0;
         var cardCount = 0;
-
         if (member.vipStorageCardList) {
             var vipStorageCardList = member.vipStorageCardList;
             cardCount = vipStorageCardList.length;
@@ -860,7 +879,6 @@ class CashierBillingView extends React.Component {
 
         member.cardCount = cardCount;
         member.cardBalanceCount = cardBalanceCount;
-
         this.props.navigation.setParams({
             ...this.props.route.params,
             showMemberIcon: true,
@@ -878,50 +896,67 @@ class CashierBillingView extends React.Component {
             navigation
         }))
 
-        this.setState((prevState, props) => {
-            //构建次卡项目
-            buildCardProjDatas(prevState, member.vipStorageCardList);
+        // 处理限购项目
+        const {allItemDatas, allProjDatas} = this.state
+        const limitPromise = []
+        if(allItemDatas){ // 外卖
+            limitPromise.push(buildLimitInfo(this.props.route.params.member, allItemDatas, "0", "bindMember"))
+        }
+        if(allProjDatas){ // 项目
+            limitPromise.push(buildLimitInfo(this.props.route.params.member, allProjDatas, "1", "bindMember"))
+        }
 
-            if (prevState.timesProjectDatas.length > 0) {
-                this.cardCount = prevState.timesProjectDatas.length;
-                this.swipConsumeItem('card');
-            }
+        Promise.all(limitPromise).then(res=>{
+            // 处理会员识别后的问题
+            this.setState((prevState, props) => {
+                // 限购展示
+                prevState['allItemDatas'] = allItemDatas
+                prevState['limitPromise'] = limitPromise
 
-            //构建切换视图
-            prevState.showMemberQueryModal = false;
-            prevState.addProjStyle = cashierBillingStyle.consumeTextBoxActive
-            prevState.addProjTextStyle = cashierBillingStyle.consumeTextActive
-            prevState.addItemStyle = cashierBillingStyle.consumeTextBox
-            prevState.addItemTextStyle = cashierBillingStyle.consumeText
-            prevState.addCardStyle = cashierBillingStyle.consumeTextBox
-            prevState.addCardTextStyle = cashierBillingStyle.consumeText
-            prevState.addConsumeType = 'proj'
-            prevState.currentEditConsumeItemIndex = -1
-            prevState.currentEditConsumeServicerIndex = -1
-            prevState.clearServicerGridChoose = '02'
-            prevState.queryInputTips = '项目查询'
-            prevState.queryInputText = ''
-            prevState.memberType = member.memberType;
-            prevState.memberId = member.id;
-            prevState.customerSex = member.sex;
-            prevState.memberInfo = member;
-            prevState.reserveId = member.reserveId;
+                //构建次卡项目
+                buildCardProjDatas(prevState, member.vipStorageCardList);
 
-            //如果更新会员，则删除之前的次卡项目
-            if (member.id != prevState.memberId) {
-                let newConsumeItems = [];
-                for (let k = 0; k < prevState.consumeItems.length; k++) {
-                    let itemInfo = prevState.consumeItems[k];
-                    if (itemInfo.itemType != 'card') {
-                        newConsumeItems.push(item);
-                    }
+                if (prevState.timesProjectDatas.length > 0) {
+                    this.cardCount = prevState.timesProjectDatas.length;
+                    this.swipConsumeItem('card');
                 }
-                prevState.consumeItems = newConsumeItems;
-                prevState = buildTotalPrice(prevState);
-            }
 
-            return prevState;
-        });
+                //构建切换视图
+                prevState.showMemberQueryModal = false;
+                prevState.addProjStyle = cashierBillingStyle.consumeTextBoxActive
+                prevState.addProjTextStyle = cashierBillingStyle.consumeTextActive
+                prevState.addItemStyle = cashierBillingStyle.consumeTextBox
+                prevState.addItemTextStyle = cashierBillingStyle.consumeText
+                prevState.addCardStyle = cashierBillingStyle.consumeTextBox
+                prevState.addCardTextStyle = cashierBillingStyle.consumeText
+                prevState.addConsumeType = 'proj'
+                prevState.currentEditConsumeItemIndex = -1
+                prevState.currentEditConsumeServicerIndex = -1
+                prevState.clearServicerGridChoose = '02'
+                prevState.queryInputTips = '项目查询'
+                prevState.queryInputText = ''
+                prevState.memberType = member.memberType;
+                prevState.memberId = member.id;
+                prevState.customerSex = member.sex;
+                prevState.memberInfo = member;
+                prevState.reserveId = member.reserveId;
+
+                //如果更新会员，则删除之前的次卡项目
+                if (member.id != prevState.memberId) {
+                    let newConsumeItems = [];
+                    for (let k = 0; k < prevState.consumeItems.length; k++) {
+                        let itemInfo = prevState.consumeItems[k];
+                        if (itemInfo.itemType != 'card') {
+                            newConsumeItems.push(item);
+                        }
+                    }
+                    prevState.consumeItems = newConsumeItems;
+                    prevState = buildTotalPrice(prevState);
+                }
+
+                return prevState;
+            });
+        })
     }
 
     //取消会员识别
@@ -967,13 +1002,11 @@ class CashierBillingView extends React.Component {
     //挂单
     onSaveOrder() {
         let {toSubmit, data, index} = buildSubmitData(this);
-
         if (toSubmit) {
             this.props.saveOrderInfo(data, false);
             this.props.initOrderFlowNumber();
         } else if (index != -1) {
             //滚动到具体行数
-
             console.log("滚动到具体行数" + index)
         }
     }
@@ -1155,6 +1188,29 @@ class CashierBillingView extends React.Component {
             prevState.consumeItems.forEach((item, index) => {
                 if (itemIndex != index) {
                     newItems.push(item);
+                }else{
+                    if(item.limitBuy){
+                        const limitBuy = prevState.allProjDatas[item.itemId].limitBuy
+                        let projectMirror = item.projectMirror
+                        if(typeof projectMirror == "string"){
+                            projectMirror = JSON.parse(projectMirror)
+                        }
+
+                        if(projectMirror && projectMirror.mkt){
+                            limitBuy.canBuyCount = limitBuy.canBuyCount + projectMirror.mkt.buyCount
+                            limitBuy.buyCount = limitBuy.buyCount + projectMirror.mkt.buyCount
+                        }else{
+                            limitBuy.canBuyCount = limitBuy.canBuyCount + 1
+                            limitBuy.buyCount = limitBuy.buyCount - 1
+                        }
+
+                        // 处理限购项目展示
+                        if (item.itemType == 'proj') { // 项目
+                            prevState.allProjDatas[item.itemId].limitBuy = limitBuy
+                        } else if (item.itemType == 'item') { // 外卖
+                            prevState.allItemDatas[item.itemId].limitBuy = limitBuy
+                        }
+                    }
                 }
             });
             prevState.consumeItems = newItems;
@@ -1530,21 +1586,22 @@ class CashierBillingView extends React.Component {
                                                                     <TouchableOpacity
                                                                         style={(this.state.currentEditConsumeItemIndex == itemIndex && this.state.currentEditConsumeServicerIndex == -1) ? cashierBillingStyle.showServicerLiActive : cashierBillingStyle.showServicerLi}
                                                                         onPress={this.showEditConsumeItemModal.bind(this, itemIndex)}>
-                                                                        <View
-                                                                            style={cashierBillingStyle.showServicerLiBox}>
-                                                                            <View
-                                                                                style={cashierBillingStyle.showServicerNameBox}>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.showServicerName}>
+                                                                        <View style={cashierBillingStyle.showServicerLiBox}>
+                                                                            <View style={cashierBillingStyle.showServicerNameBox}>
+                                                                                <Text style={cashierBillingStyle.showServicerName}>
                                                                                     {itemInfo.itemName}
                                                                                 </Text>
                                                                             </View>
-                                                                            <View
-                                                                                style={cashierBillingStyle.showServicerInfo}>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.showServicerText}>￥{itemInfo.itemPrice}</Text>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.showServicerText}>x{itemNum}</Text>
+                                                                            {itemInfo.limitBuy && (
+                                                                                <View style={cashierBillingStyle.limitItemInfo}>
+                                                                                    <Text style={cashierBillingStyle.limitItemInfoText}>限购</Text>
+                                                                                </View>
+                                                                            )}
+                                                                            <View style={cashierBillingStyle.showServicerInfo}>
+                                                                                <Text style={cashierBillingStyle.showServicerText}>
+                                                                                    ￥{ itemInfo.limitBuy ? itemInfo.limitBuy.limitPrice:itemInfo.itemPrice}
+                                                                                </Text>
+                                                                                <Text style={cashierBillingStyle.showServicerText}>x{itemNum}</Text>
                                                                             </View>
                                                                         </View>
                                                                     </TouchableOpacity>
@@ -1722,6 +1779,7 @@ class CashierBillingView extends React.Component {
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
+                                    {/*可选价格区域*/}
                                     <View style={cashierBillingStyle.priceItemQueryBoxBody}>
                                         <ScrollView horizontal={true}>
                                             {
@@ -1731,8 +1789,7 @@ class CashierBillingView extends React.Component {
                                                             <TouchableOpacity
                                                                 onPress={this.filterConsumeItem.bind(this, 'price', 'proj', "-1", index)}
                                                                 style={cashierBillingStyle.priceItemQueryBoxText}>
-                                                                <Text
-                                                                    style={this.state.choosedProjPriceIndex == index ? cashierBillingStyle.priceItemQueryTextActive : cashierBillingStyle.priceItemQueryText}>
+                                                                <Text style={this.state.choosedProjPriceIndex == index ? cashierBillingStyle.priceItemQueryTextActive : cashierBillingStyle.priceItemQueryText}>
                                                                     {item.text}
                                                                 </Text>
                                                             </TouchableOpacity>
@@ -1760,6 +1817,7 @@ class CashierBillingView extends React.Component {
                                             </TouchableOpacity>
                                         </View>
                                         {
+                                            // 分类筛选
                                             this.state.showProjCategoryChoose.map((item, index) => {
                                                 return (
                                                     <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
@@ -1785,9 +1843,10 @@ class CashierBillingView extends React.Component {
                                     <SectionList noItems={true}/>
                                 </View>
                             }
-                            {this.state.addConsumeType == 'proj' && (
-                                <View
-                                    style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
+                            {
+                                // 项目列表
+                                this.state.addConsumeType == 'proj' && (
+                                <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
                                     <View style={cashierBillingStyle.consumeBodyHeight}>
                                         <FlatList
                                             style={cashierBillingStyle.addServicerBox2}
@@ -1808,21 +1867,41 @@ class CashierBillingView extends React.Component {
                                                                           itemType: 'proj',
                                                                           isChoosed: false,
                                                                           unitType: '',
-                                                                          canUse: true
+                                                                          canUse: true,
+                                                                          limitBuy: projItem.limitBuy
                                                                       })}>
                                                         <View style={cashierBillingStyle.addServicerLiBox}>
                                                             <Text style={cashierBillingStyle.addServicerName}
                                                                   numberOfLines={2}>
                                                                 {projItem.name}
                                                             </Text>
-                                                            <View style={cashierBillingStyle.addServicerInfo}>
-                                                                <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                    {projItem.itemNo}
-                                                                </Text>
-                                                                <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                    {projItem.sumPrice}
-                                                                </Text>
-                                                            </View>
+                                                            {
+                                                                projItem.limitBuy && (
+                                                                    <View style={cashierBillingStyle.addServicerInfo}>
+                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                            {projItem.itemNo}
+                                                                        </Text>
+                                                                        <Text style={cashierBillingStyle.addServicerLimit}>
+                                                                            可购{projItem.limitBuy.canBuyCount}件
+                                                                        </Text>
+                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                            {projItem.limitBuy.canBuyCount > 0 ? projItem.limitBuy.limitPrice:projItem.sumPrice}
+                                                                        </Text>
+                                                                    </View>
+                                                                )
+                                                            }
+                                                            {
+                                                                !projItem.limitBuy && (
+                                                                    <View style={cashierBillingStyle.addServicerInfo}>
+                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                            {projItem.itemNo}
+                                                                        </Text>
+                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                            {projItem.sumPrice}
+                                                                        </Text>
+                                                                    </View>
+                                                                )
+                                                            }
                                                         </View>
                                                     </TouchableOpacity>
                                                 )
@@ -1921,7 +2000,6 @@ class CashierBillingView extends React.Component {
                                             keyExtractor={item => item}
                                             renderItem={({item}) => {
                                                 let takeItem = this.state.allItemDatas[item];
-
                                                 return (
                                                     <TouchableOpacity style={cashierBillingStyle.addServicerLi}
                                                                       key={item}
@@ -1934,21 +2012,40 @@ class CashierBillingView extends React.Component {
                                                                           itemType: 'item',
                                                                           isChoosed: false,
                                                                           unitType: '1',
-                                                                          canUse: true
+                                                                          canUse: true,
+                                                                          limitBuy: takeItem.limitBuy
                                                                       })}>
                                                         <View style={cashierBillingStyle.addServicerLiBox}>
                                                             <Text style={cashierBillingStyle.addServicerName}
                                                                   numberOfLines={2}>
                                                                 {takeItem.name}
                                                             </Text>
-                                                            <View style={cashierBillingStyle.addServicerInfo}>
-                                                                <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                    {takeItem.itemNo}
-                                                                </Text>
-                                                                <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                    {takeItem.unitPrice}
-                                                                </Text>
-                                                            </View>
+
+                                                            {
+                                                                takeItem.limitBuy && (
+                                                                    <View style={cashierBillingStyle.addServicerInfo}>
+                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                            {takeItem.itemNo}
+                                                                        </Text>
+                                                                        <Text style={cashierBillingStyle.addServicerLimit}>可购{takeItem.limitBuy.canBuyCount}件</Text>
+                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                            {takeItem.limitBuy.canBuyCount > 0 ? takeItem.limitBuy.limitPrice:takeItem.unitPrice}
+                                                                        </Text>
+                                                                    </View>
+                                                                )
+                                                            }
+                                                            {
+                                                                !takeItem.limitBuy && (
+                                                                    <View style={cashierBillingStyle.addServicerInfo}>
+                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                            {takeItem.itemNo}
+                                                                        </Text>
+                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                            {takeItem.unitPrice}
+                                                                        </Text>
+                                                                    </View>
+                                                                )
+                                                            }
                                                         </View>
                                                     </TouchableOpacity>
                                                 )
@@ -2610,7 +2707,6 @@ const buildSwipView = (self, type) => {
     }
 }
 
-
 const buildDatas = (self, orderData, cb) => {
     let projDatas = JSON.parse(orderData.projectInfo);
     let itemDatas = JSON.parse(orderData.productInfo);
@@ -2618,52 +2714,57 @@ const buildDatas = (self, orderData, cb) => {
     let serverDatas = JSON.parse(orderData.staffInfo);
     let searchCardProjDats = JSON.parse(orderData.searchInfo);
 
-    self.setState((prevState, prevProps) => {
-        buildProjDatas(prevState, projDatas);
-        buildItemDatas(prevState, itemDatas);
-        buildServicerDatas(prevState, serverDatas);
+    // 处理限购信息
+    const itemLimitPromise = buildLimitInfo(self.props.route.params.member, itemDatas, "0", "init")
+    const projLimitPromise = buildLimitInfo(self.props.route.params.member, projDatas, "1", "init")
+    Promise.all([itemLimitPromise, projLimitPromise]).then(res=>{
+        self.setState((prevState, prevProps) => {
+            buildProjDatas(prevProps, prevState, projDatas);
+            buildItemDatas(prevProps, prevState, itemDatas);
+            buildServicerDatas(prevState, serverDatas);
 
-        prevState.isInited = true;
-        prevState.cacheAllProjDatas = prevState.currentShowProjDatas;
-        prevState.choosedProjPriceDatas = prevState.currentShowProjDatas;
-        prevState.choosedProjCategoryDatas = prevState.currentShowProjDatas;
+            prevState.isInited = true;
+            prevState.cacheAllProjDatas = prevState.currentShowProjDatas;
+            prevState.choosedProjPriceDatas = prevState.currentShowProjDatas;
+            prevState.choosedProjCategoryDatas = prevState.currentShowProjDatas;
 
-        prevState.cacheAllItemDatas = prevState.currentShowItemDatas;
-        prevState.choosedItemPriceDatas = prevState.currentShowItemDatas;
-        prevState.choosedItemCategoryDatas = prevState.currentShowItemDatas;
+            prevState.cacheAllItemDatas = prevState.currentShowItemDatas;
+            prevState.choosedItemPriceDatas = prevState.currentShowItemDatas;
+            prevState.choosedItemCategoryDatas = prevState.currentShowItemDatas;
 
-        prevState.cacheAllServicerDatas = prevState.currentShowServicerDatas;
-        prevState.choosedServicerCategoryDatas = prevState.currentShowServicerDatas;
-        prevState.searchCardProjInfo = searchCardProjDats;
+            prevState.cacheAllServicerDatas = prevState.currentShowServicerDatas;
+            prevState.choosedServicerCategoryDatas = prevState.currentShowServicerDatas;
+            prevState.searchCardProjInfo = searchCardProjDats;
 
-        prevState.flowNumber = orderData.flowNumber;
-        prevState.handNumber = orderData.handNumber;
-        prevState.customerNumber = orderData.customerNumber;
-        prevState.customerSex = orderData.customerSex == undefined ? '0' : orderData.customerSex;
-        prevState.operatorId = orderData.operatorId;
-        prevState.isSynthesis = orderData.isSynthesis;
-        prevState.operatorText = orderData.operatorText;
-        prevState.companyId = orderData.companyId;
-        prevState.storeId = orderData.storeId;
-        prevState.categoryId = orderData.operatorId;
-        prevState.keyNumber = orderData.handNumber;
-        prevState.deptId = orderData.deptId;
-        prevState.isOldCustomer = self.state.isOldCustomer;
-        return prevState;
-    }, cb);
-
+            prevState.flowNumber = orderData.flowNumber;
+            prevState.handNumber = orderData.handNumber;
+            prevState.customerNumber = orderData.customerNumber;
+            prevState.customerSex = orderData.customerSex == undefined ? '0' : orderData.customerSex;
+            prevState.operatorId = orderData.operatorId;
+            prevState.isSynthesis = orderData.isSynthesis;
+            prevState.operatorText = orderData.operatorText;
+            prevState.companyId = orderData.companyId;
+            prevState.storeId = orderData.storeId;
+            prevState.categoryId = orderData.operatorId;
+            prevState.keyNumber = orderData.handNumber;
+            prevState.deptId = orderData.deptId;
+            prevState.isOldCustomer = self.state.isOldCustomer;
+            return prevState;
+        }, cb);
+    })
 }
 
 //处理项目信息
-const buildProjDatas = (prevState, projDatas) => {
+const buildProjDatas = (props, prevState, projDatas) => {
+    // 处理项目展示
     prevState.currentShowProjDatas = [];
     for (let key in projDatas) {
         let projCid = (key.split(";")[0]).split(":")[1];
         let projCname = key.split(";")[1];
         let projItems = projDatas[key];
+
         //处理筛选分类
         let showProjCategory = {text: projCname, cid: projCid, items: []}
-
         for (let k = 0; k < projItems.length; k++) {
             let currItem = projItems[k];
             let itemId = currItem.id;
@@ -2708,7 +2809,8 @@ const buildProjDatas = (prevState, projDatas) => {
 }
 
 //处理外卖信息
-const buildItemDatas = (prevState, itemDatas) => {
+const buildItemDatas = (props, prevState, itemDatas) => {
+    // 处理外卖展示
     prevState.currentShowItemDatas = [];
     for (let key in itemDatas) {
         let itemCid = (key.split(";")[0]).split(":")[1];
@@ -2758,6 +2860,79 @@ const buildItemDatas = (prevState, itemDatas) => {
         //保存筛选分类
         prevState.showItemCategoryChoose.push(showItemCategory);
     }
+}
+
+/**
+ * 构建限购信息:初始化｜取单
+ * @param dataList
+ */
+const buildLimitInfo = (member, dataList, type, source)=>{
+    return new Promise((resolve, reject)=>{
+        if(member && member.phone){
+            const phone = member.phone
+            const itemIds = []
+
+            if(source == 'bindMember'){ // 会员识别
+                Object.values(dataList).forEach(leaf=>{
+                    itemIds.push(type + "_" + leaf.templateId)
+                })
+            }else{ // 会员开单
+                Object.values(dataList).forEach(item=>{
+                    item.forEach(leaf=>{
+                        itemIds.push(type + "_" + leaf.templateId)
+                    })
+                })
+            }
+
+            const params = {
+                phone,
+                ids: itemIds.join(",")
+            }
+
+            getLimitItems(params).then(res=>{
+                if(res.code == '6000'){
+                    const backData = res.data
+                    if(backData && Object.keys(backData).length > 0){
+                        if(source == 'bindMember'){ // 会员识别
+                            // 处理限购展示
+                            for(let key in dataList){
+                                const leaf = dataList[key]
+                                const refId = type + "_" + leaf.templateId
+                                // 处理限购返回结果
+                                const limitData = backData[refId];
+                                if(limitData){ // 当前项有限购
+                                    const cloneKey = key + "@lmt"
+                                    const cloneItem = Object.assign({}, leaf)
+                                    leaf['limitBuy'] = limitData
+                                }
+                            }
+                        }else{ // 会员开单
+                            // 处理限购展示
+                            for(let key in dataList){
+                                const item = dataList[key]
+                                item.forEach(leaf=>{
+                                    const refId = type + "_" + leaf.templateId
+                                    // 处理限购返回结果
+                                    const limitData = backData[refId];
+                                    if(limitData){ // 当前项有限购
+                                        const cloneKey = key + "@lmt"
+                                        const cloneItem = Object.assign({}, leaf)
+                                        leaf['limitBuy'] = limitData
+                                    }
+                                })
+                            }
+                        }
+                    }
+                    resolve()
+                }
+            }).catch((err) => {
+                console.error("获取限购信息失败", err)
+                resolve()
+            });
+        }else{
+            resolve()
+        }
+    })
 }
 
 //处理服务人信息
@@ -3060,7 +3235,7 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
 
 //转换前端数据结构为bms数据结构
 const convertToBackendData = (prevState, consumeItem) => {
-    let allDatas;
+    let allDatas = {};
 
     consumeItem.projectConsumeType = "0";
     consumeItem.consumeTimeAmount = "0";
@@ -3077,6 +3252,7 @@ const convertToBackendData = (prevState, consumeItem) => {
         consumeItem.consumeTimeAmount = 1;
     }
 
+    // 初次预算金额｜优惠信息
     consumeItem.id = -1;
     consumeItem.costPrice = consumeItem.itemPrice;
     consumeItem.discountPrice = 0;
@@ -3084,6 +3260,7 @@ const convertToBackendData = (prevState, consumeItem) => {
     consumeItem.totalPrice = parseFloat(consumeItem.itemPrice) * parseInt(consumeItem.itemNum);
     consumeItem.paidIn = parseFloat(consumeItem.itemPrice) * parseInt(consumeItem.itemNum);
     consumeItem.projectMirror = {};
+
     if (consumeItem.itemType == 'card') {
         consumeItem.projectMirror.vipCardNo = allDatas[consumeItem.vipCardNo].vipCardNo;
         consumeItem.projectMirror.cardName = allDatas[consumeItem.vipCardNo].cardName;
@@ -3092,18 +3269,15 @@ const convertToBackendData = (prevState, consumeItem) => {
     }
     consumeItem.projectMirror.index = new Date().getTime() + '' + Math.round(Math.random() * 1000);
     consumeItem.type = '0';
-
     consumeItem.unitType = consumeItem.unitType;
     if (consumeItem.itemType == 'item') {
         consumeItem.itemSpecification = allDatas[consumeItem.itemId].specification;
         consumeItem.unit = allDatas[consumeItem.itemId].specUnit;
         consumeItem.unitLev1 = allDatas[consumeItem.itemId].unit;
-
         consumeItem.itemTypeId = allDatas[consumeItem.itemId].itemTypeId;
         consumeItem.itemTypeName = '产品';//allDatas[consumeItem.itemId].name;
     } else if (consumeItem.itemType == 'proj') {
         consumeItem.unit = '规格';//allDatas[consumeItem.itemId].specUnit;
-
         consumeItem.itemTypeId = allDatas[consumeItem.itemId].itemTypeId;
         consumeItem.itemTypeName = '服务项';//allDatas[consumeItem.itemId].name;
     } else {
@@ -3111,6 +3285,16 @@ const convertToBackendData = (prevState, consumeItem) => {
 
         consumeItem.itemTypeId = allDatas[consumeItem.vipCardNo].itemTypeId;
         consumeItem.itemTypeName = '产品';// allDatas[consumeItem.vipCardNo].name;
+    }
+
+    // 处理限购
+    if(consumeItem.itemType != 'card' && consumeItem.limitBuy && consumeItem.limitBuy.canBuyCount > -1){
+        consumeItem.projectMirror['mkt'] =  {
+            buyCount: consumeItem.itemNum,
+            id: consumeItem.limitBuy.mktId
+        }
+
+        consumeItem.projectMirror['templateId'] = allDatas[consumeItem.itemId].templateId
     }
 
     consumeItem.rebate = -1;
@@ -3129,7 +3313,7 @@ const convertToBackendData = (prevState, consumeItem) => {
     return computePrice(consumeItem);
 }
 
-//构建取单数据
+//取单数据构建
 const buildExistDatas = (self, orderData) => {
     let projDatas = JSON.parse(orderData.projectInfo);
     let itemDatas = JSON.parse(orderData.productInfo);
@@ -3137,72 +3321,94 @@ const buildExistDatas = (self, orderData) => {
     let serverDatas = JSON.parse(orderData.staffInfo);
     let searchCardProjDats = JSON.parse(orderData.searchInfo);
 
-    self.setState((prevState, prevProps) => {
-        //clear oldData
-        prevState.consumeItems = [];
+    // 处理限购信息
+    const itemLimitPromise = buildLimitInfo(orderData.memberInfo, itemDatas, "0", "paddingOrder")
+    const projLimitPromise = buildLimitInfo(orderData.memberInfo, projDatas, "1", "paddingOrder")
+    Promise.all([itemLimitPromise, projLimitPromise]).then(res=>{
+        self.setState((prevState, prevProps) => {
+            //clear oldData
+            prevState.consumeItems = [];
 
-        //构建数据
-        buildProjDatas(prevState, projDatas);
-        buildItemDatas(prevState, itemDatas);
-        buildServicerDatas(prevState, serverDatas);
-        buildConsumedItems(prevState, orderData.consumeList, orderData.billingInfo.memberType, orderData.memberInfo);
-        buildBillingedInfos(prevState, orderData.billingInfo);
+            // 构建项目数据
+            buildProjDatas(prevProps, prevState, projDatas);
+            // 构建外卖数据
+            buildItemDatas(prevProps, prevState, itemDatas);
+            // 构建服务人数据
+            buildServicerDatas(prevState, serverDatas);
+            // 构建消费项信息
+            buildConsumedItems(prevState, orderData.consumeList, orderData.billingInfo.memberType, orderData.memberInfo);
+            // 构建挂单单据信息
+            buildBillingedInfos(prevState, orderData.billingInfo);
+            //构建次卡项目-会员信息
+            prevState.searchCardProjInfo = searchCardProjDats;
+            if (orderData.billingInfo.memberType == '0' && orderData.memberInfo) {
+                buildMemberInfos(self, prevState, orderData.memberInfo);
+            }
 
-        //构建次卡项目-会员信息
-        prevState.searchCardProjInfo = searchCardProjDats;
-        if (orderData.billingInfo.memberType == '0' && orderData.memberInfo) {
-            buildMemberInfos(self, prevState, orderData.memberInfo);
-        }
+            // self.swipConsumeItem('card');
 
-        // self.swipConsumeItem('card');
+            prevState.isgeted = true;
+            prevState.cacheAllProjDatas = prevState.currentShowProjDatas;
+            prevState.choosedProjPriceDatas = prevState.currentShowProjDatas;
+            prevState.choosedProjCategoryDatas = prevState.currentShowProjDatas;
 
-        prevState.isgeted = true;
-        prevState.cacheAllProjDatas = prevState.currentShowProjDatas;
-        prevState.choosedProjPriceDatas = prevState.currentShowProjDatas;
-        prevState.choosedProjCategoryDatas = prevState.currentShowProjDatas;
+            prevState.cacheAllItemDatas = prevState.currentShowItemDatas;
+            prevState.choosedItemPriceDatas = prevState.currentShowItemDatas;
+            prevState.choosedItemCategoryDatas = prevState.currentShowItemDatas;
 
-        prevState.cacheAllItemDatas = prevState.currentShowItemDatas;
-        prevState.choosedItemPriceDatas = prevState.currentShowItemDatas;
-        prevState.choosedItemCategoryDatas = prevState.currentShowItemDatas;
+            prevState.cacheAllServicerDatas = prevState.currentShowServicerDatas;
+            prevState.choosedServicerCategoryDatas = prevState.currentShowServicerDatas;
 
-        prevState.cacheAllServicerDatas = prevState.currentShowServicerDatas;
-        prevState.choosedServicerCategoryDatas = prevState.currentShowServicerDatas;
-
-        prevState.handNumber = orderData.handNumber.length > 0 ? orderData.handNumber : '';
-        prevState.operatorId = orderData.operatorId;
-        prevState.operatorText = orderData.operatorText;
-        prevState.customerNumber = (orderData.customerNumber.length < 1 || orderData.customerNumber == '0') ? '1' : orderData.customerNumber;
-        prevState.customerSex = orderData.customerSex;
-        prevState.isSynthesis = orderData.isSynthesis;
-        prevState.totalConsumePrice = orderData.totalPrice;
-        prevState.isKeyNumber = orderData.isKeyNumber;
-        return prevState;
-    });
+            prevState.handNumber = orderData.handNumber.length > 0 ? orderData.handNumber : '';
+            prevState.operatorId = orderData.operatorId;
+            prevState.operatorText = orderData.operatorText;
+            prevState.customerNumber = (orderData.customerNumber.length < 1 || orderData.customerNumber == '0') ? '1' : orderData.customerNumber;
+            prevState.customerSex = orderData.customerSex;
+            prevState.isSynthesis = orderData.isSynthesis;
+            prevState.totalConsumePrice = orderData.totalPrice;
+            prevState.isKeyNumber = orderData.isKeyNumber;
+            return prevState;
+        });
+    })
 }
 
 //构建挂单的消费项目
 const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
-
     let allConsumables = consumeDatas.filter(x => x.service == 2);
     consumeDatas = consumeDatas.filter(x => x.service != 2);
     consumeDatas.forEach((item) => {
-
         item.itemNum = item.amount;
         item.itemPrice = item.costPrice;
         item.itemType = '';
+        item.isChoosed = false;
+
+        const projectMirror = JSON.parse(item.projectMirror || "")
         if (item.service == '0') {//外卖
             item.itemType = 'item'
-        } else if (item.service == '2') {//消耗
-            item.itemType = 'consume';
+
+            // 处理限购信息
+            if(projectMirror && projectMirror.mkt){
+                const limitBuy = prevState.allItemDatas[item.itemId].limitBuy
+                limitBuy['buyCount'] = projectMirror.mkt.buyCount
+                item['limitBuy'] = limitBuy
+            }
         } else if (item.service == '1') {//服务项目
             if (item.projectConsumeType == '0') {
                 item.itemType = 'proj'
+
+                // 处理限购信息
+                if(projectMirror && projectMirror.mkt){
+                    const limitBuy = prevState.allProjDatas[item.itemId].limitBuy
+                    limitBuy['buyCount'] = projectMirror.mkt.buyCount
+                    item['limitBuy'] = limitBuy
+                }
             } else {
                 item.itemType = 'card';
                 item.itemNum = item.consumeTimeAmount;
             }
+        } else if (item.service == '2') {//消耗
+            item.itemType = 'consume';
         }
-        item.isChoosed = false;
 
         let staffCount = 0;
         let assistStaffDetail = typeof item.assistStaffDetail === 'string' ? JSON.parse(item.assistStaffDetail) : item.assistStaffDetail;
@@ -3214,7 +3420,6 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
         for (let k = 0; k < (3 - staffCount); k++) {
             assistStaffDetail.push(defaultServicer());
         }
-
 
         item.projectMirror = item.projectMirror && item.projectMirror.length > 0 ? JSON.parse(item.projectMirror) : item.projectMirror;
         item.assistStaffDetail = assistStaffDetail;
@@ -3251,7 +3456,7 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
     };
 
     consumeDatas.filter(x => x.service === 1).forEach(item => {
-        var consumables = allConsumables.map(x => ({
+        const consumables = allConsumables.map(x => ({
             ...x,
             assistList: formatStaffData(x.assistStaffDetail),
             projectMirror: JSON.parse(x.projectMirror),
@@ -3534,7 +3739,6 @@ function dealTimesCardProjectPaymentGeneral(self, readyData, paymentTimesCard, p
             }
         }
 
-
         for (let k in timesProjectMap) {
             let timesProject = timesProjectMap[k];
             if (timesProject && timesProject.index) {
@@ -3677,25 +3881,21 @@ const buildPayComsumeItems = (self, readyData) => {
 
 //价格计算
 const computePrice = function (consumes) {
-    var billingType = '0'//是否员工单  0:普通单  1:员工单
-    var totalPrice = 0;
-    var extraPrice = consumes.extraPrice;
-    if (consumes.service == 1) {
-        // 服务项目
+    const billingType = '0'//是否员工单  0:普通单  1:员工单
+    let totalPrice = 0;
+    const extraPrice = consumes.extraPrice;
+    if (consumes.service == 1) { // 服务项目
         if (billingType != '1') {
             totalPrice = parseFloat(consumes.costPrice) * parseInt(consumes.amount);
             consumes.paidIn = parseFloat(consumes.costPrice) * parseInt(consumes.amount);
         }
-    } else {
-        // 产品
-        if (consumes.unitType == '1') {
-            // 大单位
+    } else { // 产品
+        if (consumes.unitType == '1') { // 大单位
             totalPrice = parseFloat(consumes.costPrice) * parseInt(consumes.amount);
             consumes.paidIn = parseFloat(consumes.costPrice) * parseInt(consumes.amount);
         } else {
-            // 小单位
-            var countNum = 0;
-            if (consumes.itemSpecification) {
+            let countNum = 0;
+            if (consumes.itemSpecification) { // 小单位
                 countNum = Math.ceil(parseInt(consumes.amount) / parseInt(consumes.itemSpecification));
             } else {
                 console.log(consumes.itemName + " : 没有产品规格，总价为0");
@@ -3760,6 +3960,18 @@ const computePrice = function (consumes) {
             }
         }
         consumes.paidIn = priceFixed(parseFloat(consumes.paidIn) + parseFloat(extraPrice));
+    }
+
+    // 处理限购价格
+    if (consumes.projectMirror.mkt && consumes.projectMirror.mkt.buyCount > -1) {
+        const buyCount = consumes.projectMirror.mkt.buyCount;
+        const discountPrice = priceFixed((consumes.costPrice - consumes.limitBuy.limitPrice) * parseInt(buyCount));
+        consumes.priceType = 2;
+        consumes.isGift = 0;
+        consumes.rebate = -1;
+        consumes.fixedPrice = discountPrice;
+        consumes.discountPrice = discountPrice;
+        consumes.totalPrice = priceFixed(consumes.totalPrice - discountPrice + extraPrice)
     }
 
     return consumes;
