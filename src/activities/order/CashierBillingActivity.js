@@ -3322,9 +3322,11 @@ const buildExistDatas = (self, orderData) => {
     let searchCardProjDats = JSON.parse(orderData.searchInfo);
 
     // 处理限购信息
-    const itemLimitPromise = buildLimitInfo(orderData.memberInfo, itemDatas, "0", "paddingOrder")
-    const projLimitPromise = buildLimitInfo(orderData.memberInfo, projDatas, "1", "paddingOrder")
+    const itemLimitPromise = buildLimitInfo({phone: orderData.billingInfo.phone}, itemDatas, "0", "paddingOrder")
+    const projLimitPromise = buildLimitInfo({phone: orderData.billingInfo.phone}, projDatas, "1", "paddingOrder")
     Promise.all([itemLimitPromise, projLimitPromise]).then(res=>{
+
+
         self.setState((prevState, prevProps) => {
             //clear oldData
             prevState.consumeItems = [];
