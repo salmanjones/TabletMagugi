@@ -1190,7 +1190,14 @@ class CashierBillingView extends React.Component {
                     newItems.push(item);
                 }else{
                     if(item.limitBuy){
-                        const limitBuy = prevState.allProjDatas[item.itemId].limitBuy
+                        // 获取删除的数据限购信息
+                        let allDataArray = {}
+                        if(item.itemType == 'proj') { // 项目
+                            allDataArray = prevState.allProjDatas
+                        }else if (item.itemType == 'item') { // 外卖
+                            allDataArray = prevState.allItemDatas
+                        }
+                        const limitBuy = allDataArray[item.itemId].limitBuy
                         let projectMirror = item.projectMirror
                         if(typeof projectMirror == "string"){
                             projectMirror = JSON.parse(projectMirror)
