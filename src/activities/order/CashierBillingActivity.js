@@ -3394,7 +3394,7 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
             item.itemType = 'item'
 
             // 处理限购信息
-            if(projectMirror && projectMirror.mkt){
+            if(projectMirror && projectMirror.mkt && prevState.allItemDatas[item.itemId]){
                 const limitBuy = prevState.allItemDatas[item.itemId].limitBuy
                 if(limitBuy){
                     limitBuy['buyCount'] = projectMirror.mkt.buyCount
@@ -3417,7 +3417,7 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
                 item.itemType = 'proj'
 
                 // 处理限购信息
-                if(projectMirror && projectMirror.mkt){
+                if(projectMirror && projectMirror.mkt && prevState.allItemDatas[item.itemId]){
                     const limitBuy = prevState.allProjDatas[item.itemId].limitBuy
                     if(limitBuy){
                         limitBuy['buyCount'] = projectMirror.mkt.buyCount
