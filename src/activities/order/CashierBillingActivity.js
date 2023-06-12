@@ -1189,7 +1189,7 @@ class CashierBillingView extends React.Component {
                 if (itemIndex != index) {
                     newItems.push(item);
                 }else{
-                    if(item.limitBuy){
+                    if(item.limitBuy && item.limitBuy.hidden !== true){
                         // 获取删除的数据限购信息
                         let allDataArray = {}
                         if(item.itemType == 'proj') { // 项目
@@ -1883,7 +1883,7 @@ class CashierBillingView extends React.Component {
                                                                 {projItem.name}
                                                             </Text>
                                                             {
-                                                                projItem.limitBuy && (
+                                                                (projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
                                                                     <View style={cashierBillingStyle.addServicerInfo}>
                                                                         <Text style={cashierBillingStyle.addServicerNumber}>
                                                                             {projItem.itemNo}
@@ -1898,7 +1898,7 @@ class CashierBillingView extends React.Component {
                                                                 )
                                                             }
                                                             {
-                                                                !projItem.limitBuy && (
+                                                                !(projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
                                                                     <View style={cashierBillingStyle.addServicerInfo}>
                                                                         <Text style={cashierBillingStyle.addServicerNumber}>
                                                                             {projItem.itemNo}
@@ -2029,7 +2029,7 @@ class CashierBillingView extends React.Component {
                                                             </Text>
 
                                                             {
-                                                                takeItem.limitBuy && (
+                                                                (takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
                                                                     <View style={cashierBillingStyle.addServicerInfo}>
                                                                         <Text style={cashierBillingStyle.addServicerNumber}>
                                                                             {takeItem.itemNo}
@@ -2042,7 +2042,7 @@ class CashierBillingView extends React.Component {
                                                                 )
                                                             }
                                                             {
-                                                                !takeItem.limitBuy && (
+                                                                !(takeItem.limitBuy && takeItem.limitBuy.hidden !== true)  && (
                                                                     <View style={cashierBillingStyle.addServicerInfo}>
                                                                         <Text style={cashierBillingStyle.addServicerNumber}>
                                                                             {takeItem.itemNo}
@@ -3332,8 +3332,6 @@ const buildExistDatas = (self, orderData) => {
     const itemLimitPromise = buildLimitInfo({phone: orderData.billingInfo.phone}, itemDatas, "0", "paddingOrder")
     const projLimitPromise = buildLimitInfo({phone: orderData.billingInfo.phone}, projDatas, "1", "paddingOrder")
     Promise.all([itemLimitPromise, projLimitPromise]).then(res=>{
-
-
         self.setState((prevState, prevProps) => {
             //clear oldData
             prevState.consumeItems = [];
@@ -3398,8 +3396,21 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
             // 处理限购信息
             if(projectMirror && projectMirror.mkt){
                 const limitBuy = prevState.allItemDatas[item.itemId].limitBuy
-                limitBuy['buyCount'] = projectMirror.mkt.buyCount
-                item['limitBuy'] = limitBuy
+                if(limitBuy){
+                    limitBuy['buyCount'] = projectMirror.mkt.buyCount
+                    item['limitBuy'] = limitBuy
+                }else{
+                    const limitBuy = {
+                        buyCount: projectMirror.mkt.buyCount,
+                        canBuyCount: 0,
+                        hidden: true,
+                        currBuyAmount: 0,
+                        limitCount: 0,
+                        limitPrice: (item.totalPrice/projectMirror.mkt.buyCount)
+                    }
+                    prevState.allItemDatas[item.itemId]['limitBuy'] = limitBuy
+                    item['limitBuy'] = limitBuy
+                }
             }
         } else if (item.service == '1') {//服务项目
             if (item.projectConsumeType == '0') {
@@ -3408,8 +3419,21 @@ const buildConsumedItems = (prevState, consumeDatas, billType, memberInfo) => {
                 // 处理限购信息
                 if(projectMirror && projectMirror.mkt){
                     const limitBuy = prevState.allProjDatas[item.itemId].limitBuy
-                    limitBuy['buyCount'] = projectMirror.mkt.buyCount
-                    item['limitBuy'] = limitBuy
+                    if(limitBuy){
+                        limitBuy['buyCount'] = projectMirror.mkt.buyCount
+                        item['limitBuy'] = limitBuy
+                    }else{
+                        const limitBuy = {
+                            buyCount: projectMirror.mkt.buyCount,
+                            limitPrice: (item.totalPrice/projectMirror.mkt.buyCount),
+                            canBuyCount: 0,
+                            hidden: true,
+                            currBuyAmount: 0,
+                            limitCount: 0,
+                        }
+                        prevState.allProjDatas[item.itemId]['limitBuy'] = limitBuy
+                        item['limitBuy'] = limitBuy
+                    }
                 }
             } else {
                 item.itemType = 'card';
