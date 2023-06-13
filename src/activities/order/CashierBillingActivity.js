@@ -2342,8 +2342,7 @@ class CashierBillingView extends React.Component {
                     style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
                 {
                     this.props.route.params.member && (
-                        <Animated.View
-                            style={this.state.sliderDisplay ? [cashierBillingStyle.rightPositionBox, {left: this.state.sliderLeft}] : {display: 'none'}} {...this._pinchResponder.panHandlers}>
+                        <Animated.View style={this.state.sliderDisplay ? [cashierBillingStyle.rightPositionBox, {left: this.state.sliderLeft}] : {display: 'none'}} {...this._pinchResponder.panHandlers}>
                             <TouchableOpacity onPress={this.hideRightPanel.bind(this)} activeOpacity={1}
                                               style={cashierBillingStyle.rightPositionBoxO}>
                                 <View style={cashierBillingStyle.hideBox}>

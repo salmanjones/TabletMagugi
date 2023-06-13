@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {AppState, BackHandler, Platform, StatusBar, View} from 'react-native';
+import {AppState, BackHandler, Dimensions, Platform, StatusBar, View} from 'react-native';
 import {
     createNavigationContainerRef,
     NavigationContainer,
@@ -40,6 +40,7 @@ import {
     VipcardActivity,
     StaffQueueActivity,
     StaffWorksActivity,
+    ReserveBoardActivity
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
@@ -636,34 +637,41 @@ function RootNavigation() {
  * @constructor
  */
 function TabNavigation() {
+    // tab栏位数量
+    const tabStackSize = 4
+
     return (
         <TabStack.Navigator
-            initialRouteName="CashierActivity"
-            options={{
-                headerShown: true,
-                tabBarIndicatorStyle: {
-                    backgroundColor: '#111c3c',
-                    height: PixelUtil.size(6),
-                    width: PixelUtil.size(86),
-                    marginLeft: PixelUtil.size(212),
-                },
-                tabBarStyle: {
-                    backgroundColor: '#ffffff',
-                    elevation: 0,
-                    shadowOpacity: 0,
-                    height: PixelUtil.size(86),
-                    borderBottomWidth: PixelUtil.size(2),
-                    borderBottomColor: '#cbcbcb',
-                },
+            initialLayout={{width: Dimensions.get('window').width}}
+            initialRouteName="ReserveBoardActivity"
+            screenOptions={{
+                tabBarActiveTintColor: '#2D2D2D',
+                tabBarInactiveTintColor:'#6B6B6B',
                 tabBarLabelStyle: {
                     fontSize: PixelUtil.size(32),
-                    height: PixelUtil.size(45),
-                    marginTop: PixelUtil.size(0),
+                    fontWeight: 'bold',
                 },
+                tabBarItemStyle: {
+
+                },
+                tabBarStyle: {
+                    backgroundColor: '#FFFFFF',
+                },
+                tabBarIndicatorContainerStyle:{
+                    width: '100%',
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: PixelUtil.size(2)
+                },
+                tabBarIndicatorStyle: {
+                    width: PixelUtil.size(100),
+                    height: PixelUtil.size(4),
+                    backgroundColor: '#081539',
+                    marginLeft: ((Dimensions.get('window').width)/tabStackSize - PixelUtil.size(100))/2
+                }
             }}>
             <TabStack.Screen
-                name="CashierActivity"
-                component={CashierActivity}
+                name="ReserveBoardActivity"
+                component={ReserveBoardActivity}
                 options={{tabBarLabel: '开单'}}
             />
             <TabStack.Screen
@@ -672,15 +680,20 @@ function TabNavigation() {
                 options={{tabBarLabel: '取单'}}
             />
             <TabStack.Screen
-                name="IdentifyActivity"
-                component={IdentifyActivity}
-                options={{tabBarLabel: '充值'}}
+                name="CashierActivity"
+                component={CashierActivity}
+                options={{tabBarLabel: '开单'}}
             />
-            <TabStack.Screen
-                name="SelectCustomerType"
-                component={SelectCustomerType}
-                options={{tabBarLabel: '开卡'}}
-            />
+            {/*<TabStack.Screen*/}
+            {/*    name="IdentifyActivity"*/}
+            {/*    component={IdentifyActivity}*/}
+            {/*    options={{tabBarLabel: '充值'}}*/}
+            {/*/>*/}
+            {/*<TabStack.Screen*/}
+            {/*    name="SelectCustomerType"*/}
+            {/*    component={SelectCustomerType}*/}
+            {/*    options={{tabBarLabel: '开卡'}}*/}
+            {/*/>*/}
             <TabStack.Screen
                 name="BillManageActivity"
                 component={BillManageActivity}

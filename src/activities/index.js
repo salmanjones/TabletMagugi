@@ -22,4 +22,5 @@ export * from './webview/GenWebViewActivity';//H5容器：呈现H5页面
 export * from './analysis/AnalysisHomeView';//分析统计主页
 export * from './staff/StaffQueueActivity';//选牌
 export * from './staff/StaffWorksActivity';//作品
+export * from './reserve/ReserveBoardActivity';//作品
 

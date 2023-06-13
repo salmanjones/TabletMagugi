@@ -27,6 +27,7 @@
         "@react-navigation/stack": "^6.3.11",
         "@reduxjs/toolkit": "^1.9.1",
         "babel-plugin-module-resolver": "^5.0.0",
+        "dayjs": "^1.11.7",
         "deprecated-react-native-prop-types": "^4.0.0",
         "moment": "^2.29.4",
         "qs": "^6.11.0",
