@@ -18,8 +18,11 @@ export const ReserveBoardActivity = props => {
         currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
         age: 16
     })
-    // 会员组件
+    // 会员子组件
     const memberPanelRef = useRef(null);
+    const [memberState, setMemberState] = useState({
+        age: -1
+    })
 
     // 初次加载处理
     useEffect(()=>{
@@ -31,7 +34,11 @@ export const ReserveBoardActivity = props => {
     const handleAge = () => {
         setReserveInfo({
             ...reserveInfo,
-            age: 18
+            age: reserveInfo.age + 1
+        })
+
+        setMemberState({
+            age: reserveInfo.age
         })
     }
 
@@ -72,7 +79,7 @@ export const ReserveBoardActivity = props => {
                 }}
             />
 
-            <MemberPanel ref={memberPanelRef}></MemberPanel>
+            <MemberPanel ref={memberPanelRef} memberInfo={memberState}></MemberPanel>
         </View>
     );
 }

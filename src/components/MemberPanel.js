@@ -1,10 +1,13 @@
 import {Animated, Image, LogBox, PanResponder, TouchableOpacity, View} from "react-native";
 import {PixelUtil} from "../utils";
-import React, {useState, forwardRef, useImperativeHandle} from "react";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {MemberPanelStyles} from "../styles/MemberPanel";
-import {cashierBillingStyle} from "../styles";
 
-export default forwardRef((props, refArgs) => {
+/**
+ * 会员右滑组件
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
+ */
+const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
     const [animateState, setAnimateState] = useState({
@@ -85,26 +88,32 @@ export default forwardRef((props, refArgs) => {
     }))
 
     console.log('子组件被重新渲染了')
+    console.log(props)
 
     return (
         <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask: {display: 'none'}}>
             <Animated.View
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [MemberPanelStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
-
-                <TouchableOpacity onPress={()=>{hideRightPanel()}} activeOpacity={1}
-                                  style={cashierBillingStyle.rightPositionBoxO}>
-                    <View style={cashierBillingStyle.hideBox}>
+                {/*左侧点击区域*/}
+                <TouchableOpacity onPress={()=>{hideRightPanel()}}
+                                  activeOpacity={1}
+                                  style={MemberPanelStyles.leftPanMask}>
+                    <View style={MemberPanelStyles.hideIconBox}>
                         <TouchableOpacity onPress={()=>{hideRightPanel()}}>
                             <Image resizeMethod="resize"
                                    source={require('@imgPath/p-hide-box.png')}
-                                   style={[cashierBillingStyle.hideBtn, {resizeMode: 'contain'}]}/>
+                                   style={[MemberPanelStyles.hideIconButton, {resizeMode: 'contain'}]}/>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
-                <View style={cashierBillingStyle.rightAnBox}>
+                {/*右侧*/}
+                <View style={MemberPanelStyles.memberWrapBox}>
                 </View>
             </Animated.View>
         </View>
     )
 })
+
+// 使用React.memo渲染缓存，防止父组件属性变更导致子组件渲染
+export default React.memo(MemberPanelForwardRef)
