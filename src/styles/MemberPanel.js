@@ -2,8 +2,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
 
-let rightPanelPadding = PixelUtil.size(30);
-let rightPanelWidth = PixelUtil.screenSize.width * 0.5;
 export const MemberPanelStyles = StyleSheet.create({
     rightPanelMask: {
         width: '100%',
