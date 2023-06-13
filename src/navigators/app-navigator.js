@@ -638,8 +638,7 @@ function RootNavigation() {
  */
 function TabNavigation() {
     // tab栏位数量
-    const tabStackSize = 4
-
+    const tabStackSize = 3
     return (
         <TabStack.Navigator
             initialLayout={{width: Dimensions.get('window').width}}
@@ -669,6 +668,12 @@ function TabNavigation() {
                     marginLeft: ((Dimensions.get('window').width)/tabStackSize - PixelUtil.size(100))/2
                 }
             }}>
+            {/*老开单入口*/}
+            {/*<TabStack.Screen*/}
+            {/*    name="CashierActivity"*/}
+            {/*    component={CashierActivity}*/}
+            {/*    options={{tabBarLabel: '开单'}}*/}
+            {/*/>*/}
             <TabStack.Screen
                 name="ReserveBoardActivity"
                 component={ReserveBoardActivity}
@@ -678,11 +683,6 @@ function TabNavigation() {
                 name="PendingOrderActivity"
                 component={PendingOrderActivity}
                 options={{tabBarLabel: '取单'}}
-            />
-            <TabStack.Screen
-                name="CashierActivity"
-                component={CashierActivity}
-                options={{tabBarLabel: '开单'}}
             />
             {/*<TabStack.Screen*/}
             {/*    name="IdentifyActivity"*/}
