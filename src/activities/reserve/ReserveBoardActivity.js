@@ -1,11 +1,16 @@
 // 预约看板
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, View, StyleSheet, Text} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
+import Spinner from "react-native-loading-spinner-overlay";
+import Toast from "react-native-root-toast";
 import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
-import MemberPanel from "../../components/MemberPanel";
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
+import {getReserveInfo} from "../../services/reserve";
+import MemberPanel from "../../components/MemberPanel";
+import StylistWidget from "./widgets/StylistFlatList"
+import CustomerWidget from "./widgets/CustomerFlatList"
 
 
 export const ReserveBoardActivity = props => {
@@ -15,119 +20,133 @@ export const ReserveBoardActivity = props => {
     const navigation = useNavigation();
     // redux状态
     const reduxState = ReduxStore.getState()
+    // 加载提示信息
+    const [isLoading, setLoading] = useState(false)
+    // 预约状态切换
+    const [reserveFlag, setReserveFlag] = useState('valid')
     // 预约信息
-    const [reserveInfo, setReserveInfo] = useState({
-        currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-        age: 16
-    })
+    const [reserveInfoArray, setReserveInfoArray] = useState([
+        {
+            staffName: "全部",
+            staffReseverCount: 0,
+            staffNowReseverCount: 0,
+            staffPassReseverCount: 0
+        }
+    ])
+    // 选择索引
+    const [checkIndex, setCheckIndex] = useState(0)
     // 会员子组件
     const memberPanelRef = useRef(null);
+    // 会员信息
     const [memberState, setMemberState] = useState({
         age: -1
     })
 
+    // 获取预约数据
+    const getReserveList = (params)=>{
+        getReserveInfo(params).then(backData => {
+            const {code, data} = backData
+            if("6000" == code){
+                console.log("=========================================")
+                console.log(JSON.stringify(data))
+                setReserveInfoArray(data)
+            }else{
+                showToast("信息加载失败")
+            }
+        }).catch(e => {
+            console.log("预约开单数据加载失败", e)
+            showToast("信息加载失败")
+        }).finally(() => {
+            setLoading(false)
+            // 初次加载完毕，不再展示加载信息
+            console.log('数据请求完成')
+        })
+    }
+
     // 初次加载处理
-    useEffect(()=>{
-        // getData
+    useEffect(() => {
+        // 加载中
+        setLoading(true)
+
+        // 准备参数
+        const reloadDelay = 1000 * 60 * 1
+        const params = {
+            companyId: reduxState.auth.userInfo.companyId,
+            storeId: reduxState.auth.userInfo.storeId,
+        }
+
+        // 首次获取数据
+        getReserveList(params)
+
+        // 定时刷新数据
+        const timer = setInterval(()=>{
+            getReserveList(params)
+        }, reloadDelay)
+
+        return ()=>{
+            //在组件卸载前执行
+            timer && clearInterval(timer)
+        }
+    }, []) // 如果指定的是[],回调函数只会在第一次render()后执行
 
 
-    }, [])
-
-    const handleAge = () => {
-        setReserveInfo({
-            ...reserveInfo,
-            age: reserveInfo.age + 1
-        })
-
-        setMemberState({
-            age: reserveInfo.age
-        })
+    //展示提示信息
+    const showToast = (message) => {
+        Toast.show(message, {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+        });
     }
 
-    const handleBack = () => {
-        navigation.goBack()
+    // 选择发型师
+    const checkStylistEvent = (index) => {
+        setCheckIndex(index)
     }
 
-    const DATA = [
-        {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            title: 'First Item',
-        },
-        {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            title: 'Second Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d73',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d74',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d75',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d76',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d77',
-            title: 'Third Item',
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d78',
-            title: 'Third Item',
-        },
-    ];
+    // 选择顾客
+    const checkCustomerEvent = () => {
 
-    const styles = StyleSheet.create({
-        item: {
-            backgroundColor: '#f9c2ff',
-            padding: 20,
-            marginVertical: 8,
-            marginHorizontal: 16,
-        },
-        title: {
-            fontSize: 32,
-        },
-    });
-
-
-    const Item = ({title}) => (
-        <View style={styles.item}>
-            <Text style={styles.title}>{title}</Text>
-        </View>
-    );
+    }
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>
+            {/*加载中*/}
+            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}} />
             {/*预约状态切换*/}
-            <View style={ReserveBoardStyles.reserveFlagBox}></View>
+            <View style={ReserveBoardStyles.reserveFlagBox}>
+                <TouchableOpacity
+                    onPress={()=>{
+                        setReserveFlag('valid')
+                    }}
+                    style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle]:[ReserveBoardStyles.reserveValidStyle]}>
+                    <Text style={reserveFlag == 'valid' ?  ReserveBoardStyles.reserveFlagTxtActive:ReserveBoardStyles.reserveFlagTxt}>
+                        当前预约
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>{
+                        setReserveFlag('invalid')
+                    }}
+                    style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle]:[ReserveBoardStyles.reserveInvalidStyle]}>
+                    <Text style={reserveFlag == 'invalid' ?  ReserveBoardStyles.reserveFlagTxtActive:ReserveBoardStyles.reserveFlagTxt}>
+                        过期预约
+                    </Text>
+                </TouchableOpacity>
+            </View>
             {/*预约信息展示*/}
             <View style={ReserveBoardStyles.reserveInfoBox}>
                 <View style={ReserveBoardStyles.reserveDetailWrap}>
                     {/*发型师列表*/}
                     <View style={ReserveBoardStyles.reserveStylistBox}>
-                        <FlatList
-                            data={DATA}
-                            renderItem={({item}) => <Item title={item.title} />}
-                            keyExtractor={item => item.id}
-                        />
+                        <StylistWidget checkStylistEvent={checkStylistEvent} reserveInfoArray={reserveInfoArray} reserveFlag={reserveFlag}/>
                     </View>
                     {/*顾客预约列表*/}
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
-                        <FlatList
-                            data={DATA}
-                            renderItem={({item}) => <Item title={item.title} />}
-                            keyExtractor={item => item.id}
-                        />
+                        <CustomerWidget checkCustomerEvent={checkCustomerEvent} reserveInfo={reserveInfoArray[checkIndex]} reserveFlag={reserveFlag}/>
                     </View>
                 </View>
             </View>

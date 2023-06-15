@@ -87,9 +87,6 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         hideRightPanel
     }))
 
-    console.log('子组件被重新渲染了')
-    console.log(props)
-
     return (
         <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask: {display: 'none'}}>
             <Animated.View

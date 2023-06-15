@@ -14,7 +14,7 @@ export const PixelUtil = {
         //转换比率
         let pxRatio = widthPx / widthDp;
 
-        return designSize / pxRatio * (1 / widthPxRatio);
+        return parseInt((designSize / pxRatio * (1 / widthPxRatio)).toString());
     },
     rect: (
         designWidth = 1,
@@ -26,8 +26,8 @@ export const PixelUtil = {
         let height = degisnHeight * (width / designWidth);
 
         return {
-            width: width,
-            height: height,
+            width: parseInt(width.toString()),
+            height: parseInt(height.toString()),
         };
     },
 };

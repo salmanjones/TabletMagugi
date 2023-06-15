@@ -125,4 +125,5 @@ export const getTokenApp = `${hostApp}/safe/code/get`;
 export const staffQueues = `${hostApp}/customerapp/staffinfo/findbypagerforstore`;
 //轮牌:员工作品列表
 export const staffWorks = `${hostApp}/staff/homepage/data/list`;
-
+//新预约开单
+export const getReserveInfo = `${hostBms}/tablet/new/reserve/find/reserve/list`;
