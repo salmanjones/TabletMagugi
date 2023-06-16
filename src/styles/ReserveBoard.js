@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
+import {RGBtoHSV} from "react-native-reanimated/lib/types/lib";
 
 export const ReserveBoardStyles = StyleSheet.create({
     boardWrapBox: {
@@ -260,13 +261,16 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: PixelUtil.size(164),
         paddingHorizontal: PixelUtil.size(20),
         paddingVertical: PixelUtil.size(24),
-        borderRadius: PixelUtil.size(22),
+        borderRadius: PixelUtil.size(28),
         overflow: 'hidden',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        position:"relative"
+        position:"relative",
+        borderWidth: PixelUtil.size(4),
+        borderStyle: 'solid',
+        borderColor: '#00000000'
     },
     reserveCustomerDetailMiddleBox:{
         width: PixelUtil.size(496),
@@ -275,13 +279,22 @@ export const ReserveBoardStyles = StyleSheet.create({
         marginRight: PixelUtil.size(32),
         paddingHorizontal: PixelUtil.size(20),
         paddingVertical: PixelUtil.size(24),
-        borderRadius: PixelUtil.size(22),
+        borderRadius: PixelUtil.size(28),
         overflow: 'hidden',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        position:"relative"
+        position:"relative",
+        borderWidth: PixelUtil.size(4),
+        borderStyle: 'solid',
+        borderColor: '#00000000'
+    },
+    reserveCustomerReadyBox:{
+        backgroundColor: '#ffffff',
+        borderWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+        borderColor: '#A49BFF'
     },
     reserveCustomerDelIconBox:{
         width: PixelUtil.size(48),
