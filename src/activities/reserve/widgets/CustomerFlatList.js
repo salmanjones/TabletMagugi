@@ -4,26 +4,23 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import {getImage, ImageQutity, PixelUtil} from "../../../utils";
 import {cashierBillingStyle} from "../../../styles";
 
-export default React.memo(({reserveInfo, reserveFlag, checkCustomerEvent}) => {
+export default React.memo(({reserveInfo, reserveFlag, customerIndex, checkCustomerEvent}) => {
     // 呈现
     const dataArray = reserveFlag == 'valid' ? reserveInfo['staffNowReseverList']:reserveInfo['staffPassReseverList']
-    // 选中
-    const [checkIndex, setCheckIndex] = useState(0)
 
     // 选中事件
-    const checkCustomerHandle = (idx)=>{
+    const checkCustomerHandle = React.useCallback((idx)=>{
         checkCustomerEvent(idx)
-        setCheckIndex(idx)
-    }
+    })
 
     // 取消预约
     const cancelReserveHandle = (id) => {
         console.log("reserveId", id)
     }
 
-    const Item = ({itemInfo, index}) => {
+    const Item = React.memo(({itemInfo, index, clickItem}) => {
         return (
-            <View style={checkIndex == index ? ReserveBoardStyles.reserveCustomersWrap:ReserveBoardStyles.reserveCustomersWrap}>
+            <View style={ReserveBoardStyles.reserveCustomersWrap}>
                 <View style={ReserveBoardStyles.reserveCustomersBox}>
                     {/*时间展示*/}
                     <View style={ReserveBoardStyles.reserveCustomerTimersBox}>
@@ -51,22 +48,55 @@ export default React.memo(({reserveInfo, reserveFlag, checkCustomerEvent}) => {
                             <View style={itemInfo.reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap:ReserveBoardStyles.reserveCustomerListWaitWrap}>
                                 {
                                     itemInfo.resverInfoList.map((customer, idx)=>{
+                                        // 全局索引
+                                        const globalIndex = index + '-' + idx
+
+                                        // 样式
+                                        const cardStyle = []
+
                                         // 中间元素
                                         const isMiddleWidget = (idx + 2) % 3 == 0
+                                        if(isMiddleWidget){
+                                            cardStyle.push(ReserveBoardStyles.reserveCustomerDetailMiddleBox)
+                                        }else{
+                                            cardStyle.push(ReserveBoardStyles.reserveCustomerDetailBox)
+                                        }
+
+                                        if(itemInfo.resverInfoList.length > 3){
+                                            cardStyle.push({marginBottom: PixelUtil.size(30)})
+                                        }
+
+                                        // 是否选中
+                                        const isCheck = customerIndex == globalIndex
+                                        if(isCheck){
+                                            cardStyle.push({
+                                                borderWidth: PixelUtil.size(4),
+                                                borderStyle: 'solid',
+                                                borderColor: '#FFDA99'
+                                            })
+                                        }
+
+                                        // 是否过期预约
+                                        if(reserveFlag != 'valid'){
+                                            cardStyle.push({opacity: 0.8})
+                                        }
+
                                         return (
-                                            <TouchableOpacity onPress={()=>{checkCustomerHandle(idx)}} style={ReserveBoardStyles.reserveCustomerDetailWrap}>
+                                            <TouchableOpacity
+                                                style={ReserveBoardStyles.reserveCustomerDetailWrap}
+                                                onPress={()=>{clickItem(globalIndex)}}>
                                                 {/*预约卡片*/}
                                                 <ImageBackground
                                                     resizeMode={"stretch"}
-                                                    style={isMiddleWidget
-                                                        ? reserveFlag == 'valid' ? ReserveBoardStyles.reserveCustomerDetailMiddleBox : [ReserveBoardStyles.reserveCustomerDetailMiddleBox, {opacity: 0.8}]
-                                                        : reserveFlag == 'valid' ? ReserveBoardStyles.reserveCustomerDetailBox: [ReserveBoardStyles.reserveCustomerDetailBox, {opacity: 0.8}]}
+                                                    style={cardStyle}
                                                     source={reserveFlag == 'valid'
                                                         ? customer.isMember == '1' ? require('@imgPath/reserve_customer_detail_bg.png'):require('@imgPath/reserve_customer_detail_person_bg.png') // 有效预约
                                                         : customer.isMember == '1' ? require('@imgPath/reserve_customer_detail_invalid_bg.png'):require('@imgPath/reserve_customer_detail_person_bg.png') // 无效预约
                                                     }>
                                                     {/*取消预约*/}
-                                                    <TouchableOpacity style={ReserveBoardStyles.reserveCustomerDelIconBox} onPress={()=>{cancelReserveHandle(customer.reserveId)}}>
+                                                    <TouchableOpacity
+                                                        style={ReserveBoardStyles.reserveCustomerDelIconBox}
+                                                        onPress={()=>{cancelReserveHandle(customer.reserveId)}}>
                                                         <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                                resizeMode={'contain'}
                                                                source={customer.isMember == '1'
@@ -288,19 +318,16 @@ export default React.memo(({reserveInfo, reserveFlag, checkCustomerEvent}) => {
                 </View>
             </View>
         )
-    }
-
-    console.log("==-====================")
-    console.log("我被重新渲染了")
+    })
 
     return (
         <FlatList
             data={dataArray}
             renderItem={
                 ({item, index}) => {
-                    return <Item itemInfo={item} index={index}/>
+                    return <Item itemInfo={item} index={index} clickItem={checkCustomerHandle}/>
                 }
             }
-            keyExtractor={item => item.id}/>
+            keyExtractor={item => item.reserveTime}/>
     )
 })

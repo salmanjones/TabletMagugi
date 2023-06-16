@@ -244,6 +244,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         width: PixelUtil.size(1614),
         padding: PixelUtil.size(30),
         paddingBottom: 0,
+        paddingTop: 0,
         backgroundColor: '#ffffff',
         display: 'flex',
         flexDirection: 'row',
@@ -265,7 +266,6 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(30),
         position:"relative"
     },
     reserveCustomerDetailMiddleBox:{
@@ -281,7 +281,6 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(30),
         position:"relative"
     },
     reserveCustomerDelIconBox:{

@@ -33,8 +33,10 @@ export const ReserveBoardActivity = props => {
             staffPassReseverCount: 0
         }
     ])
-    // 选择索引
-    const [checkIndex, setCheckIndex] = useState(0)
+    // 选中的发型师索引
+    const [checkStylistIndex, setCheckStylistIndex] = useState(0)
+    // 选中的顾客索引号
+    const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
     // 会员子组件
     const memberPanelRef = useRef(null);
     // 会员信息
@@ -104,12 +106,13 @@ export const ReserveBoardActivity = props => {
 
     // 选择发型师
     const checkStylistEvent = (index) => {
-        setCheckIndex(index)
+        setCheckStylistIndex(index)
+        setCheckCustomerIndex('')
     }
 
     // 选择顾客
-    const checkCustomerEvent = () => {
-
+    const checkCustomerEvent = (idx) => {
+        setCheckCustomerIndex(idx)
     }
 
     return (
@@ -146,7 +149,7 @@ export const ReserveBoardActivity = props => {
                     </View>
                     {/*顾客预约列表*/}
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
-                        <CustomerWidget checkCustomerEvent={checkCustomerEvent} reserveInfo={reserveInfoArray[checkIndex]} reserveFlag={reserveFlag}/>
+                        <CustomerWidget reserveInfo={reserveInfoArray[checkStylistIndex]} reserveFlag={reserveFlag} customerIndex={checkCustomerIndex} checkCustomerEvent={checkCustomerEvent} />
                     </View>
                 </View>
             </View>

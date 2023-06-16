@@ -30,6 +30,6 @@ export default React.memo(({reserveInfoArray, checkStylistEvent, reserveFlag}) =
             renderItem={
                 ({item, index}) => <Item index={index} title={item.staffName} validCount={item.staffNowReseverCount} invalidCount={item.staffPassReseverCount}/>
             }
-            keyExtractor={item => item.id}/>
+            keyExtractor={item => item.staffId}/>
     )
 })
