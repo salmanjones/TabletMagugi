@@ -47,8 +47,8 @@ export const ReserveBoardActivity = props => {
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
             if("6000" == code){
-                console.log("=========================================")
-                console.log(JSON.stringify(data))
+                // console.log("=========================================")
+                // console.log(JSON.stringify(data))
                 setReserveInfoArray(data)
             }else{
                 showToast("信息加载失败")
@@ -103,9 +103,9 @@ export const ReserveBoardActivity = props => {
     }
 
     // 选择发型师
-    const checkStylistEvent = (index) => {
+    const checkStylistEvent = React.useCallback((index) => {
         setCheckStylistIndex(index)
-    }
+    },[])
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>

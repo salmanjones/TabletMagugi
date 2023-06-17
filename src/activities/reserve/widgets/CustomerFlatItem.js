@@ -7,15 +7,26 @@ import {getImage, ImageQutity, PixelUtil} from "../../../utils";
 export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveFlag})=>{
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
 
+    // 命中处理
+    const checkedCustomerHandle = React.useCallback((idx) => {
+            setCheckCustomerIndex(idx)
+        }
+    ,[]
+    )
+
     // 添加预约
-    const addReserveHandle = (id) => {
-        console.log("reserveId", id)
-    }
+    const addReserveHandle = React.useCallback((id) => {
+            console.log("reserveId", id)
+        }
+        ,[]
+    )
 
     // 取消预约
-    const cancelReserveHandle = (id) => {
-        console.log("reserveId", id)
-    }
+    const cancelReserveHandle = React.useCallback((id) => {
+            console.log("reserveId", id)
+        }
+        ,[]
+    )
 
     if(reserveInfoArray.length > 0){
         const reserveInfoList = JSON.parse(JSON.stringify(reserveInfoArray))
@@ -64,7 +75,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
 
                             return (
                                 <TouchableOpacity
-                                    onPress={()=>{setCheckCustomerIndex(globalIndex)}}
+                                    onPress={()=>{checkedCustomerHandle(globalIndex)}}
                                     style={ReserveBoardStyles.reserveCustomerDetailWrap}>
                                     <View style={cardStyle}>
                                         <Text>11</Text>
@@ -95,7 +106,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                 <TouchableOpacity
                                     style={ReserveBoardStyles.reserveCustomerDetailWrap}
                                     onPress={()=>{
-                                        setCheckCustomerIndex(globalIndex)
+                                        checkedCustomerHandle(globalIndex)
                                     }}>
                                     <ImageBackground
                                         resizeMode={"stretch"}
