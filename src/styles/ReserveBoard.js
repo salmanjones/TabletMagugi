@@ -294,7 +294,11 @@ export const ReserveBoardStyles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderWidth: PixelUtil.size(2),
         borderStyle: 'solid',
-        borderColor: '#A49BFF'
+        borderColor: '#A49BFF',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     reserveCustomerDelIconBox:{
         width: PixelUtil.size(48),
@@ -405,5 +409,18 @@ export const ReserveBoardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(26),
         color: '#ffffff',
         marginLeft: PixelUtil.size(10)
+    },
+    reserveCustomerIconBox:{
+        width: PixelUtil.size(166),
+        height: PixelUtil.size(64),
+        borderRadius: PixelUtil.size(32),
+        overflow: 'hidden'
+    },
+    reserveCustomerBtnIcon:{
+        width: '100%',
+        height: '100%'
+    },
+    reserveCustomerBtnRight:{
+        marginLeft: PixelUtil.size(32)
     }
 })

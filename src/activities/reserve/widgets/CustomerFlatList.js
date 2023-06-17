@@ -10,18 +10,21 @@ export default React.memo(({reserveInfo, reserveFlag}) => {
     const [customerFlatData, setCustomerFlatData] = useState([])
 
     // 模拟分页加载
-    const pageSize = 4
+    const pageSize = 5
     const loadMoreData = ()=>{
-        console.log("load more")
+        let customerReserveList = []
+        if(reserveFlag == 'valid'){
+            customerReserveList = reserveInfo['staffNowReseverList'] || []
+        }else{
+            customerReserveList = reserveInfo['staffPassReseverList'] || []
+        }
+
+        if(customerReserveList.length !=0 && customerFlatData.length  == customerReserveList.length){
+            return
+        }
+
         setIsLoading(true)
         setTimeout(()=>{
-            let customerReserveList = []
-            if(reserveFlag == 'valid'){
-                customerReserveList = reserveInfo['staffNowReseverList'] || []
-            }else{
-                customerReserveList = reserveInfo['staffPassReseverList'] || []
-            }
-
             const start = customerFlatData.length
             const end = start + pageSize
             const customerFlatArray = customerFlatData
@@ -34,8 +37,6 @@ export default React.memo(({reserveInfo, reserveFlag}) => {
     }
 
     React.useEffect(()=>{
-        console.log("init data")
-
         let customerReserveList = []
         if(reserveFlag == 'valid'){
             customerReserveList = reserveInfo['staffNowReseverList'] || []
@@ -44,7 +45,7 @@ export default React.memo(({reserveInfo, reserveFlag}) => {
         }
 
         setCustomerFlatData(customerReserveList.slice(0, pageSize))
-    }, [reserveInfo])
+    }, [reserveInfo, reserveFlag])
 
     const TimerPanel = React.memo(({itemInfo, index}) => {
         return (
@@ -78,12 +79,12 @@ export default React.memo(({reserveInfo, reserveFlag}) => {
     })
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             {/*加载中*/}
             <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}} />
             <FlatList
                 data={customerFlatData}
-                initialNumToRender={4}
+                initialNumToRender={5}
                 renderItem={
                     ({item, index}) => {
                         return <TimerPanel itemInfo={item} index={index}/>
