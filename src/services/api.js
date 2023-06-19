@@ -127,3 +127,5 @@ export const staffQueues = `${hostApp}/customerapp/staffinfo/findbypagerforstore
 export const staffWorks = `${hostApp}/staff/homepage/data/list`;
 //新预约开单
 export const getReserveInfo = `${hostBms}/tablet/new/reserve/find/reserve/list`;
+//员工占用
+export const saveReserveVocation = `${hostBms}/tablet/new/reserve/save/staff/vocation`;

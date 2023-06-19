@@ -1,13 +1,13 @@
 // 预约看板
 import React, {useEffect, useRef, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Text, TouchableOpacity, View} from 'react-native';
 import Spinner from "react-native-loading-spinner-overlay";
 import Toast from "react-native-root-toast";
 import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
@@ -43,14 +43,14 @@ export const ReserveBoardActivity = props => {
     })
 
     // 获取预约数据
-    const getReserveList = (params)=>{
+    const getReserveList = (params) => {
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
-            if("6000" == code){
-                console.log("=========================================")
-                console.log(JSON.stringify(data))
+            if ("6000" == code) {
+                console.log('========================')
+                console.log(JSON.stringify(backData))
                 setReserveInfoArray(data)
-            }else{
+            } else {
                 showToast("信息加载失败")
             }
         }).catch(e => {
@@ -79,11 +79,11 @@ export const ReserveBoardActivity = props => {
         getReserveList(params)
 
         // 定时刷新数据
-        const timer = setInterval(()=>{
+        const timer = setInterval(() => {
             getReserveList(params)
         }, reloadDelay)
 
-        return ()=>{
+        return () => {
             //在组件卸载前执行
             timer && clearInterval(timer)
         }
@@ -105,17 +105,43 @@ export const ReserveBoardActivity = props => {
     // 选择发型师
     const checkStylistEvent = React.useCallback((index) => {
         setCheckStylistIndex(index)
-    },[])
+    }, [])
 
     // 客户卡片点击
-    const customerCardPressEvent = React.useCallback((type, extra)=>{
-        switch (type){
+    const customerCardPressEvent = React.useCallback((type, extra, callBack) => {
+        switch (type) {
             case 'showDetail': // 查看详情
                 memberPanelRef.current.showRightPanel()
                 break
             case 'addReserve': // 散客预约
                 break;
             case 'addOccupy':  // 时间占用
+                setLoading(true)
+                const {reserveTime, staffId} = extra
+                const storeId = reduxState.auth.userInfo.storeId
+                console.log({storeId, staffId, reserveTime})
+                saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
+                    const {code, data} = backData
+                    if(code != '6000'){ // 占用异常
+                        Alert.alert(
+                            '系统提示',
+                            data,
+                            [
+                                {
+                                    text: '知道了',
+                                }
+                            ]
+                        );
+                        callBack && callBack(backData)
+                    }else{
+                        callBack && callBack(backData)
+                    }
+                }).catch(e => {
+                    console.log(e)
+                    callBack && callBack({code: '7000', data: ''})
+                }).finally(_ => {
+                    setLoading(false)
+                })
                 break;
             case 'cancelReserve': // 取消预约
                 break;
@@ -128,24 +154,26 @@ export const ReserveBoardActivity = props => {
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>
             {/*加载中*/}
-            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}} />
+            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             {/*预约状态切换*/}
             <View style={ReserveBoardStyles.reserveFlagBox}>
                 <TouchableOpacity
-                    onPress={()=>{
+                    onPress={() => {
                         setReserveFlag('valid')
                     }}
-                    style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle]:[ReserveBoardStyles.reserveValidStyle]}>
-                    <Text style={reserveFlag == 'valid' ?  ReserveBoardStyles.reserveFlagTxtActive:ReserveBoardStyles.reserveFlagTxt}>
+                    style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
+                    <Text
+                        style={reserveFlag == 'valid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
                         当前预约
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>{
+                    onPress={() => {
                         setReserveFlag('invalid')
                     }}
-                    style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle]:[ReserveBoardStyles.reserveInvalidStyle]}>
-                    <Text style={reserveFlag == 'invalid' ?  ReserveBoardStyles.reserveFlagTxtActive:ReserveBoardStyles.reserveFlagTxt}>
+                    style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
+                    <Text
+                        style={reserveFlag == 'invalid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
                         过期预约
                     </Text>
                 </TouchableOpacity>
@@ -156,13 +184,17 @@ export const ReserveBoardActivity = props => {
                     {/*发型师列表*/}
                     <View style={ReserveBoardStyles.reserveStylistBox}>
                         {reserveInfoArray.length > 0 && (
-                            <StylistWidget checkStylistEvent={checkStylistEvent} reserveInfoArray={reserveInfoArray} reserveFlag={reserveFlag}/>
+                            <StylistWidget checkStylistEvent={checkStylistEvent} reserveInfoArray={reserveInfoArray}
+                                           reserveFlag={reserveFlag}/>
                         )}
                     </View>
                     {/*顾客预约列表*/}
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
                         {reserveInfoArray.length > 0 && (
-                            <CustomerWidget reserveInfo={reserveInfoArray[checkStylistIndex]} reserveFlag={reserveFlag} customerCardEvent={customerCardPressEvent}/>
+                            <CustomerWidget reserveInfoArray={reserveInfoArray}
+                                            checkStylistIndex={checkStylistIndex}
+                                            reserveFlag={reserveFlag}
+                                            customerCardEvent={customerCardPressEvent}/>
                         )}
                     </View>
                 </View>

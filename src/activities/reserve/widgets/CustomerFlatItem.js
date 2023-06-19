@@ -4,8 +4,9 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard";
 import {getImage, ImageQutity, PixelUtil} from "../../../utils";
 
 // 顾客预约列表
-export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveFlag, customerCardEvent}) => {
+export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId, reserveFlag, customerCardEvent}) => {
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
+    const [timerReserveList, setTimerReserveList] = useState(reserveInfoArray)
 
     // 命中处理
     const checkedCustomerHandle = React.useCallback((idx) => {
@@ -13,12 +14,31 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
         }, []
     )
 
+    // 处理点击事件
+    const customerClickEvent = (type, extra)=>{
+        customerCardEvent(type, extra, (backData)=>{
+            switch (type) {
+                case 'addOccupy':  // 时间占用
+                    const {code, data} = backData
+                    if(code == '6000'){
+                        const {index} = extra
+                        const timerReserveArray = [...timerReserveList]
+                        timerReserveArray[index]['isReseve'] = "3"
+                        timerReserveArray[index]['recordId'] = data
+                        setTimerReserveList(timerReserveArray)
+                    }
+
+                    break
+            }
+        })
+    }
+
     if (reserveInfoArray.length > 0) {
         return (
             <View
                 style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
-                    reserveInfoArray.map((customer, idx) => {
+                    timerReserveList.map((customer, idx) => {
                         // 全局索引
                         const globalIndex = timeIndex + '-' + idx
                         // 样式
@@ -35,7 +55,6 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
 
                         // 是否选中
                         const isCheck = checkCustomerIndex == globalIndex
-
                         if(customer.isReseve == '3'){ // 占用状态
                             cardStyle.push(ReserveBoardStyles.reserveCustomerBusyBox)
                             // 选中
@@ -61,7 +80,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                             onPress={() => {
-                                                customerCardEvent('cancelOccupy', customer) // 占用
+                                                customerClickEvent('cancelOccupy', {recordId: customer.recordId}) // 占用
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                    resizeMode={'contain'}
@@ -101,7 +120,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerIconBox}
                                             onPress={()=>{
-                                                customerCardEvent('addReserve', customer) // 散客预约
+                                                customerClickEvent('addReserve', customer) // 散客预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                    resizeMode={'contain'}
@@ -113,7 +132,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                                 <TouchableOpacity
                                                     style={[ReserveBoardStyles.reserveCustomerIconBox, ReserveBoardStyles.reserveCustomerBtnRight]}
                                                     onPress={()=>{
-                                                        customerCardEvent('addOccupy', customer) // 占用
+                                                        customerClickEvent('addOccupy', {staffId:staffId, reserveTime: customer.reserveTime, index: idx}) // 占用
                                                     }}>
                                                     <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                            resizeMode={'contain'}
@@ -149,7 +168,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                     style={ReserveBoardStyles.reserveCustomerDetailWrap}
                                     onPress={() => {
                                         checkedCustomerHandle(globalIndex)
-                                        customerCardEvent('showDetail', customer) // 查看详情
+                                        customerClickEvent('showDetail', customer) // 查看详情
                                     }}>
                                     <ImageBackground
                                         resizeMode={"stretch"}
@@ -162,7 +181,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                             onPress={() => {
-                                                customerCardEvent('cancelReserve', customer) // 取消预约
+                                                customerClickEvent('cancelReserve', customer) // 取消预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                    resizeMode={'contain'}

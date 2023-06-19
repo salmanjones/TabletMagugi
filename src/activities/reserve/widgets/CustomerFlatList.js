@@ -4,31 +4,31 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
 
-export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
+export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, customerCardEvent}) => {
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
 
     // 模拟分页加载
     const pageSize = 5
-    const loadMoreData = ()=>{
+    const loadMoreData = () => {
         let customerReserveList = []
-        if(reserveFlag == 'valid'){
-            customerReserveList = reserveInfo['staffNowReseverList'] || []
-        }else{
-            customerReserveList = reserveInfo['staffPassReseverList'] || []
+        if (reserveFlag == 'valid') {
+            customerReserveList = reserveInfoArray[checkStylistIndex]['staffNowReseverList'] || []
+        } else {
+            customerReserveList = reserveInfoArray[checkStylistIndex]['staffPassReseverList'] || []
         }
 
-        if(customerReserveList.length !=0 && customerFlatData.length  == customerReserveList.length){
+        if (customerReserveList.length != 0 && customerFlatData.length == customerReserveList.length) {
             return
         }
 
         setIsLoading(true)
-        setTimeout(()=>{
+        setTimeout(() => {
             const start = customerFlatData.length
             const end = start + pageSize
             const customerFlatArray = customerFlatData
-            customerReserveList.slice(start, end).forEach(item=>{
+            customerReserveList.slice(start, end).forEach(item => {
                 customerFlatArray.push(item)
             })
             setCustomerFlatData(customerFlatArray)
@@ -36,18 +36,19 @@ export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
         }, 500)
     }
 
-    React.useEffect(()=>{
+    // 当预约信息刷新与切换Tab时触发
+    React.useEffect(() => {
         let customerReserveList = []
-        if(reserveFlag == 'valid'){
-            customerReserveList = reserveInfo['staffNowReseverList'] || []
-        }else{
-            customerReserveList = reserveInfo['staffPassReseverList'] || []
+        if (reserveFlag == 'valid') {
+            customerReserveList = reserveInfoArray[checkStylistIndex]['staffNowReseverList'] || []
+        } else {
+            customerReserveList = reserveInfoArray[checkStylistIndex]['staffPassReseverList'] || []
         }
 
         setCustomerFlatData(customerReserveList.slice(0, pageSize))
-    }, [reserveInfo, reserveFlag])
+    }, [reserveInfoArray, checkStylistIndex, reserveFlag])
 
-    const TimerPanel = React.memo(({itemInfo, index}) => {
+    const TimerPanel = React.memo(({itemInfo, index, staffId}) => {
         return (
             // 时间轴面板
             <View style={ReserveBoardStyles.reserveCustomersWrap}>
@@ -59,7 +60,8 @@ export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
                             resizeMethod="resize"
                             source={itemInfo.reserveStatus == '1' ? require('@imgPath/reserve_recent_flag.png') : require('@imgPath/reserve_wait_flag.png')}/>
                         {/*时间*/}
-                        <Text style={itemInfo.reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerTimerRecentTxt: ReserveBoardStyles.reserveCustomerTimerWaitTxt}>
+                        <Text
+                            style={itemInfo.reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerTimerRecentTxt : ReserveBoardStyles.reserveCustomerTimerWaitTxt}>
                             {itemInfo.reserveTime}
                         </Text>
                         {/*即将到店提示*/}
@@ -75,6 +77,7 @@ export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
                     <CustomerFlatItem
                         reserveInfoArray={itemInfo.resverInfoList || []}
                         reserveStatus={itemInfo.reserveStatus}
+                        staffId={reserveInfoArray[checkStylistIndex].staffId}
                         timeIndex={index}
                         reserveFlag={reserveFlag}
                         customerCardEvent={customerCardEvent}/>
@@ -83,22 +86,24 @@ export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
         )
     })
 
+    console.log("customerFlatData", JSON.stringify(customerFlatData))
+
     return (
         <View style={{flex: 1}}>
             {/*加载中*/}
-            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}} />
+            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             <FlatList
                 data={customerFlatData}
                 initialNumToRender={5}
                 renderItem={
                     ({item, index}) => {
-                        return <TimerPanel itemInfo={item} index={index}/>
+                        return <TimerPanel itemInfo={item} index={index} staffId={item.staffId}/>
                     }
                 }
                 keyExtractor={(item, index) => {
                     return item['reserveTime']
                 }}
-                onEndReachedThreshold = {0.1}
+                onEndReachedThreshold={0.1}
                 onEndReached={loadMoreData}/>
         </View>
     )
