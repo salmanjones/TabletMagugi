@@ -28,7 +28,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         let loadingTimerId = setTimeout(()=>{
             setIsLoading(false)
             loadingTimerId && clearTimeout(loadingTimerId)
-        }, 800)
+        }, 300)
 
     }, [stylistReserveInfo, reserveFlag])
 
@@ -61,9 +61,9 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                     <CustomerFlatItem
                         reserveInfoArray={itemInfo.resverInfoList || []}
                         reserveStatus={itemInfo.reserveStatus}
-                        staffId={stylistReserveInfo.staffId}
-                        timeIndex={index}
                         reserveFlag={reserveFlag}
+                        timeIndex={index}
+                        staffId={stylistReserveInfo.staffId}
                         customerCardEvent={customerCardEvent}/>
                 </View>
             </View>
