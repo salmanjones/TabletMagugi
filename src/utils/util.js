@@ -47,11 +47,29 @@ export const displayError = (error, errMsg, native) => {
     showMessage(msg, native);
 };
 
-export const showMessage = (msg, native, callback) => {
+export const showMessage = (msg, native, callback, config) => {
     if (!native) {
         Toast.show(msg, {
-            duration: Toast.durations.SHORT,
-            position: Toast.positions.BOTTOM,
+            duration: config.duration || Toast.durations.SHORT,
+            position:   config.position || Toast.positions.BOTTOM,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+            onShown: () => {
+                callback && callback();
+            },
+        });
+    } else {
+        Alert.alert('', msg, [{text: '知道了', onPress: () => callback && callback()}]);
+    }
+};
+
+export const showMessageExt = (msg, config, native, callback) => {
+    if (!native) {
+        Toast.show(msg, {
+            duration: config.duration || Toast.durations.SHORT,
+            position:   config.position || Toast.positions.BOTTOM,
             shadow: true,
             animation: true,
             hideOnPress: true,
