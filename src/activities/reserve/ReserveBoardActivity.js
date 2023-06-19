@@ -8,7 +8,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
 import {getReserveInfo} from "../../services/reserve";
-import MemberPanel from "../../components/MemberPanel";
+import MemberPanel from "../../components/memberPanel/MemberPanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 
@@ -47,8 +47,8 @@ export const ReserveBoardActivity = props => {
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
             if("6000" == code){
-                // console.log("=========================================")
-                // console.log(JSON.stringify(data))
+                console.log("=========================================")
+                console.log(JSON.stringify(data))
                 setReserveInfoArray(data)
             }else{
                 showToast("信息加载失败")
@@ -107,6 +107,24 @@ export const ReserveBoardActivity = props => {
         setCheckStylistIndex(index)
     },[])
 
+    // 客户卡片点击
+    const customerCardPressEvent = React.useCallback((type, extra)=>{
+        switch (type){
+            case 'showDetail': // 查看详情
+                memberPanelRef.current.showRightPanel()
+                break
+            case 'addReserve': // 散客预约
+                break;
+            case 'addOccupy':  // 时间占用
+                break;
+            case 'cancelReserve': // 取消预约
+                break;
+            case 'cancelOccupy':  // 取消占用
+                break;
+        }
+
+    }, [])
+
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>
             {/*加载中*/}
@@ -144,7 +162,7 @@ export const ReserveBoardActivity = props => {
                     {/*顾客预约列表*/}
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
                         {reserveInfoArray.length > 0 && (
-                            <CustomerWidget reserveInfo={reserveInfoArray[checkStylistIndex]} reserveFlag={reserveFlag} />
+                            <CustomerWidget reserveInfo={reserveInfoArray[checkStylistIndex]} reserveFlag={reserveFlag} customerCardEvent={customerCardPressEvent}/>
                         )}
                     </View>
                 </View>

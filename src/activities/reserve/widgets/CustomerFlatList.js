@@ -4,7 +4,7 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
 
-export default React.memo(({reserveInfo, reserveFlag}) => {
+export default React.memo(({reserveInfo, reserveFlag, customerCardEvent}) => {
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
@@ -72,7 +72,12 @@ export default React.memo(({reserveInfo, reserveFlag}) => {
                         }
                     </View>
                     {/*预约顾客列表*/}
-                    <CustomerFlatItem reserveInfoArray={itemInfo.resverInfoList || []} reserveStatus={itemInfo.reserveStatus} timeIndex={index} reserveFlag={reserveFlag}></CustomerFlatItem>
+                    <CustomerFlatItem
+                        reserveInfoArray={itemInfo.resverInfoList || []}
+                        reserveStatus={itemInfo.reserveStatus}
+                        timeIndex={index}
+                        reserveFlag={reserveFlag}
+                        customerCardEvent={customerCardEvent}/>
                 </View>
             </View>
         )

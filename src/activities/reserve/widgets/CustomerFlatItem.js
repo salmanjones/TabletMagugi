@@ -4,7 +4,7 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard";
 import {getImage, ImageQutity, PixelUtil} from "../../../utils";
 
 // 顾客预约列表
-export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveFlag}) => {
+export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveFlag, customerCardEvent}) => {
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
 
     // 命中处理
@@ -13,35 +13,12 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
         }, []
     )
 
-    // 添加预约
-    const addReserveHandle = React.useCallback((id) => {
-            console.log("reserveId", id)
-        }, []
-    )
-
-    // 取消预约
-    const cancelReserveHandle = React.useCallback((id) => {
-            console.log("reserveId", id)
-        }, []
-    )
-
     if (reserveInfoArray.length > 0) {
-        const reserveInfoList = JSON.parse(JSON.stringify(reserveInfoArray))
-        if (reserveFlag == 'valid' && reserveInfoList.length < 3) {
-            const readyMax = 3 // 同一时间段最多3次占用
-            const readySize = readyMax - reserveInfoList.length
-            for (let x = 0; x < readySize; x++) {
-                reserveInfoList.push({
-                    panelType: 'occupy' // 占用
-                })
-            }
-        }
-
         return (
             <View
                 style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
-                    reserveInfoList.map((customer, idx) => {
+                    reserveInfoArray.map((customer, idx) => {
                         // 全局索引
                         const globalIndex = timeIndex + '-' + idx
                         // 样式
@@ -59,8 +36,50 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                         // 是否选中
                         const isCheck = checkCustomerIndex == globalIndex
 
-                        if (customer.panelType == 'occupy') { // 占用
-                            cardStyle.push(ReserveBoardStyles.reserveCustomerReadyBox)
+                        if(customer.isReseve == '3'){ // 占用状态
+                            cardStyle.push(ReserveBoardStyles.reserveCustomerBusyBox)
+                            // 选中
+                            if (isCheck) {
+                                cardStyle.push({
+                                    borderWidth: PixelUtil.size(4),
+                                    borderStyle: 'solid',
+                                    borderColor: '#FFDA99'
+                                })
+                            }
+
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        checkedCustomerHandle(globalIndex)
+                                    }}
+                                    style={ReserveBoardStyles.reserveCustomerDetailWrap}>
+                                    <ImageBackground
+                                        resizeMode={"stretch"}
+                                        style={cardStyle}
+                                        source={require('@imgPath/reserve_customer_detail_busy_bg.png')}>
+                                        {/*取消预约*/}
+                                        <TouchableOpacity
+                                            style={ReserveBoardStyles.reserveCustomerDelIconBox}
+                                            onPress={() => {
+                                                customerCardEvent('cancelOccupy', customer) // 占用
+                                            }}>
+                                            <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
+                                                   resizeMode={'contain'}
+                                                   source={require('@imgPath/reserve_customer_detail_del.png')}/>
+                                        </TouchableOpacity>
+
+                                        {/*预约占用状态*/}
+                                        <View style={ReserveBoardStyles.reserveStylistBusyBox}>
+                                            <Image style={ReserveBoardStyles.reserveStylistBusyIcon}
+                                                   resizeMode={'contain'}
+                                                   source={require('@imgPath/reserve_customer_detail_busy_icon.png')}/>
+                                            <Text style={ReserveBoardStyles.reserveStylistBusyText}>已占用</Text>
+                                        </View>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                            )
+                        }else if (customer.isReseve == '0' || customer.isReseve == '2') { // 0占用｜预约 2仅预约
+                             cardStyle.push(ReserveBoardStyles.reserveCustomerReadyBox)
 
                             // 选中
                             if (isCheck) {
@@ -79,21 +98,33 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                     style={ReserveBoardStyles.reserveCustomerDetailWrap}>
                                     <View style={cardStyle}>
                                         {/*预约*/}
-                                        <TouchableOpacity style={ReserveBoardStyles.reserveCustomerIconBox}>
+                                        <TouchableOpacity
+                                            style={ReserveBoardStyles.reserveCustomerIconBox}
+                                            onPress={()=>{
+                                                customerCardEvent('addReserve', customer) // 散客预约
+                                            }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                    resizeMode={'contain'}
                                                    source={require('@imgPath/reserve_customer_yuyue.png') }/>
                                         </TouchableOpacity>
                                         {/*占用*/}
-                                        <TouchableOpacity style={[ReserveBoardStyles.reserveCustomerIconBox, ReserveBoardStyles.reserveCustomerBtnRight]}>
-                                            <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
-                                                   resizeMode={'contain'}
-                                                   source={require('@imgPath/reserve_customer_zhanyong.png')}/>
-                                        </TouchableOpacity>
+                                        {
+                                            customer.isReseve == '0' && (
+                                                <TouchableOpacity
+                                                    style={[ReserveBoardStyles.reserveCustomerIconBox, ReserveBoardStyles.reserveCustomerBtnRight]}
+                                                    onPress={()=>{
+                                                        customerCardEvent('addOccupy', customer) // 占用
+                                                    }}>
+                                                    <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
+                                                           resizeMode={'contain'}
+                                                           source={require('@imgPath/reserve_customer_zhanyong.png')}/>
+                                                </TouchableOpacity>
+                                            )
+                                        }
                                     </View>
                                 </TouchableOpacity>
                             )
-                        } else { // 预约
+                        } else if(customer.isReseve == '1') { // 预约
                             // 预约顾客是否需要换行展示
                             if (reserveInfoArray.length > 3) {
                                 cardStyle.push({marginBottom: PixelUtil.size(30)})
@@ -118,6 +149,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                     style={ReserveBoardStyles.reserveCustomerDetailWrap}
                                     onPress={() => {
                                         checkedCustomerHandle(globalIndex)
+                                        customerCardEvent('showDetail', customer) // 查看详情
                                     }}>
                                     <ImageBackground
                                         resizeMode={"stretch"}
@@ -130,7 +162,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                             onPress={() => {
-                                                cancelReserveHandle(customer.reserveId)
+                                                customerCardEvent('cancelReserve', customer) // 取消预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                    resizeMode={'contain'}
@@ -307,15 +339,15 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveF
                                                         </Text>
                                                     )
                                                 }
-                                                {/*造型*/}
+                                                {/*洗吹*/}
                                                 {
                                                     customer.reserveCateName == '洗吹' && (
                                                         <Image
                                                             style={ReserveBoardStyles.reserveCustomerTypeIcon}
                                                             resizeMode={'contain'}
                                                             source={customer.isMember == '1'
-                                                                ? require('@imgPath/reserve_customer_type_zaoxing_wt.png') // 有档案
-                                                                : require('@imgPath/reserve_customer_type_zaoxing_bl.png') // 无档案
+                                                                ? require('@imgPath/reserve_customer_type_xichui_wt.png') // 有档案
+                                                                : require('@imgPath/reserve_customer_type_xichui_bl.png') // 无档案
                                                             }/>
                                                     )
                                                 }

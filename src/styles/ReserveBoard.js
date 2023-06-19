@@ -300,6 +300,38 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    reserveCustomerBusyBox:{
+        width: PixelUtil.size(496),
+        height: PixelUtil.size(164),
+        paddingHorizontal: PixelUtil.size(20),
+        paddingVertical: PixelUtil.size(24),
+        borderRadius: PixelUtil.size(28),
+        overflow: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        position:"relative",
+        borderWidth: PixelUtil.size(4),
+        borderStyle: 'solid',
+        borderColor: '#00000000'
+    },
+    reserveStylistBusyBox:{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    reserveStylistBusyIcon:{
+        width: PixelUtil.size(60),
+        height: PixelUtil.size(60),
+    },
+    reserveStylistBusyText:{
+        marginTop: PixelUtil.size(2),
+        fontSize: PixelUtil.size(26),
+        fontWeight: '500',
+        color: '#ffffff'
+    },
     reserveCustomerDelIconBox:{
         width: PixelUtil.size(48),
         height: PixelUtil.size(48),
@@ -383,8 +415,8 @@ export const ReserveBoardStyles = StyleSheet.create({
         marginTop: PixelUtil.size(30)
     },
     reserveCustomerTypeIcon: {
-        width: PixelUtil.size(40),
-        height: PixelUtil.size(40),
+        width: PixelUtil.size(30),
+        height: PixelUtil.size(30),
     },
     reserveCustomerTypeText:{
         fontWeight: '500',
