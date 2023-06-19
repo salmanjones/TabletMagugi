@@ -21,3 +21,14 @@ export const saveReserveVocation = params => {
         return backData;
     });
 }
+
+/**
+ * 新收银：取消预约|占用
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const cancelStaffReserve = params => {
+    return callService(api.cancelStaffReserve, params).then(backData => {
+        return backData;
+    });
+}

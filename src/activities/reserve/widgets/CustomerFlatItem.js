@@ -3,6 +3,13 @@ import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native
 import {ReserveBoardStyles} from "../../../styles/ReserveBoard";
 import {getImage, ImageQutity, PixelUtil} from "../../../utils";
 
+/**
+ * isReseve 0 占用与预约按钮都可用
+ * isReseve 1 有顾客预约
+ * isReseve 2 仅可预约按钮
+ * isReseve 3 已占用
+ */
+
 // 顾客预约列表
 export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId, reserveFlag, customerCardEvent}) => {
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
@@ -17,18 +24,32 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
     // 处理点击事件
     const customerClickEvent = (type, extra)=>{
         customerCardEvent(type, extra, (backData)=>{
+            const {code, data} = backData
+            const {index} = extra
+            const timerReserveArray = [...timerReserveList]
+
             switch (type) {
                 case 'addOccupy':  // 时间占用
-                    const {code, data} = backData
                     if(code == '6000'){
-                        const {index} = extra
-                        const timerReserveArray = [...timerReserveList]
                         timerReserveArray[index]['isReseve'] = "3"
                         timerReserveArray[index]['recordId'] = data
                         setTimerReserveList(timerReserveArray)
                     }
-
-                    break
+                    break;
+                case 'cancelReserve':
+                    console.log("backData", timerReserveList.length)
+                    if(code == '6000'){ // 取消预约｜取消占用 成功
+                        if(timerReserveList.length > 1){
+                            timerReserveArray[index]['isReseve'] = '2'
+                            timerReserveArray[index]['recordId'] = ''
+                            setTimerReserveList(timerReserveArray)
+                        }else{
+                            timerReserveArray[index]['isReseve'] = '0'
+                            timerReserveArray[index]['recordId'] = ''
+                            setTimerReserveList(timerReserveArray)
+                        }
+                    }
+                    break;
             }
         })
     }
@@ -76,11 +97,11 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         resizeMode={"stretch"}
                                         style={cardStyle}
                                         source={require('@imgPath/reserve_customer_detail_busy_bg.png')}>
-                                        {/*取消预约*/}
+                                        {/*取消占用*/}
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                             onPress={() => {
-                                                customerClickEvent('cancelOccupy', {recordId: customer.recordId}) // 占用
+                                                customerClickEvent('cancelReserve', {type: '1', recordId: customer.recordId, index: idx}) // 占用取消
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                    resizeMode={'contain'}
@@ -132,7 +153,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                                 <TouchableOpacity
                                                     style={[ReserveBoardStyles.reserveCustomerIconBox, ReserveBoardStyles.reserveCustomerBtnRight]}
                                                     onPress={()=>{
-                                                        customerClickEvent('addOccupy', {staffId:staffId, reserveTime: customer.reserveTime, index: idx}) // 占用
+                                                        customerClickEvent('addOccupy', {staffId, reserveTime: customer.reserveTime, index: idx}) // 占用
                                                     }}>
                                                     <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                            resizeMode={'contain'}
@@ -181,7 +202,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                             onPress={() => {
-                                                customerClickEvent('cancelReserve', customer) // 取消预约
+                                                customerClickEvent('cancelReserve', {type: '0', recordId: customer.recordId, index: idx}) // 取消预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                    resizeMode={'contain'}

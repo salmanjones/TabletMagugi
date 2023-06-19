@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
@@ -33,8 +33,8 @@ export const ReserveBoardActivity = props => {
             staffPassReseverCount: 0
         }
     ])
-    // 选中的发型师索引
-    const [checkStylistIndex, setCheckStylistIndex] = useState(0)
+    // 选中发型师的数据
+    const [stylistCheckedIndex, setStylistCheckedIndex] = useState(0)
     // 会员子组件
     const memberPanelRef = useRef(null);
     // 会员信息
@@ -104,7 +104,7 @@ export const ReserveBoardActivity = props => {
 
     // 选择发型师
     const checkStylistEvent = React.useCallback((index) => {
-        setCheckStylistIndex(index)
+        setStylistCheckedIndex(index)
     }, [])
 
     // 客户卡片点击
@@ -119,13 +119,12 @@ export const ReserveBoardActivity = props => {
                 setLoading(true)
                 const {reserveTime, staffId} = extra
                 const storeId = reduxState.auth.userInfo.storeId
-                console.log({storeId, staffId, reserveTime})
                 saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
                     const {code, data} = backData
                     if(code != '6000'){ // 占用异常
                         Alert.alert(
                             '系统提示',
-                            data,
+                            data || '占用异常',
                             [
                                 {
                                     text: '知道了',
@@ -143,12 +142,45 @@ export const ReserveBoardActivity = props => {
                     setLoading(false)
                 })
                 break;
-            case 'cancelReserve': // 取消预约
-                break;
-            case 'cancelOccupy':  // 取消占用
+            case 'cancelReserve': // 0:取消预约 1:取消占用
+                const {type, recordId} = extra
+                const tips = type == '0' ? '您确定要取消预约吗?':'您确定要取消占用吗?'
+                Alert.alert('系统提示', tips, [
+                    {
+                        text: '是',
+                        onPress: () => {
+                            setLoading(true)
+                            cancelStaffReserve({type, recordId}).then(backData => {
+                                const {code, data} = backData
+                                if(code != '6000'){ // 占用异常
+                                    Alert.alert(
+                                        '系统提示',
+                                        data || '取消异常',
+                                        [
+                                            {
+                                                text: '知道了',
+                                            }
+                                        ]
+                                    );
+                                    callBack && callBack(backData)
+                                }else{
+                                    callBack && callBack(backData)
+                                }
+                            }).catch(e => {
+                                console.log(e)
+                                callBack && callBack({code: '7000', data: ''})
+                            }).finally(_ => {
+                                setLoading(false)
+                            })
+
+                        },
+                    },
+                    {
+                        text: '否',
+                    },
+                ]);
                 break;
         }
-
     }, [])
 
     return (
@@ -184,17 +216,18 @@ export const ReserveBoardActivity = props => {
                     {/*发型师列表*/}
                     <View style={ReserveBoardStyles.reserveStylistBox}>
                         {reserveInfoArray.length > 0 && (
-                            <StylistWidget checkStylistEvent={checkStylistEvent} reserveInfoArray={reserveInfoArray}
+                            <StylistWidget checkStylistEvent={checkStylistEvent}
+                                           reserveInfoArray={reserveInfoArray}
                                            reserveFlag={reserveFlag}/>
                         )}
                     </View>
                     {/*顾客预约列表*/}
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
                         {reserveInfoArray.length > 0 && (
-                            <CustomerWidget reserveInfoArray={reserveInfoArray}
-                                            checkStylistIndex={checkStylistIndex}
-                                            reserveFlag={reserveFlag}
-                                            customerCardEvent={customerCardPressEvent}/>
+                            <CustomerWidget
+                                stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]}
+                                reserveFlag={reserveFlag}
+                                customerCardEvent={customerCardPressEvent}/>
                         )}
                     </View>
                 </View>

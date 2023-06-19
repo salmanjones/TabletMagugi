@@ -4,7 +4,7 @@ import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
 
-export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, customerCardEvent}) => {
+export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent}) => {
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
@@ -14,9 +14,9 @@ export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, cu
     const loadMoreData = () => {
         let customerReserveList = []
         if (reserveFlag == 'valid') {
-            customerReserveList = reserveInfoArray[checkStylistIndex]['staffNowReseverList'] || []
+            customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
         } else {
-            customerReserveList = reserveInfoArray[checkStylistIndex]['staffPassReseverList'] || []
+            customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
         }
 
         if (customerReserveList.length != 0 && customerFlatData.length == customerReserveList.length) {
@@ -40,13 +40,13 @@ export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, cu
     React.useEffect(() => {
         let customerReserveList = []
         if (reserveFlag == 'valid') {
-            customerReserveList = reserveInfoArray[checkStylistIndex]['staffNowReseverList'] || []
+            customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
         } else {
-            customerReserveList = reserveInfoArray[checkStylistIndex]['staffPassReseverList'] || []
+            customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
         }
 
         setCustomerFlatData(customerReserveList.slice(0, pageSize))
-    }, [reserveInfoArray, checkStylistIndex, reserveFlag])
+    }, [stylistReserveInfo, reserveFlag])
 
     const TimerPanel = React.memo(({itemInfo, index, staffId}) => {
         return (
@@ -77,7 +77,7 @@ export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, cu
                     <CustomerFlatItem
                         reserveInfoArray={itemInfo.resverInfoList || []}
                         reserveStatus={itemInfo.reserveStatus}
-                        staffId={reserveInfoArray[checkStylistIndex].staffId}
+                        staffId={stylistReserveInfo.staffId}
                         timeIndex={index}
                         reserveFlag={reserveFlag}
                         customerCardEvent={customerCardEvent}/>
@@ -85,8 +85,6 @@ export default React.memo(({reserveInfoArray, checkStylistIndex, reserveFlag, cu
             </View>
         )
     })
-
-    console.log("customerFlatData", JSON.stringify(customerFlatData))
 
     return (
         <View style={{flex: 1}}>

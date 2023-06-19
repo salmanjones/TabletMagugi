@@ -129,3 +129,4 @@ export const staffWorks = `${hostApp}/staff/homepage/data/list`;
 export const getReserveInfo = `${hostBms}/tablet/new/reserve/find/reserve/list`;
 //员工占用
 export const saveReserveVocation = `${hostBms}/tablet/new/reserve/save/staff/vocation`;
+export const cancelStaffReserve = `${hostBms}/tablet/new/reserve/cancal/staff/vocation/reserve`;

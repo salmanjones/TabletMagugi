@@ -10,7 +10,7 @@ export default React.memo(({reserveInfoArray, checkStylistEvent, reserveFlag}) =
         setCheckIndex(index)
         // 展示预约列表
         checkStylistEvent(index)
-    }, [])
+    }, [reserveFlag])
 
     const Item = React.memo(({index, title, validCount, invalidCount}) => {
         const showName = title.length > 6 ? title.substring(0,6) : title
