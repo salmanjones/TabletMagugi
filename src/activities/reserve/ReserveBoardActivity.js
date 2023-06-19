@@ -11,6 +11,7 @@ import {getReserveInfo, saveReserveVocation, cancelStaffReserve} from "../../ser
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
+import {showMessageExt} from "../../utils";
 
 
 export const ReserveBoardActivity = props => {
@@ -47,8 +48,6 @@ export const ReserveBoardActivity = props => {
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
             if ("6000" == code) {
-                console.log('========================')
-                console.log(JSON.stringify(backData))
                 setReserveInfoArray(data)
             } else {
                 showToast("信息加载失败")
@@ -116,35 +115,45 @@ export const ReserveBoardActivity = props => {
             case 'addReserve': // 散客预约
                 break;
             case 'addOccupy':  // 时间占用
-                setLoading(true)
-                const {reserveTime, staffId} = extra
-                const storeId = reduxState.auth.userInfo.storeId
-                saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
-                    const {code, data} = backData
-                    if(code != '6000'){ // 占用异常
-                        Alert.alert(
-                            '系统提示',
-                            data || '占用异常',
-                            [
-                                {
-                                    text: '知道了',
+                Alert.alert('系统提示', "确定要占用该时段吗", [
+                    {
+                        text: '是',
+                        onPress: () => {
+                            setLoading(true)
+                            const {reserveTime, staffId} = extra
+                            const storeId = reduxState.auth.userInfo.storeId
+                            saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
+                                const {code, data} = backData
+                                if(code != '6000'){ // 占用异常
+                                    Alert.alert(
+                                        '系统提示',
+                                        data || '占用异常',
+                                        [
+                                            {
+                                                text: '知道了',
+                                            }
+                                        ]
+                                    );
+                                    callBack && callBack(backData)
+                                }else{
+                                    callBack && callBack(backData)
                                 }
-                            ]
-                        );
-                        callBack && callBack(backData)
-                    }else{
-                        callBack && callBack(backData)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                    callBack && callBack({code: '7000', data: ''})
-                }).finally(_ => {
-                    setLoading(false)
-                })
+                            }).catch(e => {
+                                console.log(e)
+                                callBack && callBack({code: '7000', data: ''})
+                            }).finally(_ => {
+                                setLoading(false)
+                            })
+                        },
+                    },
+                    {
+                        text: '否',
+                    },
+                ]);
                 break;
             case 'cancelReserve': // 0:取消预约 1:取消占用
                 const {type, recordId} = extra
-                const tips = type == '0' ? '您确定要取消预约吗?':'您确定要取消占用吗?'
+                const tips = type == '0' ? '确定要取消该预约吗?':'确定要取消该占用吗?'
                 Alert.alert('系统提示', tips, [
                     {
                         text: '是',
@@ -164,6 +173,9 @@ export const ReserveBoardActivity = props => {
                                     );
                                     callBack && callBack(backData)
                                 }else{
+                                    showMessageExt("取消成功", {
+                                        position: Toast.positions.CENTER
+                                    })
                                     callBack && callBack(backData)
                                 }
                             }).catch(e => {
