@@ -9,43 +9,27 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
 
-    // 模拟分页加载
-    const pageSize = 5
-    const loadMoreData = () => {
-        let customerReserveList = []
-        if (reserveFlag == 'valid') {
-            customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
-        } else {
-            customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
-        }
-
-        if (customerReserveList.length != 0 && customerFlatData.length == customerReserveList.length) {
-            return
-        }
-
-        setIsLoading(true)
-        setTimeout(() => {
-            const start = customerFlatData.length
-            const end = start + pageSize
-            const customerFlatArray = customerFlatData
-            customerReserveList.slice(start, end).forEach(item => {
-                customerFlatArray.push(item)
-            })
-            setCustomerFlatData(customerFlatArray)
-            setIsLoading(false)
-        }, 500)
-    }
-
     // 当预约信息刷新与切换Tab时触发
     React.useEffect(() => {
-        let customerReserveList = []
-        if (reserveFlag == 'valid') {
-            customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
-        } else {
-            customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
-        }
+        setIsLoading(true)
 
-        setCustomerFlatData(customerReserveList.slice(0, pageSize))
+        let showTimerId = setTimeout(()=>{
+            let customerReserveList = []
+            if (reserveFlag == 'valid') {
+                customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
+            } else {
+                customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
+            }
+            setCustomerFlatData(customerReserveList)
+            showTimerId && clearTimeout(showTimerId)
+        }, 5)
+
+        // 视觉loading
+        let loadingTimerId = setTimeout(()=>{
+            setIsLoading(false)
+            loadingTimerId && clearTimeout(loadingTimerId)
+        }, 800)
+
     }, [stylistReserveInfo, reserveFlag])
 
     const TimerPanel = React.memo(({itemInfo, index, staffId}) => {
@@ -100,9 +84,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                 }
                 keyExtractor={(item, index) => {
                     return item['reserveTime']
-                }}
-                onEndReachedThreshold={0.1}
-                onEndReached={loadMoreData}/>
+                }}/>
         </View>
     )
 })
