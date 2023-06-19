@@ -78,6 +78,12 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                         const isCheck = checkCustomerIndex == globalIndex
                         if(customer.isReseve == '3'){ // 占用状态
                             cardStyle.push(ReserveBoardStyles.reserveCustomerBusyBox)
+
+                            // 是否过期预约
+                            if (reserveFlag != 'valid') {
+                                cardStyle.push({opacity: 0.8})
+                            }
+
                             // 选中
                             if (isCheck) {
                                 cardStyle.push({
@@ -98,15 +104,18 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         style={cardStyle}
                                         source={require('@imgPath/reserve_customer_detail_busy_bg.png')}>
                                         {/*取消占用*/}
-                                        <TouchableOpacity
-                                            style={ReserveBoardStyles.reserveCustomerDelIconBox}
-                                            onPress={() => {
-                                                customerClickEvent('cancelReserve', {type: '1', recordId: customer.recordId, index: idx}) // 占用取消
-                                            }}>
-                                            <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
-                                                   resizeMode={'contain'}
-                                                   source={require('@imgPath/reserve_customer_detail_del.png')}/>
-                                        </TouchableOpacity>
+                                        {reserveFlag == 'valid' && (
+                                            <TouchableOpacity
+                                                style={ReserveBoardStyles.reserveCustomerDelIconBox}
+                                                onPress={() => {
+                                                    customerClickEvent('cancelReserve', {type: '1', recordId: customer.recordId, index: idx}) // 占用取消
+                                                }}>
+                                                <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
+                                                       resizeMode={'contain'}
+                                                       source={require('@imgPath/reserve_customer_detail_del.png')}/>
+                                            </TouchableOpacity>
+                                        )}
+
 
                                         {/*预约占用状态*/}
                                         <View style={ReserveBoardStyles.reserveStylistBusyBox}>
