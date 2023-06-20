@@ -9,6 +9,8 @@ import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
 import {getReserveInfo, saveReserveVocation, cancelStaffReserve} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
+import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
+import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {showMessageExt} from "../../utils";
@@ -42,6 +44,10 @@ export const ReserveBoardActivity = props => {
     const [memberState, setMemberState] = useState({
         age: -1
     })
+    // 顾客预约子组件
+    const customerReservePanelRef = useRef(null);
+    // 散客预约子组件
+    const guestReservePanelRef = useRef(null);
 
     // 获取预约数据
     const getReserveList = (params) => {
@@ -113,6 +119,7 @@ export const ReserveBoardActivity = props => {
                 memberPanelRef.current.showRightPanel()
                 break
             case 'memberReserve': // 会员预约
+                customerReservePanelRef.current.showRightPanel()
                 break;
             case 'guestReserve': // 散客预约
                 break;
@@ -247,7 +254,11 @@ export const ReserveBoardActivity = props => {
                 </View>
             </View>
             {/*会员信息面板*/}
-            <MemberPanel ref={memberPanelRef} memberInfo={memberState}></MemberPanel>
+            <MemberPanel ref={memberPanelRef} memberInfo={memberState}/>
+            {/*顾客预约面板信息*/}
+            <CustomerReservePanel ref={customerReservePanelRef}/>
+            {/*散客预约*/}
+            <GuestReservePanel ref={guestReservePanelRef}/>
         </View>
     )
 }

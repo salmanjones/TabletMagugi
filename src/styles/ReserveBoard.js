@@ -280,6 +280,14 @@ export const ReserveBoardStyles = StyleSheet.create({
     reserveCustomerDetailWrap:{
         position:"relative"
     },
+    reserveCustomerServing:{
+        width: PixelUtil.size(92),
+        height: PixelUtil.size(36),
+        position: 'absolute',
+        zIndex: 100,
+        top: PixelUtil.size(-6),
+        right: PixelUtil.size(-12)
+    },
     reserveCustomerDetailBox:{
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),

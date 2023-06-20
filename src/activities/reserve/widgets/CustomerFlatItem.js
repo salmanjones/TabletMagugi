@@ -56,10 +56,11 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
 
     if (reserveInfoArray.length > 0) {
         return (
-            <View
-                style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
+            <View style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
                     timerReserveList.map((customer, idx) => {
+                        // 顾客是否已到店 0:否 1:是
+                        const isStartWork = customer.isStartWork
                         // 已小于当前时间点是否可进行互动操作 0否，1是
                         const isOper = customer.isOper
                         // 全局索引
@@ -207,6 +208,15 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         checkedCustomerHandle(globalIndex)
                                         customerClickEvent('showDetail', customer) // 查看详情
                                     }}>
+                                    {/*已到店判定*/}
+                                    {
+                                        isStartWork == '1' && (
+                                            <Image
+                                                resizeMode={"contain"}
+                                                style={ReserveBoardStyles.reserveCustomerServing}
+                                                source={require('@imgPath/reserve_customer_is_serving.png')}></Image>
+                                        )
+                                    }
                                     <ImageBackground
                                         resizeMode={"stretch"}
                                         style={cardStyle}
@@ -216,7 +226,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         }>
                                         {/*取消预约*/}
                                         {
-                                            isOper == '1' && (
+                                            isStartWork == '0' && isOper == '1' && (
                                                 <TouchableOpacity
                                                     style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                                     onPress={() => {
