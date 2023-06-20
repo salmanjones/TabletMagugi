@@ -150,7 +150,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerIconBox}
                                             onPress={()=>{
-                                                customerClickEvent('addReserve', customer) // 散客预约
+                                                customerClickEvent('memberReserve', customer) // 散客预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                    resizeMode={'contain'}

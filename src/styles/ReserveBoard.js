@@ -9,6 +9,30 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
+    reserveButtonSanke:{
+        position: "absolute",
+        right: PixelUtil.size(-18),
+        bottom: PixelUtil.size(212),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(160),
+        zIndex: 1000
+    },
+    reserveButtonSankeIcon:{
+        width: '100%',
+        height: '100%'
+    },
+    reserveButtonRevert:{
+        position: "absolute",
+        right: PixelUtil.size(-18),
+        bottom: PixelUtil.size(52),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(160),
+        zIndex: 1001
+    },
+    reserveButtonRevertIcon:{
+        width: '100%',
+        height: '100%'
+    },
     reserveFlagBox:{
         width: '100%',
         height: PixelUtil.size(142),

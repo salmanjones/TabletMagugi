@@ -1,6 +1,6 @@
 // 预约看板
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import Spinner from "react-native-loading-spinner-overlay";
 import Toast from "react-native-root-toast";
 import dayjs from "dayjs";
@@ -68,7 +68,7 @@ export const ReserveBoardActivity = props => {
         setLoading(true)
 
         // 准备参数
-        const reloadDelay = 1000 * 60 * 1
+        const reloadDelay = 1000 * 60 * 10 // 10分钟刷新一次预约列表
         const params = {
             companyId: reduxState.auth.userInfo.companyId,
             storeId: reduxState.auth.userInfo.storeId,
@@ -112,7 +112,9 @@ export const ReserveBoardActivity = props => {
             case 'showDetail': // 查看详情
                 memberPanelRef.current.showRightPanel()
                 break
-            case 'addReserve': // 散客预约
+            case 'memberReserve': // 会员预约
+                break;
+            case 'guestReserve': // 散客预约
                 break;
             case 'addOccupy':  // 时间占用
                 Alert.alert('系统提示', "确定要占用该时段吗", [
@@ -244,6 +246,7 @@ export const ReserveBoardActivity = props => {
                     </View>
                 </View>
             </View>
+            {/*会员信息面板*/}
             <MemberPanel ref={memberPanelRef} memberInfo={memberState}></MemberPanel>
         </View>
     )

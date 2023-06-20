@@ -1,36 +1,38 @@
-import React, {useState} from "react";
-import {FlatList, Image, Text, View} from "react-native";
+import React, {useRef, useState} from "react";
+import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
+import dayjs from "dayjs";
 
 export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent}) => {
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
-
+    // 列表组件
+    const flatListRef = useRef(null);
     // 当预约信息刷新与切换Tab时触发
     React.useEffect(() => {
         setIsLoading(true)
-
-        let showTimerId = setTimeout(()=>{
-            let customerReserveList = []
-            if (reserveFlag == 'valid') {
-                customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
-            } else {
-                customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
-            }
-            setCustomerFlatData(customerReserveList)
-            showTimerId && clearTimeout(showTimerId)
-        }, 5)
-
-        // 视觉loading
+        // 视觉loading 防止卡顿
         let loadingTimerId = setTimeout(()=>{
             setIsLoading(false)
             loadingTimerId && clearTimeout(loadingTimerId)
         }, 300)
 
+        // 渲染页面
+        let customerReserveList = []
+        if (reserveFlag == 'valid') {
+            customerReserveList = stylistReserveInfo['staffNowReseverList'] || []
+        } else {
+            customerReserveList = stylistReserveInfo['staffPassReseverList'] || []
+        }
+        setCustomerFlatData(customerReserveList)
     }, [stylistReserveInfo, reserveFlag])
+
+    const goToTop = ()=>{
+        flatListRef.current?.scrollToIndex({animated: true, index: 0})
+    }
 
     const TimerPanel = React.memo(({itemInfo, index, staffId}) => {
         return (
@@ -50,7 +52,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                         </Text>
                         {/*即将到店提示*/}
                         {
-                            itemInfo.reserveStatus == '1' && (itemInfo.resverInfoList && itemInfo.resverInfoList.length > 0) && (
+                            itemInfo.reserveStatus == '1' && (
                                 <View style={ReserveBoardStyles.reserveCustomerRecentTips}>
                                     <Text style={ReserveBoardStyles.reserveCustomerRecentTipsTxt}>即将到店</Text>
                                 </View>
@@ -74,7 +76,30 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         <View style={{flex: 1}}>
             {/*加载中*/}
             <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
+            {/*散客预约*/}
+            <TouchableOpacity
+                style={ReserveBoardStyles.reserveButtonSanke}
+                onPress={()=>{
+                    customerCardEvent("guestReserve", {})
+                }}>
+                <Image
+                    style={ReserveBoardStyles.reserveButtonSankeIcon}
+                    resizeMode={'contain'}
+                    source={require('@imgPath/reserve_customer_button_sanke.png')}/>
+            </TouchableOpacity>
+            {/*回到当前位置*/}
+            <TouchableOpacity
+                style={ReserveBoardStyles.reserveButtonRevert}
+                onPress={()=>{
+                    goToTop()
+                }}>
+                <Image
+                    style={ReserveBoardStyles.reserveButtonRevertIcon}
+                    resizeMode={'contain'}
+                    source={require('@imgPath/reserve_customer_button_revert.png')}/>
+            </TouchableOpacity>
             <FlatList
+                ref={flatListRef}
                 data={customerFlatData}
                 initialNumToRender={5}
                 renderItem={
@@ -83,7 +108,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                     }
                 }
                 keyExtractor={(item, index) => {
-                    return item['reserveTime']
+                    return item['reserveTime'] + index
                 }}/>
         </View>
     )
