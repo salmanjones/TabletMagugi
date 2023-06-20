@@ -407,7 +407,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         fontWeight: '700',
         fontSize: PixelUtil.size(28),
         color: '#ffffff',
-        maxWidth: PixelUtil.size(140),
+        maxWidth: PixelUtil.size(146),
     },
     reserveCustomerSexIcon:{
         marginLeft: PixelUtil.size(12),

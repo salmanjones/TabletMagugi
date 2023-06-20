@@ -194,6 +194,11 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                 })
                             }
 
+                            let staffName = customer.reserveStaffName || ""
+                            if(staffName && staffName.length > 3){
+                                staffName = staffName.substring(0, 3)
+                            }
+
                             return (
                                 // 预约卡片
                                 <TouchableOpacity
@@ -426,7 +431,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                                         ? ReserveBoardStyles.reserveCustomerTypeStaff // 有档案
                                                         : [ReserveBoardStyles.reserveCustomerTypeStaff, ReserveBoardStyles.reserveCustomerBlackTxt] // 无档案
                                                     }>
-                                                    {customer.reserveStaffName}
+                                                    {staffName}
                                                 </Text>
                                             </View>
                                         </View>
