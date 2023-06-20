@@ -60,6 +60,8 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                 style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
                     timerReserveList.map((customer, idx) => {
+                        // 已小于当前时间点是否可进行互动操作 0否，1是
+                        const isOper = customer.isOper
                         // 全局索引
                         const globalIndex = timeIndex + '-' + idx
                         // 样式
@@ -104,7 +106,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         style={cardStyle}
                                         source={require('@imgPath/reserve_customer_detail_busy_bg.png')}>
                                         {/*取消占用*/}
-                                        {reserveFlag == 'valid' && (
+                                        {reserveFlag == 'valid' && isOper == '1' && (
                                             <TouchableOpacity
                                                 style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                                 onPress={() => {
@@ -128,7 +130,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                 </TouchableOpacity>
                             )
                         }else if (customer.isReseve == '0' || customer.isReseve == '2') { // 0占用｜预约 2仅预约
-                             cardStyle.push(ReserveBoardStyles.reserveCustomerReadyBox)
+                            cardStyle.push(ReserveBoardStyles.reserveCustomerReadyBox)
 
                             // 选中
                             if (isCheck) {
@@ -208,18 +210,22 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                             : customer.isMember == '1' ? require('@imgPath/reserve_customer_detail_invalid_bg.png') : require('@imgPath/reserve_customer_detail_person_bg.png') // 无效预约
                                         }>
                                         {/*取消预约*/}
-                                        <TouchableOpacity
-                                            style={ReserveBoardStyles.reserveCustomerDelIconBox}
-                                            onPress={() => {
-                                                customerClickEvent('cancelReserve', {type: '0', recordId: customer.recordId, index: idx}) // 取消预约
-                                            }}>
-                                            <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
-                                                   resizeMode={'contain'}
-                                                   source={customer.isMember == '1'
-                                                       ? require('@imgPath/reserve_customer_detail_del.png') // 有档案
-                                                       : require('@imgPath/reserve_customer_detail_del_bl.png') // 无档案
-                                                   }/>
-                                        </TouchableOpacity>
+                                        {
+                                            isOper == '1' && (
+                                                <TouchableOpacity
+                                                    style={ReserveBoardStyles.reserveCustomerDelIconBox}
+                                                    onPress={() => {
+                                                        customerClickEvent('cancelReserve', {type: '0', recordId: customer.recordId, index: idx}) // 取消预约
+                                                    }}>
+                                                    <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
+                                                           resizeMode={'contain'}
+                                                           source={customer.isMember == '1'
+                                                               ? require('@imgPath/reserve_customer_detail_del.png') // 有档案
+                                                               : require('@imgPath/reserve_customer_detail_del_bl.png') // 无档案
+                                                           }/>
+                                                </TouchableOpacity>
+                                            )
+                                        }
                                         {/*个人信息*/}
                                         <Image
                                             style={ReserveBoardStyles.reserveCustomerAvatar}
