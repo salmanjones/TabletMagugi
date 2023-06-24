@@ -65,6 +65,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                         reserveStatus={itemInfo.reserveStatus}
                         reserveFlag={reserveFlag}
                         timeIndex={index}
+                        reserveTime={itemInfo.reserveTime}
                         staffId={stylistReserveInfo.staffId}
                         customerCardEvent={customerCardEvent}/>
                 </View>

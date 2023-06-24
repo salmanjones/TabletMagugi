@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
 import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
@@ -46,11 +46,21 @@ export const ReserveBoardActivity = props => {
     })
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);
+    // 顾客预约基础数据
+    const [reserveBaseData, setReserveBaseData] = useState({
+        reserveResoures: [],
+        reserveInfoList: []
+    })
     // 散客预约子组件
     const guestReservePanelRef = useRef(null);
 
     // 获取预约数据
-    const getReserveList = (params) => {
+    const getReserveList = (callBack) => {
+        setLoading(true)
+        const params = {
+            companyId: reduxState.auth.userInfo.companyId,
+            storeId: reduxState.auth.userInfo.storeId,
+        }
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
             if ("6000" == code) {
@@ -63,6 +73,7 @@ export const ReserveBoardActivity = props => {
             showToast("信息加载失败")
         }).finally(() => {
             setLoading(false)
+            callBack && callBack()
             // 初次加载完毕，不再展示加载信息
             console.log('数据请求完成')
         })
@@ -70,22 +81,14 @@ export const ReserveBoardActivity = props => {
 
     // 初次加载处理
     useEffect(() => {
-        // 加载中
-        setLoading(true)
-
         // 准备参数
         const reloadDelay = 1000 * 60 * 10 // 10分钟刷新一次预约列表
-        const params = {
-            companyId: reduxState.auth.userInfo.companyId,
-            storeId: reduxState.auth.userInfo.storeId,
-        }
-
         // 首次获取数据
-        getReserveList(params)
+        getReserveList()
 
         // 定时刷新数据
         const timer = setInterval(() => {
-            getReserveList(params)
+            getReserveList()
         }, reloadDelay)
 
         return () => {
@@ -114,12 +117,34 @@ export const ReserveBoardActivity = props => {
 
     // 客户卡片点击
     const customerCardPressEvent = React.useCallback((type, extra, callBack) => {
+        const storeId = reduxState.auth.userInfo.storeId
+
         switch (type) {
             case 'showDetail': // 查看详情
                 memberPanelRef.current.showRightPanel()
                 break
             case 'memberReserve': // 会员预约
-                customerReservePanelRef.current.showRightPanel()
+                setLoading(true)
+                const {staffId, reserveTime} = extra
+                getReserveInitData({
+                    storeId,
+                    staffId
+                }).then(backData=>{
+                    const {code, data} = backData
+                    if(code == '6000'){
+                        const timeReserve = dayjs().format("YYYY-MM-DD ") + reserveTime
+                        data['reserveTime'] = timeReserve
+                        setReserveBaseData(data)
+                        customerReservePanelRef.current.showRightPanel()
+                    }else{
+                        showMessageExt("获取发型师预约信息失败")
+                    }
+                }).catch(e=>{
+                    console.error("获取发型师预约信息失败", e)
+                    showMessageExt("获取发型师预约信息失败")
+                }).finally(_=>{
+                    setLoading(false)
+                })
                 break;
             case 'guestReserve': // 散客预约
                 break;
@@ -130,7 +155,6 @@ export const ReserveBoardActivity = props => {
                         onPress: () => {
                             setLoading(true)
                             const {reserveTime, staffId} = extra
-                            const storeId = reduxState.auth.userInfo.storeId
                             saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
                                 const {code, data} = backData
                                 if(code != '6000'){ // 占用异常
@@ -256,7 +280,7 @@ export const ReserveBoardActivity = props => {
             {/*会员信息面板*/}
             <MemberPanel ref={memberPanelRef} memberInfo={memberState}/>
             {/*顾客预约面板信息*/}
-            <CustomerReservePanel ref={customerReservePanelRef}/>
+            <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*散客预约*/}
             <GuestReservePanel ref={guestReservePanelRef}/>
         </View>

@@ -129,4 +129,11 @@ export const staffWorks = `${hostApp}/staff/homepage/data/list`;
 export const getReserveInfo = `${hostBms}/tablet/new/reserve/find/reserve/list`;
 //员工占用
 export const saveReserveVocation = `${hostBms}/tablet/new/reserve/save/staff/vocation`;
+//取消预约、占用
 export const cancelStaffReserve = `${hostBms}/tablet/new/reserve/cancal/staff/vocation/reserve`;
+//获取预约基础信息
+export const getReserveInitData = `${hostBms}/tablet/new/reserve/find/reserve/info/init`;
+// 获取appuser用户信息
+export const getAppUserInfo = `${hostBms}/tablet/new/reserve/find/reserve/appuser/info`
+//保存顾客预约
+export const saveCustomerReserve = `${hostBms}/tablet/new/reserve/save/new/reserve/info`

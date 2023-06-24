@@ -65,7 +65,7 @@ export const showMessage = (msg, native, callback, config) => {
     }
 };
 
-export const showMessageExt = (msg, config, native, callback) => {
+export const showMessageExt = (msg, config = {}, native, callback) => {
     if (!native) {
         Toast.show(msg, {
             duration: config.duration || Toast.durations.SHORT,

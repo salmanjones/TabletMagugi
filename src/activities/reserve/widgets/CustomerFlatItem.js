@@ -11,7 +11,7 @@ import {getImage, ImageQutity, PixelUtil} from "../../../utils";
  */
 
 // 顾客预约列表
-export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId, reserveFlag, customerCardEvent}) => {
+export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, reserveTime, staffId, reserveFlag, customerCardEvent}) => {
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
     const [timerReserveList, setTimerReserveList] = useState(reserveInfoArray)
 
@@ -153,7 +153,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, staffId,
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerIconBox}
                                             onPress={()=>{
-                                                customerClickEvent('memberReserve', customer) // 散客预约
+                                                customerClickEvent('memberReserve', {staffId, reserveTime}) // 顾客预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                    resizeMode={'contain'}

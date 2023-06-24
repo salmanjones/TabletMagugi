@@ -32,3 +32,36 @@ export const cancelStaffReserve = params => {
         return backData;
     });
 }
+
+/**
+ * 新收银：通过手机号查询顾客信息(Appuser)
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getAppUserInfo = params => {
+    return callService(api.getAppUserInfo, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 获取预约需要的基础数据
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getReserveInitData = params => {
+    return callService(api.getReserveInitData, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 保存顾客预约
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const saveCustomerReserve = params => {
+    return callService(api.saveCustomerReserve, params).then(backData => {
+        return backData;
+    });
+}
