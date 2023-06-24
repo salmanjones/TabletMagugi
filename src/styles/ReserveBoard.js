@@ -486,5 +486,10 @@ export const ReserveBoardStyles = StyleSheet.create({
     },
     reserveCustomerBtnRight:{
         marginLeft: PixelUtil.size(32)
+    },
+    noReserveEmpty: {
+        width: PixelUtil.size(440),
+        height: PixelUtil.size(440),
+        marginTop: PixelUtil.size(-160)
     }
 })

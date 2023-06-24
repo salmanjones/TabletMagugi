@@ -73,44 +73,56 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         )
     })
 
-    return (
-        <View style={{flex: 1}}>
-            {/*加载中*/}
-            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
-            {/*散客预约*/}
-            <TouchableOpacity
-                style={ReserveBoardStyles.reserveButtonSanke}
-                onPress={()=>{
-                    customerCardEvent("guestReserve", {})
-                }}>
-                <Image
-                    style={ReserveBoardStyles.reserveButtonSankeIcon}
-                    resizeMode={'contain'}
-                    source={require('@imgPath/reserve_customer_button_sanke.png')}/>
-            </TouchableOpacity>
-            {/*回到当前位置*/}
-            <TouchableOpacity
-                style={ReserveBoardStyles.reserveButtonRevert}
-                onPress={()=>{
-                    goToTop()
-                }}>
-                <Image
-                    style={ReserveBoardStyles.reserveButtonRevertIcon}
-                    resizeMode={'contain'}
-                    source={require('@imgPath/reserve_customer_button_revert.png')}/>
-            </TouchableOpacity>
-            <FlatList
-                ref={flatListRef}
-                data={customerFlatData}
-                initialNumToRender={5}
-                renderItem={
-                    ({item, index}) => {
-                        return <TimerPanel itemInfo={item} index={index} staffId={item.staffId}/>
+    if (customerFlatData && customerFlatData.length > 0){
+         return (
+            <View style={{flex: 1}}>
+                {/*加载中*/}
+                <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
+                {/*散客预约*/}
+                <TouchableOpacity
+                    style={ReserveBoardStyles.reserveButtonSanke}
+                    onPress={()=>{
+                        customerCardEvent("guestReserve", {})
+                    }}>
+                    <Image
+                        style={ReserveBoardStyles.reserveButtonSankeIcon}
+                        resizeMode={'contain'}
+                        source={require('@imgPath/reserve_customer_button_sanke.png')}/>
+                </TouchableOpacity>
+                {/*回到当前位置*/}
+                <TouchableOpacity
+                    style={ReserveBoardStyles.reserveButtonRevert}
+                    onPress={()=>{
+                        goToTop()
+                    }}>
+                    <Image
+                        style={ReserveBoardStyles.reserveButtonRevertIcon}
+                        resizeMode={'contain'}
+                        source={require('@imgPath/reserve_customer_button_revert.png')}/>
+                </TouchableOpacity>
+                <FlatList
+                    ref={flatListRef}
+                    data={customerFlatData}
+                    initialNumToRender={5}
+                    renderItem={
+                        ({item, index}) => {
+                            return <TimerPanel itemInfo={item} index={index} staffId={item.staffId}/>
+                        }
                     }
-                }
-                keyExtractor={(item, index) => {
-                    return item['reserveTime'] + index
-                }}/>
-        </View>
-    )
+                    keyExtractor={(item, index) => {
+                        return item['reserveTime'] + index
+                    }}/>
+            </View>
+        )
+    }else{
+        return (
+            <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
+                <Image style={ReserveBoardStyles.noReserveEmpty}
+                       resizeMode={'contain'}
+                       source={require('@imgPath/reserve_customer_empty.png')}></Image>
+            </View>
+        )
+    }
+
+
 })

@@ -270,7 +270,7 @@ export const ReserveBoardActivity = props => {
                     <View style={ReserveBoardStyles.reserveCustomerBox}>
                         {reserveInfoArray.length > 0 && (
                             <CustomerWidget
-                                stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]}
+                                stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
                                 reserveFlag={reserveFlag}
                                 customerCardEvent={customerCardPressEvent}/>
                         )}
