@@ -34,7 +34,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         flatListRef.current?.scrollToIndex({animated: true, index: 0})
     }
 
-    const TimerPanel = React.memo(({itemInfo, index, staffId}) => {
+    const TimerPanel = React.memo(({itemInfo, index}) => {
         return (
             // 时间轴面板
             <View style={ReserveBoardStyles.reserveCustomersWrap}>
@@ -67,6 +67,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                         timeIndex={index}
                         reserveTime={itemInfo.reserveTime}
                         staffId={stylistReserveInfo.staffId}
+                        canCancel={itemInfo.isDelete} // 已小于当前时间点是否可进行互动操作 0否，1是
                         customerCardEvent={customerCardEvent}/>
                 </View>
             </View>
@@ -123,6 +124,4 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
             </View>
         )
     }
-
-
 })

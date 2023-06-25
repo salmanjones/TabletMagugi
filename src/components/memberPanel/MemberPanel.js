@@ -13,6 +13,7 @@ import {getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {MemberPanelStyles} from "../../styles/MemberPanel";
 import {CouponWidget} from "./widgets/CouponWidget"
+import {CardWidget} from "./widgets/CardWidget"
 
 /**
  * 会员右滑组件
@@ -184,6 +185,11 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 {
                                     tabIndex == 0 && (
                                         <CouponWidget couponArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '1'},{id:5, type: '2'},{id:6, type: '3'}]}/>
+                                    )
+                                }
+                                {
+                                    tabIndex == 1 && (
+                                        <CardWidget cardArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '4'},{id:5, type: '1'},{id:6, type: '2'},{id:7, type: '3'},{id:8, type: '4'}]}/>
                                     )
                                 }
                             </View>
