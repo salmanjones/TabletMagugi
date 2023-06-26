@@ -123,9 +123,8 @@ export const ReserveBoardActivity = props => {
     }, [])
 
     // 客户卡片点击
-    const customerCardPressEvent = React.useCallback((type, extra, callBack) => {
+    const customerCardPressEvent = React.useCallback((type, extra) => {
         const storeId = reduxState.auth.userInfo.storeId
-
         switch (type) {
             case 'showDetail': // 查看详情
                 const customerInfo = extra['customer']
@@ -195,13 +194,12 @@ export const ReserveBoardActivity = props => {
                                             }
                                         ]
                                     );
-                                    callBack && callBack(backData)
                                 }else{
-                                    callBack && callBack(backData)
+                                    // 重新加载数据
+                                    getReserveList()
                                 }
                             }).catch(e => {
                                 console.log(e)
-                                callBack && callBack({code: '7000', data: ''})
                             }).finally(_ => {
                                 setLoading(false)
                             })
@@ -232,20 +230,19 @@ export const ReserveBoardActivity = props => {
                                             }
                                         ]
                                     );
-                                    callBack && callBack(backData)
                                 }else{
                                     showMessageExt("取消成功", {
                                         position: Toast.positions.CENTER
                                     })
-                                    callBack && callBack(backData)
+
+                                    // 重新加载数据
+                                    getReserveList()
                                 }
                             }).catch(e => {
                                 console.log(e)
-                                callBack && callBack({code: '7000', data: ''})
                             }).finally(_ => {
                                 setLoading(false)
                             })
-
                         },
                     },
                     {

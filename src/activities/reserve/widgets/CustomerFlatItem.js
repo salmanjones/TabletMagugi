@@ -23,35 +23,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
 
     // 处理点击事件
     const customerClickEvent = (type, extra)=>{
-        customerCardEvent(type, extra, (backData)=>{
-            const {code, data} = backData
-            const {index} = extra
-            const timerReserveArray = [...timerReserveList]
-
-            switch (type) {
-                case 'addOccupy':  // 时间占用
-                    if(code == '6000'){
-                        timerReserveArray[index]['isReseve'] = "3"
-                        timerReserveArray[index]['recordId'] = data
-                        setTimerReserveList(timerReserveArray)
-                    }
-                    break;
-                case 'cancelReserve':
-                    console.log("backData", timerReserveList.length)
-                    if(code == '6000'){ // 取消预约｜取消占用 成功
-                        if(timerReserveList.length > 1){
-                            timerReserveArray[index]['isReseve'] = '2'
-                            timerReserveArray[index]['recordId'] = ''
-                            setTimerReserveList(timerReserveArray)
-                        }else{
-                            timerReserveArray[index]['isReseve'] = '0'
-                            timerReserveArray[index]['recordId'] = ''
-                            setTimerReserveList(timerReserveArray)
-                        }
-                    }
-                    break;
-            }
-        })
+        customerCardEvent(type, extra)
     }
 
     if (reserveInfoArray.length > 0) {
