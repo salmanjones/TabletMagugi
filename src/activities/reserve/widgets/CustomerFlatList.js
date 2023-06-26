@@ -101,6 +101,17 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                             resizeMode={'contain'}
                             source={require('@imgPath/reserve_customer_button_sanke.png')}/>
                     </TouchableOpacity>
+                    {/*刷新列表*/}
+                    <TouchableOpacity
+                        style={ReserveBoardStyles.reserveButtonRefresh}
+                        onPress={()=>{
+                            customerCardEvent("reloadData", {})
+                        }}>
+                        <Image
+                            style={ReserveBoardStyles.reserveButtonSankeIcon}
+                            resizeMode={'contain'}
+                            source={require('@imgPath/reserve_customer_button_refresh.png')}/>
+                    </TouchableOpacity>
                     {/*回到当前位置*/}
                     <TouchableOpacity
                         style={ReserveBoardStyles.reserveButtonRevert}

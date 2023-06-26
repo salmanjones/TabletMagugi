@@ -12,6 +12,14 @@ export const ReserveBoardStyles = StyleSheet.create({
     reserveButtonSanke:{
         position: "absolute",
         right: PixelUtil.size(-18),
+        bottom: PixelUtil.size(372),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(160),
+        zIndex: 1000
+    },
+    reserveButtonRefresh:{
+        position: "absolute",
+        right: PixelUtil.size(-18),
         bottom: PixelUtil.size(212),
         width: PixelUtil.size(160),
         height: PixelUtil.size(160),
