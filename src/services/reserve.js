@@ -65,3 +65,12 @@ export const saveCustomerReserve = params => {
         return backData;
     });
 }
+
+/**
+ * 获取顾客所有信息
+ */
+export const getCustomerDetail = params => {
+    return callService(api.getCustomerDetail, params).then(backData => {
+        return backData;
+    });
+}

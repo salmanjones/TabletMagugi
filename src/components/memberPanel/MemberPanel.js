@@ -72,10 +72,16 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         });
     }
 
+    /// 获取控件展示状态
+    const getShowState = ()=>{
+        return animateState.sliderShow
+    }
+
     /// 向父组件开放方法
     useImperativeHandle(refArgs, () => ({
         showRightPanel,
-        hideRightPanel
+        hideRightPanel,
+        getShowState,
     }))
 
     // 页签数据

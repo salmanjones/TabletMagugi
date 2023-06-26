@@ -133,7 +133,9 @@ export const saveReserveVocation = `${hostBms}/tablet/new/reserve/save/staff/voc
 export const cancelStaffReserve = `${hostBms}/tablet/new/reserve/cancal/staff/vocation/reserve`;
 //获取预约基础信息
 export const getReserveInitData = `${hostBms}/tablet/new/reserve/find/reserve/info/init`;
-// 获取appuser用户信息
+//获取appuser用户信息
 export const getAppUserInfo = `${hostBms}/tablet/new/reserve/find/reserve/appuser/info`
 //保存顾客预约
 export const saveCustomerReserve = `${hostBms}/tablet/new/reserve/save/new/reserve/info`
+//获取顾客信息
+export const getCustomerDetail = `${hostBms}/tablet/new/reserve/find/member/all/info`

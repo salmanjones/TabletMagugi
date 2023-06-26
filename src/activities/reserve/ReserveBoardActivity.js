@@ -7,14 +7,13 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
 import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {showMessageExt} from "../../utils";
-
 
 export const ReserveBoardActivity = props => {
     // 路由
@@ -40,9 +39,8 @@ export const ReserveBoardActivity = props => {
     const [stylistCheckedIndex, setStylistCheckedIndex] = useState(0)
     // 会员子组件
     const memberPanelRef = useRef(null);
-    // 会员信息
-    const [memberState, setMemberState] = useState({
-        age: -1
+    // 顾客信息
+    const [customerState, setCustomerState] = useState({
     })
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);
@@ -82,16 +80,17 @@ export const ReserveBoardActivity = props => {
     // 初次加载处理
     useEffect(() => {
         // 准备参数
-        const reloadDelay = 1000 * 60 * 5 // 5分钟刷新一次预约列表
+        const reloadDelay = 1000 * 60 * 10 // 10分钟刷新一次预约列表
         // 首次获取数据
         getReserveList()
 
         // 定时刷新数据
         const timer = setInterval(() => {
+            const memberPanelShow = memberPanelRef.current.getShowState()
+            const reserveMemberShow = customerReservePanelRef.current.getShowState()
+            const reserveCustomerShow = guestReservePanelRef.current.getShowState()
             // 弹框中不刷新数据
-            if((memberPanelRef && memberPanelRef.current.animateState.sliderShow == true)
-                || (memberPanelRef && customerReservePanelRef.current.animateState.sliderShow  == true)
-                || (memberPanelRef && guestReservePanelRef.current.animateState.sliderShow  == true)){
+            if(memberPanelShow || reserveMemberShow || reserveCustomerShow){
                 return
             }
 
@@ -129,6 +128,27 @@ export const ReserveBoardActivity = props => {
 
         switch (type) {
             case 'showDetail': // 查看详情
+                const customerInfo = extra['customer']
+                const args = {
+                    appUserId: customerInfo.appUserId,
+                    reserveId: customerInfo.recordId
+                }
+
+                setLoading(true)
+                getCustomerDetail(args).then(backData=>{
+                    const {code, data} = backData
+                    if(code == '6000'){
+                        console.log("data", JSON.stringify(data))
+                    }else{
+                        showMessageExt("获取顾客信息失败")
+                    }
+                }).catch(e=>{
+                    console.error("获取顾客信息失败", e)
+                    showMessageExt("获取顾客信息失败")
+                }).finally(_=>{
+                    setLoading(false)
+                })
+
                 memberPanelRef.current.showRightPanel()
                 break
             case 'memberReserve': // 会员预约
@@ -286,7 +306,7 @@ export const ReserveBoardActivity = props => {
                 </View>
             </View>
             {/*会员信息面板*/}
-            <MemberPanel ref={memberPanelRef} memberInfo={memberState}/>
+            <MemberPanel ref={memberPanelRef} memberInfo={customerState}/>
             {/*顾客预约面板信息*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*散客预约*/}

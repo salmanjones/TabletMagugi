@@ -257,6 +257,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         marginTop: PixelUtil.size(24),
         width: PixelUtil.size(1614),
         padding: PixelUtil.size(30),
+        paddingBottom: PixelUtil.size(0),
         backgroundColor: '#ecf0ff',
         display: 'flex',
         flexDirection: 'row',
@@ -278,7 +279,18 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     reserveCustomerDetailWrap:{
-        position:"relative"
+        position:"relative",
+        width: PixelUtil.size(496),
+        height: PixelUtil.size(164),
+        marginBottom: PixelUtil.size(32)
+    },
+    reserveCustomerDetailMiddleWrap:{
+        position:"relative",
+        width: PixelUtil.size(496),
+        height: PixelUtil.size(164),
+        marginLeft: PixelUtil.size(32),
+        marginRight: PixelUtil.size(32),
+        marginBottom: PixelUtil.size(32)
     },
     reserveCustomerServing:{
         width: PixelUtil.size(92),
@@ -286,7 +298,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         position: 'absolute',
         zIndex: 100,
         top: PixelUtil.size(-6),
-        right: PixelUtil.size(-12)
+        right: PixelUtil.size(-12),
     },
     reserveCustomerDetailBox:{
         width: PixelUtil.size(496),
@@ -304,34 +316,6 @@ export const ReserveBoardStyles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#00000000'
     },
-    reserveCustomerDetailMiddleBox:{
-        width: PixelUtil.size(496),
-        height: PixelUtil.size(164),
-        marginLeft: PixelUtil.size(32),
-        marginRight: PixelUtil.size(32),
-        paddingHorizontal: PixelUtil.size(20),
-        paddingVertical: PixelUtil.size(24),
-        borderRadius: PixelUtil.size(28),
-        overflow: 'hidden',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        flexDirection: 'row',
-        position:"relative",
-        borderWidth: PixelUtil.size(4),
-        borderStyle: 'solid',
-        borderColor: '#00000000'
-    },
-    reserveCustomerReadyBox:{
-        backgroundColor: '#ffffff',
-        borderWidth: PixelUtil.size(2),
-        borderStyle: 'solid',
-        borderColor: '#A49BFF',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     reserveCustomerBusyBox:{
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),
@@ -347,6 +331,16 @@ export const ReserveBoardStyles = StyleSheet.create({
         borderWidth: PixelUtil.size(4),
         borderStyle: 'solid',
         borderColor: '#00000000'
+    },
+    reserveCustomerReadyBox:{
+        backgroundColor: '#ffffff',
+        borderWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+        borderColor: '#A49BFF',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     reserveStylistBusyBox:{
         display: 'flex',
@@ -419,8 +413,14 @@ export const ReserveBoardStyles = StyleSheet.create({
     },
     reserveCustomerSexIcon:{
         marginLeft: PixelUtil.size(12),
-        width: PixelUtil.size(38),
-        height: PixelUtil.size(38),
+        width: PixelUtil.size(36),
+        height: PixelUtil.size(36),
+        marginTop: PixelUtil.size(4)
+    },
+    reserveCustomerWxIcon:{
+        marginLeft: PixelUtil.size(12),
+        width: PixelUtil.size(30),
+        height: PixelUtil.size(30),
         marginTop: PixelUtil.size(4)
     },
     reserveCustomerPhoneBox:{
