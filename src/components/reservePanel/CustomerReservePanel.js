@@ -455,15 +455,18 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                     <Text style={ReservePanelStyles.reservePropertyTitle}>
                                         预约来源：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyValue}>
+                                    <View style={ReservePanelStyles.reservePropertyBtnValue}>
                                         {
                                             reserveBaseData['reserveResoures'].map((item, index)=>{
+                                                let showName = item.name
+                                                showName = showName.length > 4 ? showName.substring(0, 4): showName
+
                                                 if (index == reserveSourceIndex) {
                                                     return (
                                                         <TouchableOpacity
                                                             style={ReservePanelStyles.reservePropertyValueButtonActive}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxtActive}>
-                                                                {item.name}
+                                                                {showName}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )
@@ -475,7 +478,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                                 setReserveSourceIndex(index)
                                                             }}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxt}>
-                                                                {item.name}
+                                                                {showName}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )
@@ -488,15 +491,18 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                     <Text style={ReservePanelStyles.reservePropertyTitle}>
                                         预约服务：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyValue}>
+                                    <View style={ReservePanelStyles.reservePropertyBtnValue}>
                                         {
                                             reserveBaseData['reserveInfoList'].map((item, index)=>{
+                                                let showName = item.reserveName
+                                                showName = showName.length > 4 ? showName.substring(0, 4): showName
+
                                                 if (index == reserveTypeIndex) {
                                                     return (
                                                         <TouchableOpacity
                                                             style={ReservePanelStyles.reservePropertyValueButtonActive}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxtActive}>
-                                                                {item.reserveName.substring(0,4)}
+                                                                {showName}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )
@@ -508,7 +514,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                                 setReserveTypeIndex(index)
                                                             }}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxt}>
-                                                                {item.reserveName.substring(0,4)}
+                                                                {showName}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )

@@ -319,7 +319,7 @@ export const ReservePanelStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: "baseline",
+        alignItems: 'flex-start',
         position: "relative",
     },
     reservePropertyRequired:{
@@ -360,6 +360,14 @@ export const ReservePanelStyles = StyleSheet.create({
         fontSize: PixelUtil.size(26),
         color: '#2d2d2d'
     },
+    reservePropertyBtnValue:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: "center",
+        flexWrap: 'wrap',
+        marginTop: PixelUtil.size(-20)
+    },
     reservePropertyValueButton:{
         width: PixelUtil.size(146),
         height: PixelUtil.size(50),
@@ -371,7 +379,8 @@ export const ReservePanelStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: "center"
+        alignItems: "center",
+
     },
     reservePropertyValueButtonActive:{
         width: PixelUtil.size(146),
@@ -380,11 +389,11 @@ export const ReservePanelStyles = StyleSheet.create({
         backgroundColor : '#FFA200',
         overflow: 'hidden',
         marginRight: PixelUtil.size(32),
+        marginBottom: PixelUtil.size(20),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: "center",
-        marginBottom: PixelUtil.size(20)
     },
     reservePropertyValueButtonTxt:{
         fontWeight: 500,

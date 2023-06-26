@@ -59,8 +59,6 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
             <View style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
                     timerReserveList.map((customer, idx) => {
-                        console.log("reserveTime", reserveTime, canCancel, reserveFlag, customer.isStartWork)
-
                         // 顾客是否已到店 0:否 1:是
                         const isStartWork = customer.isStartWork
                         // 全局索引
