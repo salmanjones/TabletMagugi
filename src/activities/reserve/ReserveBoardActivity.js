@@ -82,12 +82,20 @@ export const ReserveBoardActivity = props => {
     // 初次加载处理
     useEffect(() => {
         // 准备参数
-        const reloadDelay = 1000 * 60 * 10 // 10分钟刷新一次预约列表
+        const reloadDelay = 1000 * 60 * 5 // 10分钟刷新一次预约列表
         // 首次获取数据
         getReserveList()
 
         // 定时刷新数据
         const timer = setInterval(() => {
+            // 弹框中不刷新数据
+            if(memberPanelRef.current.animateState.sliderShow == true
+                || customerReservePanelRef.current.animateState.sliderShow  == true
+                || guestReservePanelRef.current.animateState.sliderShow  == true){
+                return
+            }
+
+            // 刷新数据
             getReserveList()
         }, reloadDelay)
 
