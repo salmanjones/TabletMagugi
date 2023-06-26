@@ -424,12 +424,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                         setUserName(name)
                                                     }}
                                                     value={userName}
-                                                    maxLength={20}/>
+                                                    maxLength={10}/>
                                             </View>
                                         </View>
                                     )
                                 }
-
                                 <View style={ customerInfo != null && customerInfo.result == 'empty'
                                     ? [ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]
                                     : ReservePanelStyles.reservePropertyBox}>
@@ -497,7 +496,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                         <TouchableOpacity
                                                             style={ReservePanelStyles.reservePropertyValueButtonActive}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxtActive}>
-                                                                {item.reserveName}
+                                                                {item.reserveName.substring(0,4)}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )
@@ -509,7 +508,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                                 setReserveTypeIndex(index)
                                                             }}>
                                                             <Text style={ReservePanelStyles.reservePropertyValueButtonTxt}>
-                                                                {item.reserveName}
+                                                                {item.reserveName.substring(0,4)}
                                                             </Text>
                                                         </TouchableOpacity>
                                                     )

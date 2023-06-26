@@ -315,11 +315,12 @@ export const ReservePanelStyles = StyleSheet.create({
         marginTop: PixelUtil.size(32),
     },
     reservePropertyBox:{
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: "center",
-        position: "relative"
+        alignItems: "baseline",
+        position: "relative",
     },
     reservePropertyRequired:{
         color: '#F50000',
@@ -330,13 +331,15 @@ export const ReservePanelStyles = StyleSheet.create({
     reservePropertyTitle: {
         fontWeight: 500,
         fontSize: PixelUtil.size(26),
-        color: '#898888'
+        color: '#898888',
+        width: PixelUtil.size(134)
     },
     reservePropertyValue:{
-        display: 'flex',
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: "center"
+        alignItems: "center",
+        flexWrap: 'wrap',
     },
     reservePropertyCustomerName:{
         width: PixelUtil.size(738),
@@ -364,6 +367,7 @@ export const ReservePanelStyles = StyleSheet.create({
         backgroundColor : '#fff7ea',
         overflow: 'hidden',
         marginRight: PixelUtil.size(32),
+        marginBottom: PixelUtil.size(20),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -379,7 +383,8 @@ export const ReservePanelStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: PixelUtil.size(20)
     },
     reservePropertyValueButtonTxt:{
         fontWeight: 500,
