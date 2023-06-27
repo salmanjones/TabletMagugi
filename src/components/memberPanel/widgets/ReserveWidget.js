@@ -38,7 +38,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     顾客姓名：
                 </Text>
                 <Text style={MemberPanelStyles.memberReservePropertyValue}>
-                    {decodeURIComponent(reserveInfo.memberName)}
+                    {decodeURIComponent(decodeURIComponent(reserveInfo.memberName))}
                 </Text>
             </View>
             <View style={MemberPanelStyles.memberReserveProperty}>

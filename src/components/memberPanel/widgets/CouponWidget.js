@@ -87,11 +87,11 @@ export const CouponWidget = React.memo(({couponList})=>{
                             <View style={MemberPanelStyles.memberCouponDetailDescLeftBox}>
                                 {
                                     itemInfo.couponUsedLimitRule &&
-                                    (<View>
+                                    (<View style={{display: 'flex', flexDirection: 'row', justifyContent:'flex-start', alignItems:'center'}}>
                                         <Image resizeMethod="resize"
                                                   source={require('@imgPath/member_panel_coupon_tips.png')}
                                                   style={MemberPanelStyles.memberCouponDetailDescLeftIcon}/>
-                                        <Text style={MemberPanelStyles.memberCouponDetailDescLeftText}>
+                                        <Text style={MemberPanelStyles.memberCouponDetailDescLeftText} ellipsizeMode={'tail'} numberOfLines={1}>
                                             {itemInfo.couponUsedLimitRule}
                                         </Text>
                                     </View>

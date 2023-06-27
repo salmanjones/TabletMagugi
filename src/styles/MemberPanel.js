@@ -277,31 +277,32 @@ export const MemberPanelStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(54)
+        marginBottom: PixelUtil.size(48)
     },
     memberReservePropertyBtnWrap:{
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(54)
+        marginBottom: PixelUtil.size(48)
     },
     memberReserveDescProperty:{
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(54)
+        marginBottom: PixelUtil.size(48)
     },
     memberReservePropertyTitle:{
         color: '#898888',
         fontSize: PixelUtil.size(26),
-        fontWeight: 500
+        fontWeight: 500,
+        width: PixelUtil.size(158)
     },
     memberReservePropertyValue:{
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
-        fontWeight: 700
+        fontWeight: 700,
     },
     memberReservePropertyRemark:{
         color: '#2d2d2d',
@@ -371,7 +372,7 @@ export const MemberPanelStyles = StyleSheet.create({
     memberReserveCancel:{
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
-        marginLeft: PixelUtil.size(134),
+        marginLeft: PixelUtil.size(158),
         borderRadius: PixelUtil.size(34),
         borderStyle: 'solid',
         borderWidth: PixelUtil.size(2),
@@ -540,7 +541,9 @@ export const MemberPanelStyles = StyleSheet.create({
         fontWeight: 500,
         color: '#929292',
         marginLeft: PixelUtil.size(8),
-        lineHeight: PixelUtil.size(36)
+        lineHeight: PixelUtil.size(36),
+        maxWidth: PixelUtil.size(360),
+        overflow: 'hidden'
     },
     memberCouponDetailDescRightBox:{
         display: 'flex',
@@ -603,5 +606,81 @@ export const MemberPanelStyles = StyleSheet.create({
     memberCouponRuleDetailValue:{
         marginTop: PixelUtil.size(6),
         width: '100%',
-    }
+    },
+    memberProfileBox:{
+        width: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(26),
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        padding: PixelUtil.size(50),
+        paddingBottom: 0,
+        position: 'relative'
+    },
+    memberProfileTitle:{
+        width: '100%',
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(40)
+    },
+    memberPortraitBox:{
+        width: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(26),
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        padding: PixelUtil.size(50),
+        paddingBottom: 0,
+        position: 'relative'
+    },
+    memberPortraitTitle:{
+        width: '100%',
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(40)
+    },
+    contentBodyTitleIcon:{
+        width: PixelUtil.size(20),
+        height: PixelUtil.size(20),
+        marginLeft: PixelUtil.size(-30)
+    },
+    contentBodyTitleValue:{
+        fontSize: PixelUtil.size(34),
+        color: '#2d2d2d',
+        fontWeight: 900,
+        marginLeft: PixelUtil.size(10)
+    },
+    memberPropertyBox:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(48)
+    },
+    memberPropertyTitle:{
+        width: PixelUtil.size(184),
+        fontSize: PixelUtil.size(26),
+        color: '#898888',
+        fontWeight: '500',
+    },
+    memberPropertyValue:{
+        color: '#2D2D2D',
+        fontSize: PixelUtil.size(26),
+        fontWeight: 700,
+    },
+    memberPortraitPTitle:{
+        width: PixelUtil.size(132),
+        fontSize: PixelUtil.size(26),
+        color: '#898888',
+        fontWeight: '500',
+    },
+    memberPortraitPValue:{
+        color: '#2D2D2D',
+        fontSize: PixelUtil.size(26),
+        fontWeight: 700,
+    },
 })

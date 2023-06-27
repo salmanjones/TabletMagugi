@@ -230,7 +230,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                                           ? ReserveBoardStyles.reserveCustomerNameTxt // 有档案
                                                           : [ReserveBoardStyles.reserveCustomerNameTxt, ReserveBoardStyles.reserveCustomerBlackTxt]  // 无档案
                                                       }>
-                                                    {decodeURIComponent(customer.appUserName)}
+                                                    {decodeURIComponent(decodeURIComponent(customer.appUserName))}
                                                 </Text>
                                                 {/*男女*/}
                                                 {

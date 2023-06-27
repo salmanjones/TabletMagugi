@@ -41,6 +41,7 @@ export const ReserveBoardActivity = props => {
     const memberPanelRef = useRef(null);
     // 顾客信息
     const [customerState, setCustomerState] = useState({
+        memberCountInfo: {},
         reserveInfo: {
             reserveResoures: [],
             reserveInfoList: []
@@ -158,6 +159,7 @@ export const ReserveBoardActivity = props => {
                             data.couponList = []
                             data.czkCount = 0
                             data.ckCount = 0
+                            data.memberCountInfo = {}
                             guestReservePanelRef.current.showRightPanel()
                         }
                         setCustomerState(data)

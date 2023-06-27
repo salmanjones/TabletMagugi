@@ -15,6 +15,8 @@ import {MemberPanelStyles} from "../../styles/MemberPanel";
 import {CouponWidget} from "./widgets/CouponWidget"
 import {CardWidget} from "./widgets/CardWidget"
 import {ReserveWidget} from "./widgets/ReserveWidget"
+import {ProfileWidget} from "./widgets/ProfileWidget"
+import {PortraitWidget} from "./widgets/PortraitWidget"
 
 /**
  * 会员右滑组件
@@ -197,7 +199,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                             }
                             </View>
                             {/*tab内容*/}
-                            <View style={tabIndex == 0 ? MemberPanelStyles.memberExtraTabReserveBox:MemberPanelStyles.memberExtraTabContentBox}>
+                            <View style={tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'
+                                ? MemberPanelStyles.memberExtraTabReserveBox
+                                : MemberPanelStyles.memberExtraTabContentBox}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && (
                                         <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerCardEvent}/>
@@ -211,6 +215,16 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 {
                                     tabArray[tabIndex] == '顾客资产' && (
                                         <CardWidget cardArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '4'},{id:5, type: '1'},{id:6, type: '2'},{id:7, type: '3'},{id:8, type: '4'}]}/>
+                                    )
+                                }
+                                {
+                                    tabArray[tabIndex] == '消费画像' && (
+                                        <ProfileWidget profileInfo={customerInfo['memberCountInfo']}/>
+                                    )
+                                }
+                                {
+                                    tabArray[tabIndex] == '基础档案' && (
+                                        <PortraitWidget portraitInfo={customerInfo}/>
                                     )
                                 }
                             </View>
