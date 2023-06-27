@@ -148,9 +148,7 @@ export const ReserveBoardActivity = props => {
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
-                        if(customerInfo.isMember == '1'){
-                            memberPanelRef.current.showRightPanel()
-                        }else{
+                        if(customerInfo.isMember == '0'){
                             // 防止会员面板出错
                             data.reserveInfo =  {
                                 reserveResoures: [],
@@ -160,9 +158,14 @@ export const ReserveBoardActivity = props => {
                             data.czkCount = 0
                             data.ckCount = 0
                             data.memberCountInfo = {}
-                            guestReservePanelRef.current.showRightPanel()
                         }
                         setCustomerState(data)
+
+                        if(customerInfo.isMember == '1'){
+                            memberPanelRef.current.showRightPanel()
+                        }else{
+                            guestReservePanelRef.current.showRightPanel()
+                        }
                     }else{
                         showMessageExt("获取顾客信息失败")
                     }

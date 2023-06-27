@@ -5,7 +5,13 @@ import {MemberPanelStyles} from "../../../styles/MemberPanel";
 export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
     const isStartWork = reserveInfo.isStartWork
-    const sourceName = (reserveInfo.reserveResoures.filter(item=>item.value == reserveInfo.source)[0] ||[{name: ''}])['name']
+    let sourceName = ''
+    if(reserveInfo.sourceShowType == '1'){ // 可编辑
+        sourceName = (reserveInfo.reserveResoures.filter(item=>item.value == reserveInfo.source)[0] ||[{name: ''}])['name'] || '--'
+        console.warn("无法获取预约来源对应的名称，请检查接口数据")
+    }else{
+        sourceName = reserveInfo.sourceShowName && reserveInfo.sourceShowName.length > 0  ?reserveInfo.sourceShowName :  '--'
+    }
     const serviceType = (reserveInfo.reserveInfoList.filter(item=>item.reserveId == reserveInfo.reserveProjectId)[0] ||[{reserveName: ''}])['reserveName']
     const [sourceValue, setSourceValue] = useState(reserveInfo.source)
     const [serviceValue, setServiceValue] = useState(reserveInfo.reserveProjectId)
@@ -96,38 +102,57 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     }else{
                         return (
                             <View>
-                                <View style={MemberPanelStyles.memberReservePropertyBtnWrap}>
-                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
-                                        预约来源：
-                                    </Text>
-                                    <View style={MemberPanelStyles.reservePropertyBtnValue}>
-                                    {
-                                        reserveInfo.reserveResoures && reserveInfo.reserveResoures.map(sourceInfo=>{
-                                            if(sourceInfo.value == sourceValue){
-                                                return (
-                                                    <TouchableOpacity style={MemberPanelStyles.reservePropertyValueButtonActive}>
-                                                        <Text style={MemberPanelStyles.reservePropertyValueButtonTxtActive}>
-                                                            {sourceInfo.name}
-                                                        </Text>
-                                                    </TouchableOpacity>
-                                                )
-                                            }else{
-                                                return (
-                                                    <TouchableOpacity
-                                                        style={MemberPanelStyles.reservePropertyValueButton}
-                                                        onPress={()=>{
-                                                            setSourceValue(sourceInfo.value)
-                                                        }}>
-                                                        <Text style={MemberPanelStyles.reservePropertyValueButtonTxt}>
-                                                            {sourceInfo.name}
-                                                        </Text>
-                                                    </TouchableOpacity>
-                                                )
-                                            }
-                                        })
-                                    }
-                                    </View>
-                                </View>
+                                {
+                                    (()=>{
+                                        if(reserveInfo.sourceShowType == '0'){ // 不可编辑
+                                            return (
+                                                <View style={MemberPanelStyles.memberReserveProperty}>
+                                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                                        预约来源：
+                                                    </Text>
+                                                    <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                                                        {sourceName}
+                                                    </Text>
+                                                </View>
+                                            )
+                                        }else{
+                                            return (
+                                                <View style={MemberPanelStyles.memberReservePropertyBtnWrap}>
+                                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                                        预约来源：
+                                                    </Text>
+                                                    <View style={MemberPanelStyles.reservePropertyBtnValue}>
+                                                        {
+                                                            reserveInfo.reserveResoures && reserveInfo.reserveResoures.map(sourceInfo=>{
+                                                                if(sourceInfo.value == sourceValue){
+                                                                    return (
+                                                                        <TouchableOpacity style={MemberPanelStyles.reservePropertyValueButtonActive}>
+                                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxtActive}>
+                                                                                {sourceInfo.name}
+                                                                            </Text>
+                                                                        </TouchableOpacity>
+                                                                    )
+                                                                }else{
+                                                                    return (
+                                                                        <TouchableOpacity
+                                                                            style={MemberPanelStyles.reservePropertyValueButton}
+                                                                            onPress={()=>{
+                                                                                setSourceValue(sourceInfo.value)
+                                                                            }}>
+                                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxt}>
+                                                                                {sourceInfo.name}
+                                                                            </Text>
+                                                                        </TouchableOpacity>
+                                                                    )
+                                                                }
+                                                            })
+                                                        }
+                                                    </View>
+                                                </View>
+                                            )
+                                        }
+                                    })()
+                                }
                                 <View style={MemberPanelStyles.memberReservePropertyBtnWrap}>
                                     <Text style={MemberPanelStyles.memberReservePropertyTitle}>
                                         预约服务：

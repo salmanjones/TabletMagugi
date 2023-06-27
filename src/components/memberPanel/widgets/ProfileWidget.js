@@ -17,7 +17,7 @@ export const ProfileWidget = React.memo(({profileInfo})=>{
                     最近一次消费：
                 </Text>
                 <Text style={MemberPanelStyles.memberPropertyValue}>
-                    {profileInfo.lastTime}
+                    {profileInfo.lastTime || '暂无消费'}
                 </Text>
             </View>
             <View style={MemberPanelStyles.memberPropertyBox}>
@@ -25,7 +25,7 @@ export const ProfileWidget = React.memo(({profileInfo})=>{
                     平均消费：
                 </Text>
                 <Text style={MemberPanelStyles.memberPropertyValue}>
-                    ¥{profileInfo.allConsumePricePer}
+                    ¥{profileInfo.allConsumePricePer || 0.00}
                 </Text>
             </View>
             <View style={MemberPanelStyles.memberPropertyBox}>
@@ -33,7 +33,7 @@ export const ProfileWidget = React.memo(({profileInfo})=>{
                     累计消费：
                 </Text>
                 <Text style={MemberPanelStyles.memberPropertyValue}>
-                    ¥{profileInfo.allConsumePrice}
+                    ¥{profileInfo.allConsumePrice || 0.00}
                 </Text>
             </View>
             <View style={MemberPanelStyles.memberPropertyBox}>
@@ -41,7 +41,7 @@ export const ProfileWidget = React.memo(({profileInfo})=>{
                     累计结单：
                 </Text>
                 <Text style={MemberPanelStyles.memberPropertyValue}>
-                    {profileInfo.billingNos}
+                    {profileInfo.billingNos || 0}
                 </Text>
             </View>
         </View>
