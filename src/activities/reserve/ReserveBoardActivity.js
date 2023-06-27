@@ -147,7 +147,19 @@ export const ReserveBoardActivity = props => {
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
-                        memberPanelRef.current.showRightPanel()
+                        if(customerInfo.isMember == '1'){
+                            memberPanelRef.current.showRightPanel()
+                        }else{
+                            // 防止会员面板出错
+                            data.reserveInfo =  {
+                                reserveResoures: [],
+                                reserveInfoList: []
+                            }
+                            data.couponList = []
+                            data.czkCount = 0
+                            data.ckCount = 0
+                            guestReservePanelRef.current.showRightPanel()
+                        }
                         setCustomerState(data)
                     }else{
                         showMessageExt("获取顾客信息失败")
