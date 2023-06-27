@@ -415,7 +415,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                             <View style={ReservePanelStyles.customerReserveDetailBox}>
                                 {
                                     customerInfo != null && customerInfo.result == 'empty' &&(
-                                        <View style={ReservePanelStyles.reservePropertyBox}>
+                                        <View style={ReservePanelStyles.reservePropertyMiddleBox}>
                                             <Text style={ReservePanelStyles.reservePropertyRequired}>*</Text>
                                             <Text style={ReservePanelStyles.reservePropertyTitle}>
                                                 顾客姓名：
@@ -541,7 +541,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         multiline={true}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
-                                        value={reserveRemark}
+                                        value={decodeURIComponent(reserveRemark)}
                                         placeholder={'请输入预约备注，30个文字以内'}
                                         onChange={({nativeEvent})=>{
                                             const remark = nativeEvent.text

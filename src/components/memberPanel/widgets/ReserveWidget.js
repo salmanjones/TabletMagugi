@@ -21,6 +21,10 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
 
     return (
         <View style={MemberPanelStyles.memberReserveBox}>
+            <Image
+                resizeMode={'contain'}
+                source={isStartWork == '0' ? require('@imgPath/reserve_customer_panel_wait.png'):require('@imgPath/reserve_customer_panel_serviced.png')}
+                style={MemberPanelStyles.startWorkStyle}></Image>
             <View style={MemberPanelStyles.memberReserveProperty}>
                 <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
                     预约手机号：
@@ -169,7 +173,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
                                         placeholder={'请输入预约备注，30个文字以内'}
-                                        value={remark}
+                                        value={decodeURIComponent(remark)}
                                         onChange={({nativeEvent})=>{
                                             const remark = nativeEvent.text
                                             setRemark(remark)

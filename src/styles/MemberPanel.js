@@ -240,6 +240,13 @@ export const MemberPanelStyles = StyleSheet.create({
         paddingTop: PixelUtil.size(40),
         position: 'relative'
     },
+    startWorkStyle:{
+        position: 'absolute',
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(146),
+        right: PixelUtil.size(32),
+        top: PixelUtil.size(32),
+    },
     memberReserveProperty:{
         display: 'flex',
         justifyContent: 'flex-start',

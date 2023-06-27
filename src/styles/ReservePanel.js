@@ -322,6 +322,14 @@ export const ReservePanelStyles = StyleSheet.create({
         alignItems: 'flex-start',
         position: "relative",
     },
+    reservePropertyMiddleBox:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: "relative",
+    },
     reservePropertyRequired:{
         color: '#F50000',
         fontSize: PixelUtil.size(22),
