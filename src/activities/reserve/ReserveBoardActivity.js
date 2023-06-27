@@ -44,7 +44,10 @@ export const ReserveBoardActivity = props => {
         reserveInfo: {
             reserveResoures: [],
             reserveInfoList: []
-        }
+        },
+        couponList: [],
+        czkCount: 0,
+        ckCount: 0
     })
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);

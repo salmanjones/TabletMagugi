@@ -85,15 +85,20 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         getShowState,
     }))
 
-    // 页签数据
-    const tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
-    // 命中的页签
-    const [tabIndex, setTabIndex] = useState(0)
     // 预约顾客信息
     const customerInfo = props['memberInfo']
+    // 页签数据
+    let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
+    if(customerInfo.couponList.length < 1){
+        tabArray = tabArray.filter(item=> item != '优惠券')
+    }
+    if((customerInfo.czkCount + customerInfo.ckCount) < 1){
+        tabArray = tabArray.filter(item=> item != '顾客资产')
+    }
+    // 命中的页签
+    const [tabIndex, setTabIndex] = useState(0)
     // 当前页签
     const reserveFlag = props['reserveFlag']
-
     return (
         <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
@@ -176,7 +181,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         <View style={MemberPanelStyles.memberExtraTabWrap}>
                             {/*tab页签*/}
                             <View style={MemberPanelStyles.memberExtraTabBox}>
-                                {tabArray.map((tab, index)=>{
+                            {
+                                tabArray.map((tab, index)=>{
                                     return (
                                         <TouchableOpacity
                                             style={MemberPanelStyles.memberExtraTabItem}
@@ -187,22 +193,23 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                             <View style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemLineActive : MemberPanelStyles.memberExtraTabItemLine}></View>
                                         </TouchableOpacity>
                                     )
-                                })}
+                                })
+                            }
                             </View>
                             {/*tab内容*/}
                             <View style={tabIndex == 0 ? MemberPanelStyles.memberExtraTabReserveBox:MemberPanelStyles.memberExtraTabContentBox}>
                                 {
-                                    tabIndex == 0 && (
+                                    tabArray[tabIndex] == '预约信息' && (
                                         <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerCardEvent}/>
                                     )
                                 }
                                 {
-                                    tabIndex == 1 && (
-                                        <CouponWidget couponArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '1'},{id:5, type: '2'},{id:6, type: '3'}]}/>
+                                    tabArray[tabIndex] == '优惠券' && (
+                                        <CouponWidget couponList={customerInfo['couponList']}/>
                                     )
                                 }
                                 {
-                                    tabIndex == 2 && (
+                                    tabArray[tabIndex] == '顾客资产' && (
                                         <CardWidget cardArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '4'},{id:5, type: '1'},{id:6, type: '2'},{id:7, type: '3'},{id:8, type: '4'}]}/>
                                     )
                                 }
@@ -214,6 +221,13 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         resizeMode={'contain'}
                         source={require('@imgPath/member_panel_operator_bg.png')}
                         style={MemberPanelStyles.operatorWrap}>
+
+                        <TouchableOpacity style={MemberPanelStyles.operatorBtnCashier}>
+                            <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={MemberPanelStyles.operatorBtnCard}>
+                            <Text style={MemberPanelStyles.operatorBtnTxt}>开卡</Text>
+                        </TouchableOpacity>
                     </ImageBackground>
                 </View>
             </Animated.View>

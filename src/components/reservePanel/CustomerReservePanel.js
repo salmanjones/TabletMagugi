@@ -429,7 +429,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                         const name = nativeEvent.text.trim()
                                                         setUserName(name)
                                                     }}
-                                                    value={userName}
+                                                    value={decodeURIComponent(userName)}
                                                     maxLength={10}/>
                                             </View>
                                         </View>

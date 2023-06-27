@@ -88,7 +88,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         multiline={true}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
-                                        value={decodeURIComponent(reserveInfo.remark)}>
+                                        value={reserveInfo.remark && reserveInfo.remark.length > 0 ? decodeURIComponent(reserveInfo.remark): '暂无'}>
                                     </TextInput>
                                 </View>
                             </View>

@@ -228,6 +228,31 @@ export const MemberPanelStyles = StyleSheet.create({
     operatorWrap: {
         width: '100%',
         height: PixelUtil.size(150),
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    operatorBtnCashier: {
+        width: '50%',
+        height: PixelUtil.size(150),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    operatorBtnCard: {
+        width: '50%',
+        height: PixelUtil.size(150),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    operatorBtnTxt:{
+        fontSize: PixelUtil.size(38),
+        color: '#ffffff',
+        fontWeight: "900"
     },
     memberReserveBox:{
         width: '100%',
@@ -576,9 +601,7 @@ export const MemberPanelStyles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     memberCouponRuleDetailValue:{
+        marginTop: PixelUtil.size(6),
         width: '100%',
-        justifyContent:'flex-start',
-        color: '#9a9a9a',
-        fontSize: PixelUtil.size(22),
     }
 })

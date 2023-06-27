@@ -44,6 +44,7 @@
         "react-native-pager-view": "^5.4.25",
         "react-native-qrcode-svg": "^6.1.2",
         "react-native-reanimated": "^2.14.1",
+        "react-native-render-html": "^6.3.4",
         "react-native-root-toast": "^3.4.0",
         "react-native-safe-area-context": "^3.4.1",
         "react-native-screens": "^3.18.2",
