@@ -84,7 +84,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         multiline={true}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
-                                        value={reserveInfo.remark}>
+                                        value={decodeURIComponent(reserveInfo.remark)}>
                                     </TextInput>
                                 </View>
                             </View>
