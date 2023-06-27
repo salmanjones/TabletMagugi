@@ -1,4 +1,3 @@
-// 预约看板
 import React, {useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import Spinner from "react-native-loading-spinner-overlay";
@@ -7,7 +6,7 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail, updateCustomerReserve} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
 import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
@@ -15,6 +14,7 @@ import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {showMessageExt} from "../../utils";
 
+// 开单预约看板
 export const ReserveBoardActivity = props => {
     // 路由
     const route = useRoute()
@@ -41,6 +41,10 @@ export const ReserveBoardActivity = props => {
     const memberPanelRef = useRef(null);
     // 顾客信息
     const [customerState, setCustomerState] = useState({
+        reserveInfo: {
+            reserveResoures: [],
+            reserveInfoList: []
+        }
     })
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);
@@ -140,7 +144,8 @@ export const ReserveBoardActivity = props => {
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
-                        console.log("data", JSON.stringify(data))
+                        memberPanelRef.current.showRightPanel()
+                        setCustomerState(data)
                     }else{
                         showMessageExt("获取顾客信息失败")
                     }
@@ -150,8 +155,6 @@ export const ReserveBoardActivity = props => {
                 }).finally(_=>{
                     setLoading(false)
                 })
-
-                memberPanelRef.current.showRightPanel()
                 break
             case 'memberReserve': // 会员预约
                 setLoading(true)
@@ -214,14 +217,14 @@ export const ReserveBoardActivity = props => {
                 ]);
                 break;
             case 'cancelReserve': // 0:取消预约 1:取消占用
-                const {type, recordId} = extra
+                const {type, recordId, hideRightPanel} = extra
                 const tips = type == '0' ? '确定要取消该预约吗?':'确定要取消该占用吗?'
                 Alert.alert('系统提示', tips, [
                     {
                         text: '是',
                         onPress: () => {
                             setLoading(true)
-                            cancelStaffReserve({type, recordId}).then(backData => {
+                            cancelStaffReserve({type: type.toString(), recordId: recordId.toString()}).then(backData => {
                                 const {code, data} = backData
                                 if(code != '6000'){ // 占用异常
                                     Alert.alert(
@@ -238,10 +241,23 @@ export const ReserveBoardActivity = props => {
                                         position: Toast.positions.CENTER
                                     })
 
+                                    if(hideRightPanel === true){ // 关闭右侧面板
+                                        memberPanelRef.current.hideRightPanel()
+                                    }
+
                                     // 重新加载数据
                                     getReserveList()
                                 }
                             }).catch(e => {
+                                Alert.alert(
+                                    '系统提示',
+                                    data || '取消异常',
+                                    [
+                                        {
+                                            text: '知道了',
+                                        }
+                                    ]
+                                );
                                 console.log(e)
                             }).finally(_ => {
                                 setLoading(false)
@@ -252,6 +268,27 @@ export const ReserveBoardActivity = props => {
                         text: '否',
                     },
                 ]);
+                break;
+            case 'updateReserve': // 更新预约
+                setLoading(true)
+                const updateParams = extra.updateParams
+                const hideRight = extra.hideRightPanel
+                updateCustomerReserve(updateParams).then(backData=>{
+                    const {code, data} = backData
+                    if(code != '6000') { // 取消异常
+                        showMessageExt("更新预约失败")
+                    }else{
+                        showMessageExt("更新预约成功")
+                        if(hideRight === true){ // 关闭右侧面板
+                            memberPanelRef.current.hideRightPanel()
+                        }
+                    }
+                }).catch(e=>{
+                    console.log(e)
+                    showMessageExt("更新预约失败")
+                }).finally(_=>{
+                    setLoading(false)
+                })
                 break;
         }
     }, [])
@@ -306,7 +343,7 @@ export const ReserveBoardActivity = props => {
                 </View>
             </View>
             {/*会员信息面板*/}
-            <MemberPanel ref={memberPanelRef} memberInfo={customerState}/>
+            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerCardPressEvent}/>
             {/*顾客预约面板信息*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*散客预约*/}

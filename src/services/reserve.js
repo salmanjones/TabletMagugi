@@ -67,6 +67,18 @@ export const saveCustomerReserve = params => {
 }
 
 /**
+ * 更新顾客预约
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const updateCustomerReserve = params => {
+    return callService(api.updateCustomerReserve, params).then(backData => {
+        return backData;
+    });
+}
+
+
+/**
  * 获取顾客所有信息
  */
 export const getCustomerDetail = params => {

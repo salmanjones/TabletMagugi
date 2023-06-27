@@ -14,6 +14,7 @@ import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {MemberPanelStyles} from "../../styles/MemberPanel";
 import {CouponWidget} from "./widgets/CouponWidget"
 import {CardWidget} from "./widgets/CardWidget"
+import {ReserveWidget} from "./widgets/ReserveWidget"
 
 /**
  * 会员右滑组件
@@ -85,9 +86,13 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }))
 
     // 页签数据
-    const tabArray = ['优惠券', '顾客资产', '消费画像', '基础档案']
+    const tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
     // 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
+    // 预约顾客信息
+    const customerInfo = props['memberInfo']
+    // 当前页签
+    const reserveFlag = props['reserveFlag']
 
     return (
         <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask : {display: 'none'}}>
@@ -95,9 +100,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [MemberPanelStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
-                <TouchableOpacity onPress={() => {
-                    hideRightPanel()
-                }}
+                <TouchableOpacity onPress={() => {hideRightPanel()}}
                                   activeOpacity={1}
                                   style={MemberPanelStyles.leftPanMask}>
                     <View style={MemberPanelStyles.hideIconBox}>
@@ -124,18 +127,18 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 <Image
                                     style={MemberPanelStyles.customerAvatar}
                                     resizeMethod="resize"
-                                    source={getImage('', ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                    source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={MemberPanelStyles.namePhoneBox}>
                                     <View style={MemberPanelStyles.nameWrap}>
-                                        <Text style={MemberPanelStyles.nameShowText}>钱嘉乐</Text>
+                                        <Text style={MemberPanelStyles.nameShowText}>{decodeURIComponent(customerInfo.nickName)}</Text>
                                         <Image
                                             style={MemberPanelStyles.customerSexIcon}
                                             resizeMode={'contain'}
-                                            source={'1' == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                            source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
                                     </View>
                                     <Text style={MemberPanelStyles.phoneShowText}>
-                                        158****6816
+                                        {customerInfo.reserveInfo.memberPhoneShow}
                                     </Text>
                                 </View>
                             </View>
@@ -145,7 +148,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         储值卡
                                     </Text>
                                     <Text style={MemberPanelStyles.propertyInfoItemValue}>
-                                        3张
+                                        {customerInfo.czkCount}张
                                     </Text>
                                 </View>
                                 <View style={MemberPanelStyles.propertyInfoItemBox}>
@@ -153,7 +156,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         次卡
                                     </Text>
                                     <Text style={MemberPanelStyles.propertyInfoItemValue}>
-                                        2张
+                                        {customerInfo.ckCount}张
                                     </Text>
                                 </View>
                                 <View style={MemberPanelStyles.propertyInfoItemBox}>
@@ -161,7 +164,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         储值卡余额
                                     </Text>
                                     <Text style={MemberPanelStyles.propertyInfoItemValue}>
-                                        ¥1282952.00
+                                        ¥{customerInfo.czkPriceSum}
                                     </Text>
                                 </View>
                             </View>
@@ -173,28 +176,33 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         <View style={MemberPanelStyles.memberExtraTabWrap}>
                             {/*tab页签*/}
                             <View style={MemberPanelStyles.memberExtraTabBox}>
-                            {tabArray.map((tab, index)=>{
-                                return (
-                                    <TouchableOpacity
-                                        style={MemberPanelStyles.memberExtraTabItem}
-                                        onPress={()=>{
-                                            setTabIndex(index)
-                                        }}>
-                                        <Text style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemTitleActive:MemberPanelStyles.memberExtraTabItemTitle}>{tab}</Text>
-                                        <View style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemLineActive : MemberPanelStyles.memberExtraTabItemLine}></View>
-                                    </TouchableOpacity>
-                                )
-                            })}
+                                {tabArray.map((tab, index)=>{
+                                    return (
+                                        <TouchableOpacity
+                                            style={MemberPanelStyles.memberExtraTabItem}
+                                            onPress={()=>{
+                                                setTabIndex(index)
+                                            }}>
+                                            <Text style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemTitleActive:MemberPanelStyles.memberExtraTabItemTitle}>{tab}</Text>
+                                            <View style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemLineActive : MemberPanelStyles.memberExtraTabItemLine}></View>
+                                        </TouchableOpacity>
+                                    )
+                                })}
                             </View>
                             {/*tab内容*/}
-                            <View style={MemberPanelStyles.memberExtraTabContentBox}>
+                            <View style={tabIndex == 0 ? MemberPanelStyles.memberExtraTabReserveBox:MemberPanelStyles.memberExtraTabContentBox}>
                                 {
                                     tabIndex == 0 && (
-                                        <CouponWidget couponArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '1'},{id:5, type: '2'},{id:6, type: '3'}]}/>
+                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerCardEvent}/>
                                     )
                                 }
                                 {
                                     tabIndex == 1 && (
+                                        <CouponWidget couponArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '1'},{id:5, type: '2'},{id:6, type: '3'}]}/>
+                                    )
+                                }
+                                {
+                                    tabIndex == 2 && (
                                         <CardWidget cardArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '4'},{id:5, type: '1'},{id:6, type: '2'},{id:7, type: '3'},{id:8, type: '4'}]}/>
                                     )
                                 }

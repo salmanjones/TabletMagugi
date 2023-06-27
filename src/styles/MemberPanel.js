@@ -210,6 +210,14 @@ export const MemberPanelStyles = StyleSheet.create({
         backgroundColor: '#ffa200',
         overflow: 'hidden',
     },
+    memberExtraTabReserveBox: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        paddingHorizontal: PixelUtil.size(40),
+        paddingVertical: PixelUtil.size(32),
+        paddingTop: PixelUtil.size(0)
+    },
     memberExtraTabContentBox: {
         flex: 1,
         width: '100%',
@@ -220,6 +228,149 @@ export const MemberPanelStyles = StyleSheet.create({
     operatorWrap: {
         width: '100%',
         height: PixelUtil.size(150),
+    },
+    memberReserveBox:{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(26),
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        paddingHorizontal: PixelUtil.size(40),
+        paddingTop: PixelUtil.size(40),
+        position: 'relative'
+    },
+    memberReserveProperty:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(54)
+    },
+    memberReservePropertyBtnWrap:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(54)
+    },
+    memberReserveDescProperty:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(54)
+    },
+    memberReservePropertyTitle:{
+        color: '#898888',
+        fontSize: PixelUtil.size(26),
+        fontWeight: 500
+    },
+    memberReservePropertyValue:{
+        color: '#2D2D2D',
+        fontSize: PixelUtil.size(26),
+        fontWeight: 700
+    },
+    memberReservePropertyRemark:{
+        color: '#2d2d2d',
+        fontSize: PixelUtil.size(26),
+        padding: 0,
+        fontWeight: '700',
+        marginTop: PixelUtil.size(-8)
+    },
+    memberReservePropertyDesc:{
+        color: '#2d2d2d',
+        fontSize: PixelUtil.size(26),
+        padding: PixelUtil.size(24),
+        fontWeight: '500',
+        width: PixelUtil.size(694),
+        height: PixelUtil.size(130),
+        borderStyle: 'dashed',
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#cdcdcd',
+        backgroundColor: '#f9fafb',
+        borderRadius: PixelUtil.size(10)
+    },
+    reservePropertyBtnValue:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: "center",
+        flexWrap: 'wrap',
+        marginTop: PixelUtil.size(-20)
+    },
+    reservePropertyValueButton:{
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(50),
+        borderRadius: PixelUtil.size(26),
+        backgroundColor : '#fff7ea',
+        overflow: 'hidden',
+        marginRight: PixelUtil.size(32),
+        marginBottom: PixelUtil.size(20),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: "center",
+
+    },
+    reservePropertyValueButtonActive:{
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(50),
+        borderRadius: PixelUtil.size(26),
+        backgroundColor : '#FFA200',
+        overflow: 'hidden',
+        marginRight: PixelUtil.size(32),
+        marginBottom: PixelUtil.size(20),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: "center",
+    },
+    reservePropertyValueButtonTxt:{
+        fontWeight: 500,
+        fontSize: PixelUtil.size(24),
+        color: '#ffa200'
+    },
+    reservePropertyValueButtonTxtActive:{
+        fontWeight: 500,
+        fontSize: PixelUtil.size(24),
+        color: '#FFFFFF'
+    },
+    memberReserveCancel:{
+        width: PixelUtil.size(200),
+        height: PixelUtil.size(68),
+        marginLeft: PixelUtil.size(134),
+        borderRadius: PixelUtil.size(34),
+        borderStyle: 'solid',
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#111c3c',
+        backgroundColor: '#eaf0ff',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    memberReserveCancelText:{
+        fontSize: PixelUtil.size(32),
+        color: '#111c3c',
+        fontWeight: '500'
+    },
+    memberReserveModify:{
+        width: PixelUtil.size(200),
+        height: PixelUtil.size(68),
+        marginLeft: PixelUtil.size(32),
+        borderRadius: PixelUtil.size(34),
+        borderStyle: 'solid',
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#111c3c',
+        backgroundColor: '#111c3c',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    memberReserveModifyText:{
+        fontSize: PixelUtil.size(32),
+        color: '#ffffff',
+        fontWeight: '500'
     },
     memberCouponBox: {
         width: '100%',

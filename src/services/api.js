@@ -137,5 +137,7 @@ export const getReserveInitData = `${hostBms}/tablet/new/reserve/find/reserve/in
 export const getAppUserInfo = `${hostBms}/tablet/new/reserve/find/reserve/appuser/info`
 //保存顾客预约
 export const saveCustomerReserve = `${hostBms}/tablet/new/reserve/save/new/reserve/info`
+//更新顾客预约
+export const updateCustomerReserve = `${hostBms}/tablet/new/reserve/update/new/reserve/info`
 //获取顾客信息
 export const getCustomerDetail = `${hostBms}/tablet/new/reserve/find/member/all/info`
