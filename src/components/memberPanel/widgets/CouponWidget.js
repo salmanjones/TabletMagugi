@@ -8,11 +8,16 @@ import {PixelUtil} from "../../../utils";
 export const CouponWidget = React.memo(({couponList})=>{
     const CouponItemWidget = React.memo(({itemInfo, index})=>{
         const [isExpand, setIsExpand] = useState(false)
+        const couponStatus = itemInfo.couponStatus
+        const activityTime = itemInfo.activityTime
+
         return (
             <View style={MemberPanelStyles.memberCouponBox}>
                 <ImageBackground
                     resizeMode={'contain'}
-                    source={require('@imgPath/member_panel_coupon_bg.png')}
+                    source={couponStatus == '3'
+                        ? require('@imgPath/member_panel_coupon_inactive_bg.png')
+                        : require('@imgPath/member_panel_coupon_bg.png')}
                     style={MemberPanelStyles.memberCouponBg}>
                     <View style={MemberPanelStyles.memberCouponPriceBox}>
                         {/*券金额*/}
@@ -79,7 +84,20 @@ export const CouponWidget = React.memo(({couponList})=>{
 
                         {/*有效期*/}
                         <Text style={MemberPanelStyles.memberCouponDetailValidDateTxt}>
-                            有效期：{dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至{dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}
+                            {
+                                (()=>{
+                                    if(couponStatus == '3'){
+                                        if(activityTime){
+                                            return `激活后${activityTime}天内有效`
+                                        }else{
+                                            return `有效期：${dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
+                                        }
+                                    }else{
+                                        return `有效期：${dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
+                                    }
+                                })()
+                            }
+
                         </Text>
 
                         {/*使用说明*/}
