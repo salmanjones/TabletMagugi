@@ -279,6 +279,13 @@ export const MemberPanelStyles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
+    memberReservePropertyOperator:{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(48)
+    },
     memberReservePropertyBtnWrap:{
         display: 'flex',
         justifyContent: 'flex-start',
@@ -370,17 +377,13 @@ export const MemberPanelStyles = StyleSheet.create({
         color: '#FFFFFF'
     },
     memberReserveCancel:{
-        width: PixelUtil.size(200),
-        height: PixelUtil.size(68),
-        marginLeft: PixelUtil.size(158),
-        borderRadius: PixelUtil.size(34),
-        borderStyle: 'solid',
-        borderWidth: PixelUtil.size(2),
-        borderColor: '#111c3c',
-        backgroundColor: '#eaf0ff',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: PixelUtil.size(142),
+        height: PixelUtil.size(36),
+    },
+    memberReserveCancelImage:{
+        width: PixelUtil.size(142),
+        height: PixelUtil.size(36),
+        marginLeft: PixelUtil.size(20)
     },
     memberReserveCancelText:{
         fontSize: PixelUtil.size(32),

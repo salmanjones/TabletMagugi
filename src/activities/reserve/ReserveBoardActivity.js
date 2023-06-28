@@ -62,11 +62,12 @@ export const ReserveBoardActivity = props => {
 
     // 获取预约数据
     const getReserveList = (callBack) => {
-        setLoading(true)
         const params = {
             companyId: reduxState.auth.userInfo.companyId,
             storeId: reduxState.auth.userInfo.storeId,
         }
+
+        setLoading(true)
         getReserveInfo(params).then(backData => {
             const {code, data} = backData
             if ("6000" == code) {
@@ -87,29 +88,8 @@ export const ReserveBoardActivity = props => {
 
     // 初次加载处理
     useEffect(() => {
-        // 准备参数
-        const reloadDelay = 1000 * 60 * 10 // 10分钟刷新一次预约列表
         // 首次获取数据
         getReserveList()
-
-        // 定时刷新数据
-        const timer = setInterval(() => {
-            const memberPanelShow = memberPanelRef.current.getShowState()
-            const reserveMemberShow = customerReservePanelRef.current.getShowState()
-            const reserveCustomerShow = guestReservePanelRef.current.getShowState()
-            // 弹框中不刷新数据
-            if(memberPanelShow || reserveMemberShow || reserveCustomerShow){
-                return
-            }
-
-            // 刷新数据
-            getReserveList()
-        }, reloadDelay)
-
-        return () => {
-            //在组件卸载前执行
-            timer && clearInterval(timer)
-        }
     }, []) // 如果指定的是[],回调函数只会在第一次render()后执行
 
 

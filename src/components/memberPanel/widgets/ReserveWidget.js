@@ -8,7 +8,6 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
     let sourceName = ''
     if(reserveInfo.sourceShowType == '1'){ // 可编辑
         sourceName = (reserveInfo.reserveResoures.filter(item=>item.value == reserveInfo.source)[0] ||[{name: ''}])['name'] || '--'
-        console.warn("无法获取预约来源对应的名称，请检查接口数据")
     }else{
         sourceName = reserveInfo.sourceShowName && reserveInfo.sourceShowName.length > 0  ?reserveInfo.sourceShowName :  '--'
     }
@@ -38,6 +37,16 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                 <Text style={MemberPanelStyles.memberReservePropertyValue}>
                     {reserveInfo.memberPhoneShow}
                 </Text>
+                <TouchableOpacity
+                    style={MemberPanelStyles.memberReserveCancel}
+                    onPress={()=>{
+                        customerPressEvent('cancelReserve', {type: '0', recordId: reserveInfo.reserveId, hideRightPanel: true})
+                    }}>
+                    <Image
+                        resizeMode={'contain'}
+                        source={require('@imgPath/reserve_customer_panel_calcel_reserve.png')}
+                        style={MemberPanelStyles.memberReserveCancelImage}></Image>
+                </TouchableOpacity>
             </View>
             <View style={MemberPanelStyles.memberReserveProperty}>
                 <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
@@ -207,13 +216,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                     </TextInput>
 
                                 </View>
-                                <View style={MemberPanelStyles.memberReserveProperty}>
-                                    <TouchableOpacity style={MemberPanelStyles.memberReserveCancel}
-                                        onPress={()=>{
-                                            customerPressEvent('cancelReserve', {type: '0', recordId: reserveInfo.reserveId, hideRightPanel: true})
-                                        }}>
-                                        <Text style={MemberPanelStyles.memberReserveCancelText}>取消预约</Text>
-                                    </TouchableOpacity>
+                                <View style={MemberPanelStyles.memberReservePropertyOperator}>
                                     <TouchableOpacity
                                         style={MemberPanelStyles.memberReserveModify}
                                         onPress={()=>{

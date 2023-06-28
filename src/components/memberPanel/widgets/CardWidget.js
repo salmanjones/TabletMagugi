@@ -1,6 +1,7 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
 import React, {useState} from "react";
 import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {re} from "@babel/core/lib/vendor/import-meta-resolve";
 
 export const CardWidget = React.memo(({cardArray})=>{
     const CardItemWidget = React.memo(({itemInfo, index})=>{
@@ -18,7 +19,9 @@ export const CardWidget = React.memo(({cardArray})=>{
                     return <CardItemWidget itemInfo={item} index={index}/>
                 }
             }
-            keyExtractor={item=>item.id}
+            keyExtractor={item=>{
+                return item.id
+            }}
         />
     )
 })

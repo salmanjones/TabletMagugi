@@ -208,7 +208,6 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                     setCustomerInfo({result: 'empty'})
                     showMessageExt("获取顾客信息失败")
                 }
-                console.log(backdata)
             }).catch(e=>{
                 setCustomerInfo({result: 'empty'})
                 showMessageExt("获取顾客信息失败")
