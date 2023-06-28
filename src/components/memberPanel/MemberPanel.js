@@ -101,6 +101,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     const [tabIndex, setTabIndex] = useState(0)
     // 当前页签
     const reserveFlag = props['reserveFlag']
+
     return (
         <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
@@ -214,7 +215,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 }
                                 {
                                     tabArray[tabIndex] == '顾客资产' && (
-                                        <CardWidget cardArray={[{id:1, type: '1'},{id:2, type: '2'},{id:3, type: '3'},{id:4, type: '4'},{id:5, type: '1'},{id:6, type: '2'},{id:7, type: '3'},{id:8, type: '4'}]}/>
+                                        <CardWidget cardsInfo={customerInfo['cardsInfo']}/>
                                     )
                                 }
                                 {
@@ -235,7 +236,6 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         resizeMode={'contain'}
                         source={require('@imgPath/member_panel_operator_bg.png')}
                         style={MemberPanelStyles.operatorWrap}>
-
                         <TouchableOpacity style={MemberPanelStyles.operatorBtnCashier}>
                             <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>

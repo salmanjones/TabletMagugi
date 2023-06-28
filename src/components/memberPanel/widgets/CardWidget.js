@@ -1,27 +1,11 @@
-import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
-import React, {useState} from "react";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
-import {re} from "@babel/core/lib/vendor/import-meta-resolve";
+import React from "react";
+import {View} from "react-native";
 
-export const CardWidget = React.memo(({cardArray})=>{
-    const CardItemWidget = React.memo(({itemInfo, index})=>{
-        return (
-            <View style={MemberPanelStyles.memberCouponBox}>
-            </View>
-        )
-    })
+export const CardWidget = React.memo(({cardsInfo})=>{
+    const {card1List, card2List, card3List, card4List, card5List} = cardsInfo
+
 
     return (
-        <FlatList
-            data={cardArray}
-            renderItem={
-                ({item, index}) => {
-                    return <CardItemWidget itemInfo={item} index={index}/>
-                }
-            }
-            keyExtractor={item=>{
-                return item.id
-            }}
-        />
+        <View></View>
     )
 })

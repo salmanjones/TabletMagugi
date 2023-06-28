@@ -37,16 +37,20 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                 <Text style={MemberPanelStyles.memberReservePropertyValue}>
                     {reserveInfo.memberPhoneShow}
                 </Text>
-                <TouchableOpacity
-                    style={MemberPanelStyles.memberReserveCancel}
-                    onPress={()=>{
-                        customerPressEvent('cancelReserve', {type: '0', recordId: reserveInfo.reserveId, hideRightPanel: true})
-                    }}>
-                    <Image
-                        resizeMode={'contain'}
-                        source={require('@imgPath/reserve_customer_panel_calcel_reserve.png')}
-                        style={MemberPanelStyles.memberReserveCancelImage}></Image>
-                </TouchableOpacity>
+                {
+                    reserveFlag == 'valid' && isStartWork == '0' && (
+                        <TouchableOpacity
+                            style={MemberPanelStyles.memberReserveCancel}
+                            onPress={()=>{
+                                customerPressEvent('cancelReserve', {type: '0', recordId: reserveInfo.reserveId, hideRightPanel: true})
+                            }}>
+                            <Image
+                                resizeMode={'contain'}
+                                source={require('@imgPath/reserve_customer_panel_calcel_reserve.png')}
+                                style={MemberPanelStyles.memberReserveCancelImage}></Image>
+                        </TouchableOpacity>
+                    )
+                }
             </View>
             <View style={MemberPanelStyles.memberReserveProperty}>
                 <Text  style={MemberPanelStyles.memberReservePropertyTitle}>

@@ -154,7 +154,7 @@ export const CouponWidget = React.memo(({couponList})=>{
                 }
             }
             keyExtractor={item=>{
-                return item.id
+                return item.couponId
             }}
         />
     )

@@ -47,6 +47,7 @@ export const ReserveBoardActivity = props => {
             reserveInfoList: []
         },
         couponList: [],
+        cardsInfo: {},
         czkCount: 0,
         ckCount: 0
     })
@@ -138,6 +139,7 @@ export const ReserveBoardActivity = props => {
                             data.czkCount = 0
                             data.ckCount = 0
                             data.memberCountInfo = {}
+                            data.cardsInfo = {}
                         }
                         setCustomerState(data)
 
@@ -276,7 +278,15 @@ export const ReserveBoardActivity = props => {
                 updateCustomerReserve(updateParams).then(backData=>{
                     const {code, data} = backData
                     if(code != '6000') { // 取消异常
-                        showMessageExt("更新预约失败")
+                        Alert.alert(
+                            '系统提示',
+                            data || '更新预约失败',
+                            [
+                                {
+                                    text: '知道了',
+                                }
+                            ]
+                        )
                     }else{
                         showMessageExt("更新预约成功")
                         if(hideRight === true){ // 关闭右侧面板
