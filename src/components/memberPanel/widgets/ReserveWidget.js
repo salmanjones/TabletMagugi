@@ -5,6 +5,8 @@ import {MemberPanelStyles} from "../../../styles/MemberPanel";
 export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
     const isStartWork = reserveInfo.isStartWork
+    const canCancel = reserveInfo.isDelete
+
     let sourceName = ''
     if(reserveInfo.sourceShowType == '1'){ // 可编辑
         sourceName = (reserveInfo.reserveResoures.filter(item=>item.value == reserveInfo.source)[0] ||[{name: ''}])['name'] || '--'
@@ -38,7 +40,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     {reserveInfo.memberPhoneShow}
                 </Text>
                 {
-                    reserveFlag == 'valid' && isStartWork == '0' && (
+                    isStartWork == '0' && canCancel == '1' && (
                         <TouchableOpacity
                             style={MemberPanelStyles.memberReserveCancel}
                             onPress={()=>{

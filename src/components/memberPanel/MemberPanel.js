@@ -237,10 +237,10 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         source={require('@imgPath/member_panel_operator_bg.png')}
                         style={MemberPanelStyles.operatorWrap}>
                         <TouchableOpacity style={MemberPanelStyles.operatorBtnCashier}>
-                            <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
+                            <Text style={MemberPanelStyles.operatorBtnTxt}>办卡</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={MemberPanelStyles.operatorBtnCard}>
-                            <Text style={MemberPanelStyles.operatorBtnTxt}>开卡</Text>
+                            <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>
                     </ImageBackground>
                 </View>
