@@ -34,6 +34,8 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         flatListRef.current?.scrollToIndex({animated: true, index: 0})
     }
 
+    // 门店是否休息日，0 否 ，1 是
+    const isStoreAllDayRest = stylistReserveInfo.isStoreAllDayRest
     // 员工是否休息日，0 否 ，1 是
     const isStaffRest = stylistReserveInfo.isStaffRest
     const TimerPanel = React.memo(({itemInfo, index}) => {
@@ -76,7 +78,15 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
         )
     })
 
-    if(isStaffRest == '1'){
+    if(isStoreAllDayRest == '1'){ // 门店休息
+        return (
+            <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
+                <Image style={ReserveBoardStyles.noReserveEmpty}
+                       resizeMode={'contain'}
+                       source={require('@imgPath/reserve_staff_rest.png')}></Image>
+            </View>
+        )
+    } else if(isStaffRest == '1'){ // 员工休息
         return (
             <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
                 <Image style={ReserveBoardStyles.noReserveEmpty}

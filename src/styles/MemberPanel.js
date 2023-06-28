@@ -508,7 +508,9 @@ export const MemberPanelStyles = StyleSheet.create({
     },
     memberCouponDetailNameText:{
         width: '100%',
-        lineHeight: PixelUtil.size(32)
+        lineHeight: PixelUtil.size(32),
+        color: '#1a1a1a',
+        fontSize: PixelUtil.size(24)
     },
     memberCouponDetailValidDateTxt:{
         width: '100%',

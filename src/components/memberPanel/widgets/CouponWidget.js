@@ -50,7 +50,7 @@ export const CouponWidget = React.memo(({couponList})=>{
                                 <Text
                                     ellipsizeMode={'tail'} numberOfLines={2}
                                     style={MemberPanelStyles.memberCouponDetailNameText}>
-                                    &emsp;&emsp;&emsp;&emsp;&emsp;{itemInfo.couponName}
+                                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                 </Text>
                             </View>)
                         }
@@ -61,7 +61,7 @@ export const CouponWidget = React.memo(({couponList})=>{
                                     <Text
                                         ellipsizeMode={'tail'} numberOfLines={2}
                                         style={MemberPanelStyles.memberCouponDetailNameText}>
-                                        &emsp;&emsp;&emsp;&emsp;&emsp;{itemInfo.couponName}
+                                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                     </Text>
                                 </View>)
                         }
@@ -72,7 +72,7 @@ export const CouponWidget = React.memo(({couponList})=>{
                                     <Text
                                         ellipsizeMode={'tail'} numberOfLines={2}
                                         style={MemberPanelStyles.memberCouponDetailNameText}>
-                                        &emsp;&emsp;&emsp;&emsp;&emsp;{itemInfo.couponName}
+                                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                     </Text>
                                 </View>)
                         }
@@ -102,7 +102,7 @@ export const CouponWidget = React.memo(({couponList})=>{
                                 onPress={()=>{setIsExpand(!isExpand)}}
                                 style={MemberPanelStyles.memberCouponDetailDescRightBox}>
                                 <Text style={MemberPanelStyles.memberCouponDetailDescRightText}>
-                                    查看详情
+                                    {isExpand ? '收起':'查看详情'}
                                 <Image resizeMode={"contain"}
                                        source={isExpand ? require('@imgPath/member_panel_coupon_up.png') : require('@imgPath/member_panel_coupon_dw.png')}
                                        style={MemberPanelStyles.memberCouponDetailDescRightIcon}/>
