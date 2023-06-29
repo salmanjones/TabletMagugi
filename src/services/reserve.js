@@ -77,12 +77,20 @@ export const updateCustomerReserve = params => {
     });
 }
 
-
 /**
  * 获取顾客所有信息
  */
 export const getCustomerDetail = params => {
     return callService(api.getCustomerDetail, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 卡延期
+ */
+export const updateCardValidity = params => {
+    return callService(api.updateCardValidity, params).then(backData => {
         return backData;
     });
 }

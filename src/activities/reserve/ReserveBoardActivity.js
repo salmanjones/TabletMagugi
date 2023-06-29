@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail, updateCustomerReserve} from "../../services/reserve";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail, updateCustomerReserve, updateCardValidity} from "../../services/reserve";
 import MemberPanel from "../../components/memberPanel/MemberPanel";
 import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
 import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
@@ -112,7 +112,7 @@ export const ReserveBoardActivity = props => {
     }, [])
 
     // 客户卡片点击
-    const customerCardPressEvent = React.useCallback((type, extra) => {
+    const customerPressEvent = React.useCallback((type, extra) => {
         const storeId = reduxState.auth.userInfo.storeId
         switch (type) {
             case 'reloadData': // 刷新数据
@@ -124,7 +124,6 @@ export const ReserveBoardActivity = props => {
                     appUserId: customerInfo.appUserId,
                     reserveId: customerInfo.recordId
                 }
-
                 setLoading(true)
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
@@ -300,6 +299,63 @@ export const ReserveBoardActivity = props => {
                     setLoading(false)
                 })
                 break;
+            case 'editCardValidity': // 卡延期
+                Alert.alert('系统提示', "该卡确定要延期吗", [
+                    {
+                        text: '是',
+                        onPress: () => {
+                            setLoading(true)
+                            updateCardValidity({
+                                cardId: extra.cardId
+                            }).then(backData=>{
+                                const {code, data} = backData
+                                if(code != '6000') { // 取消异常
+                                    Alert.alert(
+                                        '系统提示',
+                                        data || '卡延期失败',
+                                        [
+                                            {
+                                                text: '知道了',
+                                            }
+                                        ]
+                                    )
+                                }else{
+                                    // 重新获取会员信息
+                                    setLoading(true)
+                                    getCustomerDetail({
+                                        appUserId: extra.appUserId,
+                                        reserveId: extra.reserveId
+                                    }).then(backData=>{
+                                        const {code, data} = backData
+                                        if(code == '6000'){
+                                            setCustomerState(data)
+                                            showMessageExt("卡延期成功")
+                                        }else{
+                                            showMessageExt("获取顾客信息失败")
+                                        }
+                                    }).catch(e=>{
+                                        console.error("获取顾客信息失败", e)
+                                        showMessageExt("获取顾客信息失败")
+                                    }).finally(_=>{
+                                        setLoading(false)
+                                    })
+                                }
+                            }).catch(e=>{
+                                console.log(e)
+                                showMessageExt("卡延期失败")
+                            }).finally(_=>{
+                                setLoading(false)
+                            })
+                        }
+                    },
+                    {
+                        text: '否',
+                    },
+                ])
+                break;
+            case 'rechargeCardItem': //
+
+                break;
         }
     }, [])
 
@@ -347,13 +403,13 @@ export const ReserveBoardActivity = props => {
                             <CustomerWidget
                                 stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
                                 reserveFlag={reserveFlag}
-                                customerCardEvent={customerCardPressEvent}/>
+                                customerCardEvent={customerPressEvent}/>
                         )}
                     </View>
                 </View>
             </View>
             {/*会员信息面板*/}
-            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerCardPressEvent}/>
+            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerPressEvent}/>
             {/*顾客预约面板信息*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*散客预约*/}

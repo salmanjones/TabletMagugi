@@ -2,7 +2,7 @@ import React from "react";
 import {FlatList, ImageBackground, Text, TouchableOpacity, View} from "react-native";
 import {MemberPanelStyles} from "../../../styles/MemberPanel";
 
-export const CardFlatList = React.memo(({cardArray, cardType})=>{
+export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, customerPressEvent})=>{
     const CardFlatItem = React.memo(({cardItem, index})=>{
         // 是否为偶数
         const isEvenElement = index % 2 == 0
@@ -43,7 +43,6 @@ export const CardFlatList = React.memo(({cardArray, cardType})=>{
         }
 
         // 是否要隐藏次数
-
         let hideCardBalance = false
         if(cardTypeId == '2' && cardMode == '2'){ // 时间卡
             hideCardBalance = true
@@ -71,7 +70,17 @@ export const CardFlatList = React.memo(({cardArray, cardType})=>{
                                 cardTypeId == '1' ? `¥${cardItem.cardBalance}`:`${cardItem.cardBalance}次`
                             }
                         </Text>
-                        <TouchableOpacity style={cardButtonStyle}>
+                        <TouchableOpacity style={cardButtonStyle} onPress={()=>{
+                            if(isInvalidCard) {
+                                customerPressEvent('editCardValidity', {
+                                    cardId: cardItem.cardId,
+                                    appUserId: extendsInfo.appUserId,
+                                    reserveId: extendsInfo.reserveId
+                                })
+                            }else {
+                                customerPressEvent('rechargeCardItem', {cardId: cardItem.cardId})
+                            }
+                        }}>
                             <Text style={cardButtonTxtStyle}>
                                 {isInvalidCard ? '延期':'充值'}
                             </Text>

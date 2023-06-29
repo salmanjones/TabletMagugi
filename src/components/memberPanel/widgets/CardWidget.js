@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native";
 import {MemberPanelStyles} from "../../../styles/MemberPanel";
 import {CardFlatList} from "./CardFlatList";
 
-export const CardWidget = React.memo(({cardsInfo})=>{
+export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEvent})=>{
     // 选中tab state
     const [activeTabIndex, setActiveTabIndex] = useState(0)
     // tabs
@@ -50,6 +50,10 @@ export const CardWidget = React.memo(({cardsInfo})=>{
         })
     }
 
+    useEffect(()=>{
+        setActiveTabIndex(0)
+    }, [cardsInfo])
+
     return (
         <View style={MemberPanelStyles.memberCardsBox}>
             {/*Tab*/}
@@ -75,7 +79,11 @@ export const CardWidget = React.memo(({cardsInfo})=>{
             </View>
             {/*卡列表*/}
             <View style={MemberPanelStyles.memberCardsWrap}>
-                <CardFlatList cardArray={tabList[activeTabIndex]['data']} cardType={tabList[activeTabIndex]['title']}></CardFlatList>
+                <CardFlatList
+                    cardArray={tabList[activeTabIndex]['data']}
+                    cardType={tabList[activeTabIndex]['title']}
+                    customerPressEvent={customerPressEvent}
+                    extendsInfo={extendsInfo}/>
             </View>
         </View>
     )
