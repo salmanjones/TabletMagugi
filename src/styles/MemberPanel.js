@@ -547,6 +547,7 @@ export const MemberPanelStyles = StyleSheet.create({
         color: '#929292',
         marginLeft: PixelUtil.size(8),
         lineHeight: PixelUtil.size(36),
+        width: PixelUtil.size(360),
         maxWidth: PixelUtil.size(360),
         overflow: 'hidden'
     },
@@ -688,4 +689,226 @@ export const MemberPanelStyles = StyleSheet.create({
         fontSize: PixelUtil.size(26),
         fontWeight: 700,
     },
+    memberCardsBox: {
+        width: '100%',
+        height: '100%',
+        position: 'relative'
+    },
+    memberCardsTabBox:{
+        width: '100%',
+        height: PixelUtil.size(80),
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'row'
+    },
+    memberCardsTabItem:{
+        width: PixelUtil.size(168),
+        height: PixelUtil.size(56),
+        marginRight: PixelUtil.size(26),
+        backgroundColor: '#ebedf2',
+        borderRadius: PixelUtil.size(28),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    memberCardsTabItemText:{
+        fontSize: PixelUtil.size(24),
+        color: '#2d2d2d',
+        fontWeight: '500',
+    },
+    memberCardsTabItemActive:{
+        width: PixelUtil.size(168),
+        height: PixelUtil.size(56),
+        marginRight: PixelUtil.size(26),
+        backgroundColor: '#f8ecd9',
+        borderRadius: PixelUtil.size(28),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    memberCardsTabItemTextActive:{
+        fontSize: PixelUtil.size(24),
+        color: '#FFA200',
+        fontWeight: '500',
+    },
+    memberCardsWrap:{
+        flex: 1,
+        width: '100%',
+    },
+    cardItemSeparator:{
+        width: PixelUtil.size(1),
+        height: PixelUtil.size(14)
+    },
+    cardItemBackground: {
+        width: PixelUtil.size(472),
+        height: PixelUtil.size(307),
+        borderRadius: PixelUtil.size(20),
+        marginRight: PixelUtil.size(14),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        position: "relative"
+    },
+    cardItemBackground2N:{
+        width: PixelUtil.size(472),
+        height: PixelUtil.size(307),
+        borderRadius: PixelUtil.size(20),
+        marginRight: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        position: "relative"
+    },
+    cardItemModeName:{
+        color: "#ffefd5",
+        fontSize: PixelUtil.size(20),
+        marginLeft: PixelUtil.size(50),
+        marginTop: PixelUtil.size(10)
+    },
+    cardItemModeNameWuXiao:{
+        color: "#ffffff",
+        fontSize: PixelUtil.size(20),
+        marginLeft: PixelUtil.size(50),
+        marginTop: PixelUtil.size(10)
+    },
+    cardItemContentBox:{
+        marginTop: PixelUtil.size(12),
+        width: PixelUtil.size(472),
+        height: PixelUtil.size(172),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: "relative",
+    },
+    cardItemOtherBox:{
+        marginTop: PixelUtil.size(0),
+        width: PixelUtil.size(472),
+        height: PixelUtil.size(72),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardItemOtherWrap:{
+        width: PixelUtil.size(412),
+        height: PixelUtil.size(72),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardItemChuZhiName:{
+        width: PixelUtil.size(412),
+        height: PixelUtil.size(96),
+        color: '#5E3F20',
+        lineHeight: PixelUtil.size(48),
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+    },
+    cardItemTaoCanName:{
+        width: PixelUtil.size(412),
+        height: PixelUtil.size(96),
+        color: '#3C4C72',
+        lineHeight: PixelUtil.size(48),
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+    },
+    cardItemWuXiaoName:{
+        width: PixelUtil.size(412),
+        height: PixelUtil.size(96),
+        color: '#1A1A1A',
+        lineHeight: PixelUtil.size(48),
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+    },
+    cardItemOperatorBox:{
+        width: PixelUtil.size(412),
+        height: PixelUtil.size(76),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardItemChuZhiBalance:{
+        fontSize: PixelUtil.size(45),
+        fontWeight: '700',
+        color: '#5E3F20'
+    },
+    cardItemTaoCanBalance:{
+        fontSize: PixelUtil.size(45),
+        fontWeight: '700',
+        color: '#081539'
+    },
+    cardItemWuXiaoBalance:{
+        fontSize: PixelUtil.size(45),
+        fontWeight: '700',
+        color: '#5A5A5A'
+    },
+    cardItemYinCangBalance:{
+        fontSize: PixelUtil.size(45),
+        fontWeight: '700',
+        color: '#5A5A5A00',
+    },
+    cardItemChuZhiOperator:{
+        width: PixelUtil.size(130),
+        height: PixelUtil.size(52),
+        borderRadius: PixelUtil.size(26),
+        backgroundColor: '#5E3F20',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardItemTaoCanOperator:{
+        width: PixelUtil.size(130),
+        height: PixelUtil.size(52),
+        borderRadius: PixelUtil.size(26),
+        backgroundColor: '#3C4C72',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardItemYanQiOperator:{
+        width: PixelUtil.size(130),
+        height: PixelUtil.size(52),
+        borderRadius: PixelUtil.size(26),
+        backgroundColor: '#353535',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardItemOperatorText:{
+        fontSize: PixelUtil.size(30),
+        fontWeight: '700',
+        color: '#FFF2DC'
+    },
+    cardItemOperatorYanQiText:{
+        fontSize: PixelUtil.size(30),
+        fontWeight: '700',
+        color: '#ffffff'
+    },
+    cardItemStore:{
+        width: PixelUtil.size(186),
+        fontSize: PixelUtil.size(20),
+        fontWeight: '500',
+        color: '#858585'
+    },
+    cardItemDate:{
+        fontSize: PixelUtil.size(20),
+        fontWeight: '500',
+        color: '#858585'
+    },
+    cardItemWuXiaoDate:{
+        fontSize: PixelUtil.size(20),
+        fontWeight: '500',
+        color: '#FF3636'
+    }
 })
