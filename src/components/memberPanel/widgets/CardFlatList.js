@@ -71,10 +71,7 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                             }
                         </Text>
                         {
-
-
                             (()=>{
-                                console.log("cardItem.allowRecharge", JSON.stringify(cardItem))
                                 if(isInvalidCard) { // 无效卡
                                     return (
                                         <TouchableOpacity style={cardButtonStyle} onPress={

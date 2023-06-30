@@ -112,11 +112,11 @@ export const ReserveBoardActivity = props => {
     }, [])
 
     // 客户卡片点击
-    const customerPressEvent = React.useCallback((type, extra) => {
+    const customerPressEvent = React.useCallback((type, extra, callBack) => {
         const storeId = reduxState.auth.userInfo.storeId
         switch (type) {
             case 'reloadData': // 刷新数据
-                getReserveList()
+                getReserveList(callBack)
                 break;
             case 'showDetail': // 查看详情
                 const customerInfo = extra['customer']

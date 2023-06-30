@@ -44,7 +44,7 @@ export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEven
     }
 
     if(zeroCardList.length > 0){
-        zeroCardList.push({
+        tabList.push({
             title: `0元卡(${zeroCardList.length})`,
             data: zeroCardList
         })

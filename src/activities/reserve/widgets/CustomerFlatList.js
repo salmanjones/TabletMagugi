@@ -45,7 +45,6 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
             getRefreshState({storeId: ReduxStore.getState().auth.userInfo.storeId, uniqueId}).then(backData=>{
                 const {code, data} = backData
                 if(code == '6000'){
-                    console.log("======refresh", backData)
                     setNeedRefresh(data)
                 }
             }).catch(e=>{
@@ -140,7 +139,9 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                     <TouchableOpacity
                         style={ReserveBoardStyles.reserveButtonRefresh}
                         onPress={()=>{
-                            customerCardEvent("reloadData", {})
+                            customerCardEvent("reloadData", {}, ()=>{
+                                setNeedRefresh(false)
+                            })
                         }}>
                         <Image
                             style={ReserveBoardStyles.reserveButtonSankeIcon}
