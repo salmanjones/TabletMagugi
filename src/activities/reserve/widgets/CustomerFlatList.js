@@ -9,6 +9,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
+    const [needRefresh, setNeedRefresh] = useState(false)
     // 列表组件
     const flatListRef = useRef(null);
     // 当预约信息刷新与切换Tab时触发
@@ -33,6 +34,18 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
     const goToTop = ()=>{
         flatListRef.current?.scrollToIndex({animated: true, index: 0})
     }
+
+    // 1分钟获取一次，是否需要刷新数据
+    const loopTime = 1000 * 60 * 1
+    React.useEffect(()=>{
+        setInterval(()=>{
+
+        }, loopTime)
+
+        return ()=>{
+
+        }
+    }, [])
 
     // 门店是否休息日，0 否 ，1 是
     const isStoreAllDayRest = stylistReserveInfo.isStoreAllDayRest
@@ -120,7 +133,10 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
                         <Image
                             style={ReserveBoardStyles.reserveButtonSankeIcon}
                             resizeMode={'contain'}
-                            source={require('@imgPath/reserve_customer_button_refresh.png')}/>
+                            source={needRefresh
+                                ? require('@imgPath/reserve_customer_button_refresh_new.png')
+                                : require('@imgPath/reserve_customer_button_refresh.png')
+                            }/>
                     </TouchableOpacity>
                     {/*回到当前位置*/}
                     <TouchableOpacity
