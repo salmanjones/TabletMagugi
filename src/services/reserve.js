@@ -94,3 +94,13 @@ export const updateCardValidity = params => {
         return backData;
     });
 }
+
+/**
+ * 获取页面组件刷新状态
+ */
+export const getRefreshState = params => {
+    return callService(api.getRefreshState, params).then(backData => {
+        return backData;
+    });
+}
+

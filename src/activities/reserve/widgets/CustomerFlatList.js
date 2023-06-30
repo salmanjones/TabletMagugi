@@ -3,7 +3,8 @@ import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
 import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
-import dayjs from "dayjs";
+import {getRefreshState} from "../../../services/reserve";
+import ReduxStore from "../../../store/store"
 
 export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent}) => {
     // 呈现数据
@@ -38,12 +39,23 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent})
     // 1分钟获取一次，是否需要刷新数据
     const loopTime = 1000 * 60 * 1
     React.useEffect(()=>{
-        setInterval(()=>{
-
+        // 进入页面生成唯一ID
+        let uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
+        let timerId = setInterval(()=>{
+            getRefreshState({storeId: ReduxStore.getState().auth.userInfo.storeId, uniqueId}).then(backData=>{
+                const {code, data} = backData
+                if(code == '6000'){
+                    console.log("======refresh", backData)
+                    setNeedRefresh(data)
+                }
+            }).catch(e=>{
+                console.error("获取刷新状态失败", e)
+            })
         }, loopTime)
 
         return ()=>{
-
+            //在组件卸载前执行
+            timerId && clearInterval(timerId)
         }
     }, [])
 

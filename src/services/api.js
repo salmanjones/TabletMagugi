@@ -143,3 +143,5 @@ export const updateCustomerReserve = `${hostBms}/tablet/new/reserve/update/new/r
 export const getCustomerDetail = `${hostBms}/tablet/new/reserve/find/member/all/info`
 //卡延期
 export const updateCardValidity = `${hostBms}/tablet/new/reserve/update/card/validity`
+//获取刷新状态
+export const getRefreshState=`${hostBms}/tablet/new/reserve/find/reserve/is/change`

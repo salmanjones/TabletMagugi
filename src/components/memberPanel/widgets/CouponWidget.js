@@ -86,14 +86,19 @@ export const CouponWidget = React.memo(({couponList})=>{
                         <Text style={MemberPanelStyles.memberCouponDetailValidDateTxt}>
                             {
                                 (()=>{
-                                    if(couponStatus == '3'){
+                                    if(couponStatus == '3'){ // 未激活
                                         if(activityTime){
                                             return `激活后${activityTime}天内有效`
                                         }else{
                                             return `有效期：${dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
                                         }
                                     }else{
-                                        return `有效期：${dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
+                                        if(activityTime){ // 激活后的优惠券
+                                            return `有效期至：${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
+                                        }else{
+                                            return `有效期：${dayjs(itemInfo.activityStart).format("YYYY-MM-DD")}至${dayjs(itemInfo.activityEnd).format("YYYY-MM-DD")}`
+                                        }
+
                                     }
                                 })()
                             }
