@@ -104,3 +104,14 @@ export const getRefreshState = params => {
     });
 }
 
+/**
+ * 获取会员信息
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getMemberInfo = params => {
+    return callService(api.getMemberInfo, params).then(backData => {
+        return backData;
+    });
+}
+

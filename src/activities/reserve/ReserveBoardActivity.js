@@ -6,10 +6,12 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData, getCustomerDetail, updateCustomerReserve, updateCardValidity} from "../../services/reserve";
-import MemberPanel from "../../components/memberPanel/MemberPanel";
-import CustomerReservePanel from "../../components/reservePanel/CustomerReservePanel";
-import GuestReservePanel from "../../components/reservePanel/GuestReservePanel";
+import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData,
+    getCustomerDetail, updateCustomerReserve, updateCardValidity, getMemberInfo} from "../../services/reserve";
+import MemberPanel from "../../components/panelMember/MemberPanel";
+import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
+import CustomerReservePanel from "../../components/panelReserve/CustomerReservePanel";
+import GuestReservePanel from "../../components/panelReserve/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {showMessageExt} from "../../utils";
@@ -51,6 +53,9 @@ export const ReserveBoardActivity = props => {
         czkCount: 0,
         ckCount: 0
     })
+    // 多档案组件
+    const panelMultiProfilePanelRef = useRef(null)
+    const [multiProfiles, setMultiProfiles] = useState([])
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);
     // 顾客预约基础数据
@@ -113,7 +118,7 @@ export const ReserveBoardActivity = props => {
         setStylistCheckedIndex(index)
     }, [])
 
-    // 客户卡片点击
+    // 客户点击事件
     const customerPressEvent = React.useCallback((type, extra, callBack) => {
         const storeId = reduxState.auth.userInfo.storeId
         switch (type) {
@@ -355,9 +360,36 @@ export const ReserveBoardActivity = props => {
                     },
                 ])
                 break;
-            case 'rechargeCardItem': //
+            case 'rechargeCardItem': // 充值
 
                 break;
+            case 'toCreateOrder': // 创建订单
+                setLoading(true)
+                getMemberInfo({appUserId: extra['appUserId']}).then(backData => {
+                    const {code, data} = backData
+                    if(code != '6000'){
+                        console.error("通过appUserId获取会员档案失败", backData)
+                        showMessageExt("获取会员档案失败")
+                    }else{ // 多档案
+                        if(data.length > 1){ // 多档案
+                            setMultiProfiles(data)
+                            memberPanelRef.current.hideRightPanel()
+                            panelMultiProfilePanelRef.current.showRightPanel()
+                        }else if(data.length == 1){ // 单档案直接开单
+                            setMultiProfiles(data)
+                            memberPanelRef.current.hideRightPanel()
+                            panelMultiProfilePanelRef.current.showRightPanel()
+                        }else{ // 无档案
+                            showMessageExt("获取会员档案失败")
+                        }
+                    }
+                }).catch(e=>{
+                    console.error("通过appUserId获取会员档案失败", e)
+                    showMessageExt("获取会员档案失败")
+                }).finally(_=>{
+                    setLoading(false)
+                })
+                break
         }
     }, [])
 
@@ -415,6 +447,8 @@ export const ReserveBoardActivity = props => {
             <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerPressEvent}/>
             {/*顾客预约面板信息*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
+            {/*顾客多档案信息*/}
+            <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileArray={multiProfiles}></PanelMultiProfilePanel>
             {/*散客预约*/}
             <GuestReservePanel ref={guestReservePanelRef}/>
         </View>

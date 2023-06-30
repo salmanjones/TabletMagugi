@@ -145,3 +145,5 @@ export const getCustomerDetail = `${hostBms}/tablet/new/reserve/find/member/all/
 export const updateCardValidity = `${hostBms}/tablet/new/reserve/update/card/validity`
 //获取刷新状态
 export const getRefreshState=`${hostBms}/tablet/new/reserve/find/reserve/is/change`
+//根据AppUserId获取BMS会员信息
+export const getMemberInfo=`${hostBms}/tablet/new/reserve/find/bms/member/info`
