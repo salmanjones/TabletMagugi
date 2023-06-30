@@ -44,7 +44,8 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
 
         // 是否要隐藏次数
         let hideCardBalance = false
-        if(cardTypeId == '2' && cardMode == '2'){ // 时间卡
+        if((cardTypeId == '2' && cardMode == '2')// 时间卡
+            ||(cardTypeId == '1' && cardMode == '1')){  // 折扣卡
             hideCardBalance = true
         }
 
