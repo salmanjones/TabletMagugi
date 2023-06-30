@@ -62,10 +62,12 @@ export const ReserveBoardActivity = props => {
     const guestReservePanelRef = useRef(null);
 
     // 获取预约数据
+    const uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
     const getReserveList = (callBack) => {
         const params = {
             companyId: reduxState.auth.userInfo.companyId,
             storeId: reduxState.auth.userInfo.storeId,
+            uniqueId: uniqueId,
         }
 
         setLoading(true)
@@ -403,7 +405,8 @@ export const ReserveBoardActivity = props => {
                             <CustomerWidget
                                 stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
                                 reserveFlag={reserveFlag}
-                                customerCardEvent={customerPressEvent}/>
+                                customerCardEvent={customerPressEvent}
+                                uniqueId={uniqueId}/>
                         )}
                     </View>
                 </View>

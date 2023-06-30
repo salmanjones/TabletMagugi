@@ -17,13 +17,13 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
     const [sourceValue, setSourceValue] = useState(reserveInfo.source)
     const [serviceValue, setServiceValue] = useState(reserveInfo.reserveProjectId)
     const [serviceNameValue, setServiceNameValue] = useState(serviceType)
-    const [remark, setRemark] = useState(reserveInfo.remark)
+    const [remark, setRemark] = useState('')
 
     useEffect(()=>{
         setSourceValue(reserveInfo.source)
         setServiceValue(reserveInfo.reserveProjectId)
         setServiceNameValue(serviceType)
-        setRemark(reserveInfo.remark || '')
+        setRemark(decodeURIComponent(reserveInfo.remark) || '')
     }, [reserveInfo])
 
     return (
@@ -59,7 +59,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     顾客姓名：
                 </Text>
                 <Text style={MemberPanelStyles.memberReservePropertyValue}>
-                    {decodeURIComponent(decodeURIComponent(reserveInfo.memberName))}
+                    {decodeURIComponent(reserveInfo.memberName)}
                 </Text>
             </View>
             <View style={MemberPanelStyles.memberReserveProperty}>
@@ -109,7 +109,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         multiline={true}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
-                                        value={reserveInfo.remark && reserveInfo.remark.length > 0 ? decodeURIComponent(reserveInfo.remark): '暂无'}>
+                                        value={remark && remark.length > 0 ? remark: '暂无'}>
                                     </TextInput>
                                 </View>
                             </View>
@@ -213,7 +213,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
                                         placeholder={'请输入预约备注，30个文字以内'}
-                                        value={decodeURIComponent(remark)}
+                                        value={remark}
                                         onChange={({nativeEvent})=>{
                                             const remark = nativeEvent.text
                                             setRemark(remark)
