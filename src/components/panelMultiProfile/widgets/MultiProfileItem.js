@@ -15,7 +15,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                                     ? decodeURIComponent(profileItem.bmsName): '未填写姓名'}
                             </Text>
                             <Image
-                                source={require('@imgPath/reserve_customer_multi_profile_man.png')}
+                                source={profileItem.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png'):require('@imgPath/reserve_customer_multi_profile_woman.png')}
                                 style={PanelMultiProfiles.sexWrap}></Image>
                         </View>
                         <Text style={PanelMultiProfiles.valueText}>
@@ -29,7 +29,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                         </Text>
                     </View>
                     <View style={PanelMultiProfiles.timeBox}>
-                        <Text style={PanelMultiProfiles.titleText}>消费时间</Text>
+                        <Text style={PanelMultiProfiles.titleText}>最近消费时间</Text>
                         <Text style={PanelMultiProfiles.valueText}>
                             {profileItem.lastTime ? profileItem.lastTime.substring(0,19) : '暂无消费'}
                         </Text>

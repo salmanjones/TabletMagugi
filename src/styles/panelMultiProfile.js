@@ -231,13 +231,13 @@ export const PanelMultiProfiles = StyleSheet.create({
     },
     timeBox:{
         marginLeft: PixelUtil.size(60),
-        width: PixelUtil.size(270),
+        width: PixelUtil.size(280),
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
     },
     nameText:{
         fontSize: PixelUtil.size(34),
