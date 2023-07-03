@@ -710,14 +710,14 @@ export const commonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: PixelUtil.rect(2, 104).height,
+        height: '100%',
         marginRight: PixelUtil.size(58)
     },
     appointmentInfoBoxO: {
         flex: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        height: PixelUtil.rect(2, 104).height,
+        height: '100%',
     },
     titleLeftDashed: {
         width: PixelUtil.rect(2, 104).width,
@@ -725,16 +725,16 @@ export const commonStyles = StyleSheet.create({
         marginRight: PixelUtil.size(22)
     },
     titleAppointmentImg: {
-        width: PixelUtil.rect(150, 44).width,
-        height: PixelUtil.rect(150, 44).height,
+        width: PixelUtil.rect(125, 36).width,
+        height: PixelUtil.rect(125, 36).height,
         flex: 0,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        marginBottom: PixelUtil.size(20),
     },
     titleAppointmentText: {
-        fontSize: PixelUtil.size(28),
-        color: '#F97E67'
+        fontSize: PixelUtil.size(24),
+        color: '#F97E67',
+        marginTop: PixelUtil.size(10)
     }
 });
