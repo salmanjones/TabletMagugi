@@ -67,12 +67,29 @@ export const PanelMultiProfiles = StyleSheet.create({
         paddingTop: PixelUtil.size(24),
         paddingHorizontal: PixelUtil.size(30)
     },
+    contentHeadTxtWrap:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(30)
+    },
     contentHeadTitle:{
         width: '100%',
         fontWeight: 700,
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         textAlign: 'left'
+    },
+    contentHeadTitleTxt:{
+        width: '100%',
+        fontWeight: 700,
+        fontSize: PixelUtil.size(32),
+        color: '#ffffff',
+        textAlign: 'left',
+        marginTop: PixelUtil.size(-27)
     },
     headSearchBox:{
         width: '100%',
@@ -137,5 +154,119 @@ export const PanelMultiProfiles = StyleSheet.create({
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-
+    memberBodyWrap: {
+        flex: 1,
+        width: '100%',
+        position: 'relative',
+        backgroundColor: '#ffffff'
+    },
+    profileItemSplit:{
+        width: '100%',
+        height: PixelUtil.size(0),
+    },
+    profileItemBox: {
+        width: '100%',
+        height: PixelUtil.size(146),
+        paddingHorizontal: PixelUtil.size(40)
+    },
+    profileItemWrap:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative',
+        borderBottomWidth: PixelUtil.size(2),
+        borderColor: '#e3e3e3',
+        borderStyle: 'solid'
+    },
+    profileItemLastWrap:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    leftWrap:{
+        height: PixelUtil.size(98),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    rightWrap:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    nameBox:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        position: 'relative'
+    },
+    nameWrap:{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    numberBox:{
+        marginLeft: PixelUtil.size(90),
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    timeBox:{
+        marginLeft: PixelUtil.size(60),
+        width: PixelUtil.size(270),
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    nameText:{
+        fontSize: PixelUtil.size(34),
+        fontWeight: '700',
+        color: '#000000',
+        width: PixelUtil.size(180),
+    },
+    sexWrap:{
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(40),
+    },
+    titleText:{
+        marginTop: PixelUtil.size(6),
+        fontSize: PixelUtil.size(26),
+        fontWeight: '500',
+        color: '#7C7C7C'
+    },
+    valueText:{
+        fontSize: PixelUtil.size(26),
+        fontWeight: '700',
+        color: '#2E2E2E'
+    },
+    createBtnBox:{
+        width: PixelUtil.size(172),
+        height: PixelUtil.size(68),
+        borderRadius: PixelUtil.size(34)
+    },
+    createBtnImg:{
+        width: '100%',
+        height: '100%'
+    }
 })

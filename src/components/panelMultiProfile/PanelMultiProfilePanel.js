@@ -1,15 +1,15 @@
-import {Animated, Image, LogBox, PanResponder, Text, TextInput, TouchableOpacity, View,} from "react-native";
+import {Animated, FlatList, Image, LogBox, PanResponder, Text, TextInput, TouchableOpacity, View,} from "react-native";
 import {PixelUtil} from "../../utils";
-import React, {forwardRef, useImperativeHandle, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelMultiProfiles} from "../../styles/panelMultiProfile";
 import {BackgroundImage} from "react-native-elements/dist/config";
-import {ReservePanelStyles} from "../../styles/ReservePanel";
+import {MultiProfileItem} from "./widgets/MultiProfileItem";
 
 /**
  * 多档案会员右侧浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
-const PanelMultiProfilePanelForwardRef = forwardRef((props, refArgs) => {
+const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customerClickEvent}, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
     const [animateState, setAnimateState] = useState({
@@ -36,7 +36,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef((props, refArgs) => {
     });
 
     /// 展示面板
-    const showRightPanel = () => {
+    const showRightPanel = (showType = 'member') => {
+        setShowType(showType)
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -74,13 +75,21 @@ const PanelMultiProfilePanelForwardRef = forwardRef((props, refArgs) => {
         getShowState,
     }))
 
+    /// 展示类型
+    const [showType, setShowType] = useState('member') // 当前控件展示类型
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 是否展示清除按钮
     const [showClear, setShowClear] = useState(false)
     /// 会员列表
     const [memberProfileList, setMemberProfileList] = useState(null)
+    /// 多会员数据
+    const [multiProfileArray, setMultiProfileArray] = useState([])
+    useEffect(()=>{
+        setMultiProfileArray(multiProfileData)
+    }, [multiProfileData])
 
+    // 多档案数据
     return (
         <View style={animateState.sliderShow ? PanelMultiProfiles.rightPanelMask : {display: 'none'}}>
             <Animated.View
@@ -104,58 +113,85 @@ const PanelMultiProfilePanelForwardRef = forwardRef((props, refArgs) => {
                     <BackgroundImage
                         resizeMode={'stretch'}
                         style={PanelMultiProfiles.headerBox}
-                        source={require('@imgPath/reserve_customer_multi_profile_bg.png')}>
-                        <View style={PanelMultiProfiles.contentHeadWrap}>
-                            <Text style={PanelMultiProfiles.contentHeadTitle}>查询顾客</Text>
-                            <View style={PanelMultiProfiles.headSearchBox}>
-                                {/*输入框*/}
-                                <Image
-                                    resizeMode={"contain"}
-                                    style={PanelMultiProfiles.headSearchIcon}
-                                    source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
-                                <TextInput
-                                    keyboardType={'phone-pad'}
-                                    style={showClear ? PanelMultiProfiles.headSearchInputFull:PanelMultiProfiles.headSearchInputEmpty}
-                                    placeholder={'请输入预约手机号'}
-                                    placeholderTextColor={'#8e8e8e'}
-                                    onChange={({nativeEvent})=>{
-                                        const phone = nativeEvent.text
-                                        const showClear = phone.trim().length > 0
-                                        setUserPhone(phone)
-                                        setShowClear(showClear)
-                                    }}
-                                    value={userPhone}
-                                    maxLength={11}/>
-                                {/*查询*/}
-                                <TouchableOpacity
-                                    onPress={()=>{
-                                        queryCustomerInfo()
-                                    }}
-                                    style={PanelMultiProfiles.headSearchButton}>
-                                    <Image
-                                        resizeMode={"contain"}
-                                        style={PanelMultiProfiles.headSearchButtonImg}
-                                        source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
-                                </TouchableOpacity>
-                                {/*清除*/}
-                                {
-                                    showClear && (
-                                        <TouchableOpacity
-                                            style={PanelMultiProfiles.headClearButton}
-                                            onPress={()=>{
-                                                setUserPhone('')
-                                                setMemberProfileList(null)
-                                            }}>
-                                            <Image
-                                                resizeMode={"contain"}
-                                                style={PanelMultiProfiles.headClearButtonImg}
-                                                source={require('@imgPath/reserve_panel_customer_search_reset.png')}></Image>
-                                        </TouchableOpacity>
+                        source={showType == 'query' ? require('@imgPath/reserve_customer_multi_profile_bg.png') : require('@imgPath/reserve_customer_multi_profile_exist_bg.png')}>
+                        {
+                            (()=>{
+                                if(showType == 'query'){
+                                    return (
+                                        <View style={PanelMultiProfiles.contentHeadWrap}>
+                                            <Text style={PanelMultiProfiles.contentHeadTitle}>查询顾客</Text>
+                                            <View style={PanelMultiProfiles.headSearchBox}>
+                                                {/*输入框*/}
+                                                <Image
+                                                    resizeMode={"contain"}
+                                                    style={PanelMultiProfiles.headSearchIcon}
+                                                    source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
+                                                <TextInput
+                                                    keyboardType={'phone-pad'}
+                                                    style={showClear ? PanelMultiProfiles.headSearchInputFull:PanelMultiProfiles.headSearchInputEmpty}
+                                                    placeholder={'请输入预约手机号'}
+                                                    placeholderTextColor={'#8e8e8e'}
+                                                    onChange={({nativeEvent})=>{
+                                                        const phone = nativeEvent.text
+                                                        const showClear = phone.trim().length > 0
+                                                        setUserPhone(phone)
+                                                        setShowClear(showClear)
+                                                    }}
+                                                    value={userPhone}
+                                                    maxLength={11}/>
+                                                {/*查询*/}
+                                                <TouchableOpacity
+                                                    onPress={()=>{
+                                                        queryCustomerInfo()
+                                                    }}
+                                                    style={PanelMultiProfiles.headSearchButton}>
+                                                    <Image
+                                                        resizeMode={"contain"}
+                                                        style={PanelMultiProfiles.headSearchButtonImg}
+                                                        source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
+                                                </TouchableOpacity>
+                                                {/*清除*/}
+                                                {
+                                                    showClear && (
+                                                        <TouchableOpacity
+                                                            style={PanelMultiProfiles.headClearButton}
+                                                            onPress={()=>{
+                                                                setUserPhone('')
+                                                                setMemberProfileList(null)
+                                                            }}>
+                                                            <Image
+                                                                resizeMode={"contain"}
+                                                                style={PanelMultiProfiles.headClearButtonImg}
+                                                                source={require('@imgPath/reserve_panel_customer_search_reset.png')}></Image>
+                                                        </TouchableOpacity>
+                                                    )
+                                                }
+                                            </View>
+                                        </View>
+                                    )
+                                }else if(showType == 'member'){
+                                    return (
+                                        <View style={PanelMultiProfiles.contentHeadTxtWrap}>
+                                            <Text style={PanelMultiProfiles.contentHeadTitleTxt}>该手机号下有多个顾客档案，请选择~</Text>
+                                        </View>
                                     )
                                 }
-                            </View>
-                        </View>
+                            })()
+                        }
                     </BackgroundImage>
+                    <View style={PanelMultiProfiles.memberBodyWrap}>
+                        <FlatList
+                            data={multiProfileArray}
+                            renderItem={
+                                ({item, index}) => {
+                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent}/>
+                                }
+                            }
+                            keyExtractor={(item)=>item.memberNo}
+                            ItemSeparatorComponent={()=>{
+                                return <View style={PanelMultiProfiles.profileItemSplit}/>
+                            }}/>
+                    </View>
                 </View>
             </Animated.View>
         </View>

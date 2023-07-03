@@ -55,7 +55,7 @@ export const ReserveBoardActivity = props => {
     })
     // 多档案组件
     const panelMultiProfilePanelRef = useRef(null)
-    const [multiProfiles, setMultiProfiles] = useState([])
+    const [multiProfiles, setMultiProfiles] = useState(null)
     // 顾客预约子组件
     const customerReservePanelRef = useRef(null);
     // 顾客预约基础数据
@@ -363,7 +363,7 @@ export const ReserveBoardActivity = props => {
             case 'rechargeCardItem': // 充值
 
                 break;
-            case 'toCreateOrder': // 创建订单
+            case 'toCreateOrder': // 开单
                 setLoading(true)
                 getMemberInfo({appUserId: extra['appUserId']}).then(backData => {
                     const {code, data} = backData
@@ -374,11 +374,11 @@ export const ReserveBoardActivity = props => {
                         if(data.length > 1){ // 多档案
                             setMultiProfiles(data)
                             memberPanelRef.current.hideRightPanel()
-                            panelMultiProfilePanelRef.current.showRightPanel()
+                            panelMultiProfilePanelRef.current.showRightPanel('member')
                         }else if(data.length == 1){ // 单档案直接开单
                             setMultiProfiles(data)
                             memberPanelRef.current.hideRightPanel()
-                            panelMultiProfilePanelRef.current.showRightPanel()
+                            panelMultiProfilePanelRef.current.showRightPanel('member')
                         }else{ // 无档案
                             showMessageExt("获取会员档案失败")
                         }
@@ -389,6 +389,8 @@ export const ReserveBoardActivity = props => {
                 }).finally(_=>{
                     setLoading(false)
                 })
+                break
+            case 'naviToCashier':
                 break
         }
     }, [])
@@ -448,7 +450,7 @@ export const ReserveBoardActivity = props => {
             {/*顾客预约面板信息*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*顾客多档案信息*/}
-            <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileArray={multiProfiles}></PanelMultiProfilePanel>
+            <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileData={multiProfiles} customerClickEvent={customerPressEvent}/>
             {/*散客预约*/}
             <GuestReservePanel ref={guestReservePanelRef}/>
         </View>

@@ -145,3 +145,11 @@ export const getImage = (url, format, defaultImage) => {
         return {uri: url};
     }
 };
+
+export const getPhoneSecurity = (phone)=>{
+    if(!phone || phone.trim().length < 11){
+        return ""
+    }
+
+    return phone.substring(0, 3) + "****" + phone.substring(7, 11)
+}
