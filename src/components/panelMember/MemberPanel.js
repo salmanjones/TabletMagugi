@@ -80,7 +80,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     // 预约顾客信息
     const customerInfo = props['memberInfo']
     // 页签数据
-    let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
+    // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
+    let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
     if(customerInfo.couponList.length < 1){
         tabArray = tabArray.filter(item=> item != '优惠券')
     }

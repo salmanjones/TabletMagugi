@@ -62,7 +62,7 @@ let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
 const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 
-class CashierBillingView extends React.PureComponent {
+class CashierBillingView extends React.Component {
     constructor(props) {
         super(props);
         var sex = '0';
