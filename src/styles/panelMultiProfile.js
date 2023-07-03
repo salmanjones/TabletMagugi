@@ -221,7 +221,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
     },
     numberBox:{
-        marginLeft: PixelUtil.size(90),
+        marginLeft: PixelUtil.size(70),
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
