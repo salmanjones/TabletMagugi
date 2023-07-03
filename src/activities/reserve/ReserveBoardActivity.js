@@ -19,6 +19,7 @@ import GuestReservePanel from "../../components/panelReserve/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {getImage, ImageQutity, showMessageExt} from "../../utils";
+import {AppNavigate} from "../../navigators";
 
 // 开单预约看板
 export const ReserveBoardActivity = props => {
@@ -372,25 +373,34 @@ export const ReserveBoardActivity = props => {
                 getMemberInfo({appUserId: extra['appUserId']}).then(backData => {
                     const {code, data} = backData
                     if(code != '6000'){
+                        setLoading(false)
                         console.error("通过appUserId获取会员档案失败", backData)
                         showMessageExt("获取会员档案失败")
                     }else{ // 多档案
                         if(data.length > 1){ // 多档案
+                            setLoading(false)
                             setMultiProfiles(data)
                             memberPanelRef.current.hideRightPanel()
                             panelMultiProfilePanelRef.current.showRightPanel('member')
                         }else if(data.length == 1){ // 单档案直接开单
+                            setLoading(false)
                             setMultiProfiles(data)
-                            memberPanelRef.current.hideRightPanel()
-                            panelMultiProfilePanelRef.current.showRightPanel('member')
+                            // 准备开单
+                            const customer = data[0]
+                            customerPressEvent('naviToCashier', {
+                                memberId: customer.memberId,
+                                imgUrl: customer.imgUrl
+                            }, ()=>{
+                                memberPanelRef.current.hideRightPanel()
+                            })
                         }else{ // 无档案
+                            setLoading(false)
                             showMessageExt("获取会员档案失败")
                         }
                     }
                 }).catch(e=>{
                     console.error("通过appUserId获取会员档案失败", e)
                     showMessageExt("获取会员档案失败")
-                }).finally(_=>{
                     setLoading(false)
                 })
                 break
@@ -437,7 +447,7 @@ export const ReserveBoardActivity = props => {
                     }else{
                         setLoading(false)
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
                         // BMS会员卡
                         const memberCardInfo =  cardsBackData['data']
                         // 员工权限
@@ -494,13 +504,16 @@ export const ReserveBoardActivity = props => {
                             moduleCode: moduleCode,
                             isOldCustomer: memberCardInfo.isOldCustomer,
                             orderInfoLeftData: {
-                                customerNumber: '',
                                 handNumber: '',
+                                customerNumber: '1',
                                 isOldCustomer: memberCardInfo.isOldCustomer,
                             },
                             isShowReserve: true
                         }
-                        navigation.navigate('CashierBillingActivity', params)
+
+                        callBack && callBack()
+                        // 开单
+                        AppNavigate.navigate('CashierBillingActivity', params)
                     }
                 }catch (e){
                     // 错误
