@@ -115,3 +115,48 @@ export const getMemberInfo = params => {
     });
 }
 
+/**
+ * 获取会员档案信息
+ */
+export const getMemberPortrait = params => {
+    return callService(api.fetchMemberInfo, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 获取水单号
+ */
+export const getBillFlowNO = params => {
+    return callService(api.initCashierBillingFlowNumber, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 获取当前档案下的会员卡
+ */
+export const getMemberCards = params => {
+    return callService(api.fetchMemberCardList, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 获取开单用的会员卡信息
+ */
+export const getMemberBillCards = params => {
+    return callService(api.fetchWaitingMemberCardInfo, params).then(backData => {
+        return backData;
+    })
+}
+
+/**
+ * 获取员工收银权限
+ */
+export const getStaffPermission =  params => {
+    return callService(api.selectStaffAclInfo, params).then(backData => {
+        return backData;
+    });
+}
+

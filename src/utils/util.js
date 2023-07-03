@@ -131,7 +131,7 @@ export const isValidCardPwd = value => {
     return /^[0-9]{6}$/.test(value);
 };
 
-export const getImage = (url, format, defaultImage) => {
+export const getImage = (url, format, defaultImage = 'https://pic.magugi.com/magugi_default_01.png') => {
     if (!url) {
         if(defaultImage && defaultImage.indexOf && defaultImage.indexOf('http') != -1) {
             return {uri: defaultImage}

@@ -6,15 +6,19 @@ import dayjs from "dayjs";
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
-import {getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData,
-    getCustomerDetail, updateCustomerReserve, updateCardValidity, getMemberInfo} from "../../services/reserve";
+import {
+    getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData,
+    getCustomerDetail, updateCustomerReserve, updateCardValidity, getMemberInfo,
+    getMemberPortrait, getBillFlowNO, getMemberCards, getStaffPermission,
+    getMemberBillCards
+} from "../../services/reserve";
 import MemberPanel from "../../components/panelMember/MemberPanel";
 import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
 import CustomerReservePanel from "../../components/panelReserve/CustomerReservePanel";
 import GuestReservePanel from "../../components/panelReserve/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
-import {showMessageExt} from "../../utils";
+import {getImage, ImageQutity, showMessageExt} from "../../utils";
 
 // 开单预约看板
 export const ReserveBoardActivity = props => {
@@ -119,7 +123,7 @@ export const ReserveBoardActivity = props => {
     }, [])
 
     // 客户点击事件
-    const customerPressEvent = React.useCallback((type, extra, callBack) => {
+    const customerPressEvent = React.useCallback(async (type, extra, callBack) => {
         const storeId = reduxState.auth.userInfo.storeId
         switch (type) {
             case 'reloadData': // 刷新数据
@@ -391,6 +395,120 @@ export const ReserveBoardActivity = props => {
                 })
                 break
             case 'naviToCashier':
+                // 加载中
+                setLoading(true)
+                try{
+                    // 开始准备开单的数据-获取BMS会员档案
+                    const portraitBackData = await getMemberPortrait({
+                        p: 1,
+                        ps: 30,
+                        cardInfoFlag: false,
+                        solrSearchType: 0,
+                        kw: extra.memberId
+                    })
+                    // 登录的员工信息
+                    const loginUser = reduxState.auth.userInfo
+                    // 开始准备开单的数据-获取BMS会员卡
+                    const cardsBackData = await  getMemberCards({memberId: extra.memberId})
+                    // 获取员工可用的权限
+                    const permissionBackData = await getStaffPermission({
+                        staffId: loginUser.staffId,
+                        companyId: loginUser.companyId
+                    })
+                    // 获取开单用的会员卡数据
+                    const billCardsBackData = await getMemberBillCards({
+                        companyId: loginUser.companyId,
+                        storeId: loginUser.storeId,
+                        customerId: extra.memberId
+                    })
+                    // 获取水单号
+                    const flowNumberBackData = await getBillFlowNO()
+
+                    // 会员档案
+                    if(portraitBackData.code != '6000'
+                        || cardsBackData.code != '6000'
+                        || permissionBackData.code != '6000'
+                        || billCardsBackData.code != '6000'
+                        || flowNumberBackData.code != '6000'){
+                        console.log("loginUser", JSON.stringify(loginUser))
+                        // 错误
+                        showMessageExt("开单失败")
+                        setLoading(false)
+                    }else{
+                        setLoading(false)
+                        // BMS会员档案
+                        const memberPortrait = portraitBackData['data'][0]
+                        // BMS会员卡
+                        const memberCardInfo =  cardsBackData['data']
+                        // 员工权限
+                        const staffPermission = permissionBackData['data']
+                        // 开单用的会员卡
+                        const billCards = billCardsBackData['data']
+                        // 水单号
+                        const flowNumber = flowNumberBackData['data']
+                        //0专业店 1综合店
+                        const isSynthesis = loginUser.isSynthesis;
+                        // 可用主营分类
+                        const operatorCategory = loginUser.operateCategory[0];
+
+                        // 是否允许调整价格
+                        let moduleCode = "1"
+                        let moduleCodeIndex = 0;
+                        const staffAclMap = staffPermission['staffAclMap'];
+                        if (staffAclMap
+                            && staffAclMap.moduleCode
+                            && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') { // 是否能允许调整价格
+                            moduleCodeIndex++;
+                        }
+                        if (moduleCodeIndex > 0) {
+                            moduleCode = '1'
+                        } else {
+                            moduleCode = 0
+                        }
+
+                        // 开单参数
+                        const params = {
+                            companyId: loginUser.companyId,
+                            storeId: loginUser.storeId,
+                            deptId: operatorCategory.deptId,
+                            operatorId: operatorCategory.value,
+                            operatorText: operatorCategory.text,
+                            staffId: loginUser.staffId,
+                            staffDBId: loginUser.staffDBId,
+                            isSynthesis: isSynthesis,
+                            numType: "flownum",
+                            numValue: flowNumber,
+                            page: 'ReserveBoardActivity',
+                            member: Object.assign({}, memberPortrait, {
+                                userImgUrl: getImage(
+                                    extra.imgUrl,
+                                    ImageQutity.member_small,
+                                    'https://pic.magugi.com/magugi_default_01.png'
+                                ),
+                                vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
+                                cardBalanceCount: memberCardInfo.cardBalanceCount,
+                                cardCount: memberCardInfo.cardCount
+                            }),
+                            type: "vip",
+                            roundMode: staffPermission.roundMode,
+                            moduleCode: moduleCode,
+                            isOldCustomer: memberCardInfo.isOldCustomer,
+                            orderInfoLeftData: {
+                                customerNumber: '',
+                                handNumber: '',
+                                isOldCustomer: memberCardInfo.isOldCustomer,
+                            },
+                            isShowReserve: true
+                        }
+                        navigation.navigate('CashierBillingActivity', params)
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("开单失败")
+                    setLoading(false)
+                    console.error("获取会员档案失败", e)
+                }
+
                 break
         }
     }, [])

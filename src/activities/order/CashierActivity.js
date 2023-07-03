@@ -26,7 +26,7 @@ import {cashierStyles, memberIdentifyStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
 
-const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
+const defaultMemberImg = 'https://pic.magugi.com/magugi_default_01.png';
 
 class CashierView extends React.Component {
     constructor(props) {
@@ -68,8 +68,8 @@ class CashierView extends React.Component {
 
         let {route, navigation} = this.props
         navigation.setOptions({
-            headerRight: () =>  (
-                <HeadeOrderInfoRight navigation={navigation} router={route}  from="recharge"/>
+            headerRight: () => (
+                <HeadeOrderInfoRight navigation={navigation} router={route} from="recharge"/>
             )
         })
     }
@@ -130,7 +130,7 @@ class CashierView extends React.Component {
         let that = this;
         getCompanyAutoFlowNumber()
             .then((o) => {
-                if (o.data!=null || o.data!=undefined ) {
+                if (o.data != null || o.data != undefined) {
                     that.setState({
                         numValue: o.data
                     });
@@ -210,7 +210,7 @@ class CashierView extends React.Component {
     }
 
     createOrder(type, deptId, operatorId, operatorText) {
-        if(this.state.numType=='flownum' && !this.state.numValue) {
+        if (this.state.numType == 'flownum' && !this.state.numValue) {
             showMessage('请输入水单号');
             return;
         }
@@ -218,6 +218,10 @@ class CashierView extends React.Component {
         this.selectStaffAclInfoResult(type, deptId, operatorId, operatorText);
     }
 
+    /**
+     * 根据手机号等查询档案列表
+     * @param query
+     */
     queryData = query => {
         if (query !== '') {
             this.setState({
@@ -271,6 +275,11 @@ class CashierView extends React.Component {
         );
     };
 
+    /**
+     * 多档案列表
+     * @param e
+     * @returns {JSX.Element}
+     */
     renderMemberListItem = e => {
         let memberId = -1;
         this.state.member && (
@@ -286,6 +295,7 @@ class CashierView extends React.Component {
         );
     };
 
+    // 点击识别的多档案会员
     onMemberPress = member => {
         let memberId = -1;
         this.state.member && (
@@ -335,7 +345,7 @@ class CashierView extends React.Component {
 
         return (
             <View style={[cashierStyles.container, cashierStyles.openOrderContainer]}>
-                {/*左侧样式*/}
+                {/*左侧组件*/}
                 <View style={memberIdentifyStyle.Box}>
                     <SearchModule
                         placeholder={'手机号、姓名或会员号'}
@@ -362,6 +372,7 @@ class CashierView extends React.Component {
                             />
                         </View>
                     )}
+                    {/*查询的列表*/}
                     {searchStart && (
                         <View style={{height: '87%'}}>
                             <FlatList
@@ -386,7 +397,7 @@ class CashierView extends React.Component {
                     )}
                 </View>
 
-                {/*未查询样式*/}
+                {/*右侧组件：未查询样式*/}
                 {!isBillingPageShow && (
                     <View style={[cashierStyles.openOrderBox]}>
                         <View style={cashierStyles.openOrderlist}>
@@ -436,7 +447,7 @@ class CashierView extends React.Component {
                     </View>
                 )}
 
-                {/*已查询样式*/}
+                {/*右侧组件：已查询样式*/}
                 {isBillingPageShow && (
                     <View style={cashierStyles.openOrderBox}>
                         {/*右侧上方样式*/}
@@ -485,20 +496,25 @@ class CashierView extends React.Component {
                         {/*右侧会员信息样式*/}
                         <View style={cashierStyles.memberInfoBox}>
                             <View style={cashierStyles.memberInfoLi}>
-                                <Image resizeMethod="resize" source={this.userImgUrl} style={cashierStyles.memberAvatarImg}/>
+                                <Image resizeMethod="resize" source={this.userImgUrl}
+                                       style={cashierStyles.memberAvatarImg}/>
                                 <View style={cashierStyles.memberBaseInfo}>
                                     <View style={[cashierStyles.memberUserBase, cashierStyles.marginBottom10]}>
                                         {
                                             (member.name == '' || member.name == '散客' || member.name == null) ?
-                                                <Text style={cashierStyles.nameText}>手机尾号:{(member == undefined || member.phone == undefined || member.phone == '') ? "" : member.phone.substr(7)}</Text>
+                                                <Text
+                                                    style={cashierStyles.nameText}>手机尾号:{(member == undefined || member.phone == undefined || member.phone == '') ? "" : member.phone.substr(7)}</Text>
                                                 :
-                                                <Text style={cashierStyles.nameText} numberOfLines={1}>{member.name}</Text>
+                                                <Text style={cashierStyles.nameText}
+                                                      numberOfLines={1}>{member.name}</Text>
                                         }
 
                                         {member.sex == 0 ?
-                                            <Image resizeMethod="resize" source={require('@imgPath/sex_female.png')} style={cashierStyles.MemberListSexImage}/>
+                                            <Image resizeMethod="resize" source={require('@imgPath/sex_female.png')}
+                                                   style={cashierStyles.MemberListSexImage}/>
                                             :
-                                            <Image resizeMethod="resize" source={require('@imgPath/sex_man.png')} style={cashierStyles.MemberListSexImage}/>
+                                            <Image resizeMethod="resize" source={require('@imgPath/sex_man.png')}
+                                                   style={cashierStyles.MemberListSexImage}/>
                                         }
 
                                     </View>
@@ -510,13 +526,15 @@ class CashierView extends React.Component {
                                 </View>
                             </View>
                             <View style={cashierStyles.memberNumInfo}>
-                                <Text style={[cashierStyles.memberVipNum, cashierStyles.marginBottom10]}>{member.phone}</Text>
+                                <Text
+                                    style={[cashierStyles.memberVipNum, cashierStyles.marginBottom10]}>{member.phone}</Text>
                                 <Text style={cashierStyles.memberVipNum}>会员卡{cardCount}张</Text>
                             </View>
                             <View style={cashierStyles.memberOtherInfo}>
                                 <View style={[cashierStyles.appointmentImage, cashierStyles.marginBottom10]}>
                                     {member.reserveStatus === '0' && (
-                                        <Image resizeMethod="resize" source={require('@imgPath/appointment_img.png')} style={cashierStyles.appointmentImage}/>
+                                        <Image resizeMethod="resize" source={require('@imgPath/appointment_img.png')}
+                                               style={cashierStyles.appointmentImage}/>
                                     )}
                                 </View>
                                 <Text style={cashierStyles.memberVipNum}>储值卡余额 ¥{cardBalanceCount}</Text>
@@ -592,19 +610,19 @@ class CashierView extends React.Component {
                 that.props.onMemberPress && that.props.onMemberPress(member);
 
             }).catch(err => {
-            that.setState(
-                {
-                    cardCount: cardCount,
-                    cardBalanceCount: cardBalanceCount,
-                    member: member,
-                    loading: false,
-                    isBillingPageShow: true
-                }
-            );
+                that.setState(
+                    {
+                        cardCount: cardCount,
+                        cardBalanceCount: cardBalanceCount,
+                        member: member,
+                        loading: false,
+                        isBillingPageShow: true
+                    }
+                );
 
-            that.pressFlag = "1";
-            that.props.onMemberPress && that.props.onMemberPress(member);
-        });
+                that.pressFlag = "1";
+                that.props.onMemberPress && that.props.onMemberPress(member);
+            });
     };
 
     selectStaffAclInfoResult = (type, deptId, operatorId, operatorText) => {
@@ -664,7 +682,7 @@ class CashierView extends React.Component {
                 };
 
                 var handNumber = '';
-                if(self.state.numType == 'handnum'){
+                if (self.state.numType == 'handnum') {
                     handNumber = self.state.numValue;
                 }
 
@@ -785,12 +803,12 @@ const CategoryViews = props => {
     if (isSynthesis == '0') {
         let totalSize = categorys.length;
         return (
-            <View style={ cashierStyles.orderGenreBox}>
+            <View style={cashierStyles.orderGenreBox}>
                 {categorys.map((item, index) => {
                     let deptId = item.deptId;
                     let operatorId = item.value;
                     let operatorText = item.text;
-                    let operatorStyle = totalSize > 3 ? [cashierStyles.orderGenreMin]:[cashierStyles.orderGenre];
+                    let operatorStyle = totalSize > 3 ? [cashierStyles.orderGenreMin] : [cashierStyles.orderGenre];
                     let operatorType = 'hair';
                     let operatorImg = require('@imgPath/hairdresser.png');
                     let operatorImgStyle = cashierStyles.orderGenreImg;

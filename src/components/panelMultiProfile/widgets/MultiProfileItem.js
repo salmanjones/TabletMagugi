@@ -39,7 +39,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                     <TouchableOpacity
                         style={PanelMultiProfiles.createBtnBox}
                         onPress={()=>{
-                            customerClickEvent('naviToCashier', {})
+                            customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl})
                         }}>
                         <Image
                             resizeMode={"contain"}
