@@ -243,9 +243,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         <TouchableOpacity
                             style={MemberPanelStyles.operatorBtnCard}
                             onPress={()=>{
-                                console.log("customerInfo", JSON.stringify(customerInfo))
-
-                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, memberId:'', imgUrl:''})
+                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId})
                             }}>
                             <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>
