@@ -3,6 +3,10 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import {PanelMultiProfiles} from "../../../styles/panelMultiProfile";
 import {getPhoneSecurity} from "../../../utils";
 
+/**
+ * 多档案单项展示组件
+ * @type {React.NamedExoticComponent<{readonly size?: *, readonly customerClickEvent?: *, readonly index?: *, readonly profileItem?: *}>}
+ */
 export const MultiProfileItem = React.memo(({profileItem, index, size, customerClickEvent})=>{
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
@@ -15,7 +19,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                                     ? decodeURIComponent(profileItem.bmsName): '未填写姓名'}
                             </Text>
                             <Image
-                                source={profileItem.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png'):require('@imgPath/reserve_customer_multi_profile_woman.png')}
+                                source={profileItem.bmsSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png'):require('@imgPath/reserve_customer_multi_profile_woman.png')}
                                 style={PanelMultiProfiles.sexWrap}></Image>
                         </View>
                         <Text style={PanelMultiProfiles.valueText}>
