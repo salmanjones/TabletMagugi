@@ -64,6 +64,53 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
     const isStoreAllDayRest = stylistReserveInfo.isStoreAllDayRest
     // 员工是否休息日，0 否 ，1 是
     const isStaffRest = stylistReserveInfo.isStaffRest
+
+    /// 浮动按钮
+    const FloatButtons = React.memo(()=>{
+        return (
+            <View style={ReserveBoardStyles.floatButtonBox}>
+                {/*散客预约*/}
+                <TouchableOpacity
+                    style={ReserveBoardStyles.reserveButtonSanke}
+                    onPress={()=>{
+                        customerCardEvent("guestReserve", {})
+                    }}>
+                    <Image
+                        style={ReserveBoardStyles.reserveButtonSankeIcon}
+                        resizeMode={'contain'}
+                        source={require('@imgPath/reserve_customer_button_sanke.png')}/>
+                </TouchableOpacity>
+                {/*刷新列表*/}
+                <TouchableOpacity
+                    style={ReserveBoardStyles.reserveButtonRefresh}
+                    onPress={()=>{
+                        customerCardEvent("reloadData", {}, ()=>{
+                            setNeedRefresh(false)
+                        })
+                    }}>
+                    <Image
+                        style={ReserveBoardStyles.reserveButtonSankeIcon}
+                        resizeMode={'contain'}
+                        source={needRefresh
+                            ? require('@imgPath/reserve_customer_button_refresh_new.png')
+                            : require('@imgPath/reserve_customer_button_refresh.png')
+                        }/>
+                </TouchableOpacity>
+                {/*回到当前位置*/}
+                <TouchableOpacity
+                    style={ReserveBoardStyles.reserveButtonGoTop}
+                    onPress={()=>{
+                        goToTop()
+                    }}>
+                    <Image
+                        style={ReserveBoardStyles.reserveButtonRevertIcon}
+                        resizeMode={'contain'}
+                        source={require('@imgPath/reserve_customer_button_revert.png')}/>
+                </TouchableOpacity>
+            </View>
+        )
+    })
+
     const TimerPanel = React.memo(({itemInfo, index}) => {
         return (
             // 时间轴面板
@@ -106,7 +153,8 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
 
     if(isStoreAllDayRest == '1'){ // 门店休息
         return (
-            <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
+            <View style={ReserveBoardStyles.noReserveEmptyBox}>
+                <FloatButtons/>
                 <Image style={ReserveBoardStyles.noReserveEmpty}
                        resizeMode={'contain'}
                        source={require('@imgPath/reserve_staff_rest.png')}></Image>
@@ -114,7 +162,8 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
         )
     } else if(isStaffRest == '1'){ // 员工休息
         return (
-            <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
+            <View style={ReserveBoardStyles.noReserveEmptyBox}>
+                <FloatButtons/>
                 <Image style={ReserveBoardStyles.noReserveEmpty}
                        resizeMode={'contain'}
                        source={require('@imgPath/reserve_staff_rest.png')}></Image>
@@ -123,47 +172,10 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
     }else{
         if (customerFlatData && customerFlatData.length > 0){
             return (
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, width: '100%', height: '100%'}}>
                     {/*加载中*/}
                     <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
-                    {/*散客预约*/}
-                    <TouchableOpacity
-                        style={ReserveBoardStyles.reserveButtonSanke}
-                        onPress={()=>{
-                            customerCardEvent("guestReserve", {})
-                        }}>
-                        <Image
-                            style={ReserveBoardStyles.reserveButtonSankeIcon}
-                            resizeMode={'contain'}
-                            source={require('@imgPath/reserve_customer_button_sanke.png')}/>
-                    </TouchableOpacity>
-                    {/*刷新列表*/}
-                    <TouchableOpacity
-                        style={ReserveBoardStyles.reserveButtonRefresh}
-                        onPress={()=>{
-                            customerCardEvent("reloadData", {}, ()=>{
-                                setNeedRefresh(false)
-                            })
-                        }}>
-                        <Image
-                            style={ReserveBoardStyles.reserveButtonSankeIcon}
-                            resizeMode={'contain'}
-                            source={needRefresh
-                                ? require('@imgPath/reserve_customer_button_refresh_new.png')
-                                : require('@imgPath/reserve_customer_button_refresh.png')
-                            }/>
-                    </TouchableOpacity>
-                    {/*回到当前位置*/}
-                    <TouchableOpacity
-                        style={ReserveBoardStyles.reserveButtonRevert}
-                        onPress={()=>{
-                            goToTop()
-                        }}>
-                        <Image
-                            style={ReserveBoardStyles.reserveButtonRevertIcon}
-                            resizeMode={'contain'}
-                            source={require('@imgPath/reserve_customer_button_revert.png')}/>
-                    </TouchableOpacity>
+                    <FloatButtons/>
                     <FlatList
                         ref={flatListRef}
                         data={customerFlatData}
@@ -180,7 +192,8 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
             )
         }else{
             return (
-                <View style={{flex: 1,width: '100%', height: '100%', alignItems: 'center', justifyContent:'center'}}>
+                <View style={ReserveBoardStyles.noReserveEmptyBox}>
+                    <FloatButtons/>
                     <Image style={ReserveBoardStyles.noReserveEmpty}
                            resizeMode={'contain'}
                            source={require('@imgPath/reserve_customer_empty.png')}></Image>

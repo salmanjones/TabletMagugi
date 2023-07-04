@@ -9,30 +9,38 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
+    floatButtonBox:{
+        position: 'absolute',
+        right: PixelUtil.size(-18),
+        bottom: PixelUtil.size(52),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(480),
+        zIndex: 1000,
+    },
     reserveButtonSanke:{
         position: "absolute",
-        right: PixelUtil.size(-18),
-        bottom: PixelUtil.size(372),
+        right: PixelUtil.size(0),
+        bottom: PixelUtil.size(320),
         width: PixelUtil.size(160),
         height: PixelUtil.size(160),
-        zIndex: 1000
+        zIndex: 1001
     },
     reserveButtonRefresh:{
         position: "absolute",
-        right: PixelUtil.size(-18),
-        bottom: PixelUtil.size(212),
+        right: PixelUtil.size(0),
+        bottom: PixelUtil.size(160),
         width: PixelUtil.size(160),
         height: PixelUtil.size(160),
-        zIndex: 1000
+        zIndex: 1001
     },
     reserveButtonSankeIcon:{
         width: '100%',
         height: '100%'
     },
-    reserveButtonRevert:{
+    reserveButtonGoTop:{
         position: "absolute",
-        right: PixelUtil.size(-18),
-        bottom: PixelUtil.size(52),
+        right: PixelUtil.size(0),
+        bottom: PixelUtil.size(0),
         width: PixelUtil.size(160),
         height: PixelUtil.size(160),
         zIndex: 1001
@@ -494,6 +502,13 @@ export const ReserveBoardStyles = StyleSheet.create({
     },
     reserveCustomerBtnRight:{
         marginLeft: PixelUtil.size(32)
+    },
+    noReserveEmptyBox: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent:'center'
     },
     noReserveEmpty: {
         width: PixelUtil.size(440),
