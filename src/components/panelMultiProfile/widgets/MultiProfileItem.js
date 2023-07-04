@@ -1,6 +1,6 @@
 import React from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
-import {PanelMultiProfiles} from "../../../styles/panelMultiProfile";
+import {PanelMultiProfiles} from "../../../styles/PanelMultiProfile";
 import {getPhoneSecurity} from "../../../utils";
 
 /**

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {ReservePanelStyles} from "../../styles/ReservePanel";
+import {PanelReserveStyles} from "../../styles/PanelReserve";
 import {getAppUserInfo, saveCustomerReserve} from "../../services/reserve";
 import Spinner from "react-native-loading-spinner-overlay";
 import ReduxStore from "../../store/store"
@@ -241,43 +241,43 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
     // 预约基础数据
     const {reserveBaseData} = props
     return (
-        <View style={animateState.sliderShow ? ReservePanelStyles.rightPanelMask : {display: 'none'}}>
+        <View style={animateState.sliderShow ? PanelReserveStyles.rightPanelMask : {display: 'none'}}>
             {/*加载中*/}
             <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             <Animated.View
                 {...panResponder.panHandlers}
-                style={animateState.sliderShow ? [ReservePanelStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
+                style={animateState.sliderShow ? [PanelReserveStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
                 <TouchableOpacity
                     onPress={() => {hideRightPanel()}}
                     activeOpacity={1}
-                    style={ReservePanelStyles.leftPanMask}>
-                    <View style={ReservePanelStyles.hideIconBox}>
+                    style={PanelReserveStyles.leftPanMask}>
+                    <View style={PanelReserveStyles.hideIconBox}>
                         <TouchableOpacity onPress={() => {hideRightPanel()}}>
                             <Image resizeMethod="resize"
                                    source={require('@imgPath/p-hide-box.png')}
-                                   style={[ReservePanelStyles.hideIconButton, {resizeMode: 'contain'}]}/>
+                                   style={[PanelReserveStyles.hideIconButton, {resizeMode: 'contain'}]}/>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
                 {/*右侧内容区域*/}
-                <View style={ReservePanelStyles.contentWrapBox}>
+                <View style={PanelReserveStyles.contentWrapBox}>
                     {/*客户信息*/}
                     <ImageBackground
-                        style={ReservePanelStyles.contentHeadBox}
+                        style={PanelReserveStyles.contentHeadBox}
                         resizeMode={"contain"}
                         source={require('@imgPath/reserve_panel_customer_header_bg.png')}>
-                        <View style={ReservePanelStyles.contentHeadWrap}>
-                            <Text style={ReservePanelStyles.contentHeadTitle}>添加新预约</Text>
-                            <View style={ReservePanelStyles.headSearchBox}>
+                        <View style={PanelReserveStyles.contentHeadWrap}>
+                            <Text style={PanelReserveStyles.contentHeadTitle}>添加新预约</Text>
+                            <View style={PanelReserveStyles.headSearchBox}>
                                 {/*输入框*/}
                                 <Image
                                     resizeMode={"contain"}
-                                    style={ReservePanelStyles.headSearchIcon}
+                                    style={PanelReserveStyles.headSearchIcon}
                                     source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
                                 <TextInput
                                     keyboardType={'phone-pad'}
-                                    style={showClear ? ReservePanelStyles.headSearchInputFull:ReservePanelStyles.headSearchInputEmpty}
+                                    style={showClear ? PanelReserveStyles.headSearchInputFull:PanelReserveStyles.headSearchInputEmpty}
                                     placeholder={'请输入预约手机号'}
                                     placeholderTextColor={'#8e8e8e'}
                                     onChange={({nativeEvent})=>{
@@ -293,24 +293,24 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                     onPress={()=>{
                                         queryCustomerInfo()
                                     }}
-                                    style={ReservePanelStyles.headSearchButton}>
+                                    style={PanelReserveStyles.headSearchButton}>
                                     <Image
                                         resizeMode={"contain"}
-                                        style={ReservePanelStyles.headSearchButtonImg}
+                                        style={PanelReserveStyles.headSearchButtonImg}
                                         source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
                                 </TouchableOpacity>
                                 {/*清除*/}
                                 {
                                     showClear && (
                                         <TouchableOpacity
-                                            style={ReservePanelStyles.headClearButton}
+                                            style={PanelReserveStyles.headClearButton}
                                             onPress={()=>{
                                                 setUserPhone('')
                                                 setCustomerInfo(null)
                                             }}>
                                             <Image
                                                 resizeMode={"contain"}
-                                                style={ReservePanelStyles.headClearButtonImg}
+                                                style={PanelReserveStyles.headClearButtonImg}
                                                 source={require('@imgPath/reserve_panel_customer_search_reset.png')}></Image>
                                         </TouchableOpacity>
                                     )
@@ -320,75 +320,75 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                             {
                                 // 空信息
                                 customerInfo == null && (
-                                    <View style={ReservePanelStyles.userInfoEmptyBox}>
+                                    <View style={PanelReserveStyles.userInfoEmptyBox}>
                                         <Image
                                             resizeMode={"contain"}
                                             source={require('@imgPath/reserve_panel_customer_search_tips.png')}
-                                            style={ReservePanelStyles.searchUserInfoTips}></Image>
+                                            style={PanelReserveStyles.searchUserInfoTips}></Image>
                                     </View>
                                 )
                             }
                             {
                                 // 未查询到信息
                                 customerInfo != null && customerInfo.result == 'empty' &&(
-                                    <View style={ReservePanelStyles.userInfoEmptyBox}>
+                                    <View style={PanelReserveStyles.userInfoEmptyBox}>
                                         <Image
                                             resizeMode={"contain"}
                                             source={require('@imgPath/reserve_panel_customer_search_tips_error.png')}
-                                            style={ReservePanelStyles.searchUserInfoEmptyTips}></Image>
+                                            style={PanelReserveStyles.searchUserInfoEmptyTips}></Image>
                                     </View>
                                 )
                             }
                             {
                                 // 查询到信息
                                 customerInfo != null && customerInfo.result == 'success' &&(
-                                    <View style={ReservePanelStyles.userInfoFullBox}>
-                                        <View style={ReservePanelStyles.userInfoWrapBox}>
-                                            <View style={ReservePanelStyles.userInfoLeftBox}>
+                                    <View style={PanelReserveStyles.userInfoFullBox}>
+                                        <View style={PanelReserveStyles.userInfoWrapBox}>
+                                            <View style={PanelReserveStyles.userInfoLeftBox}>
                                                 {/*用户头像*/}
                                                 <Image
-                                                    style={ReservePanelStyles.customerAvatar}
+                                                    style={PanelReserveStyles.customerAvatar}
                                                     resizeMethod="resize"
                                                     source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
-                                                <View style={ReservePanelStyles.customerEasyInfo}>
-                                                    <View style={ReservePanelStyles.customerEasyNameSex}>
-                                                        <Text style={ReservePanelStyles.nameShowText}>
+                                                <View style={PanelReserveStyles.customerEasyInfo}>
+                                                    <View style={PanelReserveStyles.customerEasyNameSex}>
+                                                        <Text style={PanelReserveStyles.nameShowText}>
                                                             {decodeURIComponent(customerInfo.nickName)}
                                                         </Text>
                                                         <Image
-                                                            style={ReservePanelStyles.customerSexIcon}
+                                                            style={PanelReserveStyles.customerSexIcon}
                                                             resizeMode={'contain'}
                                                             source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
-                                                        <Text style={ReservePanelStyles.sexShowText}>{customerInfo.sex == '1'? '男':'女'}</Text>
+                                                        <Text style={PanelReserveStyles.sexShowText}>{customerInfo.sex == '1'? '男':'女'}</Text>
                                                     </View>
-                                                    <Text style={ReservePanelStyles.phoneShowText}>
+                                                    <Text style={PanelReserveStyles.phoneShowText}>
                                                         {customerInfo.phoneShow}
                                                     </Text>
                                                 </View>
                                             </View>
-                                            <View style={ReservePanelStyles.userInfoRightBox}>
-                                                <View style={ReservePanelStyles.chuzhikaBox}>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemTitle}>
+                                            <View style={PanelReserveStyles.userInfoRightBox}>
+                                                <View style={PanelReserveStyles.chuzhikaBox}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemTitle}>
                                                         储值卡
                                                     </Text>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemValue}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemValue}>
                                                         {customerInfo.cardCZKCount}张
                                                     </Text>
                                                 </View>
-                                                <View style={ReservePanelStyles.cikaBox}>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemTitle}>
+                                                <View style={PanelReserveStyles.cikaBox}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemTitle}>
                                                         次卡
                                                     </Text>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemValue}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemValue}>
                                                         {customerInfo.cardCKCount}张
                                                     </Text>
                                                 </View>
-                                                <View style={ReservePanelStyles.yueBox}>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemTitle}>
+                                                <View style={PanelReserveStyles.yueBox}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemTitle}>
                                                         储值卡余额
                                                     </Text>
-                                                    <Text style={ReservePanelStyles.propertyInfoItemValue}>
+                                                    <Text style={PanelReserveStyles.propertyInfoItemValue}>
                                                         ¥{customerInfo.cardBalanceSum.toFixed(2)}
                                                     </Text>
                                                 </View>
@@ -400,28 +400,28 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                         </View>
                     </ImageBackground>
                     {/*预约信息*/}
-                    <View style={ReservePanelStyles.contentBodyBox}>
-                        <View style={ReservePanelStyles.contentBodyWrap}>
+                    <View style={PanelReserveStyles.contentBodyBox}>
+                        <View style={PanelReserveStyles.contentBodyWrap}>
                             {/*预约标题*/}
-                            <View style={ReservePanelStyles.contentBodyTitle}>
+                            <View style={PanelReserveStyles.contentBodyTitle}>
                                 <Image
-                                    style={ReservePanelStyles.contentBodyTitleIcon}
+                                    style={PanelReserveStyles.contentBodyTitleIcon}
                                     resizeMode={"contain"}
                                     source={require('@imgPath/reserve_customer_body_title_icon.png')}/>
-                                <Text style={ReservePanelStyles.contentBodyTitleValue}>预约信息</Text>
+                                <Text style={PanelReserveStyles.contentBodyTitleValue}>预约信息</Text>
                             </View>
                             {/*预约详情*/}
-                            <View style={ReservePanelStyles.customerReserveDetailBox}>
+                            <View style={PanelReserveStyles.customerReserveDetailBox}>
                                 {
                                     customerInfo != null && customerInfo.result == 'empty' &&(
-                                        <View style={ReservePanelStyles.reservePropertyMiddleBox}>
-                                            <Text style={ReservePanelStyles.reservePropertyRequired}>*</Text>
-                                            <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                        <View style={PanelReserveStyles.reservePropertyMiddleBox}>
+                                            <Text style={PanelReserveStyles.reservePropertyRequired}>*</Text>
+                                            <Text style={PanelReserveStyles.reservePropertyTitle}>
                                                 顾客姓名：
                                             </Text>
-                                            <View style={ReservePanelStyles.reservePropertyValue}>
+                                            <View style={PanelReserveStyles.reservePropertyValue}>
                                                 <TextInput
-                                                    style={ReservePanelStyles.reservePropertyCustomerName}
+                                                    style={PanelReserveStyles.reservePropertyCustomerName}
                                                     placeholder={'请输入顾客姓名'}
                                                     placeholderTextColor={'#8e8e8e'}
                                                     onChange={({nativeEvent})=>{
@@ -435,32 +435,32 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                     )
                                 }
                                 <View style={ customerInfo != null && customerInfo.result == 'empty'
-                                    ? [ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]
-                                    : ReservePanelStyles.reservePropertyBox}>
-                                    <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                    ? [PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]
+                                    : PanelReserveStyles.reservePropertyBox}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约员工：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyValue}>
-                                        <Text style={ReservePanelStyles.reservePropertyText}>
+                                    <View style={PanelReserveStyles.reservePropertyValue}>
+                                        <Text style={PanelReserveStyles.reservePropertyText}>
                                             {reserveBaseData.staffName}
                                         </Text>
                                     </View>
                                 </View>
-                                <View style={[ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]}>
-                                    <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约时间：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyValue}>
-                                        <Text style={ReservePanelStyles.reservePropertyText}>
+                                    <View style={PanelReserveStyles.reservePropertyValue}>
+                                        <Text style={PanelReserveStyles.reservePropertyText}>
                                             {reserveBaseData.reserveTime}
                                         </Text>
                                     </View>
                                 </View>
-                                <View style={[ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]}>
-                                    <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约来源：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyBtnValue}>
+                                    <View style={PanelReserveStyles.reservePropertyBtnValue}>
                                         {
                                             reserveBaseData['reserveResoures'].map((item, index)=>{
                                                 let showName = item.name
@@ -469,8 +469,8 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                 if (index == reserveSourceIndex) {
                                                     return (
                                                         <TouchableOpacity
-                                                            style={ReservePanelStyles.reservePropertyValueButtonActive}>
-                                                            <Text style={ReservePanelStyles.reservePropertyValueButtonTxtActive}>
+                                                            style={PanelReserveStyles.reservePropertyValueButtonActive}>
+                                                            <Text style={PanelReserveStyles.reservePropertyValueButtonTxtActive}>
                                                                 {showName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -478,11 +478,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                 }else {
                                                     return (
                                                         <TouchableOpacity
-                                                            style={ReservePanelStyles.reservePropertyValueButton}
+                                                            style={PanelReserveStyles.reservePropertyValueButton}
                                                             onPress={()=>{
                                                                 setReserveSourceIndex(index)
                                                             }}>
-                                                            <Text style={ReservePanelStyles.reservePropertyValueButtonTxt}>
+                                                            <Text style={PanelReserveStyles.reservePropertyValueButtonTxt}>
                                                                 {showName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -492,11 +492,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         }
                                     </View>
                                 </View>
-                                <View style={[ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]}>
-                                    <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约服务：
                                     </Text>
-                                    <View style={ReservePanelStyles.reservePropertyBtnValue}>
+                                    <View style={PanelReserveStyles.reservePropertyBtnValue}>
                                         {
                                             reserveBaseData['reserveInfoList'].map((item, index)=>{
                                                 let showName = item.reserveName
@@ -505,8 +505,8 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                 if (index == reserveTypeIndex) {
                                                     return (
                                                         <TouchableOpacity
-                                                            style={ReservePanelStyles.reservePropertyValueButtonActive}>
-                                                            <Text style={ReservePanelStyles.reservePropertyValueButtonTxtActive}>
+                                                            style={PanelReserveStyles.reservePropertyValueButtonActive}>
+                                                            <Text style={PanelReserveStyles.reservePropertyValueButtonTxtActive}>
                                                                 {showName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -514,11 +514,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                 }else {
                                                     return (
                                                         <TouchableOpacity
-                                                            style={ReservePanelStyles.reservePropertyValueButton}
+                                                            style={PanelReserveStyles.reservePropertyValueButton}
                                                             onPress={()=>{
                                                                 setReserveTypeIndex(index)
                                                             }}>
-                                                            <Text style={ReservePanelStyles.reservePropertyValueButtonTxt}>
+                                                            <Text style={PanelReserveStyles.reservePropertyValueButtonTxt}>
                                                                 {showName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -528,14 +528,14 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         }
                                     </View>
                                 </View>
-                                <View style={[ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyMarginTop]}>
-                                    <Text style={ReservePanelStyles.reservePropertyTitle}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约备注：
                                     </Text>
                                 </View>
-                                <View style={[ReservePanelStyles.reservePropertyBox, ReservePanelStyles.reservePropertyRemarkTop]}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyRemarkTop]}>
                                     <TextInput
-                                        style={ReservePanelStyles.reservePropertyRemark}
+                                        style={PanelReserveStyles.reservePropertyRemark}
                                         editable={true}
                                         multiline={true}
                                         textAlignVertical={'top'}
@@ -554,12 +554,12 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                     </View>
                     {/*按钮*/}
                     <TouchableOpacity
-                        style={ReservePanelStyles.contentFootBox}
+                        style={PanelReserveStyles.contentFootBox}
                         onPress={()=>{
                             saveReserve()
                         }}>
                         <ImageBackground
-                            style={ReservePanelStyles.contentFootBoxImg}
+                            style={PanelReserveStyles.contentFootBoxImg}
                             resizeMode={"contain"}
                             source={canSave ? require('@imgPath/reserve_panel_customer_foot_enable.png') : require('@imgPath/reserve_panel_customer_foot_disable.png')}>
                         </ImageBackground>

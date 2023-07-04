@@ -1,6 +1,6 @@
 import React from "react";
 import {FlatList, ImageBackground, Text, TouchableOpacity, View} from "react-native";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
 export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, customerPressEvent})=>{
     const CardFlatItem = React.memo(({cardItem, index})=>{
@@ -18,28 +18,28 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
         let cardDateStyle = null
         if(isInvalidCard){ // 无效卡
             cardBackGround = require('@imgPath/member_panel_card_bg_wuxiao.png')
-            cardModeStyle = MemberPanelStyles.cardItemModeNameWuXiao
-            cardNameStyle = MemberPanelStyles.cardItemWuXiaoName
-            cardBalanceStyle = MemberPanelStyles.cardItemWuXiaoBalance
-            cardButtonStyle = MemberPanelStyles.cardItemYanQiOperator
-            cardButtonTxtStyle = MemberPanelStyles.cardItemOperatorYanQiText
-            cardDateStyle = MemberPanelStyles.cardItemWuXiaoDate
+            cardModeStyle = PanelCustomerStyles.cardItemModeNameWuXiao
+            cardNameStyle = PanelCustomerStyles.cardItemWuXiaoName
+            cardBalanceStyle = PanelCustomerStyles.cardItemWuXiaoBalance
+            cardButtonStyle = PanelCustomerStyles.cardItemYanQiOperator
+            cardButtonTxtStyle = PanelCustomerStyles.cardItemOperatorYanQiText
+            cardDateStyle = PanelCustomerStyles.cardItemWuXiaoDate
         }else if(cardTypeId == '1'){ // 储值卡
             cardBackGround = require('@imgPath/member_panel_card_bg_chuzhi.png')
-            cardModeStyle = MemberPanelStyles.cardItemModeName
-            cardNameStyle = MemberPanelStyles.cardItemChuZhiName
-            cardBalanceStyle = MemberPanelStyles.cardItemChuZhiBalance
-            cardButtonStyle = MemberPanelStyles.cardItemChuZhiOperator
-            cardButtonTxtStyle = MemberPanelStyles.cardItemOperatorText
-            cardDateStyle = MemberPanelStyles.cardItemDate
+            cardModeStyle = PanelCustomerStyles.cardItemModeName
+            cardNameStyle = PanelCustomerStyles.cardItemChuZhiName
+            cardBalanceStyle = PanelCustomerStyles.cardItemChuZhiBalance
+            cardButtonStyle = PanelCustomerStyles.cardItemChuZhiOperator
+            cardButtonTxtStyle = PanelCustomerStyles.cardItemOperatorText
+            cardDateStyle = PanelCustomerStyles.cardItemDate
         }else{ // 套餐卡
             cardBackGround = require('@imgPath/member_panel_card_bg_taocan.png')
-            cardModeStyle = MemberPanelStyles.cardItemModeName
-            cardNameStyle = MemberPanelStyles.cardItemTaoCanName
-            cardBalanceStyle = MemberPanelStyles.cardItemTaoCanBalance
-            cardButtonStyle = MemberPanelStyles.cardItemTaoCanOperator
-            cardButtonTxtStyle = MemberPanelStyles.cardItemOperatorText
-            cardDateStyle = MemberPanelStyles.cardItemDate
+            cardModeStyle = PanelCustomerStyles.cardItemModeName
+            cardNameStyle = PanelCustomerStyles.cardItemTaoCanName
+            cardBalanceStyle = PanelCustomerStyles.cardItemTaoCanBalance
+            cardButtonStyle = PanelCustomerStyles.cardItemTaoCanOperator
+            cardButtonTxtStyle = PanelCustomerStyles.cardItemOperatorText
+            cardDateStyle = PanelCustomerStyles.cardItemDate
         }
 
         // 是否要隐藏次数
@@ -52,21 +52,21 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
         return (
             <ImageBackground
                 resizeMode={"contain"}
-                style={isEvenElement ? MemberPanelStyles.cardItemBackground : MemberPanelStyles.cardItemBackground2N}
+                style={isEvenElement ? PanelCustomerStyles.cardItemBackground : PanelCustomerStyles.cardItemBackground2N}
                 source={cardBackGround}>
                 {/*卡类型*/}
                 <Text style={cardModeStyle}>
                     {cardModeName}
                 </Text>
-                <View style={MemberPanelStyles.cardItemContentBox}>
+                <View style={PanelCustomerStyles.cardItemContentBox}>
                     <Text
                         style={cardNameStyle}
                         numberOfLines={2}
                         ellipsizeMode={'tail'}>
                         {cardItem.cardName}
                     </Text>
-                    <View style={MemberPanelStyles.cardItemOperatorBox}>
-                        <Text style={hideCardBalance ? MemberPanelStyles.cardItemYinCangBalance: cardBalanceStyle}>
+                    <View style={PanelCustomerStyles.cardItemOperatorBox}>
+                        <Text style={hideCardBalance ? PanelCustomerStyles.cardItemYinCangBalance: cardBalanceStyle}>
                             {
                                 cardTypeId == '1' ? `¥${cardItem.cardBalance}`:`余${cardItem.cardBalance}次`
                             }
@@ -109,9 +109,9 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                         }
                     </View>
                 </View>
-                <View style={MemberPanelStyles.cardItemOtherBox}>
-                    <View style={MemberPanelStyles.cardItemOtherWrap}>
-                        <Text style={MemberPanelStyles.cardItemStore} numberOfLines={1} ellipsizeMode={'tail'}>
+                <View style={PanelCustomerStyles.cardItemOtherBox}>
+                    <View style={PanelCustomerStyles.cardItemOtherWrap}>
+                        <Text style={PanelCustomerStyles.cardItemStore} numberOfLines={1} ellipsizeMode={'tail'}>
                             {cardItem.cardStoreName}
                         </Text>
                         <Text style={cardDateStyle}>
@@ -133,7 +133,7 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
             }
             numColumns={2}
             ItemSeparatorComponent={()=>{
-                return <View style={MemberPanelStyles.cardItemSeparator}></View>
+                return <View style={PanelCustomerStyles.cardItemSeparator}></View>
             }}
             keyExtractor={card=>{
                 return card.cardId

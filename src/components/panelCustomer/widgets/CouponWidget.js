@@ -1,6 +1,6 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
 import React, {useState} from "react";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import dayjs from "dayjs";
 import RenderHtml from 'react-native-render-html';
 import {PixelUtil} from "../../../utils";
@@ -15,78 +15,78 @@ export const CouponWidget = React.memo(({couponList})=>{
         const activityGiveCouponStatus = itemInfo.activityGiveCouponStatus
 
         return (
-            <View style={MemberPanelStyles.memberCouponBox}>
+            <View style={PanelCustomerStyles.memberCouponBox}>
                 <ImageBackground
                     resizeMode={'contain'}
                     source={couponStatus == '3'
                         ? require('@imgPath/member_panel_coupon_inactive_bg.png')
                         : require('@imgPath/member_panel_coupon_bg.png')}
-                    style={MemberPanelStyles.memberCouponBg}>
-                    <View style={MemberPanelStyles.memberCouponPriceBox}>
+                    style={PanelCustomerStyles.memberCouponBg}>
+                    <View style={PanelCustomerStyles.memberCouponPriceBox}>
                         {/*券金额*/}
                         {
                             itemInfo.couponType == '0' && ( // 现金券
-                                <View style={MemberPanelStyles.memberCouponPriceWrap}>
-                                    <Text style={MemberPanelStyles.memberCouponPriceUnit}>¥</Text>
-                                    <Text style={MemberPanelStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
+                                <View style={PanelCustomerStyles.memberCouponPriceWrap}>
+                                    <Text style={PanelCustomerStyles.memberCouponPriceUnit}>¥</Text>
+                                    <Text style={PanelCustomerStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
                                 </View>
                             )
                         }
                         {
                             itemInfo.couponType == '6' && ( // 折扣券
-                                <View style={MemberPanelStyles.memberCouponPriceWrap}>
-                                    <Text style={MemberPanelStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
-                                    <Text style={MemberPanelStyles.memberCouponPriceUnit}>折</Text>
+                                <View style={PanelCustomerStyles.memberCouponPriceWrap}>
+                                    <Text style={PanelCustomerStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
+                                    <Text style={PanelCustomerStyles.memberCouponPriceUnit}>折</Text>
                                 </View>
                             )
                         }
                         {
                             itemInfo.couponType == '7' && ( // 抵扣券
-                                <View style={MemberPanelStyles.memberCouponPriceWrap}>
-                                    <Text style={MemberPanelStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
-                                    <Text style={MemberPanelStyles.memberCouponPriceUnit}>次</Text>
+                                <View style={PanelCustomerStyles.memberCouponPriceWrap}>
+                                    <Text style={PanelCustomerStyles.memberCouponPrice}>{itemInfo.couponPrice}</Text>
+                                    <Text style={PanelCustomerStyles.memberCouponPriceUnit}>次</Text>
                                 </View>
                             )
                         }
                     </View>
-                    <View style={MemberPanelStyles.memberCouponDetailBox}>
+                    <View style={PanelCustomerStyles.memberCouponDetailBox}>
                         {/*券名称*/}
                         {
                             itemInfo.couponType == '0' && (
-                            <View style={MemberPanelStyles.memberCouponDetailNameBox}>
-                                <Text style={MemberPanelStyles.memberCouponDetailNameTypeXJ}>现金券</Text>
+                            <View style={PanelCustomerStyles.memberCouponDetailNameBox}>
+                                <Text style={PanelCustomerStyles.memberCouponDetailNameTypeXJ}>现金券</Text>
                                 <Text
                                     ellipsizeMode={'tail'} numberOfLines={2}
-                                    style={MemberPanelStyles.memberCouponDetailNameText}>
+                                    style={PanelCustomerStyles.memberCouponDetailNameText}>
                                     &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                 </Text>
                             </View>)
                         }
                         {
                             itemInfo.couponType == '6' && (
-                                <View style={MemberPanelStyles.memberCouponDetailNameBox}>
-                                    <Text style={MemberPanelStyles.memberCouponDetailNameTypeZK}>折扣券</Text>
+                                <View style={PanelCustomerStyles.memberCouponDetailNameBox}>
+                                    <Text style={PanelCustomerStyles.memberCouponDetailNameTypeZK}>折扣券</Text>
                                     <Text
                                         ellipsizeMode={'tail'} numberOfLines={2}
-                                        style={MemberPanelStyles.memberCouponDetailNameText}>
+                                        style={PanelCustomerStyles.memberCouponDetailNameText}>
                                         &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                     </Text>
                                 </View>)
                         }
                         {
                             itemInfo.couponType == '7' && (
-                                <View style={MemberPanelStyles.memberCouponDetailNameBox}>
-                                    <Text style={MemberPanelStyles.memberCouponDetailNameTypeDK}>抵扣券</Text>
+                                <View style={PanelCustomerStyles.memberCouponDetailNameBox}>
+                                    <Text style={PanelCustomerStyles.memberCouponDetailNameTypeDK}>抵扣券</Text>
                                     <Text
                                         ellipsizeMode={'tail'} numberOfLines={2}
-                                        style={MemberPanelStyles.memberCouponDetailNameText}>
+                                        style={PanelCustomerStyles.memberCouponDetailNameText}>
                                         &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{itemInfo.couponName}
                                     </Text>
                                 </View>)
                         }
 
                         {/*有效期*/}
-                        <Text style={MemberPanelStyles.memberCouponDetailValidDateTxt}>
+                        <Text style={PanelCustomerStyles.memberCouponDetailValidDateTxt}>
                             {
                                 (()=>{
                                     if(couponStatus == '3'){ // 优惠券未激活
@@ -121,15 +121,15 @@ export const CouponWidget = React.memo(({couponList})=>{
                         </Text>
 
                         {/*使用说明*/}
-                        <View style={MemberPanelStyles.memberCouponDetailDescBox}>
-                            <View style={MemberPanelStyles.memberCouponDetailDescLeftBox}>
+                        <View style={PanelCustomerStyles.memberCouponDetailDescBox}>
+                            <View style={PanelCustomerStyles.memberCouponDetailDescLeftBox}>
                                 {
                                     itemInfo.couponUsedLimitRule &&
                                     (<View style={{display: 'flex', flexDirection: 'row', justifyContent:'flex-start', alignItems:'center'}}>
                                         <Image resizeMethod="resize"
                                                   source={require('@imgPath/member_panel_coupon_tips.png')}
-                                                  style={MemberPanelStyles.memberCouponDetailDescLeftIcon}/>
-                                        <Text style={MemberPanelStyles.memberCouponDetailDescLeftText} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                  style={PanelCustomerStyles.memberCouponDetailDescLeftIcon}/>
+                                        <Text style={PanelCustomerStyles.memberCouponDetailDescLeftText} ellipsizeMode={'tail'} numberOfLines={1}>
                                             {itemInfo.couponUsedLimitRule}
                                         </Text>
                                     </View>
@@ -138,12 +138,12 @@ export const CouponWidget = React.memo(({couponList})=>{
                             </View>
                             <TouchableOpacity
                                 onPress={()=>{setIsExpand(!isExpand)}}
-                                style={MemberPanelStyles.memberCouponDetailDescRightBox}>
-                                <Text style={MemberPanelStyles.memberCouponDetailDescRightText}>
+                                style={PanelCustomerStyles.memberCouponDetailDescRightBox}>
+                                <Text style={PanelCustomerStyles.memberCouponDetailDescRightText}>
                                     {isExpand ? '收起':'查看详情'}
                                 </Text>
                                 <Image resizeMode={"contain"}
-                                       style={MemberPanelStyles.memberCouponDetailDescRightIcon}
+                                       style={PanelCustomerStyles.memberCouponDetailDescRightIcon}
                                        source={isExpand ? require('@imgPath/member_panel_coupon_up.png') : require('@imgPath/member_panel_coupon_dw.png')}/>
                             </TouchableOpacity>
                         </View>
@@ -151,24 +151,24 @@ export const CouponWidget = React.memo(({couponList})=>{
                 </ImageBackground>
                 {/*展开说明*/}
                 {isExpand && (
-                    <View style={MemberPanelStyles.memberCouponRuleBox}>
-                        <View style={[MemberPanelStyles.memberCouponSourceBox]}>
-                            <Text style={MemberPanelStyles.memberCouponSourceTitle}>优惠券码：</Text>
-                            <Text style={MemberPanelStyles.memberCouponSourceValue}>{itemInfo.couponNo.substring(0, 3) + '****'}</Text>
+                    <View style={PanelCustomerStyles.memberCouponRuleBox}>
+                        <View style={[PanelCustomerStyles.memberCouponSourceBox]}>
+                            <Text style={PanelCustomerStyles.memberCouponSourceTitle}>优惠券码：</Text>
+                            <Text style={PanelCustomerStyles.memberCouponSourceValue}>{itemInfo.couponNo.substring(0, 3) + '****'}</Text>
                         </View>
                         {
                             itemInfo.couponResourceName && (
-                                <View style={[MemberPanelStyles.memberCouponSourceBox, MemberPanelStyles.memberCouponRuleMargin]}>
-                                    <Text style={MemberPanelStyles.memberCouponSourceTitle}>获得来源：</Text>
-                                    <Text style={MemberPanelStyles.memberCouponSourceValue}>{itemInfo.couponResourceName}</Text>
+                                <View style={[PanelCustomerStyles.memberCouponSourceBox, PanelCustomerStyles.memberCouponRuleMargin]}>
+                                    <Text style={PanelCustomerStyles.memberCouponSourceTitle}>获得来源：</Text>
+                                    <Text style={PanelCustomerStyles.memberCouponSourceValue}>{itemInfo.couponResourceName}</Text>
                                 </View>
                             )
                         }
                         {
                             itemInfo.couponRule && (
-                                <View style={MemberPanelStyles.memberCouponRuleDetailWrap}>
-                                    <Text style={MemberPanelStyles.memberCouponSourceTitle}>使用规则：</Text>
-                                    <View style={MemberPanelStyles.memberCouponRuleDetailValue}>
+                                <View style={PanelCustomerStyles.memberCouponRuleDetailWrap}>
+                                    <Text style={PanelCustomerStyles.memberCouponSourceTitle}>使用规则：</Text>
+                                    <View style={PanelCustomerStyles.memberCouponRuleDetailValue}>
                                         <RenderHtml
                                             contentWidth={PixelUtil.size(704)}
                                             source={{html: itemInfo.couponRule}}/>

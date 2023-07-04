@@ -1,7 +1,7 @@
 import {Animated, Image, ImageBackground, LogBox, PanResponder, Text, TouchableOpacity, View} from "react-native";
 import {getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {MemberPanelStyles} from "../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 import {CouponWidget} from "./widgets/CouponWidget"
 import {CardWidget} from "./widgets/CardWidget"
 import {ReserveWidget} from "./widgets/ReserveWidget"
@@ -99,97 +99,97 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }, [animateState.sliderShow])
 
     return (
-        <View style={animateState.sliderShow ? MemberPanelStyles.rightPanelMask : {display: 'none'}}>
+        <View style={animateState.sliderShow ? PanelCustomerStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
                 {...panResponder.panHandlers}
-                style={animateState.sliderShow ? [MemberPanelStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
+                style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
                 <TouchableOpacity onPress={() => {hideRightPanel()}}
                                   activeOpacity={1}
-                                  style={MemberPanelStyles.leftPanMask}>
-                    <View style={MemberPanelStyles.hideIconBox}>
+                                  style={PanelCustomerStyles.leftPanMask}>
+                    <View style={PanelCustomerStyles.hideIconBox}>
                         <TouchableOpacity onPress={() => {
                             hideRightPanel()
                         }}>
                             <Image resizeMethod="resize"
                                    source={require('@imgPath/p-hide-box.png')}
-                                   style={[MemberPanelStyles.hideIconButton, {resizeMode: 'contain'}]}/>
+                                   style={[PanelCustomerStyles.hideIconButton, {resizeMode: 'contain'}]}/>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
                 {/*右侧*/}
-                <View style={MemberPanelStyles.memberWrapBox}>
+                <View style={PanelCustomerStyles.memberWrapBox}>
                     {/*基本信息*/}
                     <ImageBackground
                         resizeMode={'contain'}
                         source={require('@imgPath/member_panel_info_bg.png')}
-                        style={MemberPanelStyles.memberInfoWrap}>
+                        style={PanelCustomerStyles.memberInfoWrap}>
                         {/*基本信息*/}
-                        <View style={MemberPanelStyles.memberInfoBaseBox}>
-                            <View style={MemberPanelStyles.nameInfoBaseBox}>
+                        <View style={PanelCustomerStyles.memberInfoBaseBox}>
+                            <View style={PanelCustomerStyles.nameInfoBaseBox}>
                                 {/*用户头像*/}
                                 <Image
-                                    style={MemberPanelStyles.customerAvatar}
+                                    style={PanelCustomerStyles.customerAvatar}
                                     resizeMethod="resize"
                                     source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
-                                <View style={MemberPanelStyles.namePhoneBox}>
-                                    <View style={MemberPanelStyles.nameWrap}>
-                                        <Text style={MemberPanelStyles.nameShowText}>{decodeURIComponent(customerInfo.nickName)}</Text>
+                                <View style={PanelCustomerStyles.namePhoneBox}>
+                                    <View style={PanelCustomerStyles.nameWrap}>
+                                        <Text style={PanelCustomerStyles.nameShowText}>{decodeURIComponent(customerInfo.nickName)}</Text>
                                         <Image
-                                            style={MemberPanelStyles.customerSexIcon}
+                                            style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
                                             source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
                                     </View>
-                                    <Text style={MemberPanelStyles.phoneShowText}>
+                                    <Text style={PanelCustomerStyles.phoneShowText}>
                                         {customerInfo.reserveInfo.memberPhoneShow}
                                     </Text>
                                 </View>
                             </View>
-                            <View style={MemberPanelStyles.propertyInfoBaseBox}>
-                                <View style={MemberPanelStyles.propertyInfoItemBox}>
-                                    <Text style={MemberPanelStyles.propertyInfoItemTitle}>
+                            <View style={PanelCustomerStyles.propertyInfoBaseBox}>
+                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡
                                     </Text>
-                                    <Text style={MemberPanelStyles.propertyInfoItemValue}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemValue}>
                                         {customerInfo.czkCount}张
                                     </Text>
                                 </View>
-                                <View style={MemberPanelStyles.propertyInfoItemBox}>
-                                    <Text style={MemberPanelStyles.propertyInfoItemTitle}>
+                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         次卡
                                     </Text>
-                                    <Text style={MemberPanelStyles.propertyInfoItemValue}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemValue}>
                                         {customerInfo.ckCount}张
                                     </Text>
                                 </View>
-                                <View style={MemberPanelStyles.propertyInfoItemBox}>
-                                    <Text style={MemberPanelStyles.propertyInfoItemTitle}>
+                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡余额
                                     </Text>
-                                    <Text style={MemberPanelStyles.propertyInfoItemValue}>
+                                    <Text style={PanelCustomerStyles.propertyInfoItemValue}>
                                         ¥{customerInfo.czkPriceSum}
                                     </Text>
                                 </View>
                             </View>
                         </View>
-                        <View style={MemberPanelStyles.memberInfoSplit}></View>
+                        <View style={PanelCustomerStyles.memberInfoSplit}></View>
                     </ImageBackground>
                     {/*资产信息*/}
-                    <View style={MemberPanelStyles.memberExtraInfoWrap}>
-                        <View style={MemberPanelStyles.memberExtraTabWrap}>
+                    <View style={PanelCustomerStyles.memberExtraInfoWrap}>
+                        <View style={PanelCustomerStyles.memberExtraTabWrap}>
                             {/*tab页签*/}
-                            <View style={MemberPanelStyles.memberExtraTabBox}>
+                            <View style={PanelCustomerStyles.memberExtraTabBox}>
                             {
                                 tabArray.map((tab, index)=>{
                                     return (
                                         <TouchableOpacity
-                                            style={MemberPanelStyles.memberExtraTabItem}
+                                            style={PanelCustomerStyles.memberExtraTabItem}
                                             onPress={()=>{
                                                 setTabIndex(index)
                                             }}>
-                                            <Text style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemTitleActive:MemberPanelStyles.memberExtraTabItemTitle}>{tab}</Text>
-                                            <View style={tabIndex == index ? MemberPanelStyles.memberExtraTabItemLineActive : MemberPanelStyles.memberExtraTabItemLine}></View>
+                                            <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive:PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
+                                            <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
                                         </TouchableOpacity>
                                     )
                                 })
@@ -197,8 +197,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                             </View>
                             {/*tab内容*/}
                             <View style={tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'
-                                ? MemberPanelStyles.memberExtraTabReserveBox
-                                : MemberPanelStyles.memberExtraTabContentBox}>
+                                ? PanelCustomerStyles.memberExtraTabReserveBox
+                                : PanelCustomerStyles.memberExtraTabContentBox}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && (
                                         <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerCardEvent}/>
@@ -236,16 +236,16 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                     <ImageBackground
                         resizeMode={'contain'}
                         source={require('@imgPath/member_panel_operator_bg.png')}
-                        style={MemberPanelStyles.operatorWrap}>
-                        <TouchableOpacity style={MemberPanelStyles.operatorBtnCashier}>
-                            <Text style={MemberPanelStyles.operatorBtnTxt}>办卡</Text>
+                        style={PanelCustomerStyles.operatorWrap}>
+                        <TouchableOpacity style={PanelCustomerStyles.operatorBtnCashier}>
+                            <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={MemberPanelStyles.operatorBtnCard}
+                            style={PanelCustomerStyles.operatorBtnCard}
                             onPress={()=>{
                                 props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId})
                             }}>
-                            <Text style={MemberPanelStyles.operatorBtnTxt}>开单</Text>
+                            <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>
                     </ImageBackground>
                 </View>

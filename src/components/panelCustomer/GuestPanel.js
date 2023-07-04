@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useImperativeHandle, useState} from "react";
-import {ReservePanelStyles} from "../../styles/ReservePanel";
+import {PanelReserveStyles} from "../../styles/PanelReserve";
 
 /**
  * 散客开单浮动面板
@@ -87,25 +87,25 @@ const GuestPanelForwardRef = forwardRef(({memberInfo, reserveFlag}, refArgs) => 
     const [tabIndex, setTabIndex] = useState(0)
 
     return (
-        <View style={animateState.sliderShow ? ReservePanelStyles.rightPanelMask : {display: 'none'}}>
+        <View style={animateState.sliderShow ? PanelReserveStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
                 {...panResponder.panHandlers}
-                style={animateState.sliderShow ? [ReservePanelStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
+                style={animateState.sliderShow ? [PanelReserveStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
                 <TouchableOpacity
                     onPress={() => {hideRightPanel()}}
                     activeOpacity={1}
-                    style={ReservePanelStyles.leftPanMask}>
-                    <View style={ReservePanelStyles.hideIconBox}>
+                    style={PanelReserveStyles.leftPanMask}>
+                    <View style={PanelReserveStyles.hideIconBox}>
                         <TouchableOpacity onPress={() => {hideRightPanel()}}>
                             <Image resizeMethod="resize"
                                    source={require('@imgPath/p-hide-box.png')}
-                                   style={[ReservePanelStyles.hideIconButton, {resizeMode: 'contain'}]}/>
+                                   style={[PanelReserveStyles.hideIconButton, {resizeMode: 'contain'}]}/>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
                 {/*右侧内容区域*/}
-                <View style={ReservePanelStyles.contentWrapBox}>
+                <View style={PanelReserveStyles.contentWrapBox}>
 
 
 

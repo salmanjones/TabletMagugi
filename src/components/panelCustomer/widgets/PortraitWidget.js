@@ -1,46 +1,46 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
 import React, {useState} from "react";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
 export const PortraitWidget = React.memo(({portraitInfo})=>{
     return (
-        <View style={MemberPanelStyles.memberPortraitBox}>
-            <View style={MemberPanelStyles.memberPortraitTitle}>
+        <View style={PanelCustomerStyles.memberPortraitBox}>
+            <View style={PanelCustomerStyles.memberPortraitTitle}>
                 <Image
-                    style={MemberPanelStyles.contentBodyTitleIcon}
+                    style={PanelCustomerStyles.contentBodyTitleIcon}
                     resizeMode={"contain"}
                     source={require('@imgPath/reserve_customer_body_title_icon.png')}/>
-                <Text style={MemberPanelStyles.contentBodyTitleValue}>基础档案</Text>
+                <Text style={PanelCustomerStyles.contentBodyTitleValue}>基础档案</Text>
             </View>
-            <View style={MemberPanelStyles.memberPropertyBox}>
-                <Text style={MemberPanelStyles.memberPortraitPTitle}>
+            <View style={PanelCustomerStyles.memberPropertyBox}>
+                <Text style={PanelCustomerStyles.memberPortraitPTitle}>
                     手机号码：
                 </Text>
-                <Text style={MemberPanelStyles.memberPortraitPValue}>
+                <Text style={PanelCustomerStyles.memberPortraitPValue}>
                     {portraitInfo.reserveInfo.memberPhoneShow}
                 </Text>
             </View>
-            <View style={MemberPanelStyles.memberPropertyBox}>
-                <Text style={MemberPanelStyles.memberPortraitPTitle}>
+            <View style={PanelCustomerStyles.memberPropertyBox}>
+                <Text style={PanelCustomerStyles.memberPortraitPTitle}>
                     顾客姓名：
                 </Text>
-                <Text style={MemberPanelStyles.memberPortraitPValue}>
+                <Text style={PanelCustomerStyles.memberPortraitPValue}>
                     {decodeURIComponent(portraitInfo.nickName)}
                 </Text>
             </View>
-            <View style={MemberPanelStyles.memberPropertyBox}>
-                <Text style={MemberPanelStyles.memberPortraitPTitle}>
+            <View style={PanelCustomerStyles.memberPropertyBox}>
+                <Text style={PanelCustomerStyles.memberPortraitPTitle}>
                     性别：
                 </Text>
-                <Text style={MemberPanelStyles.memberPortraitPValue}>
+                <Text style={PanelCustomerStyles.memberPortraitPValue}>
                     {portraitInfo.sex == '1' ? '男':'女'}
                 </Text>
             </View>
-            <View style={MemberPanelStyles.memberPropertyBox}>
-                <Text style={MemberPanelStyles.memberPortraitPTitle}>
+            <View style={PanelCustomerStyles.memberPropertyBox}>
+                <Text style={PanelCustomerStyles.memberPortraitPTitle}>
                     生日：
                 </Text>
-                <Text style={MemberPanelStyles.memberPortraitPValue}>
+                <Text style={PanelCustomerStyles.memberPortraitPValue}>
                     {portraitInfo.birthday && portraitInfo.birthday.length > 0 ? portraitInfo.birthday: '暂无'}
                 </Text>
             </View>

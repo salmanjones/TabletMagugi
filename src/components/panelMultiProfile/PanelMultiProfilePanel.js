@@ -1,7 +1,7 @@
 import {Animated, FlatList, Image, LogBox, PanResponder, Text, TextInput, TouchableOpacity, View,} from "react-native";
 import {PixelUtil} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {PanelMultiProfiles} from "../../styles/panelMultiProfile";
+import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 import {BackgroundImage} from "react-native-elements/dist/config";
 import {MultiProfileItem} from "./widgets/MultiProfileItem";
 

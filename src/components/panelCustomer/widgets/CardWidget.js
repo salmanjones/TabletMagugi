@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import {CardFlatList} from "./CardFlatList";
 
 export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEvent})=>{
@@ -55,21 +55,21 @@ export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEven
     }, [cardsInfo])
 
     return (
-        <View style={MemberPanelStyles.memberCardsBox}>
+        <View style={PanelCustomerStyles.memberCardsBox}>
             {/*Tab*/}
-            <View style={MemberPanelStyles.memberCardsTabBox}>
+            <View style={PanelCustomerStyles.memberCardsTabBox}>
                 {
                     tabList && tabList.map((tabInfo, index)=>{
                         return (
                             <TouchableOpacity style={index == activeTabIndex
-                                ? MemberPanelStyles.memberCardsTabItemActive
-                                : MemberPanelStyles.memberCardsTabItem}
+                                ? PanelCustomerStyles.memberCardsTabItemActive
+                                : PanelCustomerStyles.memberCardsTabItem}
                                 onPress={()=>{
                                     setActiveTabIndex(index)
                                 }}>
                                 <Text style={index == activeTabIndex
-                                    ? MemberPanelStyles.memberCardsTabItemTextActive
-                                    : MemberPanelStyles.memberCardsTabItemText}>
+                                    ? PanelCustomerStyles.memberCardsTabItemTextActive
+                                    : PanelCustomerStyles.memberCardsTabItemText}>
                                     {tabInfo.title}
                                 </Text>
                             </TouchableOpacity>
@@ -78,7 +78,7 @@ export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEven
                 }
             </View>
             {/*卡列表*/}
-            <View style={MemberPanelStyles.memberCardsWrap}>
+            <View style={PanelCustomerStyles.memberCardsWrap}>
                 <CardFlatList
                     cardArray={tabList[activeTabIndex]['data']}
                     cardType={tabList[activeTabIndex]['title']}

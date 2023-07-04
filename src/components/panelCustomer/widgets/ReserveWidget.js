@@ -1,6 +1,6 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
 import React, {useEffect, useState} from "react";
-import {MemberPanelStyles} from "../../../styles/MemberPanel";
+import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
 export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
@@ -27,54 +27,54 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
     }, [reserveInfo])
 
     return (
-        <View style={MemberPanelStyles.memberReserveBox}>
+        <View style={PanelCustomerStyles.memberReserveBox}>
             <Image
                 resizeMode={'contain'}
                 source={isStartWork == '0' ? require('@imgPath/reserve_customer_panel_wait.png'):require('@imgPath/reserve_customer_panel_serviced.png')}
-                style={MemberPanelStyles.startWorkStyle}></Image>
-            <View style={MemberPanelStyles.memberReserveProperty}>
-                <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                style={PanelCustomerStyles.startWorkStyle}></Image>
+            <View style={PanelCustomerStyles.memberReserveProperty}>
+                <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     预约手机号：
                 </Text>
-                <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                     {reserveInfo.memberPhoneShow}
                 </Text>
                 {
                     isStartWork == '0' && canCancel == '1' && (
                         <TouchableOpacity
-                            style={MemberPanelStyles.memberReserveCancel}
+                            style={PanelCustomerStyles.memberReserveCancel}
                             onPress={()=>{
                                 customerPressEvent('cancelReserve', {type: '0', recordId: reserveInfo.reserveId, hideRightPanel: true})
                             }}>
                             <Image
                                 resizeMode={'contain'}
                                 source={require('@imgPath/reserve_customer_panel_calcel_reserve.png')}
-                                style={MemberPanelStyles.memberReserveCancelImage}></Image>
+                                style={PanelCustomerStyles.memberReserveCancelImage}></Image>
                         </TouchableOpacity>
                     )
                 }
             </View>
-            <View style={MemberPanelStyles.memberReserveProperty}>
-                <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+            <View style={PanelCustomerStyles.memberReserveProperty}>
+                <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     顾客姓名：
                 </Text>
-                <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                     {decodeURIComponent(reserveInfo.memberName)}
                 </Text>
             </View>
-            <View style={MemberPanelStyles.memberReserveProperty}>
-                <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+            <View style={PanelCustomerStyles.memberReserveProperty}>
+                <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     预约员工：
                 </Text>
-                <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                     {decodeURIComponent(reserveInfo.staffName)}
                 </Text>
             </View>
-            <View style={MemberPanelStyles.memberReserveProperty}>
-                <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+            <View style={PanelCustomerStyles.memberReserveProperty}>
+                <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     预约时间：
                 </Text>
-                <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                     {reserveInfo.reserveTime}
                 </Text>
             </View>
@@ -83,28 +83,28 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     if(isStartWork == '1' || reserveFlag != 'valid'){ // 已到店或过期预约
                         return (
                             <View>
-                                <View style={MemberPanelStyles.memberReserveProperty}>
-                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                <View style={PanelCustomerStyles.memberReserveProperty}>
+                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                         预约来源：
                                     </Text>
-                                    <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                                    <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                                         {sourceName}
                                     </Text>
                                 </View>
-                                <View style={MemberPanelStyles.memberReserveProperty}>
-                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                <View style={PanelCustomerStyles.memberReserveProperty}>
+                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                         预约服务：
                                     </Text>
-                                    <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                                    <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                                         {serviceType}
                                     </Text>
                                 </View>
-                                <View style={MemberPanelStyles.memberReserveProperty}>
-                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                <View style={PanelCustomerStyles.memberReserveProperty}>
+                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                         预约备注：
                                     </Text>
                                     <TextInput
-                                        style={MemberPanelStyles.memberReservePropertyRemark}
+                                        style={PanelCustomerStyles.memberReservePropertyRemark}
                                         editable={false}
                                         multiline={true}
                                         textAlignVertical={'top'}
@@ -121,28 +121,28 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                     (()=>{
                                         if(reserveInfo.sourceShowType == '0'){ // 不可编辑
                                             return (
-                                                <View style={MemberPanelStyles.memberReserveProperty}>
-                                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                                <View style={PanelCustomerStyles.memberReserveProperty}>
+                                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                                         预约来源：
                                                     </Text>
-                                                    <Text style={MemberPanelStyles.memberReservePropertyValue}>
+                                                    <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                                                         {sourceName}
                                                     </Text>
                                                 </View>
                                             )
                                         }else{
                                             return (
-                                                <View style={MemberPanelStyles.memberReservePropertyBtnWrap}>
-                                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                                <View style={PanelCustomerStyles.memberReservePropertyBtnWrap}>
+                                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                                         预约来源：
                                                     </Text>
-                                                    <View style={MemberPanelStyles.reservePropertyBtnValue}>
+                                                    <View style={PanelCustomerStyles.reservePropertyBtnValue}>
                                                         {
                                                             reserveInfo.reserveResoures && reserveInfo.reserveResoures.map(sourceInfo=>{
                                                                 if(sourceInfo.value == sourceValue){
                                                                     return (
-                                                                        <TouchableOpacity style={MemberPanelStyles.reservePropertyValueButtonActive}>
-                                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxtActive}>
+                                                                        <TouchableOpacity style={PanelCustomerStyles.reservePropertyValueButtonActive}>
+                                                                            <Text style={PanelCustomerStyles.reservePropertyValueButtonTxtActive}>
                                                                                 {sourceInfo.name}
                                                                             </Text>
                                                                         </TouchableOpacity>
@@ -150,11 +150,11 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                                                 }else{
                                                                     return (
                                                                         <TouchableOpacity
-                                                                            style={MemberPanelStyles.reservePropertyValueButton}
+                                                                            style={PanelCustomerStyles.reservePropertyValueButton}
                                                                             onPress={()=>{
                                                                                 setSourceValue(sourceInfo.value)
                                                                             }}>
-                                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxt}>
+                                                                            <Text style={PanelCustomerStyles.reservePropertyValueButtonTxt}>
                                                                                 {sourceInfo.name}
                                                                             </Text>
                                                                         </TouchableOpacity>
@@ -168,17 +168,17 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         }
                                     })()
                                 }
-                                <View style={MemberPanelStyles.memberReservePropertyBtnWrap}>
-                                    <Text style={MemberPanelStyles.memberReservePropertyTitle}>
+                                <View style={PanelCustomerStyles.memberReservePropertyBtnWrap}>
+                                    <Text style={PanelCustomerStyles.memberReservePropertyTitle}>
                                         预约服务：
                                     </Text>
-                                    <View style={MemberPanelStyles.reservePropertyBtnValue}>
+                                    <View style={PanelCustomerStyles.reservePropertyBtnValue}>
                                         {
                                             reserveInfo.reserveInfoList && reserveInfo.reserveInfoList.map(typeInfo=>{
                                                 if(typeInfo.reserveId == serviceValue){
                                                     return (
-                                                        <TouchableOpacity style={MemberPanelStyles.reservePropertyValueButtonActive}>
-                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxtActive}>
+                                                        <TouchableOpacity style={PanelCustomerStyles.reservePropertyValueButtonActive}>
+                                                            <Text style={PanelCustomerStyles.reservePropertyValueButtonTxtActive}>
                                                                 {typeInfo.reserveName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -186,12 +186,12 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                                 }else{
                                                     return (
                                                         <TouchableOpacity
-                                                            style={MemberPanelStyles.reservePropertyValueButton}
+                                                            style={PanelCustomerStyles.reservePropertyValueButton}
                                                             onPress={()=>{
                                                                 setServiceValue(typeInfo.reserveId)
                                                                 setServiceNameValue(typeInfo.reserveName)
                                                             }}>
-                                                            <Text style={MemberPanelStyles.reservePropertyValueButtonTxt}>
+                                                            <Text style={PanelCustomerStyles.reservePropertyValueButtonTxt}>
                                                                 {typeInfo.reserveName}
                                                             </Text>
                                                         </TouchableOpacity>
@@ -202,12 +202,12 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                         }
                                     </View>
                                 </View>
-                                <View style={MemberPanelStyles.memberReserveDescProperty}>
-                                    <Text  style={MemberPanelStyles.memberReservePropertyTitle}>
+                                <View style={PanelCustomerStyles.memberReserveDescProperty}>
+                                    <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                                         预约备注：
                                     </Text>
                                     <TextInput
-                                        style={MemberPanelStyles.memberReservePropertyDesc}
+                                        style={PanelCustomerStyles.memberReservePropertyDesc}
                                         editable={true}
                                         multiline={true}
                                         textAlignVertical={'top'}
@@ -222,9 +222,9 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                     </TextInput>
 
                                 </View>
-                                <View style={MemberPanelStyles.memberReservePropertyOperator}>
+                                <View style={PanelCustomerStyles.memberReservePropertyOperator}>
                                     <TouchableOpacity
-                                        style={MemberPanelStyles.memberReserveModify}
+                                        style={PanelCustomerStyles.memberReserveModify}
                                         onPress={()=>{
                                             customerPressEvent('updateReserve', {
                                                 updateParams: {
@@ -240,7 +240,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                                                 hideRightPanel: true
                                             })
                                         }}>
-                                        <Text style={MemberPanelStyles.memberReserveModifyText}>保存预约</Text>
+                                        <Text style={PanelCustomerStyles.memberReserveModifyText}>保存预约</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
