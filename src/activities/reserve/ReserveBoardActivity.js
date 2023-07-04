@@ -579,7 +579,7 @@ export const ReserveBoardActivity = props => {
             {/*会员信息面板*/}
             <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerPressEvent}/>
             {/*散客信息面板*/}
-            <GuestPanel ref={guestPanelRef} memberInfo={customerState} reserveFlag={reserveFlag}/>
+            <GuestPanel ref={guestPanelRef} customerInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
             {/*顾客预约详情信息面板*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
             {/*顾客多档案信息面板*/}

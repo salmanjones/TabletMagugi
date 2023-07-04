@@ -1,22 +1,18 @@
-import {
-    Animated,
-    Image,
-    ImageBackground,
-    LogBox,
-    PanResponder,
-    TouchableOpacity,
-    View,
-    Text,
-} from "react-native";
+import {Animated, Image, ImageBackground, LogBox, PanResponder, Text, TouchableOpacity, View,} from "react-native";
 import {getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useImperativeHandle, useState} from "react";
-import {PanelReserveStyles} from "../../styles/PanelReserve";
+import {PanelCustomerStyles} from "../../styles/PanelCustomer";
+import {ReserveWidget} from "./widgets/ReserveWidget";
+import {CouponWidget} from "./widgets/CouponWidget";
+import {CardWidget} from "./widgets/CardWidget";
+import {ProfileWidget} from "./widgets/ProfileWidget";
+import {PortraitWidget} from "./widgets/PortraitWidget";
 
 /**
  * 散客开单浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
-const GuestPanelForwardRef = forwardRef(({memberInfo, reserveFlag}, refArgs) => {
+const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPressEvent}, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
     const [animateState, setAnimateState] = useState({
@@ -87,33 +83,98 @@ const GuestPanelForwardRef = forwardRef(({memberInfo, reserveFlag}, refArgs) => 
     const [tabIndex, setTabIndex] = useState(0)
 
     return (
-        <View style={animateState.sliderShow ? PanelReserveStyles.rightPanelMask : {display: 'none'}}>
+        <View style={animateState.sliderShow ? PanelCustomerStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
                 {...panResponder.panHandlers}
-                style={animateState.sliderShow ? [PanelReserveStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
+                style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
-                <TouchableOpacity
-                    onPress={() => {hideRightPanel()}}
-                    activeOpacity={1}
-                    style={PanelReserveStyles.leftPanMask}>
-                    <View style={PanelReserveStyles.hideIconBox}>
-                        <TouchableOpacity onPress={() => {hideRightPanel()}}>
+                <TouchableOpacity onPress={() => {hideRightPanel()}}
+                                  activeOpacity={1}
+                                  style={PanelCustomerStyles.leftPanMask}>
+                    <View style={PanelCustomerStyles.hideIconBox}>
+                        <TouchableOpacity onPress={() => {
+                            hideRightPanel()
+                        }}>
                             <Image resizeMethod="resize"
                                    source={require('@imgPath/p-hide-box.png')}
-                                   style={[PanelReserveStyles.hideIconButton, {resizeMode: 'contain'}]}/>
+                                   style={[PanelCustomerStyles.hideIconButton, {resizeMode: 'contain'}]}/>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
-                {/*右侧内容区域*/}
-                <View style={PanelReserveStyles.contentWrapBox}>
-
-
-
-
-
-
-
-
+                {/*右侧*/}
+                <View style={PanelCustomerStyles.memberWrapBox}>
+                    {/*基本信息*/}
+                    <ImageBackground
+                        resizeMode={'contain'}
+                        source={require('@imgPath/member_panel_info_bg.png')}
+                        style={PanelCustomerStyles.memberInfoWrap}>
+                        {/*基本信息*/}
+                        <View style={PanelCustomerStyles.customerInfoBaseBox}>
+                            {/*用户头像*/}
+                            <Image
+                                style={PanelCustomerStyles.customerAvatar}
+                                resizeMethod="resize"
+                                source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
+                            <Text style={PanelCustomerStyles.nameShowTextCustomer}>{decodeURIComponent(customerInfo['reserveInfo'].memberName)}</Text>
+                        </View>
+                        <View style={PanelCustomerStyles.memberInfoSplit}></View>
+                    </ImageBackground>
+                    {/*资产信息*/}
+                    <View style={PanelCustomerStyles.memberExtraInfoWrap}>
+                        <View style={PanelCustomerStyles.memberExtraTabWrap}>
+                            {/*tab页签*/}
+                            <View style={PanelCustomerStyles.memberExtraTabBox}>
+                                {
+                                    tabArray.map((tab, index)=>{
+                                        return (
+                                            <TouchableOpacity
+                                                style={PanelCustomerStyles.memberExtraTabItem}
+                                                onPress={()=>{
+                                                    setTabIndex(index)
+                                                }}>
+                                                <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive:PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
+                                                <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                            </View>
+                            {/*tab内容*/}
+                            <View style={PanelCustomerStyles.memberExtraTabReserveBox}>
+                                {
+                                    tabArray[tabIndex] == '预约信息' && (
+                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
+                                    )
+                                }
+                                {
+                                    tabArray[tabIndex] == '基础档案' && (
+                                        <View></View>
+                                    )
+                                }
+                            </View>
+                        </View>
+                    </View>
+                    {/*操作按钮*/}
+                    {
+                        tabIndex == 0 && (
+                            <ImageBackground
+                                resizeMode={'contain'}
+                                source={require('@imgPath/member_panel_operator_bg.png')}
+                                style={PanelCustomerStyles.operatorWrap}>
+                                <TouchableOpacity style={PanelCustomerStyles.operatorBtnCashier}>
+                                    <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={PanelCustomerStyles.operatorBtnCard}
+                                    onPress={()=>{
+                                        customerPressEvent("toCreateOrder", {appUserId: customerInfo.appUserId})
+                                    }}>
+                                    <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
+                                </TouchableOpacity>
+                            </ImageBackground>
+                        )
+                    }
                 </View>
             </Animated.View>
         </View>

@@ -70,7 +70,18 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
+    },
+    customerInfoBaseBox: {
+        width: '100%',
+        height: PixelUtil.size(164),
+        paddingHorizontal: PixelUtil.size(66),
+        paddingVertical: PixelUtil.size(36),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        overflow: 'hidden',
     },
     memberInfoSplit: {
         width: '100%',
@@ -110,6 +121,12 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         fontWeight: 700,
         color: '#ffffff'
+    },
+    nameShowTextCustomer: {
+        fontSize: PixelUtil.size(34),
+        fontWeight: 700,
+        color: '#ffffff',
+        marginLeft: PixelUtil.size(20)
     },
     customerSexIcon: {
         marginLeft: PixelUtil.size(12),
