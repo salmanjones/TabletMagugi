@@ -243,7 +243,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         fontSize: PixelUtil.size(34),
         fontWeight: '700',
         color: '#000000',
-        width: PixelUtil.size(180),
+        width: PixelUtil.size(184),
     },
     sexWrap:{
         width: PixelUtil.size(40),

@@ -12,10 +12,10 @@ import {
     getMemberPortrait, getBillFlowNO, getMemberCards, getStaffPermission,
     getMemberBillCards
 } from "../../services/reserve";
-import MemberPanel from "../../components/panelMember/MemberPanel";
+import MemberPanel from "../../components/panelCustomer/MemberPanel";
+import GuestPanel from "../../components/panelCustomer/GuestPanel";
 import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
 import CustomerReservePanel from "../../components/panelReserve/CustomerReservePanel";
-import GuestReservePanel from "../../components/panelReserve/GuestReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
 import {getImage, ImageQutity, showMessageExt} from "../../utils";
@@ -69,7 +69,7 @@ export const ReserveBoardActivity = props => {
         reserveInfoList: []
     })
     // 散客预约子组件
-    const guestReservePanelRef = useRef(null);
+    const guestPanelRef = useRef(null);
 
     // 获取预约数据
     const uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
@@ -136,16 +136,16 @@ export const ReserveBoardActivity = props => {
                     appUserId: customerInfo.appUserId,
                     reserveId: customerInfo.recordId
                 }
+
+                console.log("args", args)
+
                 setLoading(true)
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
+                        console.log("backData", JSON.stringify(backData))
                         if(customerInfo.isMember == '0'){
                             // 防止会员面板出错
-                            data.reserveInfo =  {
-                                reserveResoures: [],
-                                reserveInfoList: []
-                            }
                             data.couponList = []
                             data.czkCount = 0
                             data.ckCount = 0
@@ -157,7 +157,7 @@ export const ReserveBoardActivity = props => {
                         if(customerInfo.isMember == '1'){
                             memberPanelRef.current.showRightPanel()
                         }else{
-                            guestReservePanelRef.current.showRightPanel()
+                            guestPanelRef.current.showRightPanel()
                         }
                     }else{
                         showMessageExt("获取顾客信息失败")
@@ -578,12 +578,12 @@ export const ReserveBoardActivity = props => {
             </View>
             {/*会员信息面板*/}
             <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerPressEvent}/>
-            {/*顾客预约面板信息*/}
+            {/*散客信息面板*/}
+            <GuestPanel ref={guestPanelRef} memberInfo={customerState} reserveFlag={reserveFlag}/>
+            {/*顾客预约详情信息面板*/}
             <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
-            {/*顾客多档案信息*/}
+            {/*顾客多档案信息面板*/}
             <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileData={multiProfiles} customerClickEvent={customerPressEvent}/>
-            {/*散客预约*/}
-            <GuestReservePanel ref={guestReservePanelRef}/>
         </View>
     )
 }

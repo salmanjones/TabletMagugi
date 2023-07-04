@@ -16,7 +16,7 @@ import {ReservePanelStyles} from "../../styles/ReservePanel";
  * 散客开单浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
-const GuestReservePanelForwardRef = forwardRef((props, refArgs) => {
+const GuestPanelForwardRef = forwardRef(({memberInfo, reserveFlag}, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
     const [animateState, setAnimateState] = useState({
@@ -81,6 +81,11 @@ const GuestReservePanelForwardRef = forwardRef((props, refArgs) => {
         getShowState,
     }))
 
+    // 页签数据
+    let tabArray = ['预约信息', '基础档案']
+    // 命中的页签
+    const [tabIndex, setTabIndex] = useState(0)
+
     return (
         <View style={animateState.sliderShow ? ReservePanelStyles.rightPanelMask : {display: 'none'}}>
             <Animated.View
@@ -102,6 +107,13 @@ const GuestReservePanelForwardRef = forwardRef((props, refArgs) => {
                 {/*右侧内容区域*/}
                 <View style={ReservePanelStyles.contentWrapBox}>
 
+
+
+
+
+
+
+
                 </View>
             </Animated.View>
         </View>
@@ -109,4 +121,4 @@ const GuestReservePanelForwardRef = forwardRef((props, refArgs) => {
 })
 
 // 使用React.memo渲染缓存，防止父组件属性变更导致子组件渲染
-export default React.memo(GuestReservePanelForwardRef)
+export default React.memo(GuestPanelForwardRef)
