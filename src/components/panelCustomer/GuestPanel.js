@@ -1,10 +1,16 @@
 import {Animated, Image, ImageBackground, LogBox, PanResponder, Text, TouchableOpacity, View,} from "react-native";
-import {getImage, ImageQutity, PixelUtil} from "../../utils";
-import React, {forwardRef, useImperativeHandle, useState} from "react";
+import {getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 import {ReserveWidget} from "./widgets/ReserveWidget";
 import {GuestProfileWidget} from "./widgets/GusetProfile";
+import ReduxStore from "../../store/store";
+import {getGuestQRImg, getScanQRState} from "../../services/reserve";
+import Spinner from "react-native-loading-spinner-overlay";
+import {AppNavigate} from "../../navigators";
 
+let loopTimerId = null // 定时器ID
+let glUniqueId = null // 唯一ID
 /**
  * 散客开单浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
@@ -78,9 +84,137 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     let tabArray = ['预约信息', '基础档案']
     // 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
+    /// 加载中
+    const [isLoading, setLoading] = useState(false)
+    /// 小程序二维码
+    const [wxQRImg, setWxQRImg] = useState(null)
+    /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
+    const [scanState, setScanState] = useState(null)
+    /// 登录用户信息
+    const loginUser = ReduxStore.getState().auth.userInfo
+
+    /// 生成唯一id
+    const getUniqueId = ()=>{
+        // 唯一ID
+        glUniqueId = loginUser.companyId + loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000000)
+    }
+
+    /// 获取待扫描的二维码
+    const getScanCode = (callBack)=> {
+        const source = '0' // 来自于平板扫码
+        const scene = loginUser.companyId + "@" + loginUser.storeId + "@" + source + "@" + glUniqueId
+        const qrArgs = {
+            "page": "pages/welcomePage/welcomePage",
+            "scene": scene,
+            "width": 800,
+            "auto_color": false,
+            "line_color": {"r": 0, "g": 0, "b": 0},
+            "is_hyaline": true
+        }
+
+        setLoading(true)
+        getGuestQRImg({
+            args: JSON.stringify(qrArgs)
+        }).then(backData => {
+            const {code, data} = backData
+            if (code == '6000') {
+                setWxQRImg(data)
+                callBack && callBack()
+            }
+        }).catch(e => {
+            showMessageExt("获取小程序码失败")
+            console.error("获取小程序码失败", e)
+        }).finally(_ => {
+            setLoading(false)
+        })
+    }
+
+    /// 展示加载二维码
+    useEffect(()=>{
+        if(animateState.sliderShow){ // 展示请求二维码
+            getUniqueId()
+            setScanState(null)
+            getScanCode()
+        }else{ // 隐藏销毁定时器
+            setTabIndex(0)
+            clearTimer()
+        }
+    }, [animateState.sliderShow])
+
+    /// 刷新二维码状态
+    const refreshQRCodeState = ()=>{
+        // 销毁已存在的定时器
+        clearTimer()
+
+        // 每隔1.5秒获取扫码状态
+        loopTimerId = setInterval(() => {
+            const args = {uniqueId: glUniqueId}
+            getScanQRState(args).then(result => {
+                const resCode = result.code
+                const {state, appUserId} = result.data // -1 授权超时 0扫码成功 1授权成功
+                if (resCode == '6000' && state !== null && state !== undefined) {
+                    console.log("result.data", result.data)
+                    setScanState(state)
+                    if(state == 1){ // 授权成功
+                        // 清除循环定时
+                        clearTimer()
+
+                        // 进入开单页面
+                        let tmpTimerId = setTimeout(()=>{
+                            if(tmpTimerId !== null && tmpTimerId !== undefined){
+                                clearTimeout(tmpTimerId)
+                            }
+                            naviToRotatePlacard(appUserId)
+                        }, 1200)
+                    }
+                }
+            }).catch(e => {
+                console.log("获取扫码状态失败", e)
+            })
+        }, 1500)
+    }
+
+    /// 销毁定时器
+    const clearTimer = ()=>{
+        if(loopTimerId != null){
+            clearInterval(loopTimerId)
+            loopTimerId = null
+        }
+    }
+
+    /// 点击tab
+    const tabPressEvent = (index)=>{
+        setTabIndex(index)
+
+        // 扫码标签
+        if(index == 1){
+            refreshQRCodeState()
+        }
+    }
+
+    /// 更新扫码状态
+    const rescanQRCode = (state)=>{
+        // 清除时间循环
+        clearTimer()
+        // 重新生成二维码
+        getUniqueId()
+        // 获取新二维码
+        getScanCode(()=>{
+            // 刷新页面状态
+            setScanState(state)
+            // 重新启动定时
+            refreshQRCodeState()
+        })
+    }
+
+    /// 进入开单页面
+    const naviToRotatePlacard = (appUserId)=>{
+        customerPressEvent('toCreateOrder', {appUserId, type:'guest'})
+    }
 
     return (
         <View style={animateState.sliderShow ? PanelCustomerStyles.rightPanelMask : {display: 'none'}}>
+            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             <Animated.View
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
@@ -128,7 +262,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                             <TouchableOpacity
                                                 style={PanelCustomerStyles.memberExtraTabItem}
                                                 onPress={()=>{
-                                                    setTabIndex(index)
+                                                    tabPressEvent(index)
                                                 }}>
                                                 <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive:PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
                                                 <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
@@ -146,7 +280,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 }
                                 {
                                     tabArray[tabIndex] == '基础档案' && (
-                                        <GuestProfileWidget tabIndex={tabIndex}> </GuestProfileWidget>
+                                        <GuestProfileWidget tabIndex={tabIndex} sliderShow={animateState.sliderShow} scanState={scanState} wxQRImg={wxQRImg} rescanQREvent={rescanQRCode}> </GuestProfileWidget>
                                     )
                                 }
                             </View>

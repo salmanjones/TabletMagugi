@@ -137,13 +137,10 @@ export const ReserveBoardActivity = props => {
                     reserveId: customerInfo.recordId
                 }
 
-                console.log("args", args)
-
                 setLoading(true)
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
-                        console.log("backData", JSON.stringify(backData))
                         if(customerInfo.isMember == '0'){
                             // 防止会员面板出错
                             data.couponList = []
@@ -377,10 +374,16 @@ export const ReserveBoardActivity = props => {
                         console.error("通过appUserId获取会员档案失败", backData)
                         showMessageExt("获取会员档案失败")
                     }else{ // 多档案
+                        const type = extra['type'] // guest: 散客扫码开单
                         if(data.length > 1){ // 多档案
                             setLoading(false)
                             setMultiProfiles(data)
-                            memberPanelRef.current.hideRightPanel()
+                            if(type == 'guest'){ // guest: 散客扫码开单
+                                guestPanelRef.current.hideRightPanel()
+                            }else{
+                                memberPanelRef.current.hideRightPanel()
+                            }
+
                             panelMultiProfilePanelRef.current.showRightPanel('member')
                         }else if(data.length == 1){ // 单档案直接开单
                             setLoading(false)
@@ -391,7 +394,11 @@ export const ReserveBoardActivity = props => {
                                 memberId: customer.memberId,
                                 imgUrl: customer.imgUrl
                             }, ()=>{
-                                memberPanelRef.current.hideRightPanel()
+                                if(type == 'guest'){ // guest: 散客扫码开单
+                                    guestPanelRef.current.hideRightPanel()
+                                }else{
+                                    memberPanelRef.current.hideRightPanel()
+                                }
                             })
                         }else{ // 无档案
                             setLoading(false)
@@ -521,7 +528,6 @@ export const ReserveBoardActivity = props => {
                     setLoading(false)
                     console.error("获取会员档案失败", e)
                 }
-
                 break
         }
     }, [])

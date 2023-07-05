@@ -1,114 +1,24 @@
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import {Image, ImageBackground, Text, TextInput, TouchableOpacity, View} from "react-native";
-import React, {useEffect, useState} from "react";
-import ReduxStore from "../../../store/store"
-import {getGuestQRImg, getScanQRState} from "../../../services/reserve";
-import {showMessageExt} from "../../../utils";
-import Spinner from "react-native-loading-spinner-overlay";
-import {getScanQRState} from "../../../services/reserve";
+import React, {useState} from "react";
 
 /**
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex})=>{
-    /// 加载中
-    const [isLoading, setLoading] = useState(false)
-    /// 小程序二维码
-    const [wxQRImg, setWxQRImg] = useState(null)
-    /// 是否展示清除按钮
-    const [showClear, setShowClear] = useState(false)
+export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
-    /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
-    const [scanState, setScanState] = useState(0)
-    /// 登录用户信息
-    const loginUser = ReduxStore.getState().auth.userInfo
-    /// 循环的时间id
-    let timerID = null
-
-    /// 获取待扫描的二维码
-    const getScanCode = ()=>{
-        const source = '0' // 来自于平板扫码
-        const uniqueId = loginUser.companyId + loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000000)
-        const scene = loginUser.companyId + "@" + loginUser.storeId + "@" + source + "@" + uniqueId
-        const qrArgs = {
-            "page":"pages/welcomePage/welcomePage",
-            "scene": scene,
-            "width":800,
-            "auto_color":false,
-            "line_color":{"r":0,"g":0,"b":0},
-            "is_hyaline": true
-        }
-
-        setLoading(true)
-        getGuestQRImg({
-            args: JSON.stringify(qrArgs)
-        }).then(backData=>{
-            const {code, data} = backData
-            if(code == '6000'){
-                setWxQRImg(data)
-
-                // 每隔1.5秒获取扫码状态
-                timerID && clearInterval(timerID)
-                timerID = setInterval(()=>{
-                    getScanQRState({uniqueId: uniqueId}).then(result=>{
-                        const resCode = result.code
-                        const resStat = result.data
-                        if(resCode == '6000'){
-                            setScanState(resStat)
-                        }else{
-                            console.log("获取扫码状态失败", result)
-                        }
-                    }).catch(e=>{
-                        console.log("获取扫码状态失败", e)
-                    })
-                }, 1500)
-            }
-        }).catch(e=>{
-            showMessageExt("获取小程序码失败")
-            console.error("获取小程序码失败", e)
-        }).finally(_=>{
-            setLoading(false)
-        })
-    }
-
-    /// 页签变化
-    useEffect(()=>{
-        // 展示弹层，初始化面板状态
-        setScanState(0)
-
-        // 生成参数
-        if(tabIndex == 1){
-            getScanCode()
-        }
-    }, [tabIndex])
-
-    /// 扫码状态变化
-    useEffect(()=>{
-        if(tabIndex == 1 && scanState == 0){
-            getScanCode()
-        }
-    }, [scanState])
-
-    /// 退出时销毁循环计时
-    useEffect(()=>{
-        return ()=>{
-            timerID && clearInterval(timerID)
-        }
-    }, [])
-
     return (
         <View style={PanelCustomerStyles.guestProfileBox}>
-            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             {
                 (()=>{
-                    if(scanState == 0){ // 未扫码
+                    if(scanState == null){ // 未扫码
                         return (
                             <View style={PanelCustomerStyles.guestContentBox}>
                                 <Text
                                     style={PanelCustomerStyles.guestProfileTitle}>
-                                    亲爱的顾客，请使用微信扫一扫，通过顾客小程序完成会员身份确认!
+                                    亲爱的顾客，请使用微信扫一扫，通过顾客小程序完成会员身份确认! {scanState}
                                 </Text>
                                 <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>
                                 {/*查询顾客*/}
@@ -159,7 +69,7 @@ export const GuestProfileWidget = React.memo(({tabIndex})=>{
                                 </View>
                             </View>
                         )
-                    }else if(scanState == 1){ // 已扫码
+                    }else if(scanState == 0){ // 已扫码
                         return (
                             <View style={PanelCustomerStyles.guestContentWaitBox}>
                                 <Image
@@ -174,7 +84,7 @@ export const GuestProfileWidget = React.memo(({tabIndex})=>{
                                 </Text>
                             </View>
                         )
-                    }else if(scanState == 2){ // 已授权
+                    }else if(scanState == 1){ // 已授权
                         return (
                             <View style={PanelCustomerStyles.guestContentWaitBox}>
                                 <Image
@@ -186,7 +96,7 @@ export const GuestProfileWidget = React.memo(({tabIndex})=>{
                                 </Text>
                             </View>
                         )
-                    }else if(scanState == 3){ // 授权超时
+                    }else if(scanState == -1){ // 授权超时
                         return (
                             <View style={PanelCustomerStyles.guestContentWaitBox}>
                                 <Image
@@ -199,7 +109,7 @@ export const GuestProfileWidget = React.memo(({tabIndex})=>{
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.guestProfileRescanWrap}
                                     onPress={()=>{
-                                        setScanState(0)
+                                        rescanQREvent(null)
                                     }}>
                                     <ImageBackground
                                         resizeMode={"contain"}
