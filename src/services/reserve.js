@@ -160,3 +160,22 @@ export const getStaffPermission =  params => {
     });
 }
 
+/**
+ * 获取散客开单二维码
+ */
+export const getGuestQRImg =  params => {
+    return callService(api.getGuestQRImg, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
+ * 获取二维码扫描状态
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getScanQRState = params => {
+    return callService(api.getScanQRState, params).then(backData => {
+        return backData;
+    });
+}

@@ -3,10 +3,7 @@ import {getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 import {ReserveWidget} from "./widgets/ReserveWidget";
-import {CouponWidget} from "./widgets/CouponWidget";
-import {CardWidget} from "./widgets/CardWidget";
-import {ProfileWidget} from "./widgets/ProfileWidget";
-import {PortraitWidget} from "./widgets/PortraitWidget";
+import {GuestProfileWidget} from "./widgets/GusetProfile";
 
 /**
  * 散客开单浮动面板
@@ -149,7 +146,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 }
                                 {
                                     tabArray[tabIndex] == '基础档案' && (
-                                        <View></View>
+                                        <GuestProfileWidget tabIndex={tabIndex}> </GuestProfileWidget>
                                     )
                                 }
                             </View>
@@ -162,13 +159,17 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 resizeMode={'contain'}
                                 source={require('@imgPath/member_panel_operator_bg.png')}
                                 style={PanelCustomerStyles.operatorWrap}>
-                                <TouchableOpacity style={PanelCustomerStyles.operatorBtnCashier}>
+                                <TouchableOpacity
+                                    style={PanelCustomerStyles.operatorBtnCashier}
+                                    onPress={()=>{
+                                        setTabIndex(1)
+                                    }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
                                     onPress={()=>{
-                                        customerPressEvent("toCreateOrder", {appUserId: customerInfo.appUserId})
+                                        setTabIndex(1)
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                                 </TouchableOpacity>

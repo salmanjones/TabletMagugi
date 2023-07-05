@@ -927,5 +927,155 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(20),
         fontWeight: '500',
         color: '#FF3636'
+    },
+    guestProfileBox:{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(26),
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        paddingHorizontal: PixelUtil.size(50),
+        paddingVertical: PixelUtil.size(50),
+        position: 'relative'
+    },
+    guestContentBox:{
+        width: '100%',
+        height: '100%',
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    guestContentWaitBox:{
+        width: '100%',
+        height: '100%',
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    guestScanResultBox:{
+        width: PixelUtil.size(440),
+        height: PixelUtil.size(440),
+        marginTop: PixelUtil.size(110)
+    },
+    guestScanResultTxt:{
+        fontSize: PixelUtil.size(44),
+        color: '#1f1f1f',
+        fontWeight: '700',
+    },
+    guestScanResultSubTxt:{
+        fontSize: PixelUtil.size(32),
+        color: '#5d5d5d',
+        fontWeight: '500',
+        marginTop: PixelUtil.size(20)
+    },
+    guestProfileTitle:{
+        width: PixelUtil.size(608),
+        fontWeight: '700',
+        fontSize: PixelUtil.size(34),
+        textAlign: 'center',
+        lineHeight: PixelUtil.size(56)
+    },
+    guestProfileQRCode:{
+        width: PixelUtil.size(390),
+        height: PixelUtil.size(390),
+        marginTop: PixelUtil.size(40)
+    },
+    guestProfileSearchBox:{
+        marginTop: PixelUtil.size(60),
+        width: '100%',
+        height: PixelUtil.size(236),
+        backgroundColor: '#F7F9FF',
+        borderRadius: PixelUtil.size(28),
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    guestProfileSearchTitle:{
+        fontSize: PixelUtil.size(34),
+        textAlign: 'center',
+        fontWeight: '700',
+        marginTop: PixelUtil.size(32),
+    },
+    headSearchBox:{
+        width: '100%',
+        height: PixelUtil.size(68),
+        marginTop: PixelUtil.size(44),
+        marginLeft: PixelUtil.size(82),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    headSearchIcon:{
+        position: "absolute",
+        left: PixelUtil.size(20),
+        width: PixelUtil.size(42),
+        height: PixelUtil.size(42),
+        zIndex: 2002
+    },
+    headSearchInputEmpty:{
+        width: PixelUtil.size(560),
+        height: PixelUtil.size(68),
+        backgroundColor: '#fff',
+        overflow: 'hidden',
+        borderRadius: PixelUtil.size(34),
+        paddingLeft: PixelUtil.size(72),
+        color: '#292929',
+        fontSize: PixelUtil.size(30)
+    },
+    headSearchButton:{
+        marginLeft: PixelUtil.size(36),
+        width: PixelUtil.size(172),
+        height: PixelUtil.size(68),
+        overflow: "hidden",
+        borderRadius: PixelUtil.size(34)
+    },
+    headSearchButtonImg:{
+        width: '100%',
+        height: '100%',
+        overflow: "hidden",
+        borderRadius: PixelUtil.size(34)
+    },
+    guestProfileOrderBox:{
+        width: '100%',
+        height: PixelUtil.size(144),
+        marginTop: PixelUtil.size(32),
+        backgroundColor: '#F7F9FF',
+        borderRadius: PixelUtil.size(28),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    guestProfileOrderWrap:{
+        width: PixelUtil.size(290),
+        height: PixelUtil.size(80),
+        borderRadius: PixelUtil.size(40),
+    },
+    guestProfileRescanWrap:{
+        width: PixelUtil.size(290),
+        height: PixelUtil.size(80),
+        borderRadius: PixelUtil.size(40),
+        marginTop: PixelUtil.size(30)
+    },
+    guestProfileOrderImg:{
+        width: PixelUtil.size(290),
+        height: PixelUtil.size(80),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    guestProfileOrderTxt:{
+        fontSize: PixelUtil.size(32),
+        color: '#ffffff',
+        fontWeight: 400,
+        textAlign: "center",
+        textAlignVertical: 'center',
     }
 })

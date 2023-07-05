@@ -147,3 +147,7 @@ export const updateCardValidity = `${hostBms}/tablet/new/reserve/update/card/val
 export const getRefreshState=`${hostBms}/tablet/new/reserve/find/reserve/is/change`
 //根据AppUserId获取BMS会员信息
 export const getMemberInfo=`${hostBms}/tablet/new/reserve/find/bms/member/info`
+//获取散客开单二维码
+export const getGuestQRImg=`${hostBms}/tablet/new/reserve/wx/qr/image`
+//获取二维码扫描状态
+export const getScanQRState = `${hostBms}/tablet/new/reserve/find/vcord/record`
