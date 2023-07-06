@@ -6,7 +6,7 @@ import React, {useState} from "react";
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, querymemberEvent})=>{
+export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     return (
@@ -24,7 +24,11 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                 {/*查询顾客*/}
                                 <View style={PanelCustomerStyles.guestProfileSearchBox}>
                                     <Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>
-                                    <View style={PanelCustomerStyles.headSearchBox}>
+                                    <TouchableOpacity
+                                        style={PanelCustomerStyles.headSearchBox}
+                                        onPress={()=>{
+                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode})
+                                        }}>
                                         {/*输入框*/}
                                         <Image
                                             resizeMode={"contain"}
@@ -32,6 +36,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                             source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
                                         <TextInput
                                             keyboardType={'phone-pad'}
+                                            editable={false}
                                             style={PanelCustomerStyles.headSearchInputEmpty}
                                             placeholder={'请输入预约手机号'}
                                             placeholderTextColor={'#8e8e8e'}
@@ -39,25 +44,27 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                                 const phone = nativeEvent.text
                                                 setUserPhone(phone)
                                             }}
+                                            onPressIn={()=>{
+                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode})
+                                            }}
                                             value={userPhone}
                                             maxLength={11}/>
                                         {/*查询*/}
-                                        <TouchableOpacity
-                                            onPress={()=>{
-                                                querymemberEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone'})
-                                            }}
-                                            style={PanelCustomerStyles.headSearchButton}>
+                                        <View style={PanelCustomerStyles.headSearchButton}>
                                             <Image
                                                 resizeMode={"contain"}
                                                 style={PanelCustomerStyles.headSearchButtonImg}
                                                 source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
-                                        </TouchableOpacity>
-                                    </View>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
                                 {/*直接开单*/}
                                 <View style={PanelCustomerStyles.guestProfileOrderBox}>
                                     <TouchableOpacity
-                                        style={PanelCustomerStyles.guestProfileOrderWrap}>
+                                        style={PanelCustomerStyles.guestProfileOrderWrap}
+                                        onPress={()=>{
+                                            customerPressEvent("forwardToCashier", {showMode})
+                                        }}>
                                         <ImageBackground
                                             resizeMode={"contain"}
                                             style={PanelCustomerStyles.guestProfileOrderImg}
@@ -81,7 +88,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     扫码成功！
                                 </Text>
                                 <Text style={PanelCustomerStyles.guestScanResultSubTxt}>
-                                    请使用小程序授权手机号登陆…
+                                    请使用小程序授权手机号登录…
                                 </Text>
                             </View>
                         )

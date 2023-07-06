@@ -7,7 +7,6 @@ import {GuestProfileWidget} from "./widgets/GusetProfile";
 import ReduxStore from "../../store/store";
 import {getGuestQRImg, getScanQRState} from "../../services/reserve";
 import Spinner from "react-native-loading-spinner-overlay";
-import {AppNavigate} from "../../navigators";
 
 let loopTimerId = null // 定时器ID
 let glUniqueId = null // 唯一ID
@@ -41,8 +40,38 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         }
     });
 
+    // 是否已预约 withReserve:已预约 noReserve:未预约
+    const [showMode, setShowMode] = useState('')
+    // 页签数据
+    const [tabArray, setTabArray] = useState([])
+    // 命中的页签
+    const [tabIndex, setTabIndex] = useState(0)
+    /// 加载中
+    const [isLoading, setLoading] = useState(false)
+    /// 小程序二维码
+    const [wxQRImg, setWxQRImg] = useState(null)
+    /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
+    const [scanState, setScanState] = useState(null)
+    /// 登录用户信息
+    const loginUser = ReduxStore.getState().auth.userInfo
+
+    /// 生成唯一id
+    const getUniqueId = ()=>{
+        // 唯一ID
+        glUniqueId = loginUser.companyId + loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000000)
+    }
+
     /// 展示面板
-    const showRightPanel = () => {
+    const showRightPanel = (mode) => {
+        if(mode == 'noReserve'){ // 无预约信息
+            setTabArray(['基础档案'])
+        }else{
+            setTabArray(['预约信息', '基础档案'])
+        }
+        setWxQRImg('')
+        setShowMode(mode)
+        setTabIndex(0)
+
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -80,25 +109,6 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         getShowState,
     }))
 
-    // 页签数据
-    let tabArray = ['预约信息', '基础档案']
-    // 命中的页签
-    const [tabIndex, setTabIndex] = useState(0)
-    /// 加载中
-    const [isLoading, setLoading] = useState(false)
-    /// 小程序二维码
-    const [wxQRImg, setWxQRImg] = useState(null)
-    /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
-    const [scanState, setScanState] = useState(null)
-    /// 登录用户信息
-    const loginUser = ReduxStore.getState().auth.userInfo
-
-    /// 生成唯一id
-    const getUniqueId = ()=>{
-        // 唯一ID
-        glUniqueId = loginUser.companyId + loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000000)
-    }
-
     /// 获取待扫描的二维码
     const getScanCode = (callBack)=> {
         const source = '0' // 来自于平板扫码
@@ -134,12 +144,16 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         if(animateState.sliderShow){ // 展示请求二维码
             getUniqueId()
             setScanState(null)
-            getScanCode()
+            getScanCode(()=>{
+                if(showMode == 'noReserve'){
+                    refreshQRCodeState()
+                }
+            })
         }else{ // 隐藏销毁定时器
             setTabIndex(0)
             clearTimer()
         }
-    }, [animateState.sliderShow])
+    }, [animateState.sliderShow, showMode])
 
     /// 刷新二维码状态
     const refreshQRCodeState = ()=>{
@@ -152,8 +166,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             getScanQRState(args).then(result => {
                 const resCode = result.code
                 const {state, appUserId} = result.data // -1 授权超时 0扫码成功 1授权成功
+                console.log("scanState", result)
                 if (resCode == '6000' && state !== null && state !== undefined) {
-                    console.log("result.data", result.data)
                     setScanState(state)
                     if(state == 1){ // 授权成功
                         // 清除循环定时
@@ -171,7 +185,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             }).catch(e => {
                 console.log("获取扫码状态失败", e)
             })
-        }, 1500)
+        }, 1000)
     }
 
     /// 销毁定时器
@@ -209,7 +223,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
 
     /// 进入开单页面
     const naviToCashier = (appUserId)=>{
-        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode'})
+        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode})
     }
 
     return (
@@ -286,7 +300,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                             scanState={scanState}
                                             wxQRImg={wxQRImg}
                                             rescanQREvent={rescanQRCode}
-                                            querymemberEvent={customerPressEvent}/>
+                                            showMode={showMode}
+                                            customerPressEvent={customerPressEvent}/>
                                     )
                                 }
                             </View>
@@ -294,7 +309,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                     </View>
                     {/*操作按钮*/}
                     {
-                        tabIndex == 0 && (
+                        showMode!='noReserve' && tabIndex == 0 && (
                             <ImageBackground
                                 resizeMode={'contain'}
                                 source={require('@imgPath/member_panel_operator_bg.png')}

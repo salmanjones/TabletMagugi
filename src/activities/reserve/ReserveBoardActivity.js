@@ -154,7 +154,7 @@ export const ReserveBoardActivity = props => {
                         if(customerInfo.isMember == '1'){
                             memberPanelRef.current.showRightPanel()
                         }else{
-                            guestPanelRef.current.showRightPanel()
+                            guestPanelRef.current.showRightPanel('withReserve')
                         }
                     }else{
                         showMessageExt("获取顾客信息失败")
@@ -190,7 +190,21 @@ export const ReserveBoardActivity = props => {
                 })
                 break;
             case 'guestReserve': // 散客未预约直接开单
-
+                const customerData = {
+                    couponList: [],
+                    czkCount: [],
+                    ckCount: [],
+                    memberCountInfo: [],
+                    cardsInfo: [],
+                    imgUrl: null,
+                    reserveInfo:{
+                        memberName: '散客',
+                        reserveResoures: [],
+                        reserveInfoList: []
+                    }
+                }
+                setCustomerState(customerData)
+                guestPanelRef.current.showRightPanel('noReserve')
                 break;
             case 'addOccupy':  // 时间占用
                 Alert.alert('系统提示', "确定要占用该时段吗", [
@@ -370,6 +384,7 @@ export const ReserveBoardActivity = props => {
                 // 查询类型
                 const queryType = extra['queryType'] // 类型：phone:通过手机号查询 appUserId:用户id查询
                 const showType = extra['showType'] // 来源：member:会员面板点击开单 guestPhone:散客扫码面板查询顾客 scanCode:散客扫码面板点击查询 searchPhone: 多档案面板查询手机号
+                const reserveMode = extra['showMode'] // 是否已预约: withReserve:已预约 noReserve:未预约
 
                 // 查询参数
                 const params = {}
@@ -381,14 +396,19 @@ export const ReserveBoardActivity = props => {
                     params['paramType'] = '0' // 0 appUserId
                 }
 
-                if((!params['value'] || params['value'].length < 1) && params['paramType'] == '1'){
-                    if(showType == 'guestPhone'){
-                        guestPanelRef.current.hideRightPanel()
-                        panelMultiProfilePanelRef.current.showRightPanel('query', extra['phone'])
-                    }else if(showType == 'searchPhone'){
-                        setMultiProfiles([])
-                    }
+                // 散客预约面板，点击直接跳转至手机号查询组件
+                if(showType == 'guestPhone'){
+                    setMultiProfiles([])
+                    guestPanelRef.current.hideRightPanel()
+                    panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'])
+                    return
+                }
 
+                // 手机号查询组件手机号为空，清空列表
+                if((!params['value'] || params['value'].length < 1)
+                    && params['paramType'] == '1'
+                    && showType == 'searchPhone'){
+                        setMultiProfiles([])
                     return
                 }
 
@@ -398,7 +418,6 @@ export const ReserveBoardActivity = props => {
                     const {code, data} = backData
                     if(code != '6000'){
                         setLoading(false)
-                        console.error("通过appUserId获取会员档案失败", backData)
                         showMessageExt("获取会员档案失败")
                     }else{ // 多档案
                         if(showType == 'searchPhone' || data.length > 1){ // 多档案
@@ -406,13 +425,13 @@ export const ReserveBoardActivity = props => {
                             setMultiProfiles(data)
                             if(showType == 'scanCode'){ // 散客扫码开单
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel('member', '')
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '')
                             }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel('query', extra['phone'])
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'])
                             }else if(showType == 'member'){ // 会员面板开单
                                 memberPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel('member', '')
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '')
                             }else if(showType == 'searchPhone'){ // 手机号查询档案面板
                                 console.log("通过手机号查询档案")
                             }
@@ -480,7 +499,6 @@ export const ReserveBoardActivity = props => {
                         || permissionBackData.code != '6000'
                         || billCardsBackData.code != '6000'
                         || flowNumberBackData.code != '6000'){
-                        console.log("loginUser", JSON.stringify(loginUser))
                         // 错误
                         showMessageExt("开单失败")
                         setLoading(false)
@@ -562,8 +580,18 @@ export const ReserveBoardActivity = props => {
                     console.error("获取会员档案失败", e)
                 }
                 break
+            case 'forwardToCashier':
+                const showMode = extra['showMode']
+                console.log("showMode", showMode)
+
+                if(showMode == 'noReserve'){ // 未预约直接开单.跳转选牌
+                    AppNavigate.navigate('StaffQueueActivity', {})
+                }else{ // 已预约散客直接开单.跳转开单页面
+
+                }
+                break
         }
-    }, [])
+    }, [stylistCheckedIndex])
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>

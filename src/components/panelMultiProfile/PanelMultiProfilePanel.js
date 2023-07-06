@@ -36,7 +36,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     });
 
     /// 展示面板
-    const showRightPanel = (showType = 'member', phone) => {
+    const showRightPanel = (showMode = 'withReserve', showType = 'member', phone) => {
+        setShowMode(showMode)
         setShowType(showType)
         setUserPhone(phone)
         setShowClear(phone && phone.length > 0)
@@ -77,8 +78,16 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
         getShowState,
     }))
 
-    /// 展示类型
-    const [showType, setShowType] = useState('member') // 当前控件展示类型
+    /**
+     * 跳转来源
+     * member:会员面板点击开单->[多档案]
+     * scanCode:散客扫码面板->扫码->多档案
+     * guestPhone:散客扫码面板->查询手机号
+     * searchPhone:多档案面板->查询手机号
+     */
+    const [showType, setShowType] = useState('member')
+    // 是否已预约 withReserve:已预约 noReserve:未预约
+    const [showMode, setShowMode] = useState('withReserve')
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 是否展示清除按钮
@@ -142,7 +151,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 {/*查询*/}
                                                 <TouchableOpacity
                                                     onPress={()=>{
-                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone'})
+                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone', showMode})
                                                     }}
                                                     style={PanelMultiProfiles.headSearchButton}>
                                                     <Image
@@ -184,7 +193,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                             data={multiProfileArray}
                             renderItem={
                                 ({item, index}) => {
-                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent}/>
+                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent} showMode={showMode}/>
                                 }
                             }
                             keyExtractor={(item)=>item.memberNo}
@@ -198,7 +207,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                             resizeMode={"contain"}
                                             source={require('@imgPath/reserve_customer_body_empty.png')}
                                             style={PanelMultiProfiles.memberBodyEmptyImage}/>
-                                        <Text style={PanelMultiProfiles.memberBodyEmptyTxt}>~暂无数据~</Text>
+                                        <Text style={PanelMultiProfiles.memberBodyEmptyTxt}>无符合条件的顾客档案！</Text>
                                     </View>
                                 )
                             }}/>
