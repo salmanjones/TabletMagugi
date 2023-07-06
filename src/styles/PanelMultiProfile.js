@@ -160,6 +160,25 @@ export const PanelMultiProfiles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#ffffff'
     },
+    memberBodyEmptyWrap: {
+        width: '100%',
+        height: PixelUtil.size(200),
+        marginTop: PixelUtil.size(280),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    memberBodyEmptyImage:{
+        width: PixelUtil.size(180),
+        height: PixelUtil.size(180),
+    },
+    memberBodyEmptyTxt: {
+        textAlign: 'center',
+        fontSize: PixelUtil.size(30),
+        color: '#aeaeae',
+        marginTop: PixelUtil.size(40)
+    },
     profileItemSplit:{
         width: '100%',
         height: PixelUtil.size(0),

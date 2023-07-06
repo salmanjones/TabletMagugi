@@ -39,6 +39,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     const showRightPanel = (showType = 'member', phone) => {
         setShowType(showType)
         setUserPhone(phone)
+        setShowClear(phone && phone.length > 0)
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -82,8 +83,6 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     const [userPhone, setUserPhone] = useState('')
     /// 是否展示清除按钮
     const [showClear, setShowClear] = useState(false)
-    /// 会员列表
-    const [memberProfileList, setMemberProfileList] = useState(null)
     /// 多会员数据
     const [multiProfileArray, setMultiProfileArray] = useState([])
     useEffect(()=>{
@@ -143,7 +142,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 {/*查询*/}
                                                 <TouchableOpacity
                                                     onPress={()=>{
-                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'guestPhone', queryType:'phone'})
+                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone'})
                                                     }}
                                                     style={PanelMultiProfiles.headSearchButton}>
                                                     <Image
@@ -158,7 +157,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                             style={PanelMultiProfiles.headClearButton}
                                                             onPress={()=>{
                                                                 setUserPhone('')
-                                                                setMemberProfileList(null)
+                                                                setMultiProfileArray([])
                                                             }}>
                                                             <Image
                                                                 resizeMode={"contain"}
@@ -191,6 +190,17 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                             keyExtractor={(item)=>item.memberNo}
                             ItemSeparatorComponent={()=>{
                                 return <View style={PanelMultiProfiles.profileItemSplit}/>
+                            }}
+                            ListEmptyComponent={()=>{
+                                return (
+                                    <View style={PanelMultiProfiles.memberBodyEmptyWrap}>
+                                        <Image
+                                            resizeMode={"contain"}
+                                            source={require('@imgPath/reserve_customer_body_empty.png')}
+                                            style={PanelMultiProfiles.memberBodyEmptyImage}/>
+                                        <Text style={PanelMultiProfiles.memberBodyEmptyTxt}>~暂无数据~</Text>
+                                    </View>
+                                )
                             }}/>
                     </View>
                 </View>

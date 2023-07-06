@@ -367,10 +367,9 @@ export const ReserveBoardActivity = props => {
 
                 break;
             case 'toCreateOrder': // 开单
-                setLoading(true)
                 // 查询类型
-                const queryType = extra['queryType'] // phone:通过手机号查询 appUserId:用户id查询
-                const showType = extra['showType'] // member:会员面板开单 guestPhone:散客查询顾客 scanCode:散客扫码
+                const queryType = extra['queryType'] // 类型：phone:通过手机号查询 appUserId:用户id查询
+                const showType = extra['showType'] // 来源：member:会员面板点击开单 guestPhone:散客扫码面板查询顾客 scanCode:散客扫码面板点击查询 searchPhone: 多档案面板查询手机号
 
                 // 查询参数
                 const params = {}
@@ -382,7 +381,19 @@ export const ReserveBoardActivity = props => {
                     params['paramType'] = '0' // 0 appUserId
                 }
 
+                if((!params['value'] || params['value'].length < 1) && params['paramType'] == '1'){
+                    if(showType == 'guestPhone'){
+                        guestPanelRef.current.hideRightPanel()
+                        panelMultiProfilePanelRef.current.showRightPanel('query', extra['phone'])
+                    }else if(showType == 'searchPhone'){
+                        setMultiProfiles([])
+                    }
+
+                    return
+                }
+
                 // 获取会员档案
+                setLoading(true)
                 getMemberInfo(params).then(backData => {
                     const {code, data} = backData
                     if(code != '6000'){
@@ -390,7 +401,7 @@ export const ReserveBoardActivity = props => {
                         console.error("通过appUserId获取会员档案失败", backData)
                         showMessageExt("获取会员档案失败")
                     }else{ // 多档案
-                        if(data.length > 1){ // 多档案
+                        if(showType == 'searchPhone' || data.length > 1){ // 多档案
                             setLoading(false)
                             setMultiProfiles(data)
                             if(showType == 'scanCode'){ // 散客扫码开单
@@ -401,7 +412,9 @@ export const ReserveBoardActivity = props => {
                                 panelMultiProfilePanelRef.current.showRightPanel('query', extra['phone'])
                             }else if(showType == 'member'){ // 会员面板开单
                                 memberPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel('query', '')
+                                panelMultiProfilePanelRef.current.showRightPanel('member', '')
+                            }else if(showType == 'searchPhone'){ // 手机号查询档案面板
+                                console.log("通过手机号查询档案")
                             }
                         }else if(data.length == 1){ // 单档案直接开单
                             setLoading(false)
