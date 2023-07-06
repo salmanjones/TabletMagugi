@@ -164,7 +164,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                             if(tmpTimerId !== null && tmpTimerId !== undefined){
                                 clearTimeout(tmpTimerId)
                             }
-                            naviToRotatePlacard(appUserId)
+                            naviToCashier(appUserId)
                         }, 1200)
                     }
                 }
@@ -208,8 +208,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 进入开单页面
-    const naviToRotatePlacard = (appUserId)=>{
-        customerPressEvent('toCreateOrder', {appUserId, type:'guest'})
+    const naviToCashier = (appUserId)=>{
+        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode'})
     }
 
     return (
@@ -280,7 +280,13 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 }
                                 {
                                     tabArray[tabIndex] == '基础档案' && (
-                                        <GuestProfileWidget tabIndex={tabIndex} sliderShow={animateState.sliderShow} scanState={scanState} wxQRImg={wxQRImg} rescanQREvent={rescanQRCode}> </GuestProfileWidget>
+                                        <GuestProfileWidget
+                                            tabIndex={tabIndex}
+                                            sliderShow={animateState.sliderShow}
+                                            scanState={scanState}
+                                            wxQRImg={wxQRImg}
+                                            rescanQREvent={rescanQRCode}
+                                            querymemberEvent={customerPressEvent}/>
                                     )
                                 }
                             </View>

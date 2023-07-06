@@ -36,8 +36,9 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     });
 
     /// 展示面板
-    const showRightPanel = (showType = 'member') => {
+    const showRightPanel = (showType = 'member', phone) => {
         setShowType(showType)
+        setUserPhone(phone)
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -142,7 +143,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 {/*查询*/}
                                                 <TouchableOpacity
                                                     onPress={()=>{
-                                                        queryCustomerInfo()
+                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'guestPhone', queryType:'phone'})
                                                     }}
                                                     style={PanelMultiProfiles.headSearchButton}>
                                                     <Image

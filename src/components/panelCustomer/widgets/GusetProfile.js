@@ -6,7 +6,7 @@ import React, {useState} from "react";
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent})=>{
+export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, querymemberEvent})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     return (
@@ -44,6 +44,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                         {/*查询*/}
                                         <TouchableOpacity
                                             onPress={()=>{
+                                                querymemberEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone'})
                                             }}
                                             style={PanelCustomerStyles.headSearchButton}>
                                             <Image

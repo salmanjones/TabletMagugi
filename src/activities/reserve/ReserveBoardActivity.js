@@ -189,7 +189,8 @@ export const ReserveBoardActivity = props => {
                     setLoading(false)
                 })
                 break;
-            case 'guestReserve': // 散客预约
+            case 'guestReserve': // 散客未预约直接开单
+
                 break;
             case 'addOccupy':  // 时间占用
                 Alert.alert('系统提示', "确定要占用该时段吗", [
@@ -367,24 +368,41 @@ export const ReserveBoardActivity = props => {
                 break;
             case 'toCreateOrder': // 开单
                 setLoading(true)
-                getMemberInfo({appUserId: extra['appUserId']}).then(backData => {
+                // 查询类型
+                const queryType = extra['queryType'] // phone:通过手机号查询 appUserId:用户id查询
+                const showType = extra['showType'] // member:会员面板开单 guestPhone:散客查询顾客 scanCode:散客扫码
+
+                // 查询参数
+                const params = {}
+                if(queryType == 'phone'){
+                    params['value'] = extra['phone']
+                    params['paramType'] = '1'  // 1 手机号
+                }else{
+                    params['value'] = extra['appUserId']
+                    params['paramType'] = '0' // 0 appUserId
+                }
+
+                // 获取会员档案
+                getMemberInfo(params).then(backData => {
                     const {code, data} = backData
                     if(code != '6000'){
                         setLoading(false)
                         console.error("通过appUserId获取会员档案失败", backData)
                         showMessageExt("获取会员档案失败")
                     }else{ // 多档案
-                        const type = extra['type'] // guest: 散客扫码开单
                         if(data.length > 1){ // 多档案
                             setLoading(false)
                             setMultiProfiles(data)
-                            if(type == 'guest'){ // guest: 散客扫码开单
+                            if(showType == 'scanCode'){ // 散客扫码开单
                                 guestPanelRef.current.hideRightPanel()
-                            }else{
+                                panelMultiProfilePanelRef.current.showRightPanel('member', '')
+                            }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
+                                guestPanelRef.current.hideRightPanel()
+                                panelMultiProfilePanelRef.current.showRightPanel('query', extra['phone'])
+                            }else if(showType == 'member'){ // 会员面板开单
                                 memberPanelRef.current.hideRightPanel()
+                                panelMultiProfilePanelRef.current.showRightPanel('query', '')
                             }
-
-                            panelMultiProfilePanelRef.current.showRightPanel('member')
                         }else if(data.length == 1){ // 单档案直接开单
                             setLoading(false)
                             setMultiProfiles(data)
@@ -394,9 +412,11 @@ export const ReserveBoardActivity = props => {
                                 memberId: customer.memberId,
                                 imgUrl: customer.imgUrl
                             }, ()=>{
-                                if(type == 'guest'){ // guest: 散客扫码开单
+                                if(showType == 'scanCode'){ // 散客扫码开单
                                     guestPanelRef.current.hideRightPanel()
-                                }else{
+                                }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
+                                    guestPanelRef.current.hideRightPanel()
+                                }else if(showType == 'member'){ // 会员面板开单
                                     memberPanelRef.current.hideRightPanel()
                                 }
                             })
