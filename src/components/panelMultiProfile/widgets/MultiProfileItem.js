@@ -7,7 +7,7 @@ import {getPhoneSecurity} from "../../../utils";
  * 多档案单项展示组件
  * @type {React.NamedExoticComponent<{readonly size?: *, readonly customerClickEvent?: *, readonly index?: *, readonly profileItem?: *}>}
  */
-export const MultiProfileItem = React.memo(({profileItem, index, size, customerClickEvent, showMode})=>{
+export const MultiProfileItem = React.memo(({profileItem, index, size, customerClickEvent, showMode, waiterId})=>{
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
             <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastWrap:PanelMultiProfiles.profileItemWrap}>
@@ -46,7 +46,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                             if(showMode == 'noReserve') { // 未预约，跳转选牌
                                 customerClickEvent('forwardToCashier', {showMode})
                             }else { // 已预约，直接进入开单页面
-                                customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl, showMode})
+                                customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl, showMode, waiterId: waiterId})
                             }
                         }}>
                         <Image

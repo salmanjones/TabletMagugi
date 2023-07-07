@@ -79,6 +79,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
 
     // 预约顾客信息
     const customerInfo = props['memberInfo']
+    // 服务人ID
+    const waiterId = customerInfo['reserveInfo']['staffId']
     // 页签数据
     // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
     let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
@@ -237,13 +239,17 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         resizeMode={'contain'}
                         source={require('@imgPath/member_panel_operator_bg.png')}
                         style={PanelCustomerStyles.operatorWrap}>
-                        <TouchableOpacity style={PanelCustomerStyles.operatorBtnCashier}>
+                        <TouchableOpacity
+                            onPress={()=>{
+                                props['customerCardEvent']("toCreateCard", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId})
+                            }}
+                            style={PanelCustomerStyles.operatorBtnCashier}>
                             <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={PanelCustomerStyles.operatorBtnCard}
                             onPress={()=>{
-                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member'})
+                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId})
                             }}>
                             <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>

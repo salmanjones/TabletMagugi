@@ -385,6 +385,7 @@ export const ReserveBoardActivity = props => {
                 const queryType = extra['queryType'] // 类型：phone:通过手机号查询 appUserId:用户id查询
                 const showType = extra['showType'] // 来源：member:会员面板点击开单 guestPhone:散客扫码面板查询顾客 scanCode:散客扫码面板点击查询 searchPhone: 多档案面板查询手机号
                 const reserveMode = extra['showMode'] // 是否已预约: withReserve:已预约 noReserve:未预约
+                const waiterId = extra['waiterId'] // 服务人ID
 
                 // 查询参数
                 const params = {}
@@ -400,7 +401,7 @@ export const ReserveBoardActivity = props => {
                 if(showType == 'guestPhone'){
                     setMultiProfiles([])
                     guestPanelRef.current.hideRightPanel()
-                    panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'])
+                    panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId)
                     return
                 }
 
@@ -419,19 +420,19 @@ export const ReserveBoardActivity = props => {
                     if(code != '6000'){
                         setLoading(false)
                         showMessageExt("获取会员档案失败")
-                    }else{ // 多档案
+                    }else{
                         if(showType == 'searchPhone' || data.length > 1){ // 多档案
                             setLoading(false)
                             setMultiProfiles(data)
                             if(showType == 'scanCode'){ // 散客扫码开单
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '')
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId)
                             }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'])
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId)
                             }else if(showType == 'member'){ // 会员面板开单
                                 memberPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '')
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId)
                             }else if(showType == 'searchPhone'){ // 手机号查询档案面板
                                 console.log("通过手机号查询档案")
                             }
@@ -442,7 +443,8 @@ export const ReserveBoardActivity = props => {
                             const customer = data[0]
                             customerPressEvent('naviToCashier', {
                                 memberId: customer.memberId,
-                                imgUrl: customer.imgUrl
+                                imgUrl: customer.imgUrl,
+                                waiterId: waiterId
                             }, ()=>{
                                 if(showType == 'scanCode'){ // 散客扫码开单
                                     guestPanelRef.current.hideRightPanel()
@@ -518,6 +520,8 @@ export const ReserveBoardActivity = props => {
                         const isSynthesis = loginUser.isSynthesis;
                         // 可用主营分类
                         const operatorCategory = loginUser.operateCategory[0];
+                        // 服务人信息
+                        const waiterId = extra['waiterId']
 
                         // 是否允许调整价格
                         let moduleCode = "1"
@@ -541,6 +545,7 @@ export const ReserveBoardActivity = props => {
                             deptId: operatorCategory.deptId,
                             operatorId: operatorCategory.value,
                             operatorText: operatorCategory.text,
+                            waiterId: waiterId,
                             staffId: loginUser.staffId,
                             staffDBId: loginUser.staffDBId,
                             isSynthesis: isSynthesis,
@@ -582,16 +587,96 @@ export const ReserveBoardActivity = props => {
                 break
             case 'forwardToCashier':
                 const showMode = extra['showMode']
-                console.log("showMode", showMode)
-
                 if(showMode == 'noReserve'){ // 未预约直接开单.跳转选牌
                     AppNavigate.navigate('StaffQueueActivity', {})
-                }else{ // 已预约散客直接开单.跳转开单页面
+                }else { // 已预约散客直接开单.跳转开单页面
+                    // 加载中
+                    setLoading(true)
+                    try {
+                        // 服务人信息
+                        const waiterId = extra['waiterId']
+                        // 登录的员工信息
+                        const loginUser = reduxState.auth.userInfo
+                        // 获取员工可用的权限
+                        const permissionBackData = await getStaffPermission({
+                            staffId: loginUser.staffId,
+                            companyId: loginUser.companyId
+                        })
+                        // 获取水单号
+                        const flowNumberBackData = await getBillFlowNO()
+                        // 会员档案
+                        if(permissionBackData.code != '6000'
+                            || flowNumberBackData.code != '6000'){
+                            // 错误
+                            showMessageExt("开单失败")
+                            setLoading(false)
+                        }else{
+                            setLoading(false)
+                            // 员工权限
+                            const staffPermission = permissionBackData['data']
+                            // 水单号
+                            const flowNumber = flowNumberBackData['data']
+                            //0专业店 1综合店
+                            const isSynthesis = loginUser.isSynthesis;
+                            // 可用主营分类
+                            const operatorCategory = loginUser.operateCategory[0];
+                            // 是否允许调整价格
+                            let moduleCode = "1"
+                            let moduleCodeIndex = 0;
+                            const roundMode = staffPermission.roundMode
+                            const staffAclMap = staffPermission['staffAclMap'];
+                            if (staffAclMap
+                                && staffAclMap.moduleCode
+                                && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') { // 是否能允许调整价格
+                                moduleCodeIndex++;
+                            }
+                            if (moduleCodeIndex > 0) {
+                                moduleCode = '1'
+                            } else {
+                                moduleCode = 0
+                            }
 
+
+                            const params = {
+                                orderInfoLeftData:{
+                                    customerNumber:"1",
+                                    isOldCustomer:"0",
+                                    handNumber:""
+                                },
+                                companyId: loginUser.companyId,
+                                storeId: loginUser.storeId,
+                                deptId: operatorCategory.deptId,
+                                operatorId: operatorCategory.value,
+                                operatorText: operatorCategory.text,
+                                waiterId: waiterId,
+                                staffId: loginUser.staffId,
+                                staffDBId: loginUser.staffDBId,
+                                isSynthesis: isSynthesis,
+                                numType: "flownum",
+                                numValue: flowNumber,
+                                page: "ReserveBoardActivity",
+                                member:null,
+                                type: "vip",
+                                roundMode: roundMode,
+                                moduleCode: moduleCode,
+                                isOldCustomer: "0" // 散客
+                            }
+
+                            callBack && callBack()
+                            // 开单
+                            AppNavigate.navigate('CashierBillingActivity', params)
+                        }
+                    } catch (e) {
+                        setLoading(false)
+                        console.error("散客开单失败", e)
+                    }
                 }
                 break
+            case 'toCreateCard':
+
+                break
         }
-    }, [stylistCheckedIndex])
+    }, [])
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>

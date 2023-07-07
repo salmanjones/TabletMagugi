@@ -166,7 +166,6 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             getScanQRState(args).then(result => {
                 const resCode = result.code
                 const {state, appUserId} = result.data // -1 授权超时 0扫码成功 1授权成功
-                console.log("scanState", result)
                 if (resCode == '6000' && state !== null && state !== undefined) {
                     setScanState(state)
                     if(state == 1){ // 授权成功
@@ -223,7 +222,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
 
     /// 进入开单页面
     const naviToCashier = (appUserId)=>{
-        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode})
+        const waiterId = customerInfo['reserveInfo']['staffId'] || ''
+        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode, waiterId})
     }
 
     return (
@@ -301,7 +301,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                             wxQRImg={wxQRImg}
                                             rescanQREvent={rescanQRCode}
                                             showMode={showMode}
-                                            customerPressEvent={customerPressEvent}/>
+                                            customerPressEvent={customerPressEvent}
+                                            reserveInfo={customerInfo['reserveInfo']}/>
                                     )
                                 }
                             </View>
@@ -317,14 +318,14 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCashier}
                                     onPress={()=>{
-                                        setTabIndex(1)
+                                        tabPressEvent(1)
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
                                     onPress={()=>{
-                                        setTabIndex(1)
+                                        tabPressEvent(1)
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                                 </TouchableOpacity>
