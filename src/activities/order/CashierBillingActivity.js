@@ -40,9 +40,9 @@ import {
     StockTips,
     VipPayFor
 } from '../../components';
-import {changeBillingOwner, selectStaffAclInfoResult, getLimitItems} from '../../services';
+import {changeBillingOwner, getLimitItems, selectStaffAclInfoResult} from '../../services';
 import {
-    CASHIERBILLING_CUSTOMER, CASHIERBILLING_SAVE,
+    CASHIERBILLING_CUSTOMER,
     cashierBillingFlowNumberInitAction,
     cashierBillingGetAction,
     cashierBillingInitAction,
@@ -65,28 +65,32 @@ const defaultMemberImg = 'https://pic.magugi.com/rotate-portrait.png';
 class CashierBillingView extends React.Component {
     constructor(props) {
         super(props);
-        var sex = '0';
 
+        let sex = '0';
         if (props.route.params.member) {
             sex = props.route.params.member.sex;
         }
-        var isOldCustomer = '0';
+
+        let isOldCustomer = '0';
         if (props.route.params.orderInfoLeftData) {
             isOldCustomer = props.route.params.orderInfoLeftData.isOldCustomer;
         }
 
-        //props.route.params.isOldCustomer
-        var defaultState = defaultInfos(sex, isOldCustomer);
-
-        var sliderDisplayStatus = false;
+        let sliderDisplayStatus = false;
         if (props.route.params.member) {
             sliderDisplayStatus = false;
         }
 
+        // 默认服务人ID
+        let waiterId = props.route.params.waiterId || ''
+
+        // 构建默认state
+        const defaultState = defaultInfos(sex, isOldCustomer);
         this.state = {
             ...defaultState,
             sliderLeft: new Animated.Value(animateLeft),
-            sliderDisplay: sliderDisplayStatus
+            sliderDisplay: sliderDisplayStatus,
+            waiterId: waiterId
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
         this.moduleCode = props.route.params.moduleCode;
@@ -304,7 +308,6 @@ class CashierBillingView extends React.Component {
             })
 
             const {params} = this.props.route;
-            //this.props.navigation.setParams({ back: null});
             if (params.page == 'pendingOrder') {
                 this.props.resetToCashier(true);
             } else {
@@ -564,7 +567,6 @@ class CashierBillingView extends React.Component {
         // 处理消费项
         this.setState((prevState, props) => {
             //服务人信息
-            itemInfo.assistStaffDetail = [defaultServicer(), defaultServicer(), defaultServicer()];
             if (prevState.consumeItems.length > 0) {
                 let prevServicer = prevState.consumeItems[prevState.consumeItems.length - 1].assistStaffDetail;
                 if (itemInfo.itemType == 'item') {
@@ -579,6 +581,32 @@ class CashierBillingView extends React.Component {
                         this.copyServicer(prevServicer[1]),
                         this.copyServicer(prevServicer[2])
                     ];
+                }
+            }else{
+                const waiterId = this.state.waiterId
+                if(waiterId && waiterId.length > 0){ // 已由外部传入服务人
+                    // 第一位服务人
+                    let firstWaiter = defaultServicer()
+                    // 所有服务人
+                    const allWaiter = this.props.servicers
+                    for(let key in allWaiter){
+                        const positionWaiters = allWaiter[key] || []
+                        const waiterList = positionWaiters.filter(waiter=>{
+                            return waiter.id == waiterId
+                        })
+
+                        if(waiterList.length > 0){
+                            firstWaiter = waiterList[0]
+                            firstWaiter.workTypeId = firstWaiter.positionId;
+                            firstWaiter.workTypeDesc = firstWaiter.positionInfo;
+                            firstWaiter.workPositionTypeId = firstWaiter.staffType;
+                            firstWaiter.appoint = false;
+                            break
+                        }
+                    }
+                    itemInfo.assistStaffDetail = [firstWaiter, defaultServicer(), defaultServicer()];
+                }else{
+                    itemInfo.assistStaffDetail = [defaultServicer(), defaultServicer(), defaultServicer()];
                 }
             }
 
@@ -2566,7 +2594,8 @@ const defaultInfos = (sex, isOldCustomer) => {
         isSaved: false,
         companySetting: {
             isUseCash: true
-        }
+        },
+        waiterId: '' // 进入收银页面前已选中的发型师ID
     }
 }
 
