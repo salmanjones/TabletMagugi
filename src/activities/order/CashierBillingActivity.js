@@ -600,7 +600,7 @@ class CashierBillingView extends React.Component {
                             firstWaiter.workTypeId = firstWaiter.positionId;
                             firstWaiter.workTypeDesc = firstWaiter.positionInfo;
                             firstWaiter.workPositionTypeId = firstWaiter.staffType;
-                            firstWaiter.appoint = false;
+                            firstWaiter.appoint = this.props.route.params.staffAppoint || 'true';
                             break
                         }
                     }

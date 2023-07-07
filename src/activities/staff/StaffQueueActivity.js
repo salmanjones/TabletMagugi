@@ -186,7 +186,7 @@ export class StaffQueueView extends React.Component {
             // 跳转参数
             let params = {
                 workInfo: worksList[index],
-                staffInfo: staffSelected
+                staffInfo: staffSelected,
             }
             // 页面跳转
             AppNavigate.navigate('StaffWorksActivity', params)
@@ -281,7 +281,8 @@ export class StaffQueueView extends React.Component {
                     type: "vip",
                     roundMode: roundMode,
                     moduleCode: moduleCode,
-                    isOldCustomer: "0" // 散客
+                    isOldCustomer: "0", // 散客
+                    staffAppoint: "false" // 非指定
                 }
 
                 // 开单

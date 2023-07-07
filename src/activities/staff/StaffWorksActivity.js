@@ -138,7 +138,8 @@ export class StaffWorksView extends React.Component {
                         type: "vip",
                         roundMode: roundMode,
                         moduleCode: moduleCode,
-                        isOldCustomer: "0" // 散客
+                        isOldCustomer: "0", // 散客
+                        staffAppoint: "false" // 非指定
                     }
 
                     // 开单
