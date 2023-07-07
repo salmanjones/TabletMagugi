@@ -180,22 +180,21 @@ export const cashierBillingSaveAction = billingData => {
             billingNo: billingInfo.billingNo,
             storeId: billingInfo.storeId,
             companyId: billingInfo.companyId,
+        }).then(backData => {
+            let checkStat = backData.data.checkStatus;
+            dispatch({type: CASHIERBILLING_FLOWNUMBER.SUCCESS});
+            if (checkStat == '0') {
+                dispatch(cashierBillingSave(billingData));
+            } else {
+                displayError('', '水单号已存在', true);
+            }
         })
-            .then(backData => {
-                let checkStat = backData.data.checkStatus;
-                dispatch({type: CASHIERBILLING_FLOWNUMBER.SUCCESS});
-                if (checkStat == '0') {
-                    dispatch(cashierBillingSave(billingData));
-                } else {
-                    displayError('', '水单号已存在', true);
-                }
-            })
-            .catch(err => {
-                displayError(err, '校验水单号失败，请稍后再试');
-                dispatch({
-                    type: CASHIERBILLING_FLOWNUMBER.ERROR,
-                });
+        .catch(err => {
+            displayError(err, '校验水单号失败，请稍后再试');
+            dispatch({
+                type: CASHIERBILLING_FLOWNUMBER.ERROR,
             });
+        });
     };
 };
 

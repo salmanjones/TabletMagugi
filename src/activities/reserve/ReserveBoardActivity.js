@@ -575,6 +575,8 @@ export const ReserveBoardActivity = props => {
                         }
 
                         callBack && callBack()
+                        // 关闭侧边栏
+                        hideAllPanel()
                         // 开单
                         AppNavigate.navigate('CashierBillingActivity', params)
                     }
@@ -663,6 +665,8 @@ export const ReserveBoardActivity = props => {
                             }
 
                             callBack && callBack()
+                            // 关闭侧边栏
+                            hideAllPanel()
                             // 开单
                             AppNavigate.navigate('CashierBillingActivity', params)
                         }
@@ -677,6 +681,14 @@ export const ReserveBoardActivity = props => {
                 break
         }
     }, [])
+
+    /// 关闭所有侧边栏
+    const hideAllPanel = ()=>{
+        memberPanelRef.current.hideRightPanel()
+        panelMultiProfilePanelRef.current.hideRightPanel()
+        customerReservePanelRef.current.hideRightPanel()
+        guestPanelRef.current.hideRightPanel()
+    }
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>

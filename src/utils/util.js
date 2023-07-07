@@ -47,11 +47,11 @@ export const displayError = (error, errMsg, native) => {
     showMessage(msg, native);
 };
 
-export const showMessage = (msg, native, callback, config) => {
+export const showMessage = (msg, native, callback) => {
     if (!native) {
         Toast.show(msg, {
-            duration: config.duration || Toast.durations.SHORT,
-            position:   config.position || Toast.positions.BOTTOM,
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.BOTTOM,
             shadow: true,
             animation: true,
             hideOnPress: true,
