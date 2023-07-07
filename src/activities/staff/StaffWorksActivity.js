@@ -6,6 +6,9 @@ import Swiper from "react-native-web-swiper";
 import {AppNavigate} from "../../navigators";
 import Video from "react-native-video";
 import Toast from "react-native-root-toast";
+import {getBillFlowNO, getStaffPermission} from "../../services/reserve";
+import {showMessageExt} from "../../utils";
+import Spinner from "react-native-loading-spinner-overlay";
 
 
 const styles = StyleSheet.create({
@@ -38,6 +41,7 @@ export class StaffWorksView extends React.Component {
         this.state = {
             staffInfo,
             workInfo,
+            isLoading: false,
             showVideo: true
         }
     }
@@ -45,20 +49,6 @@ export class StaffWorksView extends React.Component {
     componentDidMount() {
         this.setState({
             showVideo: true
-        })
-
-        // 右侧按钮
-        let {navigation} = this.props
-        navigation.setOptions({
-            headerRight: () =>  (
-                <TouchableOpacity onPress={()=>{
-                    this.toCashier()
-                }}>
-                    <View style={staffQueueStyles.cashierBtn}>
-                        <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
-                    </View>
-                </TouchableOpacity>
-            )
         })
     }
 
@@ -71,8 +61,96 @@ export class StaffWorksView extends React.Component {
     toCashier(){
         this.setState({
             showVideo: false
-        }, ()=>{
-            AppNavigate.navigate('CashierActivity')
+        }, async () => {
+            // 加载中
+            this.setState({
+                isLoading: true
+            })
+
+            try {
+                // 服务人信息
+                const waiterId =  this.state.staffInfo['staffId']
+                // 登录的员工信息
+                const loginUser = this.props.userInfo// 获取员工可用的权限
+                const permissionBackData = await getStaffPermission({
+                    staffId: loginUser.staffId,
+                    companyId: loginUser.companyId
+                })
+                // 获取水单号
+                const flowNumberBackData = await getBillFlowNO()
+                // 会员档案
+                if (permissionBackData.code != '6000'
+                    || flowNumberBackData.code != '6000') {
+                    // 错误
+                    showMessageExt("开单失败")
+                    // 加载中
+                    this.setState({
+                        isLoading: false
+                    })
+                } else {
+                    // 加载中
+                    this.setState({
+                        isLoading: false
+                    })
+                    // 员工权限
+                    const staffPermission = permissionBackData['data']
+                    // 水单号
+                    const flowNumber = flowNumberBackData['data']
+                    //0专业店 1综合店
+                    const isSynthesis = loginUser.isSynthesis;
+                    // 可用主营分类
+                    const operatorCategory = loginUser.operateCategory[0];
+                    // 是否允许调整价格
+                    let moduleCode = "1"
+                    let moduleCodeIndex = 0;
+                    const roundMode = staffPermission.roundMode
+                    const staffAclMap = staffPermission['staffAclMap'];
+                    if (staffAclMap
+                        && staffAclMap.moduleCode
+                        && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') { // 是否能允许调整价格
+                        moduleCodeIndex++;
+                    }
+                    if (moduleCodeIndex > 0) {
+                        moduleCode = '1'
+                    } else {
+                        moduleCode = 0
+                    }
+
+                    const params = {
+                        orderInfoLeftData: {
+                            customerNumber: "1",
+                            isOldCustomer: "0",
+                            handNumber: ""
+                        },
+                        companyId: loginUser.companyId,
+                        storeId: loginUser.storeId,
+                        deptId: operatorCategory.deptId,
+                        operatorId: operatorCategory.value,
+                        operatorText: operatorCategory.text,
+                        waiterId: waiterId,
+                        staffId: loginUser.staffId,
+                        staffDBId: loginUser.staffDBId,
+                        isSynthesis: isSynthesis,
+                        numType: "flownum",
+                        numValue: flowNumber,
+                        page: "ReserveBoardActivity",
+                        member: null,
+                        type: "vip",
+                        roundMode: roundMode,
+                        moduleCode: moduleCode,
+                        isOldCustomer: "0" // 散客
+                    }
+
+                    // 开单
+                    AppNavigate.navigate('CashierBillingActivity', params)
+                }
+            } catch (e) {
+                // 加载中
+                this.setState({
+                    isLoading: false
+                })
+                console.error("散客开单失败", e)
+            }
         })
     }
 
@@ -88,10 +166,32 @@ export class StaffWorksView extends React.Component {
     }
 
     render() {
-        let {workInfo, staffInfo, showVideo} = this.state
+        let {workInfo, staffInfo, showVideo, isLoading} = this.state
         // 总视图
         return (
             <View style={staffWorksStyles.content}>
+                <Spinner
+                    visible={isLoading}
+                    textContent={'加载中'}
+                    textStyle={{
+                        color: '#FFF'
+                    }}
+                />
+                <View style={staffQueueStyles.floatButtonBox}>
+                    {/*立即开单*/}
+                    <TouchableOpacity
+                        style={staffQueueStyles.reserveButtonKaiDan}
+                        onPress={()=>{
+                            this.toCashier()
+                        }}>
+                        <Image
+                            style={staffQueueStyles.reserveButtonKaiDanIcon}
+                            resizeMode={'contain'}
+                            source={require('@imgPath/reserve_customer_button_kaidan.png')}/>
+                    </TouchableOpacity>
+                </View>
+
+
                 {
                     showVideo && workInfo.contentType == 1 ?
                         (

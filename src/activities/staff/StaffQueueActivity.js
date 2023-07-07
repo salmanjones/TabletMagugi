@@ -2,12 +2,14 @@ import React from 'react';
 import {FlatList, Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {staffQueueStyles} from '../../styles';
 import {connect} from 'react-redux';
-import {AppConfig} from "../../utils";
+import {AppConfig, showMessageExt} from "../../utils";
 import {fetchStaffList, fetchWorksList} from '../../services';
-import {HeadeOrderInfoRight, StarRating} from "../../components";
+import {StarRating} from "../../components";
 import Toast from "react-native-root-toast";
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
+import {ReserveBoardStyles} from "../../styles/ReserveBoard";
+import {getBillFlowNO, getStaffPermission} from "../../services/reserve";
 
 export class StaffQueueView extends React.Component {
     constructor(props) {
@@ -19,24 +21,12 @@ export class StaffQueueView extends React.Component {
             platform: Platform.OS === 'ios' ? 'ios' : 'android',
             pageSize: 40,
             pageNo: 1,
-            staffSelected: undefined
+            staffSelected: undefined,
+            waiterId: ''
         };
     }
 
     componentDidMount() {
-        // 右侧按钮
-        let {navigation} = this.props
-        navigation.setOptions({
-            headerRight: () =>  (
-                <TouchableOpacity onPress={()=>{
-                    this.toCashier()
-                }}>
-                    <View style={staffQueueStyles.cashierBtn}>
-                        <Text style={staffQueueStyles.cashierBtnTxt}>立即开单</Text>
-                    </View>
-                </TouchableOpacity>
-            )
-        })
         // 获取员工信息
         this.loadStaffs()
     }
@@ -66,7 +56,8 @@ export class StaffQueueView extends React.Component {
                 let staffSelected = staffList[0]
                 this.setState({
                     staffList,
-                    staffSelected
+                    staffSelected,
+                    waiterId: staffSelected.staffId
                 }, ()=>{
                     // 加载第一位员工的作品
                     self.loadWorks(true)
@@ -113,7 +104,7 @@ export class StaffQueueView extends React.Component {
         // 更新状态
         const staffSelected = staffList[index]
         this.setState((prevState, props) => {
-            return {...prevState, staffList, worksList: [], staffSelected};
+            return {...prevState, staffList, worksList: [], staffSelected, waiterId: staffSelected.staffId};
         }, ()=>{
             this.loadWorks(true)
         });
@@ -211,8 +202,98 @@ export class StaffQueueView extends React.Component {
         })
     }
 
-    toCashier(){
-        AppNavigate.navigate('CashierActivity')
+    // 去开单
+    async toCashier(){
+        // 加载中
+        this.setState({
+            isLoading: true
+        })
+
+        try {
+            // 服务人信息
+            const waiterId = this.state.waiterId
+            // 登录的员工信息
+            const loginUser = this.props.userInfo// 获取员工可用的权限
+            const permissionBackData = await getStaffPermission({
+                staffId: loginUser.staffId,
+                companyId: loginUser.companyId
+            })
+            // 获取水单号
+            const flowNumberBackData = await getBillFlowNO()
+            // 会员档案
+            if(permissionBackData.code != '6000'
+                || flowNumberBackData.code != '6000'){
+                // 错误
+                showMessageExt("开单失败")
+                // 加载中
+                this.setState({
+                    isLoading: false
+                })
+            }else{
+                // 加载中
+                this.setState({
+                    isLoading: false
+                })
+                // 员工权限
+                const staffPermission = permissionBackData['data']
+                // 水单号
+                const flowNumber = flowNumberBackData['data']
+                //0专业店 1综合店
+                const isSynthesis = loginUser.isSynthesis;
+                // 可用主营分类
+                const operatorCategory = loginUser.operateCategory[0];
+                // 是否允许调整价格
+                let moduleCode = "1"
+                let moduleCodeIndex = 0;
+                const roundMode = staffPermission.roundMode
+                const staffAclMap = staffPermission['staffAclMap'];
+                if (staffAclMap
+                    && staffAclMap.moduleCode
+                    && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') { // 是否能允许调整价格
+                    moduleCodeIndex++;
+                }
+                if (moduleCodeIndex > 0) {
+                    moduleCode = '1'
+                } else {
+                    moduleCode = 0
+                }
+
+
+                const params = {
+                    orderInfoLeftData:{
+                        customerNumber:"1",
+                        isOldCustomer:"0",
+                        handNumber:""
+                    },
+                    companyId: loginUser.companyId,
+                    storeId: loginUser.storeId,
+                    deptId: operatorCategory.deptId,
+                    operatorId: operatorCategory.value,
+                    operatorText: operatorCategory.text,
+                    waiterId: waiterId,
+                    staffId: loginUser.staffId,
+                    staffDBId: loginUser.staffDBId,
+                    isSynthesis: isSynthesis,
+                    numType: "flownum",
+                    numValue: flowNumber,
+                    page: "ReserveBoardActivity",
+                    member:null,
+                    type: "vip",
+                    roundMode: roundMode,
+                    moduleCode: moduleCode,
+                    isOldCustomer: "0" // 散客
+                }
+
+                // 开单
+                AppNavigate.navigate('CashierBillingActivity', params)
+            }
+        } catch (e) {
+            // 加载中
+            this.setState({
+                isLoading: false
+            })
+            console.error("散客开单失败", e)
+        }
     }
 
     // 转换点赞
@@ -304,6 +385,19 @@ export class StaffQueueView extends React.Component {
                         color: '#FFF'
                     }}
                 />
+                <View style={staffQueueStyles.floatButtonBox}>
+                    {/*立即开单*/}
+                    <TouchableOpacity
+                        style={staffQueueStyles.reserveButtonKaiDan}
+                        onPress={()=>{
+                            this.toCashier()
+                        }}>
+                        <Image
+                            style={staffQueueStyles.reserveButtonKaiDanIcon}
+                            resizeMode={'contain'}
+                            source={require('@imgPath/reserve_customer_button_kaidan.png')}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={staffQueueStyles.containerList}>
                     <View style={staffQueueStyles.ListHeader}>
                         <Text style={staffQueueStyles.HeaderTxt}>发型师</Text>

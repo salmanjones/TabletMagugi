@@ -13,7 +13,7 @@ export const staffWorksStyles = StyleSheet.create({
     content: {
         flex: 1,
         position: "relative",
-        backgroundColor: '#000'
+        backgroundColor: '#000',
     },
     iconImg: {
         width: PixelUtil.size(130, 2048),

@@ -28,7 +28,28 @@ export const staffQueueStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        backgroundColor: '#FBF9F7'
+        backgroundColor: '#FBF9F7',
+        position: 'relative'
+    },
+    floatButtonBox:{
+        position: 'absolute',
+        right: PixelUtil.size(-18),
+        bottom: PixelUtil.size(52),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(480),
+        zIndex: 1000,
+    },
+    reserveButtonKaiDan:{
+        position: "absolute",
+        right: PixelUtil.size(32),
+        bottom: PixelUtil.size(360),
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(160),
+        zIndex: 1001
+    },
+    reserveButtonKaiDanIcon:{
+        width: '100%',
+        height: '100%'
     },
     containerList: {
         width: '37%',
