@@ -439,21 +439,23 @@ export const ReserveBoardActivity = props => {
                         }else if(data.length == 1){ // 单档案直接开单
                             setLoading(false)
                             setMultiProfiles(data)
-                            // 准备开单
                             const customer = data[0]
-                            customerPressEvent('naviToCashier', {
-                                memberId: customer.memberId,
-                                imgUrl: customer.imgUrl,
-                                waiterId: waiterId
-                            }, ()=>{
-                                if(showType == 'scanCode'){ // 散客扫码开单
-                                    guestPanelRef.current.hideRightPanel()
-                                }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
-                                    guestPanelRef.current.hideRightPanel()
-                                }else if(showType == 'member'){ // 会员面板开单
-                                    memberPanelRef.current.hideRightPanel()
-                                }
-                            })
+                            // 准备开单
+                            if(reserveMode == 'noReserve'){ // 未预约:扫码->进入选牌页面
+                                customerPressEvent('forwardToCashier', {
+                                    memberId: customer.memberId,
+                                    imgUrl: customer.imgUrl,
+                                    showMode: reserveMode
+                                })
+                            }else{
+                                customerPressEvent('naviToCashier', {
+                                    memberId: customer.memberId,
+                                    imgUrl: customer.imgUrl,
+                                    waiterId: waiterId
+                                }, ()=>{
+                                    hideAllPanel()
+                                })
+                            }
                         }else{ // 无档案
                             setLoading(false)
                             showMessageExt("获取会员档案失败")
@@ -590,7 +592,9 @@ export const ReserveBoardActivity = props => {
             case 'forwardToCashier':
                 const showMode = extra['showMode']
                 if(showMode == 'noReserve'){ // 未预约直接开单.跳转选牌
-                    AppNavigate.navigate('StaffQueueActivity', {})
+                    const memberId = extra['memberId'] // 未预约散客扫码转会员后有会员ID
+                    const imgUrl = extra['imgUrl'] // 未预约散客扫码转会员后有会员ID
+                    AppNavigate.navigate('StaffQueueActivity', {memberId, imgUrl})
                 }else { // 已预约散客直接开单.跳转开单页面
                     // 加载中
                     setLoading(true)

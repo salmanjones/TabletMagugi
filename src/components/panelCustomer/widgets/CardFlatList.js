@@ -81,7 +81,6 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                                                     cardId: cardItem.cardId,
                                                     appUserId: extendsInfo.appUserId,
                                                     reserveId: extendsInfo.reserveId
-
                                                 })
                                             }
                                         }>
@@ -94,7 +93,7 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                                     return (
                                         <TouchableOpacity style={cardButtonStyle} onPress={
                                             ()=>{
-                                                customerPressEvent('rechargeCardItem', {cardId: cardItem.cardId})
+                                                customerPressEvent('rechargeCardItem', {cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
                                             }
                                         }>
                                             <Text style={cardButtonTxtStyle}>

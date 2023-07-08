@@ -217,7 +217,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                                     customerPressEvent={props.customerCardEvent}
                                                     extendsInfo={{
                                                         appUserId: customerInfo.appUserId,
-                                                        reserveId: customerInfo['reserveInfo']['reserveId']
+                                                        reserveId: customerInfo['reserveInfo']['reserveId'],
+                                                        waiterId
                                                     }}/>
                                     )
                                 }

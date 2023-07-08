@@ -44,7 +44,7 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                         style={PanelMultiProfiles.createBtnBox}
                         onPress={()=>{
                             if(showMode == 'noReserve') { // 未预约，跳转选牌
-                                customerClickEvent('forwardToCashier', {showMode})
+                                customerClickEvent('forwardToCashier', {showMode, memberId: profileItem.memberId})
                             }else { // 已预约，直接进入开单页面
                                 customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl, showMode, waiterId: waiterId})
                             }

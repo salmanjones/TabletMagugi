@@ -311,7 +311,8 @@ class CashierBillingView extends React.Component {
             if (params.page == 'pendingOrder') {
                 this.props.resetToCashier(true);
             } else {
-                this.props.resetToCashier();
+                // 2023.07.08 最新需求，所有挂单成功均返回挂单页面
+                this.props.resetToCashier(true);
             }
         } else if (nextProps.orderInfo.propChangeType == 'toApp') {
             this.setState((prevState, props) => {
@@ -4261,9 +4262,12 @@ const mapDispatchToProps = (dispatch, props) => {
         resetToCashier: (toPendingOrder) => {
             if (toPendingOrder) {
                 dispatch(getPendingListAction('', true));
+                props.navigation.setParams({back: null});
+                AppNavigate.navigate("PendingOrderActivity")
+            }else{
+                props.navigation.setParams({back: null});
+                AppNavigate.goBack()
             }
-            props.navigation.setParams({back: null});
-            AppNavigate.goBack()
         },
         checkFlowNumber: (params) => {
             dispatch(cashierCheckFlowNumberAction(params))
