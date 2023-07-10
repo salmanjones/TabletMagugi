@@ -22,6 +22,7 @@ import {getImage, ImageQutity, showMessageExt} from "../../utils";
 import {AppNavigate} from "../../navigators";
 
 // 开单预约看板
+let checkReserveId = '' // 选中的预约id
 export const ReserveBoardActivity = props => {
     // 路由
     const route = useRoute()
@@ -137,6 +138,10 @@ export const ReserveBoardActivity = props => {
                     reserveId: customerInfo.recordId
                 }
 
+                // 缓存选中的预约ID,以供开单使用
+                checkReserveId = customerInfo.recordId
+
+                // 获取顾客详情
                 setLoading(true)
                 getCustomerDetail(args).then(backData=>{
                     const {code, data} = backData
@@ -573,7 +578,8 @@ export const ReserveBoardActivity = props => {
                                 customerNumber: '1',
                                 isOldCustomer: memberCardInfo.isOldCustomer,
                             },
-                            isShowReserve: true
+                            isShowReserve: true,
+                            checkReserveId: checkReserveId
                         }
 
                         callBack && callBack()
@@ -665,7 +671,8 @@ export const ReserveBoardActivity = props => {
                                 type: "vip",
                                 roundMode: roundMode,
                                 moduleCode: moduleCode,
-                                isOldCustomer: "0" // 散客
+                                isOldCustomer: "0", // 散客
+                                checkReserveId: checkReserveId
                             }
 
                             callBack && callBack()
