@@ -46,7 +46,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     预约手机号：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
-                    {reserveInfo.memberPhoneShow}
+                    {reserveInfo.memberPhoneShow && reserveInfo.memberPhoneShow.length > 0 ? reserveInfo.memberPhoneShow : '暂无'}
                 </Text>
                 {
                     isStartWork == '0' && canCancel == '1' && (
