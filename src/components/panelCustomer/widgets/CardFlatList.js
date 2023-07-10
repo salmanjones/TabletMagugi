@@ -93,7 +93,7 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                                     return (
                                         <TouchableOpacity style={cardButtonStyle} onPress={
                                             ()=>{
-                                                customerPressEvent('rechargeCardItem', {cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
+                                                customerPressEvent('rechargeCardItem', {memberId: cardItem['cardMemberId'], cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
                                             }
                                         }>
                                             <Text style={cardButtonTxtStyle}>

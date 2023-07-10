@@ -213,13 +213,15 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 }
                                 {
                                     tabArray[tabIndex] == '顾客资产' && (
-                                        <CardWidget cardsInfo={customerInfo['cardsInfo']}
-                                                    customerPressEvent={props.customerCardEvent}
-                                                    extendsInfo={{
-                                                        appUserId: customerInfo.appUserId,
-                                                        reserveId: customerInfo['reserveInfo']['reserveId'],
-                                                        waiterId
-                                                    }}/>
+                                        <CardWidget
+                                            cardsInfo={customerInfo['cardsInfo']}
+                                            customerPressEvent={props.customerCardEvent}
+                                            extendsInfo={{
+                                                appUserId: customerInfo.appUserId,
+                                                reserveId: customerInfo['reserveInfo']['reserveId'],
+                                                waiterId
+                                            }}
+                                        />
                                     )
                                 }
                                 {

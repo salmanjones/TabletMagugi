@@ -489,7 +489,7 @@ export const ReserveBoardActivity = props => {
                         // 开始准备开单的数据-获取BMS会员档案
                         const portraitBackData = await getMemberPortrait({
                             p: 1,
-                            ps: 30,
+                            ps: 1000,
                             cardInfoFlag: false,
                             solrSearchType: 0,
                             kw: extra.memberId
@@ -525,7 +525,7 @@ export const ReserveBoardActivity = props => {
                         // 开始准备开单的数据-获取BMS会员档案
                         const portraitBackData = await getMemberPortrait({
                             p: 1,
-                            ps: 30,
+                            ps: 1000,
                             cardInfoFlag: false,
                             solrSearchType: 0,
                             kw: extra.memberId
@@ -765,8 +765,50 @@ export const ReserveBoardActivity = props => {
                 }
                 break
             case 'rechargeCardItem': // 充值
-                const query = {
-                    memberId: extra['']
+                // 加载中
+                setLoading(true)
+                try {
+                    // 开始准备开单的数据-获取BMS会员档案
+                    const portraitBackData = await getMemberPortrait({
+                        p: 1,
+                        ps: 1000,
+                        cardInfoFlag: true,
+                        solrSearchType: 0,
+                        kw: extra.memberId
+                    })
+                    // 会员档案
+                    if(portraitBackData.code != '6000'){
+                        // 错误
+                        showMessageExt("充值失败")
+                        setLoading(false)
+                    }else{
+                        setLoading(false)
+                        // 关闭所有面板
+                        hideAllPanel()
+                        // BMS会员档案
+                        const cardId = extra['cardId']
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const cardList = memberPortrait['vipStorageCardList'] || []
+                        const selectCard = cardList.filter(card=>{
+                            return card.id == cardId
+                        })
+
+                        if(selectCard && selectCard.length == 1){
+                            InteractionManager.runAfterInteractions(() => {
+                                navigation.navigate('RechargeActivity', {
+                                    card: selectCard[0],
+                                    member: memberPortrait
+                                });
+                            })
+                        }else{
+                            showMessageExt("充值失败")
+                        }
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("充值失败")
+                    setLoading(false)
+                    console.error("获取会员档案失败", e)
                 }
                 break
         }
