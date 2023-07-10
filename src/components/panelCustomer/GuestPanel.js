@@ -60,7 +60,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     /// 生成唯一id
     const getUniqueId = ()=>{
         // 唯一ID
-        glUniqueId = loginUser.companyId + loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000000)
+        glUniqueId = loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000)
     }
 
     /// 展示面板
