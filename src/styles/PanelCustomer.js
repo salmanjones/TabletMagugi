@@ -1058,8 +1058,8 @@ export const PanelCustomerStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(40),
     },
     guestProfileRescanWrap:{
-        width: PixelUtil.size(290),
-        height: PixelUtil.size(80),
+        width: PixelUtil.size(200),
+        height: PixelUtil.size(68),
         borderRadius: PixelUtil.size(40),
         marginTop: PixelUtil.size(98)
     },
