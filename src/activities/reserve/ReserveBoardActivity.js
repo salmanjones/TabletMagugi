@@ -24,7 +24,10 @@ import {fetchMemberNO} from "../../services/member";
 import {ModalCreateMember} from "../../components";
 
 // 开单预约看板
-let checkReserveId = '' // 选中的预约id
+const pageCache = {
+    checkReserveId: '', // 选中的预约id
+    checkAppUserId: '' // 选中的app表用户Id
+}
 export const ReserveBoardActivity = props => {
     // 路由
     const route = useRoute()
@@ -132,11 +135,18 @@ export const ReserveBoardActivity = props => {
         setStylistCheckedIndex(index)
     }, [])
 
+    // 清除页面缓存
+    const clearPageCache = ()=>{
+        pageCache.checkReserveId = ""
+        pageCache.checkAppUserId = ""
+    }
+
     // 客户点击事件
     const customerPressEvent = React.useCallback(async (type, extra, callBack) => {
         const storeId = reduxState.auth.userInfo.storeId
         switch (type) {
             case 'reloadData': // 刷新数据
+                clearPageCache()
                 getReserveList(callBack)
                 break;
             case 'showDetail': // 查看详情
@@ -147,7 +157,8 @@ export const ReserveBoardActivity = props => {
                 }
 
                 // 缓存选中的预约ID,以供开单使用
-                checkReserveId = customerInfo.recordId
+                pageCache.checkReserveId = customerInfo.recordId
+                pageCache.checkAppUserId = customerInfo.appUserId
 
                 // 获取顾客详情
                 setLoading(true)
@@ -203,6 +214,7 @@ export const ReserveBoardActivity = props => {
                 })
                 break;
             case 'guestReserve': // 散客未预约直接开单
+                clearPageCache()
                 const customerData = {
                     couponList: [],
                     czkCount: [],
@@ -408,6 +420,11 @@ export const ReserveBoardActivity = props => {
                     params['paramType'] = '0' // 0 appUserId
                 }
 
+                // 缓存扫码后的appUserId
+                if(extra['appUserId'] && extra['appUserId'].length > 0 && showType == 'scanCode'){
+                    pageCache.checkAppUserId = extra['appUserId']
+                }
+
                 // 散客预约面板，点击直接跳转至手机号查询组件
                 if(showType == 'guestPhone'){
                     setMultiProfiles([])
@@ -509,6 +526,7 @@ export const ReserveBoardActivity = props => {
                                 navigation.navigate('VipcardActivity', {
                                     type: 'vip',
                                     member: memberPortrait,
+                                    appUserId: pageCache.checkAppUserId
                                 })
                             });
                         }
@@ -625,7 +643,7 @@ export const ReserveBoardActivity = props => {
                                     isOldCustomer: memberCardInfo.isOldCustomer,
                                 },
                                 isShowReserve: true,
-                                checkReserveId: checkReserveId
+                                checkReserveId: pageCache.checkReserveId
                             }
 
                             callBack && callBack()
@@ -748,7 +766,7 @@ export const ReserveBoardActivity = props => {
                                     roundMode: roundMode,
                                     moduleCode: moduleCode,
                                     isOldCustomer: "0", // 散客
-                                    checkReserveId: checkReserveId
+                                    checkReserveId: pageCache.checkReserveId
                                 }
 
                                 callBack && callBack()
@@ -797,7 +815,8 @@ export const ReserveBoardActivity = props => {
                             InteractionManager.runAfterInteractions(() => {
                                 navigation.navigate('RechargeActivity', {
                                     card: selectCard[0],
-                                    member: memberPortrait
+                                    member: memberPortrait,
+                                    appUserId: pageCache.checkAppUserId
                                 });
                             })
                         }else{
