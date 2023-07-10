@@ -648,7 +648,6 @@ export const ReserveBoardActivity = props => {
                                 moduleCode = 0
                             }
 
-
                             const params = {
                                 orderInfoLeftData:{
                                     customerNumber:"1",

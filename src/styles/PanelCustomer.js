@@ -1061,11 +1061,21 @@ export const PanelCustomerStyles = StyleSheet.create({
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         borderRadius: PixelUtil.size(40),
-        marginTop: PixelUtil.size(30)
+        marginTop: PixelUtil.size(98)
     },
     guestProfileOrderImg:{
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    guestProfileTimeout:{
+        width: PixelUtil.size(200),
+        height: PixelUtil.size(68),
+        backgroundColor: '#111c3c',
+        borderRadius: PixelUtil.size(34),
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'center',

@@ -123,14 +123,11 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     onPress={()=>{
                                         rescanQREvent(null)
                                     }}>
-                                    <ImageBackground
-                                        resizeMode={"contain"}
-                                        style={PanelCustomerStyles.guestProfileOrderImg}
-                                        source={require('@imgPath/reserve_panel_customer_create_order.png')}>
+                                    <View style={PanelCustomerStyles.guestProfileTimeout}>
                                         <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
                                             重新扫码
                                         </Text>
-                                    </ImageBackground>
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                         )
