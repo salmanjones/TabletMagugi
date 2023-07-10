@@ -2,12 +2,13 @@ import React from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
 import {PanelMultiProfiles} from "../../../styles/PanelMultiProfile";
 import {getPhoneSecurity} from "../../../utils";
+import {BackgroundImage} from "react-native-elements/dist/config";
 
 /**
  * 多档案单项展示组件
  * @type {React.NamedExoticComponent<{readonly size?: *, readonly customerClickEvent?: *, readonly index?: *, readonly profileItem?: *}>}
  */
-export const MultiProfileItem = React.memo(({profileItem, index, size, customerClickEvent, showMode, waiterId})=>{
+export const MultiProfileItem = React.memo(({profileItem, index, size, customerClickEvent, showMode, waiterId, actionType})=>{
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
             <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastWrap:PanelMultiProfiles.profileItemWrap}>
@@ -44,15 +45,17 @@ export const MultiProfileItem = React.memo(({profileItem, index, size, customerC
                         style={PanelMultiProfiles.createBtnBox}
                         onPress={()=>{
                             if(showMode == 'noReserve') { // 未预约，跳转选牌
-                                customerClickEvent('forwardToCashier', {showMode, memberId: profileItem.memberId})
+                                customerClickEvent('forwardToCashier', {showMode, memberId: profileItem.memberId, actionType})
                             }else { // 已预约，直接进入开单页面
-                                customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl, showMode, waiterId: waiterId})
+                                customerClickEvent('naviToCashier', {memberId: profileItem.memberId, imgUrl: profileItem.imgUrl, showMode, waiterId: waiterId, actionType})
                             }
                         }}>
-                        <Image
+                        <BackgroundImage
                             resizeMode={"contain"}
                             source={require('@imgPath/reserve_customer_multi_profile_btn.png')}
-                            style={PanelMultiProfiles.createBtnImg}></Image>
+                            style={PanelMultiProfiles.createBtnImg}>
+                            <Text style={PanelMultiProfiles.createBtnTxt}>{actionType == 'createOrder'? '开单':'办卡'}</Text>
+                        </BackgroundImage>
                     </TouchableOpacity>
                 </View>
             </View>

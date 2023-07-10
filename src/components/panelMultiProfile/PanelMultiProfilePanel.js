@@ -36,9 +36,10 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     });
 
     /// 展示面板
-    const showRightPanel = (showMode = 'withReserve', showType = 'member', phone, waiterId) => {
+    const showRightPanel = (showMode = 'withReserve', showType = 'member', phone, waiterId, actionType) => {
         setShowMode(showMode)
         setShowType(showType)
+        setActionType(actionType)
         setUserPhone(phone)
         setWaiterId(waiterId)
         setShowClear(phone && phone.length > 0)
@@ -89,6 +90,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     const [showType, setShowType] = useState('member')
     /// 是否已预约 withReserve:已预约 noReserve:未预约
     const [showMode, setShowMode] = useState('withReserve')
+    /// 去向：createOrder 开单 createCard开卡
+    const [actionType, setActionType] = useState('createOrder')
     /// 服务人id
     const [waiterId, setWaiterId] = useState('')
     /// 查询值
@@ -154,7 +157,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 {/*查询*/}
                                                 <TouchableOpacity
                                                     onPress={()=>{
-                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone', showMode, waiterId})
+                                                        customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone', showMode, waiterId, actionType: actionType})
                                                     }}
                                                     style={PanelMultiProfiles.headSearchButton}>
                                                     <Image
@@ -196,7 +199,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                             data={multiProfileArray}
                             renderItem={
                                 ({item, index}) => {
-                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent} showMode={showMode} waiterId={waiterId}/>
+                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent} showMode={showMode} waiterId={waiterId} actionType={actionType}/>
                                 }
                             }
                             keyExtractor={(item)=>item.memberNo}

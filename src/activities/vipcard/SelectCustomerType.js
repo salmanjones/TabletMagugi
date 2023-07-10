@@ -46,21 +46,19 @@ export class SelectCustomerType extends React.Component {
             isFetchMemberNoPending: true,
         });
 
-        fetchMemberNO()
-            .then(res => {
-                that.setState({
-                    isFetchMemberNoPending: false,
-                    visible: 'create',
-                    oper: oper,
-                    memberNo: res.data,
-                });
-            })
-            .catch(err => {
-                that.setState({
-                    isFetchMemberNoPending: false,
-                });
-                displayError(err, '获取会员号码异常');
+        fetchMemberNO().then(res => {
+            that.setState({
+                isFetchMemberNoPending: false,
+                visible: 'create',
+                oper: oper,
+                memberNo: res.data,
             });
+        }).catch(err => {
+            that.setState({
+                isFetchMemberNoPending: false,
+            });
+            displayError(err, '获取会员号码异常');
+        })
     };
 
     render() {

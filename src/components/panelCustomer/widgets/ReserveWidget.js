@@ -23,7 +23,16 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
         setSourceValue(reserveInfo.source)
         setServiceValue(reserveInfo.reserveProjectId)
         setServiceNameValue(serviceType)
-        setRemark(decodeURIComponent(reserveInfo.remark) || '')
+
+        // 处理备注加密的问题
+        let memo = ''
+        try{
+            memo = decodeURIComponent(decodeURIComponent(reserveInfo.remark))
+        }catch (e){
+            console.log("解码备注失败", e)
+            memo = reserveInfo.remark
+        }
+        setRemark(memo)
     }, [reserveInfo])
 
     return (

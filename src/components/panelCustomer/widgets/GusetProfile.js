@@ -6,7 +6,7 @@ import React, {useState} from "react";
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode, reserveInfo})=>{
+export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode, reserveInfo, actionType})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 服务人ID
@@ -31,7 +31,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     <TouchableOpacity
                                         style={PanelCustomerStyles.headSearchBox}
                                         onPress={()=>{
-                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId})
+                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType})
                                         }}>
                                         {/*输入框*/}
                                         <Image
@@ -49,7 +49,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                                 setUserPhone(phone)
                                             }}
                                             onPressIn={()=>{
-                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId})
+                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType})
                                             }}
                                             value={userPhone}
                                             maxLength={11}/>
@@ -67,14 +67,14 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     <TouchableOpacity
                                         style={PanelCustomerStyles.guestProfileOrderWrap}
                                         onPress={()=>{
-                                            customerPressEvent("forwardToCashier", {showMode, waiterId})
+                                            customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})
                                         }}>
                                         <ImageBackground
                                             resizeMode={"contain"}
                                             style={PanelCustomerStyles.guestProfileOrderImg}
                                             source={require('@imgPath/reserve_panel_customer_create_order.png')}>
                                             <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
-                                                散客直接开单
+                                                {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}
                                             </Text>
                                         </ImageBackground>
                                     </TouchableOpacity>

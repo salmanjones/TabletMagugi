@@ -242,7 +242,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         style={PanelCustomerStyles.operatorWrap}>
                         <TouchableOpacity
                             onPress={()=>{
-                                props['customerCardEvent']("toCreateCard", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId})
+                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createCard'})
                             }}
                             style={PanelCustomerStyles.operatorBtnCashier}>
                             <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
@@ -250,7 +250,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         <TouchableOpacity
                             style={PanelCustomerStyles.operatorBtnCard}
                             onPress={()=>{
-                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId})
+                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createOrder'})
                             }}>
                             <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                         </TouchableOpacity>

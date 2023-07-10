@@ -40,11 +40,13 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         }
     });
 
-    // 是否已预约 withReserve:已预约 noReserve:未预约
+    /// 后续动作
+    const [actionType, setActionType] = useState('createOrder')
+    /// 是否已预约 withReserve:已预约 noReserve:未预约
     const [showMode, setShowMode] = useState('')
-    // 页签数据
+    /// 页签数据
     const [tabArray, setTabArray] = useState([])
-    // 命中的页签
+    /// 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
     /// 加载中
     const [isLoading, setLoading] = useState(false)
@@ -62,12 +64,13 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 展示面板
-    const showRightPanel = (mode) => {
+    const showRightPanel = (mode, actionType) => {
         if(mode == 'noReserve'){ // 无预约信息
             setTabArray(['基础档案'])
         }else{
             setTabArray(['预约信息', '基础档案'])
         }
+        setActionType(actionType)
         setWxQRImg('')
         setShowMode(mode)
         setTabIndex(0)
@@ -196,8 +199,9 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 点击tab
-    const tabPressEvent = (index)=>{
+    const tabPressEvent = (index, actionType = 'createOrder')=>{
         setTabIndex(index)
+        setActionType(actionType)
 
         // 扫码标签
         if(index == 1){
@@ -223,7 +227,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     /// 进入开单页面
     const naviToCashier = (appUserId)=>{
         const waiterId = customerInfo['reserveInfo']['staffId'] || ''
-        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode, waiterId})
+        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode, waiterId, actionType})
     }
 
     return (
@@ -302,7 +306,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                             rescanQREvent={rescanQRCode}
                                             showMode={showMode}
                                             customerPressEvent={customerPressEvent}
-                                            reserveInfo={customerInfo['reserveInfo']}/>
+                                            reserveInfo={customerInfo['reserveInfo']}
+                                            actionType={actionType}/>
                                     )
                                 }
                             </View>
@@ -318,14 +323,14 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCashier}
                                     onPress={()=>{
-                                        tabPressEvent(1)
+                                        tabPressEvent(1, 'createCard')
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
                                     onPress={()=>{
-                                        tabPressEvent(1)
+                                        tabPressEvent(1, 'createOrder')
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                                 </TouchableOpacity>

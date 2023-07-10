@@ -285,6 +285,15 @@ export const PanelMultiProfiles = StyleSheet.create({
     },
     createBtnImg:{
         width: '100%',
-        height: '100%'
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    createBtnTxt:{
+        fontSize: PixelUtil.size(32),
+        fontWeight: '700',
+        color: '#ffffff',
+        textAlign: 'center'
     }
 })
