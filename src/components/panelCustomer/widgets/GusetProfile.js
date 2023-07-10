@@ -114,7 +114,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                 <Image
                                     resizeMode={"contain"}
                                     style={PanelCustomerStyles.guestScanResultBox}
-                                    source={require('@imgPath/reserve_panel_customer_scan_seccess.png')}></Image>
+                                    source={require('@imgPath/reserve_panel_customer_scan_timeout.png')}></Image>
                                 <Text style={PanelCustomerStyles.guestScanResultTxt}>
                                     授权超时!
                                 </Text>
