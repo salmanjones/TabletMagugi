@@ -182,7 +182,8 @@ export class StaffWorksView extends React.Component {
                                 customerNumber: '1',
                                 isOldCustomer: memberCardInfo.isOldCustomer,
                             },
-                            isShowReserve: true
+                            isShowReserve: true,
+                            staffAppoint: "false" // 非指定
                         }
                         // 开单
                         AppNavigate.navigate('CashierBillingActivity', params)
