@@ -250,6 +250,14 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
+    operatorGuestWrap: {
+        width: '100%',
+        height: PixelUtil.size(150),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
     operatorBtnCashier: {
         width: '50%',
         height: PixelUtil.size(150),

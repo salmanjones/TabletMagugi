@@ -318,15 +318,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                         showMode!='noReserve' && tabIndex == 0 && (
                             <ImageBackground
                                 resizeMode={'contain'}
-                                source={require('@imgPath/member_panel_operator_bg.png')}
-                                style={PanelCustomerStyles.operatorWrap}>
-                                <TouchableOpacity
-                                    style={PanelCustomerStyles.operatorBtnCashier}
-                                    onPress={()=>{
-                                        tabPressEvent(1, 'createCard')
-                                    }}>
-                                    <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
-                                </TouchableOpacity>
+                                source={require('@imgPath/guest_panel_operator_bg.png')}
+                                style={PanelCustomerStyles.operatorGuestWrap}>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
                                     onPress={()=>{
