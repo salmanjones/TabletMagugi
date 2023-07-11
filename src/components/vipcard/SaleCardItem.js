@@ -58,7 +58,7 @@ const getCardTitle = (card) =>{
 
 export class SaleCardItem extends React.PureComponent {
     render() {
-        const {data, selected, onSelected} = this.props;
+        const {data, selected, onSelected, cardPay} = this.props;
         // 是否为储值卡
         const isStorageCard = data.cardType == 1;
         // 获取标题

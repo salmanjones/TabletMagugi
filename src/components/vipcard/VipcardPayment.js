@@ -100,7 +100,9 @@ export class VipcardPayment extends React.PureComponent {
                 totalPrice,
                 staffids,
                 card.vipCardName,
-                card.vipCardNo
+                card.vipCardNo,
+                card.cardCateId,
+                card.cardType
             ).then(backData => {
                 const data = backData.data;
                 if (data.tradeNo && data.codeUrl) {
@@ -137,7 +139,9 @@ export class VipcardPayment extends React.PureComponent {
                 totalPrice,
                 staffids,
                 card.vipCardName,
-                card.vipCardNo
+                card.vipCardNo,
+                card.cardCateId,
+                card.cardType
             ).then(backData => {
                 if (backData.code == '6000') {
                     that.setState({
@@ -237,7 +241,7 @@ export class VipcardPayment extends React.PureComponent {
                                     <View style={openCardAccountStyle.leftBodyBox}>
                                         <ScrollView style={openCardAccountStyle.leftBox}>
                                             <View style={openCardAccountStyle.cardInfo}>
-                                                <SaleCardItem data={card}/>
+                                                <SaleCardItem data={card} mode={'cardPay'}/>
                                             </View>
                                             <View style={openCardAccountStyle.cardPrice}>
                                                 <Text style={openCardAccountStyle.cardPriceText}>
@@ -252,7 +256,6 @@ export class VipcardPayment extends React.PureComponent {
                                                     categoryId={card.cardCategory}
                                                     onChecked={this.onDeptSelected}
                                                 />
-
                                                 <MemberInfo data={member}/>
                                                 {/* <PaymentTypeList onSelected={this.onPayTypeSelected} /> */}
                                             </View>

@@ -433,6 +433,19 @@ export const commonStyles = StyleSheet.create({
         marginBottom: PixelUtil.size(20),
         marginLeft: PixelUtil.size(36),
     },
+    cardPayBox: {
+        //会员卡
+        width: PixelUtil.size(542),
+        height: PixelUtil.size(292),
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: PixelUtil.size(20),
+        marginLeft: PixelUtil.size(36),
+    },
     cardBoxBg: {
         //会员卡-卡类型
         width: '100%',

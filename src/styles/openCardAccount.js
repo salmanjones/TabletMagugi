@@ -117,7 +117,7 @@ export const openCardAccountStyle = StyleSheet.create({
         //卡样式
         width: '100%',
         height: PixelUtil.size(300),
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -127,12 +127,11 @@ export const openCardAccountStyle = StyleSheet.create({
     cardPrice: {
         //金额
         width: '100%',
-        // height: '10%',
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft: PixelUtil.size(160),
+        paddingLeft: PixelUtil.size(196),
         paddingRight: PixelUtil.size(160),
         paddingBottom: PixelUtil.size(20),
     },
@@ -157,8 +156,9 @@ export const openCardAccountStyle = StyleSheet.create({
     chooseCardGenreBox: {
         width: '100%',
         flex: 1,
-        paddingLeft: PixelUtil.size(120),
+        paddingLeft: PixelUtil.size(180),
         paddingRight: PixelUtil.size(140),
+        marginTop: PixelUtil.size(40)
     },
 
     cardGenreCheckbox: {
@@ -243,13 +243,13 @@ export const openCardAccountStyle = StyleSheet.create({
     },
     rightBox: {
         //右边内容
-        // height: PixelUtil.size(460),
         paddingLeft: PixelUtil.size(256),
         paddingRight: PixelUtil.size(256),
         paddingTop: PixelUtil.size(20),
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: PixelUtil.size(60)
     },
     rightBoxNew: {
         //右边内容

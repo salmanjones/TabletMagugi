@@ -223,8 +223,6 @@ class VipCard extends React.Component {
 const mapStateToProps = state => {
     const { vipcard } = state;
 
-    console.log("vipcard", JSON.stringify(vipcard))
-
     return {
         staffs: vipcard.staffs,
         card: vipcard.card,

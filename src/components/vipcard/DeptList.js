@@ -40,7 +40,7 @@ class DeptListComponent extends React.PureComponent {
             <View style={openCardAccountStyle.chooseCardGenreBox}>
                 <Text style={openCardAccountStyle.cardGenreTitleText}>服务部门：</Text>
                 <View style={openCardAccountStyle.cardGenreCheckbox}>
-                    {deptList.map(x => {
+                    {deptList.map((x, index) => {
                         return (
                             <CheckBox
                                 left
@@ -49,8 +49,7 @@ class DeptListComponent extends React.PureComponent {
                                 checkedIcon="radio-button-checked"
                                 uncheckedIcon="radio-button-unchecked"
                                 checked={
-                                    (deptId === 0 && categoryId == x.categoryId) ||
-                                    deptId === x.id
+                                    (deptId === 0 && categoryId == x.categoryId) || deptId === x.id
                                 }
                                 onPress={() => this.onChecked(x.id)}
                                 size={PixelUtil.size(32)}

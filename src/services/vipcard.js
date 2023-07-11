@@ -59,7 +59,9 @@ export const fetchCreateCardOrder = (
     totalFee,
     staffIds,
     title,
-    vipCardNo
+    vipCardNo,
+    cardCateId,
+    cardType
 ) => {
     const pay = THIRD_PAY[payType];
     let params = {
@@ -81,6 +83,8 @@ export const fetchCreateCardOrder = (
         title: title,
         vipCardNo: vipCardNo,
         deptId: deptId,
+        cardCateId,
+        cardType
     };
 
     return callService(api.createCardOrder, params);
@@ -118,9 +122,13 @@ export const fetchOtherPayment = (
     payAmount,
     staffIds,
     vipCardName,
-    vipCardNo
+    vipCardNo,
+    cardCateId,
+    cardType
 ) => {
     let params = {
+        cardCateId,
+        cardType,
         payType: payType,
         payTypeId: payTypeId,
         payTypeNo: payTypeId,
