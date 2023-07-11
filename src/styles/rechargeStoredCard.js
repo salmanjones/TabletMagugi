@@ -306,7 +306,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     cardServicerTitle: {
         // 中部-服务人-标题
         width: '100%',
-        height: '30%',
+        height: PixelUtil.size(122),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -318,8 +318,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     cardServicerTitleItem: {
         // 中部-服务人-标题-各项
-        width: PixelUtil.rect(128, 128).width,
-        height: PixelUtil.rect(128, 128).height,
+        width: PixelUtil.size(128),
+        height: PixelUtil.size(128),
         textAlign: 'center',
         fontSize: PixelUtil.size(32),
         color: '#333',
@@ -330,12 +330,12 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         width: '100%',
         height: '70%',
         overflow: 'hidden',
-        paddingLeft: PixelUtil.size(10),
+        paddingLeft: PixelUtil.size(16),
     },
     servicerPersonInfo: {
         // 服务项-服务人
-        width: PixelUtil.rect(128, 128).width,
-        height: PixelUtil.rect(128, 128).height,
+        width: PixelUtil.size(128),
+        height: PixelUtil.size(128),
         backgroundColor: '#f3f3f3',
         borderColor: '#BCCDFF',
         borderWidth: PixelUtil.size(4),
@@ -348,8 +348,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     servicerPersonInfoSelected: {
         // 服务项-服务人
-        width: PixelUtil.rect(128, 128).width,
-        height: PixelUtil.rect(128, 128).height,
+        width: PixelUtil.size(128),
+        height: PixelUtil.size(128),
         backgroundColor: '#f3f3f3',
         borderColor: '#FF9B1F',
         borderWidth: PixelUtil.size(4),
@@ -471,7 +471,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openCardBox: {
         // 售卡-卡展示
         width: '100%',
-        height: PixelUtil.size(850),
+        flex: 1,
     },
     LeftOpenCardcontent: {
         // 售卡-左边主体
@@ -522,9 +522,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openCardServicerInfo: {
         // 中部-服务人
         width: '100%',
-        height: '25%',
+        height: PixelUtil.size(310),
         overflow: 'hidden',
-        backgroundColor: '#fff',
     },
     openCardOther: {
         width: '25%',
@@ -564,17 +563,16 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     chooseItem: {
         //有选中内容
         width: '100%',
-        height: '85%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f0f0'
     },
     activeAreaL: {
         width: '100%',
         height: PixelUtil.size(150),
-        backgroundColor: '#00ff00'
     },
     cardOperate: {
         // 底部-结算
@@ -677,12 +675,25 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openActiveArea: {
         //操作区域(开卡)
         width: '100%',
-        height: '14%',
-        flex: 0,
+        height: PixelUtil.size(154),
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        backgroundColor: 'rgba(0,0,0,0)',
+        borderRightWidth: PixelUtil.size(1),
+        borderRightColor: '#cbcbcb',
+    },
+    openActiveStaffArea: {
+        //操作区域(开卡)
+        width: '100%',
+        height: PixelUtil.size(154),
+        borderTopColor: '#cbcbcb',
+        borderTopWidth: PixelUtil.size(1),
+        borderStyle: 'solid',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
     },
     openActiveAreaL: {
         //(开卡)
@@ -705,8 +716,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openActiveAreaR: {
         //(开卡)
         width: '100%',
-        height: '80%',
-        marginTop: PixelUtil.size(22),
+        height: '100%',
     },
     tipTextBox: {
         // 提示

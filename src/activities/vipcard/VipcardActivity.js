@@ -170,11 +170,8 @@ class VipCard extends React.Component {
                     <View style={RechargeStoredCardStyles.ShowOpenRightcontent}>
                         {/*右侧卡列表*/}
                         <View style={RechargeStoredCardStyles.ShowOpenCardBox}>
-                            <View
-                                style={{
-                                    display: tabIndex !== 2 ? 'flex' : 'none',
-                                    flex: 1,
-                                }}>
+                            {/*卡列表*/}
+                            <View style={{ display: tabIndex !== 2 ? 'flex' : 'none', flex: 1}}>
                                 <VipcardSaleCardList
                                     cardType={tabIndex == 0 ? 1 : 2}
                                     card={card}
@@ -182,7 +179,7 @@ class VipCard extends React.Component {
                                     setCount={setCount}
                                 />
                             </View>
-
+                            {/*服务人*/}
                             <View style={{display: tabIndex === 2 ? 'flex' : 'none', flex: 1}}>
                                 <StaffSelectBox
                                     onSelected={setStaff}
@@ -190,7 +187,8 @@ class VipCard extends React.Component {
                                 />
                             </View>
                             {editStaff.id && tabIndex == 2 && (
-                                <View style={RechargeStoredCardStyles.openActiveArea}>
+                                // 服务人编辑
+                                <View style={RechargeStoredCardStyles.openActiveStaffArea}>
                                     <View style={RechargeStoredCardStyles.openActiveAreaR}>
                                         <StaffServiceEdit
                                             data={editStaff}
@@ -203,7 +201,6 @@ class VipCard extends React.Component {
                                 </View>
                             )}
                         </View>
-
                     </View>
                 </View>
                 <VipcardPayment

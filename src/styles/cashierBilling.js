@@ -1003,8 +1003,6 @@ export const cashierBillingStyle = StyleSheet.create({
     designerLeftInfo: {
         //选中内容-左
         width: PixelUtil.rect(200, 100).width,
-        // flex: 0,
-        // justifyContent: 'center',
         marginRight: PixelUtil.size(168),
         marginLeft: PixelUtil.size(74),
     },

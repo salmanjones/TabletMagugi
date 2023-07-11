@@ -132,7 +132,7 @@ class StaffSelectBoxClass extends React.PureComponent {
         }
 
         return (
-            <View style={{height: '97%', marginBottom: PixelUtil.size(1)}}>
+            <View style={{height: '100%'}}>
                 <FlatList
                     data={sections}
                     keyExtractor={item => item.title}
