@@ -43,15 +43,14 @@ export class VipcardPayment extends React.PureComponent {
                 this.setState({otherPayTypeList: {}});
                 showMessage('加载外联支付失败', true);
             }
-        })
-            .catch(err => {
+        }).catch(err => {
+            requestAnimationFrame(() => {
+                this.setState({otherPayTypeList: {}});
                 requestAnimationFrame(() => {
-                    this.setState({otherPayTypeList: {}});
-                    requestAnimationFrame(() => {
-                        displayError(err, null, true);
-                    })
+                    displayError(err, null, true);
                 })
-            });
+            })
+        });
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -102,33 +101,31 @@ export class VipcardPayment extends React.PureComponent {
                 staffids,
                 card.vipCardName,
                 card.vipCardNo
-            )
-                .then(backData => {
-                    const data = backData.data;
-                    if (data.tradeNo && data.codeUrl) {
-                        that.setState({
-                            isPaying: false,
-                            qrUrl: data.codeUrl,
-                            tradeNo: data.tradeNo,
-                            title: payType === 'wx' ? '微信支付' : '支付宝支付',
-                        });
-                    } else {
-                        requestAnimationFrame(() => {
-                            that.setState({isPaying: false});
-                            requestAnimationFrame(() => {
-                                showMessage('创建订单异常，请重试', true);
-                            })
-                        })
-                    }
-                })
-                .catch(err => {
+            ).then(backData => {
+                const data = backData.data;
+                if (data.tradeNo && data.codeUrl) {
+                    that.setState({
+                        isPaying: false,
+                        qrUrl: data.codeUrl,
+                        tradeNo: data.tradeNo,
+                        title: payType === 'wx' ? '微信支付' : '支付宝支付',
+                    });
+                } else {
                     requestAnimationFrame(() => {
                         that.setState({isPaying: false});
                         requestAnimationFrame(() => {
-                            displayError(err, null, true);
+                            showMessage('创建订单异常，请重试', true);
                         })
                     })
-                });
+                }
+            }).catch(err => {
+                requestAnimationFrame(() => {
+                    that.setState({isPaying: false});
+                    requestAnimationFrame(() => {
+                        displayError(err, null, true);
+                    })
+                })
+            });
         } else {
             fetchOtherPayment(
                 deptId,

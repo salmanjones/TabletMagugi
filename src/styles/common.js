@@ -422,42 +422,45 @@ export const commonStyles = StyleSheet.create({
     },
     cardBox: {
         //会员卡
-        width: PixelUtil.rect(476, 240).width,
-        height: PixelUtil.rect(476, 240).height,
+        width: PixelUtil.size(452),
+        height: PixelUtil.size(244),
         overflow: 'hidden',
         position: 'relative',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginBottom: PixelUtil.size(20),
-        marginLeft: PixelUtil.size(20),
-        // marginTop: PixelUtil.size(30),
-    },
-    cardBoxActive: {
-        backgroundColor: 'red',
+        marginLeft: PixelUtil.size(36),
     },
     cardBoxBg: {
         //会员卡-卡类型
-        width: PixelUtil.rect(476, 240).width,
-        height: PixelUtil.rect(476, 240).height,
-        position: 'absolute',
-        top: 0,
-        left: 0,
+        width: '100%',
+        height: '100%',
+    },
+    cardSaleTitle:{
+        marginLeft: PixelUtil.size(40),
+        marginTop: PixelUtil.size(10),
+        color: '#FFEFD5',
+        fontSize: PixelUtil.size(20),
+        fontWeight: '700'
     },
     cardName: {
         //会员卡-卡名
-        marginLeft: PixelUtil.size(142),
-        marginTop: PixelUtil.size(26),
-        width: PixelUtil.size(304),
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(20),
+        width: PixelUtil.size(412),
+        minHeight: PixelUtil.size(84)
     },
     cardNameText: {
         //会员卡-卡名-文字
-        fontSize: PixelUtil.size(32),
-        color: '#fff',
+        fontSize: PixelUtil.size(24),
+        color: '#5E3F20',
         textAlign: 'left',
+        fontWeight: '700',
+        lineHeight: PixelUtil.size(48)
     },
-    cardSite: {
+    cardSite:{
         //会员卡-地址
         marginLeft: PixelUtil.size(142),
         marginBottom: PixelUtil.size(10),
@@ -471,15 +474,25 @@ export const commonStyles = StyleSheet.create({
         lineHeight: PixelUtil.size(50),
     },
     cardPrice: {
-        //会员卡-价格
-        marginLeft: PixelUtil.size(142),
-        width: PixelUtil.size(304),
+        //会员卡-卡名
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(14),
+        width: PixelUtil.size(412),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'baseline'
+    },
+    cardPricePreText:{
+        fontSize: PixelUtil.size(28),
+        color: '#5E3F20',
+        fontWeight: '700'
     },
     cardPriceText: {
         //会员卡-价格-文字
-        fontSize: PixelUtil.size(32),
-        color: '#fff',
-        textAlign: 'left',
+        fontSize: PixelUtil.size(40),
+        color: '#5E3F20',
+        fontWeight: '700'
     },
     cardIconBox: {
         //会员卡-小图标
@@ -545,47 +558,20 @@ export const commonStyles = StyleSheet.create({
         height: PixelUtil.rect(74, 74).height,
         borderRadius: PixelUtil.size(37),
     },
-    timeCardBoxBg: {
-        //次卡-背景
-        width: PixelUtil.rect(476, 240).width,
-        height: PixelUtil.rect(476, 240).height,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        flex: 0,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    activeTimeCardBoxBg: {
-        //次卡-背景
-        width: PixelUtil.rect(476, 240).width,
-        height: PixelUtil.rect(476, 240).height,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        flex: 0,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginLeft: PixelUtil.size(-5),
-        paddingLeft: PixelUtil.size(5),
-    },
     timeCardName: {
-        //次卡-卡名
-        width: PixelUtil.rect(277, 80).width,
-        height: PixelUtil.rect(277, 80).height,
-        marginTop: PixelUtil.size(100),
-        marginLeft: PixelUtil.size(22),
-        overflow: 'hidden',
+        //会员卡-卡名
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(20),
+        width: PixelUtil.size(412),
+        minHeight: PixelUtil.size(84)
     },
     timeCardNameText: {
-        //次卡-卡名-文字
-        fontSize: PixelUtil.size(32),
-        color: '#fff',
-        width: PixelUtil.rect(277, 80).width,
-        height: PixelUtil.rect(277, 80).height,
-        overflow: 'hidden',
+        //会员卡-卡名-文字
+        fontSize: PixelUtil.size(24),
+        color: '#3C4C72',
+        textAlign: 'left',
+        fontWeight: '700',
+        lineHeight: PixelUtil.size(48)
     },
     timeCardNum: {
         //次卡-余次
@@ -599,25 +585,44 @@ export const commonStyles = StyleSheet.create({
         marginTop: PixelUtil.size(50)
     },
     timeCardOtherBody: {
-        //次卡-余次
-        width: '40%',
-        height: '100%',
-        flex: 0,
+        //会员卡-卡名
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(14),
+        width: PixelUtil.size(412),
+        display: "flex",
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingLeft: Platform.OS === 'ios' ? '2%' : '3%',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     timeCardOtherBox: {
         width: '100%',
         height: '48%',
         marginTop: '14%',
     },
+    timeCardPriceBigPreText:{
+        fontSize: PixelUtil.size(28),
+        color: '#101B3C',
+        fontWeight: "700"
+    },
     timeCardPriceBigText: {
         //次卡-余次-金额v
-        fontSize: PixelUtil.size(32),
-        color: '#333',
-        textAlign: 'left',
+        fontSize: PixelUtil.size(40),
+        color: '#101B3C',
+        fontWeight: '700'
+    },
+    timeCardPriceBigAfterText:{
+        //次卡-余次-金额v
+        fontSize: PixelUtil.size(30),
+        color: '#444956',
+        fontWeight: '500',
+        marginLeft: PixelUtil.size(10)
+    },
+    timeCardOtherBodyRight:{
+        width: '85%',
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'baseline',
     },
     timeCardPriceText: {
         //次卡-余次-金额

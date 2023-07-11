@@ -35,7 +35,6 @@ class VipCard extends React.Component {
         this.state = {
             tabIndex: 0,
         };
-
         this.acl = {};
     }
 
@@ -92,17 +91,16 @@ class VipCard extends React.Component {
             <View style={RechargeStoredCardStyles.cardOperateBottom}>
                 <View style={RechargeStoredCardStyles.showPayPrice}>
                     <Text style={RechargeStoredCardStyles.showPayPriceText}>
-                        应付：{totalPrice}
+                        应付：{totalPrice && totalPrice.toString().length > 0 ? totalPrice: '0.00'}
                     </Text>
                 </View>
                 <View style={RechargeStoredCardStyles.PayForBtn}>
                     <TouchableOpacity
                         style={RechargeStoredCardStyles.PayForBtnFinish}
-                        onPress={this.submitOrder}
-                    >
+                        onPress={this.submitOrder}>
                         <Text style={RechargeStoredCardStyles.PayForBtnFinishText}>
                             结单
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -128,10 +126,13 @@ class VipCard extends React.Component {
 
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
+                {/*标题栏*/}
                 <View style={RechargeStoredCardStyles.openCardTitle}>
+                    {/*标题*/}
                     <View style={RechargeStoredCardStyles.openCardTitleL}>
                         <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
                     </View>
+                    {/*Tbs*/}
                     <View style={RechargeStoredCardStyles.openCardTitleR}>
                         <View style={RechargeStoredCardStyles.openCardTitleRTitle}>
                             <TabGroup
@@ -142,17 +143,22 @@ class VipCard extends React.Component {
                         </View>
                     </View>
                 </View>
+                {/*内容区域*/}
                 <View style={RechargeStoredCardStyles.openContentBox}>
+                    {/*左侧内容*/}
                     <View style={RechargeStoredCardStyles.contentBody}>
+                        {/*左侧卡信息区域*/}
                         <View style={RechargeStoredCardStyles.Leftcontent}>
+                            {/*购卡信息*/}
                             <VipcardDetailSection
                                 data={card}
                                 setCount={setCount}
                                 count={count}
                                 acl={this.acl}
                             />
-
+                            {/*服务人信息*/}
                             <StaffServiceBar data={staffs} onSelected={this.onStaffPress} />
+                            {/*总金额*/}
                             <View style={RechargeStoredCardStyles.openActiveArea}>
                                 <View style={RechargeStoredCardStyles.openActiveAreaL}>
                                     {this.renderTotal(totalPrice)}
@@ -160,14 +166,15 @@ class VipCard extends React.Component {
                             </View>
                         </View>
                     </View>
+                    {/*右侧内容*/}
                     <View style={RechargeStoredCardStyles.ShowOpenRightcontent}>
+                        {/*右侧卡列表*/}
                         <View style={RechargeStoredCardStyles.ShowOpenCardBox}>
                             <View
                                 style={{
                                     display: tabIndex !== 2 ? 'flex' : 'none',
                                     flex: 1,
-                                }}
-                            >
+                                }}>
                                 <VipcardSaleCardList
                                     cardType={tabIndex == 0 ? 1 : 2}
                                     card={card}
@@ -176,31 +183,25 @@ class VipCard extends React.Component {
                                 />
                             </View>
 
-                            <View
-                                style={{
-                                    display: tabIndex === 2 ? 'flex' : 'none',
-                                    flex: 1,
-                                }}
-                            >
+                            <View style={{display: tabIndex === 2 ? 'flex' : 'none', flex: 1}}>
                                 <StaffSelectBox
                                     onSelected={setStaff}
                                     clearServicerGridChoose={staffIndex}
                                 />
                             </View>
-                            {editStaff.id &&
-                                tabIndex == 2 && (
-                                    <View style={RechargeStoredCardStyles.openActiveArea}>
-                                        <View style={RechargeStoredCardStyles.openActiveAreaR}>
-                                            <StaffServiceEdit
-                                                data={editStaff}
-                                                showAssign={false}
-                                                onDelete={() => {
-                                                    setStaff({});
-                                                }}
-                                            />
-                                        </View>
+                            {editStaff.id && tabIndex == 2 && (
+                                <View style={RechargeStoredCardStyles.openActiveArea}>
+                                    <View style={RechargeStoredCardStyles.openActiveAreaR}>
+                                        <StaffServiceEdit
+                                            data={editStaff}
+                                            showAssign={false}
+                                            onDelete={() => {
+                                                setStaff({});
+                                            }}
+                                        />
                                     </View>
-                                )}
+                                </View>
+                            )}
                         </View>
 
                     </View>
@@ -217,7 +218,6 @@ class VipCard extends React.Component {
                     card={card}
                     model={'vipcard'}
                 />
-
             </View>
         );
     }
@@ -225,6 +225,9 @@ class VipCard extends React.Component {
 
 const mapStateToProps = state => {
     const { vipcard } = state;
+
+    console.log("vipcard", JSON.stringify(vipcard))
+
     return {
         staffs: vipcard.staffs,
         card: vipcard.card,

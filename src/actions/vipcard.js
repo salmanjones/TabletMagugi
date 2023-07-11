@@ -1,5 +1,5 @@
 import * as types from './action-types';
-import {fetchVipcardSales} from '../services';
+import {fetchVipCardSales} from '../services';
 import {delay, showMessage} from '../utils';
 
 const CACHE_TIME = 3600 * 1000 * 2;
@@ -92,24 +92,22 @@ export const getSalesCardAction = () => {
 
             const storeId = getState().auth.userInfo.storeId;
             return Promise.all([
-                fetchVipcardSales(storeId, 1),
-                fetchVipcardSales(storeId, 2),
-            ])
-                .then(data => {
-                    dispatch({
-                        type: types.VIPCARD_GET_SALES_CARD.SUCCESS,
-                        body: {
-                            1: data[0].data,
-                            2: data[1].data,
-                        },
-                    });
-                })
-                .catch(err => {
-                    dispatch({
-                        type: types.VIPCARD_GET_SALES_CARD.ERROR,
-                        body: err,
-                    });
+                fetchVipCardSales(storeId, 1),
+                fetchVipCardSales(storeId, 2),
+            ]).then(data => {
+                dispatch({
+                    type: types.VIPCARD_GET_SALES_CARD.SUCCESS,
+                    body: {
+                        1: data[0].data,
+                        2: data[1].data,
+                    },
                 });
+            }).catch(err => {
+                dispatch({
+                    type: types.VIPCARD_GET_SALES_CARD.ERROR,
+                    body: err,
+                });
+            });
         }
     };
 };

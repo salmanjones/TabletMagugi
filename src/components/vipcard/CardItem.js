@@ -113,9 +113,8 @@ export class CardItem extends React.PureComponent {
                                 )}
 
                                 <ImageBackground source={selected ? activeTimeCardBgImg : timeCardBgImg}
-                                                 style={selected ? commonStyles.activeTimeCardBoxBg : commonStyles.timeCardBoxBg}>
-                                    <Text style={commonStyles.timeCardStore} numberOfLines={1}
-                                          ellipsizeMode={'tail'}>{data.storeName}</Text>
+                                                 style={commonStyles.cardBoxBg}>
+                                    <Text style={commonStyles.timeCardStore} numberOfLines={1} ellipsizeMode={'tail'}>{data.storeName}</Text>
                                     <View style={commonStyles.timeCardName}>
                                         <Text style={commonStyles.timeCardNameText} numberOfLines={2}>
                                             {data.vipCardName}

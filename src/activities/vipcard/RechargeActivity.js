@@ -148,7 +148,7 @@ class Recharge extends React.Component {
                             </View>
                             <Text style={RechargeStoredCardStyles.cardOperateNoneT}>
                                 请选择您要充值的会员卡
-              </Text>
+                            </Text>
                         </View>
                     </View>
                 )}

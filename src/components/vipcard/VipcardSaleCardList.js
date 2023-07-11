@@ -6,13 +6,12 @@ import {getSalesCardAction} from '../../actions';
 import {SectionList, SaleCardItem} from '../../components';
 import {memberIdentifyStyle} from '../../styles';
 
-export class VipcardSaleCardListComponent extends React.PureComponent {
+export class VipcardSaleCardListComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sCard: {},
-            tCard: {},
-        };
+            activeCard:{}
+        }
     }
 
     componentDidMount() {
@@ -23,47 +22,43 @@ export class VipcardSaleCardListComponent extends React.PureComponent {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        this.setCard(nextProps.card || {});
+        const cardItem = nextProps.card || {}
+        this.setState({
+            activeCard: cardItem
+        })
     }
-
-    setCard = item => {
-        const key = item.cardType == 1 ? 'sCard' : 'tCard';
-        const otherKey = item.cardType == 1 ? 'tCard' : 'sCard';
-        let state = {};
-        state[key] = item;
-        state[otherKey] = this.state[otherKey].id ? {} : this.state[otherKey];
-        this.setState(state);
-    };
 
     onCardItemPress = item => {
         item.openPrice = item.initialPrice;
-        this.setCard(item);
+        this.setState({
+            activeCard: item
+        })
         this.props.selectCard && this.props.selectCard(item);
         this.props.setCount(1);
     };
 
     render() {
-        const {storage, time, cardType, loading} = this.props;
+        const {storageCards, timesCards, cardType, loading} = this.props;
+        const {activeCard} = this.state
 
         return (
             <View style={{flex: 1}}>
+                {/*储值卡*/}
                 <SectionList
-                    noItems={storage.length === 0}
+                    noItems={storageCards.length === 0}
                     loading={loading}
-                    hide={cardType == 2}
-                >
+                    hide={cardType == 2}>
                     <FlatList
                         style={memberIdentifyStyle.ShowMemberCardList}
-                        data={storage}
-                        extraData={this.state.sCard}
+                        data={storageCards}
                         numColumns={2}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => {
-                            console.log(item.cardType + ':' + item.id);
+                        renderItem={({item, index}) => {
                             return (
                                 <SaleCardItem
                                     data={item}
-                                    selected={item.id == (this.state.sCard || {}).id}
+                                    index={index}
+                                    selected={item.id == activeCard.id}
                                     onSelected={this.onCardItemPress}
                                 />
                             );
@@ -71,19 +66,19 @@ export class VipcardSaleCardListComponent extends React.PureComponent {
                     />
                 </SectionList>
 
-                <SectionList noItems={time.length === 0} hide={cardType == 1}>
+                {/*次卡*/}
+                <SectionList noItems={timesCards.length === 0} hide={cardType == 1}>
                     <FlatList
                         style={memberIdentifyStyle.ShowMemberCardList}
-                        data={time}
-                        extraData={this.state.tCard}
+                        data={timesCards}
                         numColumns={2}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => {
-                            console.log(item.cardType + ':' + item.id);
+                        renderItem={({item, index}) => {
                             return (
                                 <SaleCardItem
+                                    index={index}
                                     data={item}
-                                    selected={item.id == (this.state.tCard || {}).id}
+                                    selected={item.id == activeCard.id}
                                     onSelected={this.onCardItemPress}
                                 />
                             );
@@ -97,12 +92,14 @@ export class VipcardSaleCardListComponent extends React.PureComponent {
 
 const mapStateToProps = state => {
     const {salesCard} = state.component;
-    const storage = salesCard.cards[1] || [];
-    const time = salesCard.cards[2] || [];
+    const loading = salesCard.loading
+    const storageCards = salesCard.cards[1] || [];
+    const timesCards = salesCard.cards[2] || [];
+
     return {
-        storage: storage,
-        time: time,
-        loading: salesCard.loading,
+        loading,
+        storageCards,
+        timesCards,
     };
 };
 

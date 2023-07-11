@@ -11,17 +11,18 @@ const THIRD_PAY = {
  * @param {*} storeId
  * @param {1是储值卡 2是次卡} cardType
  */
-export const fetchVipcardSales = (storeId, cardType) => {
+export const fetchVipCardSales = (storeId, cardType) => {
     return callService(api.getVipcardSales, {
         storeId: storeId,
         cardType: cardType,
     }).then(backData => {
         let cardList = backData.data.map(x => {
             return {
-                id: x.productNo,
+                id: x.cardCateId,
+                cardCateId: x.cardCateId,
+                vipCardNo: x.cardCateId,
                 brandLogo: x.brandLogo,
                 vipCardName: x.cardName,
-                vipCardNo: x.productNo,
                 cardType: x.cardType,
                 storeName: x.storeName,
                 initialPrice: x.initMoney,

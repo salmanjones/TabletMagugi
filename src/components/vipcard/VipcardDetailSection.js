@@ -3,6 +3,7 @@ import {Image, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 
 import {amendItemInfoStyle, RechargeStoredCardStyles,} from '../../styles';
 import {SaleCardItem} from '../../components';
+import {PixelUtil} from "../../utils";
 
 export class VipcardDetailSection extends React.PureComponent {
     constructor(props) {
@@ -12,8 +13,7 @@ export class VipcardDetailSection extends React.PureComponent {
             openPrice: 0,
             depositMoney: 0,
             active: false,
-        };
-
+        }
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -49,13 +49,14 @@ export class VipcardDetailSection extends React.PureComponent {
                                 <SaleCardItem data={data}/>
                             </View>
                             <View style={RechargeStoredCardStyles.openCardOther}>
+                                {/*总金额*/}
                                 <Text style={RechargeStoredCardStyles.cardOperateT}>开卡金额</Text>
                                 {
                                     (acl && acl.ncashier_opencard_card_money && cardType) ? (
                                         <TextInput
                                             ref="input"
                                             keyboardType={'numeric'}
-                                            style={amendItemInfoStyle.openCardTextInput}
+                                            style={amendItemInfoStyle.saleCardTextInput}
                                             underlineColorAndroid="transparent"
                                             maxLength={6}
                                             onChangeText={openPrice => {
@@ -65,7 +66,6 @@ export class VipcardDetailSection extends React.PureComponent {
                                                     openPrice: price + '',
                                                 }, () => this.onNumberChange(null));
                                             }}
-
                                             value={openPrice + ''}
                                         />
                                     ) : (
@@ -74,24 +74,18 @@ export class VipcardDetailSection extends React.PureComponent {
                                         </Text>
                                     )
                                 }
+                                {/*加减次数*/}
                                 {!cardType && !consumeMode && (
                                     <View style={amendItemInfoStyle.AmendCardItemCount}>
                                         <TouchableOpacity
                                             disabled={!data.id}
                                             style={amendItemInfoStyle.AmendCardItemCountAdd}
-                                            onPress={() => this.onNumberChange(-1)}
-                                        >
+                                            onPress={() => this.onNumberChange(-1)}>
                                             <Text style={amendItemInfoStyle.AmendCardItemCountMinText}>
                                                 -
                                             </Text>
                                         </TouchableOpacity>
-                                        <View
-                                            style={
-                                                active
-                                                    ? amendItemInfoStyle.AmendCardItemCountTextBoxActive
-                                                    : amendItemInfoStyle.AmendCardItemCountTextBox
-                                            }
-                                        >
+                                        <View style={ active ? amendItemInfoStyle.AmendCardItemCountTextBoxActive : amendItemInfoStyle.AmendCardItemCountTextBox}>
                                             <TextInput
                                                 ref="input"
                                                 editable={!!data.id}
@@ -116,8 +110,7 @@ export class VipcardDetailSection extends React.PureComponent {
                                         <TouchableOpacity
                                             style={amendItemInfoStyle.AmendCardItemCountMin}
                                             onPress={() => this.onNumberChange(1)}
-                                            disabled={!data.id}
-                                        >
+                                            disabled={!data.id}>
                                             <Text style={amendItemInfoStyle.AmendCardItemCountAddText}>
                                                 +
                                             </Text>
@@ -127,11 +120,12 @@ export class VipcardDetailSection extends React.PureComponent {
                                 }
 
                             </View>
-
                         </View>
                         {depositMoney != 0 && (
-                            <Text style={RechargeStoredCardStyles.cardOperateNoneText}>* 需支付 <Text
-                                style={RechargeStoredCardStyles.storedCardTipPrice}>工本费 {depositMoney}元</Text> *</Text>
+                            <View style={{width: '85%', display: 'flex', flexDirection:'row', justifyContent: 'flex-start'}}>
+                                <Text style={RechargeStoredCardStyles.cardOperateNoneText}>* 需支付</Text>
+                                <Text style={RechargeStoredCardStyles.storedCardTipPrice}>工本费 {depositMoney}元</Text>
+                            </View>
                         )}
                     </View>
                 )}
@@ -144,7 +138,6 @@ export class VipcardDetailSection extends React.PureComponent {
                                    resizeMode={'contain'}
                             />
                             <Text style={RechargeStoredCardStyles.cardOperateNoneT}>请选择您要购买的会员卡</Text>
-                            {/* <Text style={RechargeStoredCardStyles.cardOperateNoneT}>请选择您要充值的会员卡</Text> */}
                         </View>
                     </View>
                 )}

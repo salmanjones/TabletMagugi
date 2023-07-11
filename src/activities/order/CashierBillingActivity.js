@@ -3758,7 +3758,7 @@ const buildSubmitData = (self) => {
             opt: 'bms',
             consumeItems: JSON.stringify(submitConsumeDatas),
             billing: JSON.stringify(orderInfo),
-            reserveId: this.props.route.params.checkReserveId ||''
+            reserveId: self.props.route.params.checkReserveId ||''
         }
 
         return {toSubmit: true, data: finalData, index: -1};

@@ -51,8 +51,8 @@ export const getPendingList = `${hostBms}/tablet/billing/get/info`;
 export const getBillingList = `${hostBms}/tablet/billing/get/list`;
 //服务人列表
 export const billingSearch = `${hostBms}/tablet/billing/search`;
-//卡列表
-export const getVipcardSales = `${hostBms}/tablet/vipcard/find/cardsales`;
+//新：卡列表
+export const getVipcardSales = `${hostBms}/tablet/vipcard/find/tablet/cardsales`;
 //获取外联支付列表
 export const getOtherPayType = `${hostBms}/tablet/vipcard/find/otherpaytype`;
 //外联支付

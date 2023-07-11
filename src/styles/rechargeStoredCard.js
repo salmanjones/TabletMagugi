@@ -21,9 +21,19 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#fff',
     },
+    openCardTitle: {
+        // 售卡-标题
+        width: '100%',
+        height: PixelUtil.size(106),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2),
+    },
     openContentBox: {
         width: '100%',
-        height: '90%',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -32,6 +42,18 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         overflow: 'hidden',
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
+    },
+    openCardTitleL: {
+        width: '50%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    openCardTitleR: {
+        width: '50%',
+        height: '100%',
     },
     contentBox: {
         width: '100%',
@@ -46,19 +68,18 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     contentBody: {
         width: '50%',
         height: '100%',
-        borderRightWidth: PixelUtil.size(2),
-        borderRightColor: '#cbcbcb',
         position: 'relative',
-        zIndex: 2,
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        borderRightWidth: PixelUtil.size(2),
+        borderRightColor: '#cbcbcb',
     },
     Leftcontent: {
         // 左边主体
         width: '100%',
-        height: '88%',
+        height: '100%',
     },
     LeftcontentNew: {
         // 左边主体
@@ -115,15 +136,17 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     cardOperateNoneText: {
         //无内容-文字
-        fontSize: PixelUtil.size(32),
+        fontSize: PixelUtil.size(24),
         color: '#333',
-        marginTop: PixelUtil.size(32),
+        marginLeft: PixelUtil.size(40),
+        fontWeight: '500'
     },
     cardOperateT: {
         fontSize: PixelUtil.size(32),
         color: '#333',
-        marginBottom: PixelUtil.size(32),
-        textAlign: 'center'
+        marginBottom: PixelUtil.size(12),
+        textAlign: 'center',
+        fontWeight: '500'
     },
     cardInfo: {
         // 顶部--卡信息
@@ -269,8 +292,10 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         color: '#000',
     },
     storedCardTipPrice: {
-        // 顶部-充值-提示数字
-        color: '#fc9a1f',
+        //无内容-文字
+        fontSize: PixelUtil.size(24),
+        fontWeight: '500',
+        color: '#FFA800',
     },
     cardServicerInfo: {
         // 中部-服务人
@@ -282,7 +307,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // 中部-服务人-标题
         width: '100%',
         height: '30%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -303,7 +328,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     cardServicerBox: {
         // 中部-服务人-主体
         width: '100%',
-        height: '58%',
+        height: '70%',
         overflow: 'hidden',
         paddingLeft: PixelUtil.size(10),
     },
@@ -446,7 +471,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openCardBox: {
         // 售卡-卡展示
         width: '100%',
-        height: '65%',
+        height: PixelUtil.size(850),
     },
     LeftOpenCardcontent: {
         // 售卡-左边主体
@@ -455,32 +480,6 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         borderRightWidth: PixelUtil.size(2),
         borderRightColor: '#cbcbcb',
         position: 'relative',
-    },
-
-    openCardTitle: {
-        // 售卡-标题
-        width: '100%',
-        height: PixelUtil.size(106),
-        flex: 0,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        borderBottomColor: '#cbcbcb',
-        borderBottomWidth: PixelUtil.size(2),
-        marginLeft: PixelUtil.size(2),
-        backgroundColor: '#fff',
-    },
-    openCardTitleL: {
-        width: '50%',
-        height: '100%',
-        flex: 0,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    openCardTitleR: {
-        width: '100%',
-        height: PixelUtil.size(126),
     },
     openCardTitleRTitleO: {
         width: PixelUtil.size(660),
@@ -492,12 +491,12 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(-4),
     },
     openCardTitleRTitle: {
-        width: PixelUtil.size(660),
-        height: PixelUtil.size(124),
-        flex: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     },
     openCardCategory: {
         width: '60%',
@@ -515,7 +514,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // 顶部--卡信息
         width: '100%',
         // height: '100%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -523,7 +522,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openCardServicerInfo: {
         // 中部-服务人
         width: '100%',
-        height: '35%',
+        height: '25%',
         overflow: 'hidden',
         backgroundColor: '#fff',
     },
@@ -544,7 +543,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(48),
         color: '#333',
         textAlign: 'center',
-        marginBottom: PixelUtil.size(38),
+        marginBottom: PixelUtil.size(30),
         height: PixelUtil.size(72),
     },
     openCardOtherTextBox: {
@@ -673,7 +672,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         width: '50%',
         height: '100%',
         position: 'relative',
-        zIndex: 4,
+        marginLeft: PixelUtil.size(-2)
     },
     openActiveArea: {
         //操作区域(开卡)

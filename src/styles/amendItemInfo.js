@@ -298,7 +298,6 @@ export const amendItemInfoStyle = StyleSheet.create({
     AmendCardItemPriceBox: {
         width: PixelUtil.rect(256, 68).width,
     },
-
     openCardTextInput: {
         width: PixelUtil.rect(256, 72).width,
         height: PixelUtil.rect(256, 72).height,
@@ -312,4 +311,18 @@ export const amendItemInfoStyle = StyleSheet.create({
         borderColor: '#cbcbcb',
         borderWidth: PixelUtil.size(2),
     },
+    saleCardTextInput: {
+        width: PixelUtil.rect(280, 72).width,
+        height: PixelUtil.rect(280, 72).height,
+        borderRadius: PixelUtil.size(36),
+        backgroundColor: '#fff',
+        paddingTop: 0,
+        paddingBottom: 0,
+        fontSize: PixelUtil.size(34),
+        color: '#333',
+        textAlign: 'center',
+        marginTop: PixelUtil.size(38),
+        borderColor: '#cbcbcb',
+        borderWidth: PixelUtil.size(2),
+    }
 });
