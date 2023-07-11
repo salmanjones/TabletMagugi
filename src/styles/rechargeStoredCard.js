@@ -680,16 +680,13 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        borderRightWidth: PixelUtil.size(1),
-        borderRightColor: '#cbcbcb',
     },
     openActiveStaffArea: {
         //操作区域(开卡)
         width: '100%',
         height: PixelUtil.size(154),
+        borderTopWidth: PixelUtil.size(2),
         borderTopColor: '#cbcbcb',
-        borderTopWidth: PixelUtil.size(1),
-        borderStyle: 'solid',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',

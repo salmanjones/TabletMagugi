@@ -618,7 +618,6 @@ export const commonStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(10)
     },
     timeCardOtherBodyRight:{
-        width: '85%',
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'flex-end',
