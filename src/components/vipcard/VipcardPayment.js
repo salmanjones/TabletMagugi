@@ -74,7 +74,6 @@ export class VipcardPayment extends React.PureComponent {
             showMessage('请选择服务部门和支付方式', true);
             return;
         }
-
         const {member, totalPrice, staffs, card} = this.props;
 
         // 0元的次卡只有套餐卡能开
@@ -82,6 +81,7 @@ export class VipcardPayment extends React.PureComponent {
             showMessage('不支持0元开卡', true);
             return;
         }
+
 
         const staffids = staffs
             .filter(x => x.id)
@@ -122,12 +122,15 @@ export class VipcardPayment extends React.PureComponent {
                     })
                 }
             }).catch(err => {
+                console.log("支付失败", err)
                 requestAnimationFrame(() => {
                     that.setState({isPaying: false});
                     requestAnimationFrame(() => {
                         displayError(err, null, true);
                     })
                 })
+            }).finally(_=>{
+                that.setState({isPaying: false});
             });
         } else {
             fetchOtherPayment(
@@ -166,12 +169,15 @@ export class VipcardPayment extends React.PureComponent {
                     });
                 }
             }).catch(err => {
+                console.log("支付失败", err)
                 requestAnimationFrame(() => {
                     that.setState({isPaying: false});
                     requestAnimationFrame(() => {
                         displayError(err, null, true);
                     })
                 })
+            }).finally(_=>{
+                that.setState({isPaying: false});
             });
         }
     }
