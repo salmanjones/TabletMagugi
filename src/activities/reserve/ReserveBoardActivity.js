@@ -153,7 +153,8 @@ export const ReserveBoardActivity = props => {
                 const customerInfo = extra['customer']
                 const args = {
                     appUserId: customerInfo.appUserId,
-                    reserveId: customerInfo.recordId
+                    reserveId: customerInfo.recordId,
+                    isOnlyBms: '0'
                 }
 
                 // 缓存选中的预约ID,以供开单使用
@@ -373,7 +374,8 @@ export const ReserveBoardActivity = props => {
                                     setLoading(true)
                                     getCustomerDetail({
                                         appUserId: extra.appUserId,
-                                        reserveId: extra.reserveId
+                                        reserveId: extra.reserveId,
+                                        isOnlyBms: '0'
                                     }).then(backData=>{
                                         const {code, data} = backData
                                         if(code == '6000'){
