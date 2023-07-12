@@ -128,7 +128,7 @@ export const amendItemInfoStyle = StyleSheet.create({
     },
     AmendCardItemCount: {
         //修改项目-数量
-        height: PixelUtil.rect(256, 72).height,
+        height: PixelUtil.size(72),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -148,6 +148,8 @@ export const amendItemInfoStyle = StyleSheet.create({
         borderWidth: PixelUtil.size(2),
         borderRightWidth: 0,
         backgroundColor: '#fff',
+        borderTopLeftRadius: PixelUtil.size(12),
+        borderBottomLeftRadius: PixelUtil.size(12)
     },
     AmendCardItemCountAddText: {
         //修改项目-数量-加-文字
@@ -158,7 +160,6 @@ export const amendItemInfoStyle = StyleSheet.create({
     },
     AmendCardItemCountTextBox: {
         //修改项目-数量-文字
-        width: PixelUtil.rect(108, 72).width,
         height: PixelUtil.rect(108, 72).height,
         borderColor: '#cbcbcb',
         borderWidth: PixelUtil.size(2),
@@ -190,7 +191,7 @@ export const amendItemInfoStyle = StyleSheet.create({
         alignItems: 'center',
     },
     AmendCardItemCountTextInput: {
-        width: PixelUtil.rect(104, 68).width,
+        width: PixelUtil.size(136),
         height: PixelUtil.rect(104, 68).height,
         backgroundColor: '#fff',
         fontSize: PixelUtil.size(32),
@@ -212,6 +213,8 @@ export const amendItemInfoStyle = StyleSheet.create({
         borderWidth: PixelUtil.size(2),
         borderLeftWidth: 0,
         backgroundColor: '#fff',
+        borderTopRightRadius: PixelUtil.size(12),
+        borderBottomRightRadius: PixelUtil.size(12)
     },
     AmendCardItemCountMinText: {
         //修改项目-数量-减-文字

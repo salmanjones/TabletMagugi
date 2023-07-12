@@ -638,7 +638,7 @@ function RootNavigation() {
  */
 function TabNavigation() {
     // tab栏位数量
-    const tabStackSize = 4
+    const tabStackSize = 3
     return (
         <TabStack.Navigator
             initialLayout={{width: Dimensions.get('window').width}}
@@ -689,11 +689,11 @@ function TabNavigation() {
             {/*    component={IdentifyActivity}*/}
             {/*    options={{tabBarLabel: '充值'}}*/}
             {/*/>*/}
-            <TabStack.Screen
-                name="SelectCustomerType"
-                component={SelectCustomerType}
-                options={{tabBarLabel: '开卡'}}
-            />
+            {/*<TabStack.Screen*/}
+            {/*    name="SelectCustomerType"*/}
+            {/*    component={SelectCustomerType}*/}
+            {/*    options={{tabBarLabel: '开卡'}}*/}
+            {/*/>*/}
             <TabStack.Screen
                 name="BillManageActivity"
                 component={BillManageActivity}

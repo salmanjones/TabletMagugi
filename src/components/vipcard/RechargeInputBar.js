@@ -31,12 +31,10 @@ export class RechargeInputBar extends React.PureComponent {
             this.setState({amt: text});
             this.props.onAmtChanged && this.props.onAmtChanged(text, 1);
         }
-        ;
     };
 
     render() {
-        const {amt} = this.state;
-        const {onEndEditing, card, onAmtChanged} = this.props;
+        const {onEndEditing, card} = this.props;
         const cardType = card.cardType;
 
         let content = '尊敬的顾客您好，本卡不参与充值业务';
@@ -44,7 +42,9 @@ export class RechargeInputBar extends React.PureComponent {
             content = '尊敬的顾客您好，本卡有欠款，不参与充值业务';
             return this.renderUnrechargeableInput(content)
         } else {
-            if (!card.allowRecharge) return this.renderUnrechargeableInput(content);
+            if (!card.allowRecharge) {
+                return this.renderUnrechargeableInput(content);
+            }
         }
 
         let minimal = cardType == 1 ? card.rechargePrice : card.initialPrice;
@@ -56,7 +56,9 @@ export class RechargeInputBar extends React.PureComponent {
     renderUnrechargeableInput = (content) => {
         return (
             <View style={RechargeStoredCardStyles.tipTextBox}>
-                <Text style={RechargeStoredCardStyles.tipText}>{content}</Text>
+                <View style={RechargeStoredCardStyles.tipTextWrap}>
+                    <Text style={RechargeStoredCardStyles.tipText}>{content}</Text>
+                </View>
             </View>
         );
     };
@@ -66,7 +68,6 @@ export class RechargeInputBar extends React.PureComponent {
             <View style={RechargeStoredCardStyles.storedCardBox}>
                 <View style={RechargeStoredCardStyles.storedCardInfo}>
                     <Text style={RechargeStoredCardStyles.storedCardText}>充值：</Text>
-
                     <View style={RechargeStoredCardStyles.storedCardInpBox}>
                         <TextInput
                             editable={card.allowRecharge}
@@ -82,10 +83,9 @@ export class RechargeInputBar extends React.PureComponent {
                 </View>
                 <Text style={RechargeStoredCardStyles.storedCardTip}>
                     *最低充值金额<Text
-                    style={RechargeStoredCardStyles.storedCardTipPrice}
-                >
+                    style={RechargeStoredCardStyles.storedCardTipPrice}>
                     &nbsp;&nbsp;不能低于{minimal}元&nbsp;&nbsp;
-                </Text>*
+                    </Text>
                 </Text>
             </View>
         );

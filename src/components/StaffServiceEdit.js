@@ -69,8 +69,7 @@ export class StaffServiceEdit extends React.PureComponent {
                 )}
                 <TouchableOpacity
                     style={cashierBillingStyle.designerDelete}
-                    onPress={onDelete}
-                >
+                    onPress={onDelete}>
                     <Image resizeMethod="resize"
                            source={deleteBg}
                            style={cashierBillingStyle.designerDeleteImg}

@@ -23,7 +23,7 @@ const getValidity = (endDate, validTime) => {
             validity = "年卡";
             break;
         case -2:
-            validity = "有效期 " + endDate;
+            validity = "有效期至" + endDate;
             break;
         case 0:
             validity = "无期限";

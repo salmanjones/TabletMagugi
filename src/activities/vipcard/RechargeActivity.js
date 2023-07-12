@@ -7,7 +7,6 @@ import {RechargeStoredCardStyles,} from '../../styles';
 import {
     CardDetails,
     CardsView,
-    HeadeOrderInfoRight,
     ModalCardInfo,
     RechargeInputBar,
     StaffSelectBox,
@@ -18,22 +17,23 @@ import {
 } from '../../components';
 
 const tabs = [
-    { id: 1, name: '储值卡' },
-    { id: 2, name: '次卡' },
-    { id: 3, name: '服务人' },
+    {id: 1, name: '储值卡'},
+    {id: 2, name: '次卡'},
+    {id: 3, name: '服务人'},
 ];
 
 let storageCard = null;
 let timeCard = null;
+
 class Recharge extends React.Component {
     constructor(props) {
         super(props);
-        const { params } = this.props.route;
-        let avaiableCards = filterUnRechargeableCard(
+        const {params} = this.props.route;
+        const validCards = filterUnRechargeableCard(
             params.member.vipStorageCardList,
             this.props.storeId
         );
-        const card = avaiableCards.filter(x => x.id === params.card.id)[0];
+        const card = validCards.filter(x => x.id === params.card.id)[0];
         this.state = {
             member: params.member,
             currentCard: card,
@@ -46,26 +46,19 @@ class Recharge extends React.Component {
             clearServicerGridChoose: '-1',
         };
 
-        let cardGroups = groupBy(avaiableCards, card => card.cardType);
-
+        const cardGroups = groupBy(validCards, card => card.cardType);
         storageCard = cardGroups['1'] || [];
         timeCard = cardGroups['2'] || [];
     }
 
     componentDidMount() {
-        // 处理右上角会员信息展示
-        let {route, navigation} = this.props
+        let {route} = this.props
         this.props.navigation.setParams({
             showMemberIcon: true,
             memberInfo: route.params.member,
         });
         route.params.showMemberIcon = true
         route.params.memberInfo = route.params.member
-        navigation.setOptions({
-            headerRight: () =>  (
-                <HeadeOrderInfoRight navigation={navigation} router={route}  from="recharge"/>
-            )
-        })
     }
 
     render() {
@@ -76,16 +69,101 @@ class Recharge extends React.Component {
             rechargeAmt,
             rechargeCount,
             cardModelVisible,
+            currentTabIndex,
+            currentServicerIndex,
         } = this.state;
+        let currentServicer = servicers[currentServicerIndex];
 
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
                 <View style={RechargeStoredCardStyles.contentBox}>
-                    <View style={RechargeStoredCardStyles.contentBody}>
-                        {this.renderLeft(this.state)}
+                    {/*左侧内容*/}
+                    <View style={RechargeStoredCardStyles.LeftcontentNew}>
+                        <View style={RechargeStoredCardStyles.title}>
+                            <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
+                        </View>
+                        {/*已选择卡*/}
+                        {currentCard && (
+                            <View style={RechargeStoredCardStyles.cardOperateBoxOther}>
+                                <View style={RechargeStoredCardStyles.cardOperateBox}>
+                                    {/*卡详情*/}
+                                    <CardDetails data={currentCard}/>
+                                    {/*充值金额*/}
+                                    <RechargeInputBar
+                                        card={currentCard}
+                                        onAmtChanged={this.onInputEndEditing}
+                                        onEndEditing={this.onInputEndEditing}/>
+                                </View>
+                                {/*已选择服务人信息*/}
+                                <StaffServiceBar
+                                    data={servicers}
+                                    onSelected={this.onServicerSelected}
+                                />
+                            </View>
+                        )}
+                        {/*未选择卡*/}
+                        {!currentCard && (
+                            <View style={RechargeStoredCardStyles.cardOperateNoneBoxOther}>
+                                <Image resizeMethod="resize"
+                                       source={require('@imgPath/buy-card.png')}
+                                       style={RechargeStoredCardStyles.cardOperateNoneImg}
+                                       resizeMode={'contain'}
+                                />
+                                <Text style={RechargeStoredCardStyles.cardOperateNoneT}>
+                                    请选择您要充值的会员卡
+                                </Text>
+                            </View>
+                        )}
+                        {/*底部区域*/}
+                        {this.renderBottom(this.state)}
                     </View>
-                    {this.renderRight(this.state)}
+                    {/*右侧内容*/}
+                    <View style={RechargeStoredCardStyles.Rightcontent}>
+                        {/*顶部Tab*/}
+                        <View style={RechargeStoredCardStyles.openCardTitleRO}>
+                            <View style={RechargeStoredCardStyles.openCardTitleRTitleO}>
+                                <TabGroup
+                                    selectedIndex={currentTabIndex}
+                                    displayField={'name'}
+                                    data={tabs}
+                                    onSelected={this.onTabsSelected}/>
+                            </View>
+                        </View>
+                        {/*中间区域*/}
+                        <View style={RechargeStoredCardStyles.ShowMemberCardBox}>
+                            {currentTabIndex === 0 && (
+                                <CardsView
+                                    data={storageCard}
+                                    onSelected={this.onCardSelected}
+                                    card={currentCard}/>
+                            )}
 
+                            {currentTabIndex === 1 && (
+                                <CardsView
+                                    data={timeCard}
+                                    onSelected={this.onCardSelected}
+                                    card={currentCard}/>
+                            )}
+
+                            <View style={[{display: currentTabIndex === 2 ? 'flex' : 'none'}, RechargeStoredCardStyles.RightServicecontent]}>
+                                <StaffSelectBox onSelected={this.onStaffSelected} clearServicerGridChoose={this.state.clearServicerGridChoose}/>
+                            </View>
+                        </View>
+                        {/*底部区域*/}
+                        {
+                            currentTabIndex === 2 && currentServicer && currentTabIndex == 2 && Object.keys(currentServicer).length > 0
+                            && currentServicer.value && currentServicer.value.length > 0 && (
+                                <View style={RechargeStoredCardStyles.activeAreaR}>
+                                    <StaffServiceEdit
+                                        data={currentServicer}
+                                        onAssign={this.onAssign}
+                                        onCancel={this.onCancelAssign}
+                                        onDelete={this.onDeleteServicer}
+                                        showAssign={false}/>
+                                </View>
+                            )
+                        }
+                    </View>
                 </View>
                 {this.renderBottom(this.state)}
 
@@ -93,7 +171,7 @@ class Recharge extends React.Component {
                     <ModalCardInfo
                         data={currentCard}
                         visible={cardModelVisible}
-                        onConfirm={() => this.setState({ cardModelVisible: false })}
+                        onConfirm={() => this.setState({cardModelVisible: false})}
                     />
                 )}
 
@@ -114,164 +192,40 @@ class Recharge extends React.Component {
         );
     }
 
-    renderLeft = ({ currentCard, rechargeAmt, servicers }) => {
+    renderBottom = ({rechargeAmt, currentCard}) => {
         return (
-            <View style={RechargeStoredCardStyles.LeftcontentNew}>
-                <View style={RechargeStoredCardStyles.title}>
-                    <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
-                </View>
-                {currentCard && (
-                    <View style={RechargeStoredCardStyles.cardOperateBoxOther}>
-                        <View style={RechargeStoredCardStyles.cardOperateBox}>
-                            <CardDetails data={currentCard} />
-                            <RechargeInputBar
-                                card={currentCard}
-                                onAmtChanged={this.onInputEndEditing}
-                                onEndEditing={this.onInputEndEditing}
-                            />
-                        </View>
-                        <StaffServiceBar
-                            data={servicers}
-                            onSelected={this.onServicerSelected}
-                        />
+            <View style={RechargeStoredCardStyles.activeAreaL}>
+                <View style={RechargeStoredCardStyles.cardOperateNew}>
+                    <View style={RechargeStoredCardStyles.showPayPrice}>
+                        <Text style={RechargeStoredCardStyles.showPayPriceText}>
+                            应付：{rechargeAmt && rechargeAmt.toString().length > 0 ? rechargeAmt: '0.00'}
+                        </Text>
                     </View>
-                )}
-                {!currentCard && (
-                    <View style={RechargeStoredCardStyles.cardOperateNoneBoxOther}>
-                        <View>
-                            <View>
-                                <Image resizeMethod="resize"
-                                    source={require('@imgPath/buy-card.png')}
-                                    style={RechargeStoredCardStyles.cardOperateNoneImg}
-                                    resizeMode={'contain'}
-                                />
-                            </View>
-                            <Text style={RechargeStoredCardStyles.cardOperateNoneT}>
-                                请选择您要充值的会员卡
+                    <View style={RechargeStoredCardStyles.PayForBtn}>
+                        <TouchableOpacity
+                            style={RechargeStoredCardStyles.PayForBtnInfo}
+                            onPress={this.showCardInfo}>
+                            <Text style={RechargeStoredCardStyles.PayForBtnInfoText}>
+                                详细信息
                             </Text>
-                        </View>
-                    </View>
-                )}
-
-                {this.renderBottom(this.state)}
-            </View>
-        );
-    };
-
-    renderRight = ({
-        currentTabIndex,
-        servicers,
-        currentServicerIndex,
-        currentCard,
-    }) => {
-        const currentServicer = servicers[currentServicerIndex] || {};
-        return (
-            <View style={RechargeStoredCardStyles.Rightcontent}>
-                {/*顶部*/}
-                <View style={RechargeStoredCardStyles.openCardTitleRO}>
-                    <View style={RechargeStoredCardStyles.openCardTitleRTitleO}>
-                        <TabGroup
-                            selectedIndex={currentTabIndex}
-                            displayField={'name'}
-                            data={tabs}
-                            onSelected={this.onTabsSelected}/>
-                    </View>
-                </View>
-                {/*中间区域*/}
-                <View style={RechargeStoredCardStyles.ShowMemberCardBox}>
-                    {currentTabIndex === 0 &&(
-                        <CardsView
-                            data={storageCard}
-                            onSelected={this.onCardSelected}
-                            card={currentCard}/>
-                    )}
-
-                    {currentTabIndex === 1 &&(
-                        <CardsView
-                            data={timeCard}
-                            onSelected={this.onCardSelected}
-                            card={currentCard}/>
-                    )}
-
-                    <View style={[{ display: currentTabIndex === 2 ? 'flex' : 'none' }, RechargeStoredCardStyles.RightServicecontent]}>
-                        <StaffSelectBox onSelected={this.onStaffSelected} clearServicerGridChoose={this.state.clearServicerGridChoose}/>
-                    </View>
-                </View>
-                {/*底部区域*/}
-                {currentTabIndex === 2 && this.renderBottomO(this.state)}
-            </View>
-        );
-    };
-
-    renderBottomO = ({
-        cardModelVisible,
-        rechargeAmt,
-        servicers,
-        currentServicerIndex,
-        currentTabIndex,
-        currentCard,
-    }) => {
-        let currentServicer = servicers[currentServicerIndex];
-        return (
-            <View style={RechargeStoredCardStyles.activeAreaR}>
-                {currentServicer &&
-                    currentTabIndex == 2 &&
-                    Object.keys(currentServicer).length > 0 && (
-                            <StaffServiceEdit
-                                data={currentServicer}
-                                onAssign={this.onAssign}
-                                onCancel={this.onCancelAssign}
-                                onDelete={this.onDeleteServicer}
-                                showAssign={false}
-                            />
-                    )}
-            </View>
-        );
-    };
-    renderBottom = ({
-        cardModelVisible,
-        rechargeAmt,
-        servicers,
-        currentServicerIndex,
-        currentTabIndex,
-        currentCard,
-    }) => {
-        let currentServicer = servicers[currentServicerIndex];
-        return (
-                <View style={RechargeStoredCardStyles.activeAreaL}>
-                    <View style={RechargeStoredCardStyles.cardOperateNew}>
-                        <View style={RechargeStoredCardStyles.showPayPrice}>
-                            <Text style={RechargeStoredCardStyles.showPayPriceText}>
-                                应付：{rechargeAmt}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.onPay}
+                            style={[
+                                RechargeStoredCardStyles.PayForBtnFinish,
+                                {display: currentCard.allowRecharge ? 'flex' : 'none'},
+                            ]}>
+                            <Text style={RechargeStoredCardStyles.PayForBtnFinishText}>
+                                结单
                             </Text>
-                        </View>
-                        <View style={RechargeStoredCardStyles.PayForBtn}>
-                            <TouchableOpacity
-                                style={RechargeStoredCardStyles.PayForBtnInfo}
-                                onPress={this.showCardInfo}
-                            >
-                                <Text style={RechargeStoredCardStyles.PayForBtnInfoText}>
-                                    详细信息
-                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this.onPay}
-                                style={[
-                                    RechargeStoredCardStyles.PayForBtnFinish,
-                                    { display: currentCard.allowRecharge ? 'flex' : 'none' },
-                                ]}
-                            >
-                                <Text style={RechargeStoredCardStyles.PayForBtnFinishText}>
-                                    结单
-                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
+            </View>
         );
     };
     onInputEndEditing = (text, count) => {
-        this.setState({ rechargeAmt: text, rechargeCount: count });
+        this.setState({rechargeAmt: text, rechargeCount: count});
     };
 
     //选择服务人（）
@@ -284,7 +238,7 @@ class Recharge extends React.Component {
     };
     //选择服务人
     onStaffSelected = staff => {
-        const { currentServicerIndex, servicers } = this.state;
+        const {currentServicerIndex, servicers} = this.state;
 
         this.setState({
             servicers: servicers.map((item, index) => {
@@ -294,7 +248,7 @@ class Recharge extends React.Component {
     };
     //tab选择
     onTabsSelected = index => {
-        this.setState({ currentTabIndex: index });
+        this.setState({currentTabIndex: index});
     };
     //换卡
     onCardSelected = card => {
@@ -310,29 +264,29 @@ class Recharge extends React.Component {
     };
     //指定
     onAssign = () => {
-        let { servicers, currentServicerIndex } = this.state;
+        let {servicers, currentServicerIndex} = this.state;
         this.setState({
             servicers: servicers.map((item, index) => {
                 return index === currentServicerIndex
-                    ? { ...item, isAssign: true }
+                    ? {...item, isAssign: true}
                     : item;
             }),
         });
     };
     //取消指定
     onCancelAssign = () => {
-        let { servicers, currentServicerIndex } = this.state;
+        let {servicers, currentServicerIndex} = this.state;
         this.setState({
             servicers: servicers.map((item, index) => {
                 return index === currentServicerIndex
-                    ? { ...item, isAssign: false }
+                    ? {...item, isAssign: false}
                     : item;
             }),
         });
     };
     //删除服务人
     onDeleteServicer = () => {
-        let { servicers, currentServicerIndex } = this.state;
+        let {servicers, currentServicerIndex} = this.state;
         this.setState({
             servicers: servicers.map((item, index) => {
                 return index === currentServicerIndex ? {} : item;
@@ -347,12 +301,12 @@ class Recharge extends React.Component {
             return;
         }
 
-        this.setState({ cardModelVisible: true });
+        this.setState({cardModelVisible: true});
     };
     //支付
     onPay = () => {
         //precheck
-        let { servicers, rechargeAmt, currentCard, member } = this.state;
+        let {servicers, rechargeAmt, currentCard, member} = this.state;
 
         if (!currentCard.allowRecharge) {
             showMessage('当前卡不允许充值');

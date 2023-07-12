@@ -78,14 +78,14 @@ export const PanelMultiProfiles = StyleSheet.create({
     },
     contentHeadTitle:{
         width: '100%',
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         textAlign: 'left'
     },
     contentHeadTitleTxt:{
         width: '100%',
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         textAlign: 'left',

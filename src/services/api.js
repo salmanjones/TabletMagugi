@@ -56,7 +56,7 @@ export const getVipcardSales = `${hostBms}/tablet/vipcard/find/tablet/cardsales`
 //获取外联支付列表
 export const getOtherPayType = `${hostBms}/tablet/vipcard/find/otherpaytype`;
 //外联支付
-export const payOtherPayment = `${hostBms}/tablet/pay/otherpayment/process`;
+export const payOtherPayment = `${hostBms}/tablet/pay/otherpayment/tablet/process`;
 //创建卡订单
 export const createCardOrder = `${hostBms}/tablet/pay/f2f/process`;
 //查询支付结果

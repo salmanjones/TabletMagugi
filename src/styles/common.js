@@ -463,7 +463,7 @@ export const commonStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(20),
         marginTop: PixelUtil.size(20),
         width: PixelUtil.size(412),
-        minHeight: PixelUtil.size(84)
+        height: PixelUtil.size(100)
     },
     cardNameText: {
         //会员卡-卡名-文字
@@ -473,23 +473,58 @@ export const commonStyles = StyleSheet.create({
         fontWeight: '700',
         lineHeight: PixelUtil.size(48)
     },
+    rechargeSplitLineBox:{
+        width: '100%',
+        display: 'flex',
+        justifyContent:'center',
+        alignItems: 'center',
+        marginTop: PixelUtil.size(2)
+    },
+    rechargeTimesSplitLineBox:{
+        width: '100%',
+        display: 'flex',
+        justifyContent:'center',
+        alignItems: 'center',
+        marginTop: PixelUtil.size(8)
+    },
+    rechargeSplitLine:{
+        width:  PixelUtil.size(412),
+        height: PixelUtil.size(2)
+    },
     cardSite:{
         //会员卡-地址
-        marginLeft: PixelUtil.size(142),
-        marginBottom: PixelUtil.size(10),
-        width: PixelUtil.size(304),
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(8),
+        width: PixelUtil.size(412),
+        display: "flex",
+        justifyContent: 'flex-start'
+    },
+    cardTimesSite:{
+        //会员卡-地址
+        marginLeft: PixelUtil.size(20),
+        marginTop: PixelUtil.size(12),
+        width: PixelUtil.size(412),
+        display: "flex",
+        justifyContent: 'flex-start'
     },
     cardSiteText: {
         //会员卡-地址-文字
-        fontSize: PixelUtil.size(28),
-        color: '#fff',
+        fontSize: PixelUtil.size(18),
+        color: '#5E3F20',
         textAlign: 'left',
-        lineHeight: PixelUtil.size(50),
     },
     cardPrice: {
         //会员卡-卡名
         marginLeft: PixelUtil.size(20),
-        marginTop: PixelUtil.size(14),
+        width: PixelUtil.size(412),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'baseline'
+    },
+    rechargeCardPrice: {
+        //会员卡-卡名
+        marginLeft: PixelUtil.size(20),
         width: PixelUtil.size(412),
         display: "flex",
         flexDirection: 'row',
@@ -576,7 +611,7 @@ export const commonStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(20),
         marginTop: PixelUtil.size(20),
         width: PixelUtil.size(412),
-        minHeight: PixelUtil.size(84)
+        height: PixelUtil.size(100)
     },
     timeCardNameText: {
         //会员卡-卡名-文字
@@ -600,12 +635,11 @@ export const commonStyles = StyleSheet.create({
     timeCardOtherBody: {
         //会员卡-卡名
         marginLeft: PixelUtil.size(20),
-        marginTop: PixelUtil.size(14),
         width: PixelUtil.size(412),
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        justifyContent: 'flex-end',
+        alignItems: 'baseline'
     },
     timeCardOtherBox: {
         width: '100%',
@@ -625,10 +659,9 @@ export const commonStyles = StyleSheet.create({
     },
     timeCardPriceBigAfterText:{
         //次卡-余次-金额v
-        fontSize: PixelUtil.size(30),
+        fontSize: PixelUtil.size(20),
         color: '#444956',
         fontWeight: '500',
-        marginLeft: PixelUtil.size(10)
     },
     timeCardOtherBodyRight:{
         display: "flex",
@@ -638,9 +671,9 @@ export const commonStyles = StyleSheet.create({
     },
     timeCardPriceText: {
         //次卡-余次-金额
-        fontSize: PixelUtil.size(26),
-        color: '#fff',
-        textAlign: 'left',
+        fontSize: PixelUtil.size(32),
+        color: '#101B3C',
+        fontWeight: '700'
     },
     timeCardNumText: {
         //次卡-余次-数量
@@ -652,12 +685,10 @@ export const commonStyles = StyleSheet.create({
         alignItems: 'center',
     },
     timeCardStore: {
-        fontSize: PixelUtil.size(32),
-        color: '#fff',
-        position: 'absolute',
-        left: PixelUtil.size(115),
-        top: PixelUtil.size(45),
-        width: PixelUtil.size(340)
+        //会员卡-地址-文字
+        fontSize: PixelUtil.size(18),
+        color: '#606060',
+        textAlign: 'left',
     },
     simulateKeyboardInpContent: {
         //带输入框的虚拟键盘

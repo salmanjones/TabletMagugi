@@ -69,7 +69,7 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     contentHeadTitle:{
         width: '100%',
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         textAlign: 'left'
@@ -215,12 +215,12 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     nameShowText: {
         fontSize: PixelUtil.size(32),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffffff'
     },
     sexShowText:{
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff',
         marginLeft: PixelUtil.size(8)
     },
@@ -231,7 +231,7 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     phoneShowText: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff'
     },
     userInfoRightBox:{
@@ -266,12 +266,12 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     propertyInfoItemTitle: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff'
     },
     propertyInfoItemValue: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff'
     },
     contentBodyBox:{
@@ -303,7 +303,7 @@ export const PanelReserveStyles = StyleSheet.create({
     contentBodyTitleValue:{
         fontSize: PixelUtil.size(34),
         color: '#2d2d2d',
-        fontWeight: 900,
+        fontWeight: '900',
         marginLeft: PixelUtil.size(10)
     },
     customerReserveDetailBox:{
@@ -337,7 +337,7 @@ export const PanelReserveStyles = StyleSheet.create({
         left: PixelUtil.size(-14)
     },
     reservePropertyTitle: {
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: PixelUtil.size(26),
         color: '#898888',
         width: PixelUtil.size(134)
@@ -364,7 +364,7 @@ export const PanelReserveStyles = StyleSheet.create({
         marginTop: PixelUtil.size(24)
     },
     reservePropertyText:{
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: PixelUtil.size(26),
         color: '#2d2d2d'
     },
@@ -404,12 +404,12 @@ export const PanelReserveStyles = StyleSheet.create({
         alignItems: "center",
     },
     reservePropertyValueButtonTxt:{
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#ffa200'
     },
     reservePropertyValueButtonTxtActive:{
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#FFFFFF'
     },

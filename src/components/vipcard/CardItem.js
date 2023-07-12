@@ -4,15 +4,15 @@ import {ModalCardInfo} from '../../components';
 import {commonStyles} from '../../styles';
 import {getImage, ImageQutity} from '../../utils';
 
-const storageCardBgImg = require('@imgPath/card-genre-one.png');
-const timeCardBgImg = require('@imgPath/time-card-two.png');
-const activeCardBgImg = require('@imgPath/card-genre-active.png');
-const activeTimeCardBgImg = require('@imgPath/time-card-active.png');
-const defaultBrandImg = require('@imgPath/magugi.png');
-
+const storageCardBgImg = require("@imgPath/vipcard_storeage_bg.png");
+const timeCardBgImg = require("@imgPath/vipcard_times_bg.png");
+const activeCardBgImg = require("@imgPath/vipcard_storeage_active_bg.png");
+const activeTimeCardBgImg = require("@imgPath/vipcard_times_active_bg.png");
+const storageCardSplitImg = require("@imgPath/vipcard_storeage_recharge_split_line.png");
+const timesCardSplitImg = require("@imgPath/vipcard_times_recharge_split_line.png");
 const getValidity = (validity, status) => {
     if (validity.length > 9) {
-        return '有效期 ' + validity.substr(0, 10);
+        return '有效期至' + validity.substr(0, 10);
     }
     if (validity == 0 || status === '-3') {
         return '无期限';
@@ -21,6 +21,30 @@ const getValidity = (validity, status) => {
         return '暂未生效';
     }
 };
+
+// 获取次卡标题
+const getCardTitle = (card) =>{
+    let cardTitle = '次卡'
+    const cardType = card.cardType
+    const consumeMode = card.consumeMode
+
+    if(cardType == '1'){
+        cardTitle = '储值卡'
+    }else if(cardType == '2'){
+        cardTitle = '次卡'
+
+        if(consumeMode == '0'){
+            cardTitle = '疗程卡'
+        }else if(consumeMode == '1'){
+            cardTitle = '套餐卡'
+        }else if(consumeMode == '2'){
+            cardTitle = '时间卡'
+        }else if(consumeMode == '3'){
+            cardTitle = '护理卡'
+        }
+    }
+    return cardTitle
+}
 
 export class CardItem extends React.PureComponent {
     constructor(props) {
@@ -33,38 +57,24 @@ export class CardItem extends React.PureComponent {
 
     render() {
         const {data, selected, onSelected, page , showCardDetailInfo} = this.props;
-        const brandImg = getImage(
-            data.brandLogo,
-            ImageQutity.brand,
-            defaultBrandImg
-        );
         const isStorageCard = data.cardType == 1;
+        // 获取标题
+        const cardTitle = getCardTitle(data)
 
         return (
             <View>
                 <TouchableOpacity onPress={() => {
                     onSelected && onSelected(data);
-
-                    {
-                        showCardDetailInfo == true && (
-                            this.setState((prevstate)=>{
-                                return {...prevstate, cardModelVisible:true}
-                            })
-                        )
-                    }
+                    showCardDetailInfo == true && (
+                        this.setState((prevstate)=>{
+                            return {...prevstate, cardModelVisible:true}
+                        })
+                    )
                 }}>
                     <View>
                         {/*储值卡*/}
                         {isStorageCard && (
                             <View style={commonStyles.cardBox}>
-                                <View style={commonStyles.cardIconBox}>
-                                    <Image resizeMethod="resize"
-                                           source={brandImg}
-                                           defaultSource={defaultBrandImg}
-                                           style={commonStyles.cardIcon}
-                                    />
-
-                                </View>
                                 {page == 'cashier' && (
                                     <TouchableOpacity style={commonStyles.cardIconBoxMore} onPress={()=>{
                                         this.setState((prevstate)=>{
@@ -75,52 +85,49 @@ export class CardItem extends React.PureComponent {
                                 )}
                                 <ImageBackground
                                     source={selected ? activeCardBgImg : storageCardBgImg}
-                                    style={commonStyles.cardBoxBg}
-                                >
+                                    style={commonStyles.cardBoxBg}>
+                                    <Text style={commonStyles.cardSaleTitle}>{cardTitle}</Text>
                                     <View style={commonStyles.cardName}>
-                                        <Text style={commonStyles.cardNameText} numberOfLines={1}
-                                              ellipsizeMode={'tail'}>
+                                        <Text style={commonStyles.cardNameText} numberOfLines={2} ellipsizeMode={"tail"}>
                                             {data.vipCardName}
                                         </Text>
                                     </View>
+                                    <View style={commonStyles.rechargeCardPrice}>
+                                        <Text style={commonStyles.cardPricePreText}>
+                                            ￥
+                                        </Text>
+                                        <Text style={commonStyles.cardPriceText}>
+                                            {data.balance}
+                                        </Text>
+                                    </View>
+                                    <View style={commonStyles.rechargeSplitLineBox}>
+                                        <Image style={commonStyles.rechargeSplitLine} resizeMode={'contain'} source={storageCardSplitImg} ></Image>
+                                    </View>
                                     <View style={commonStyles.cardSite}>
-                                        <Text style={commonStyles.cardSiteText} numberOfLines={2}
+                                        <Text style={commonStyles.cardSiteText}
+                                              numberOfLines={2}
                                               ellipsizeMode={'tail'}>
                                             {data.storeName}
                                         </Text>
                                     </View>
-                                    <View style={commonStyles.cardPrice}>
-                                        <Text style={commonStyles.cardPriceText}>
-                                            ￥{data.balance}
-                                        </Text>
-                                    </View>
-
-
                                 </ImageBackground>
-
                             </View>
                         )}
 
                         {/*次卡等*/}
                         {!isStorageCard && (
                             <View style={commonStyles.cardBox}>
-                                <View style={commonStyles.timeCardBox}>
-                                    <Image resizeMethod="resize" source={brandImg} style={commonStyles.timeCardIcon}/>
-                                </View>
                                 {page == 'cashier' && (
-                                    <TouchableOpacity style={commonStyles.cardIconBoxMore}>
-                                    </TouchableOpacity>
+                                    <TouchableOpacity style={commonStyles.cardIconBoxMore}></TouchableOpacity>
                                 )}
-
-                                <ImageBackground source={selected ? activeTimeCardBgImg : timeCardBgImg}
-                                                 style={commonStyles.cardBoxBg}>
-                                    <Text style={commonStyles.timeCardStore} numberOfLines={1} ellipsizeMode={'tail'}>{data.storeName}</Text>
+                                <ImageBackground source={selected ? activeTimeCardBgImg : timeCardBgImg} style={commonStyles.cardBoxBg}>
+                                    <Text style={commonStyles.cardSaleTitle}>{cardTitle}</Text>
                                     <View style={commonStyles.timeCardName}>
-                                        <Text style={commonStyles.timeCardNameText} numberOfLines={2}>
+                                        <Text style={commonStyles.timeCardNameText} numberOfLines={2} ellipsizeMode={"tail"}>
                                             {data.vipCardName}
                                         </Text>
                                     </View>
-                                    <View style={commonStyles.timeCardNum}>
+                                    <View style={commonStyles.timeCardOtherBody}>
                                         {data.consumeMode === '2' && (
                                             <Text style={commonStyles.timeCardPriceText}>
                                                 {getValidity(data.validity, data.status)}
@@ -131,6 +138,12 @@ export class CardItem extends React.PureComponent {
                                                 余{data.balance}次
                                             </Text>
                                         )}
+                                    </View>
+                                    <View style={commonStyles.rechargeTimesSplitLineBox}>
+                                        <Image style={commonStyles.rechargeSplitLine} resizeMode={'contain'} source={timesCardSplitImg} ></Image>
+                                    </View>
+                                    <View style={commonStyles.cardTimesSite}>
+                                        <Text style={commonStyles.timeCardStore} numberOfLines={1} ellipsizeMode={'tail'}>{data.storeName}</Text>
                                     </View>
                                 </ImageBackground>
                             </View>

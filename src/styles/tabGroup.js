@@ -9,8 +9,6 @@ export const tabGroupStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        borderWidth: 0,
-        borderRadius: 0,
         marginLeft: PixelUtil.size(-2)
     },
     buttonStyle: {

@@ -119,12 +119,12 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     nameShowText: {
         fontSize: PixelUtil.size(32),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffffff'
     },
     nameShowTextCustomer: {
         fontSize: PixelUtil.size(34),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffffff',
         marginLeft: PixelUtil.size(20)
     },
@@ -135,7 +135,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     phoneShowText: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff'
     },
     propertyInfoBaseBox: {
@@ -156,12 +156,12 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     propertyInfoItemTitle: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff'
     },
     propertyInfoItemValue: {
         fontSize: PixelUtil.size(26),
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#ffffff',
         marginTop: PixelUtil.size(14)
     },
@@ -205,12 +205,12 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     memberExtraTabItemTitle: {
         fontSize: PixelUtil.size(28),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#1e1e1e'
     },
     memberExtraTabItemTitleActive: {
         fontSize: PixelUtil.size(28),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffa200'
     },
     memberExtraTabItemLine: {
@@ -328,13 +328,13 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberReservePropertyTitle:{
         color: '#898888',
         fontSize: PixelUtil.size(26),
-        fontWeight: 500,
+        fontWeight: '500',
         width: PixelUtil.size(158)
     },
     memberReservePropertyValue:{
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
-        fontWeight: 700,
+        fontWeight: '700',
     },
     memberReservePropertyRemark:{
         color: '#2d2d2d',
@@ -392,12 +392,12 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: "center",
     },
     reservePropertyValueButtonTxt:{
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#ffa200'
     },
     reservePropertyValueButtonTxtActive:{
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#FFFFFF'
     },
@@ -465,12 +465,12 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     memberCouponPrice:{
         fontSize: PixelUtil.size(36),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffffff'
     },
     memberCouponPriceUnit:{
         fontSize: PixelUtil.size(26),
-        fontWeight: 700,
+        fontWeight: '700',
         color: '#ffffff',
         letterSpacing: PixelUtil.size(4)
     },
@@ -541,7 +541,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         width: '100%',
         textAlign: 'left',
         fontSize: PixelUtil.size(18),
-        fontWeight: 500,
+        fontWeight: '500',
         color: '#b2b2b2',
         marginTop: PixelUtil.size(30)
     },
@@ -568,7 +568,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberCouponDetailDescLeftText:{
         textAlign: 'left',
         fontSize: PixelUtil.size(18),
-        fontWeight: 500,
+        fontWeight: '500',
         color: '#929292',
         marginLeft: PixelUtil.size(8),
         lineHeight: PixelUtil.size(36),
@@ -586,7 +586,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberCouponDetailDescRightText:{
         textAlign: 'right',
         fontSize: PixelUtil.size(18),
-        fontWeight: 500,
+        fontWeight: '500',
         color: '#C49544',
         lineHeight: PixelUtil.size(36)
     },
@@ -615,13 +615,13 @@ export const PanelCustomerStyles = StyleSheet.create({
         textAlign: 'left',
         fontSize: PixelUtil.size(22),
         color: '#363636',
-        fontWeight: 500
+        fontWeight: '500'
     },
     memberCouponSourceValue:{
         textAlign: 'left',
         fontSize: PixelUtil.size(22),
         color: '#9a9a9a',
-        fontWeight: 500
+        fontWeight: '500'
     },
     memberCouponRuleMargin:{
         marginTop: PixelUtil.size(16)
@@ -682,7 +682,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     contentBodyTitleValue:{
         fontSize: PixelUtil.size(34),
         color: '#2d2d2d',
-        fontWeight: 900,
+        fontWeight: '900',
         marginLeft: PixelUtil.size(10)
     },
     memberPropertyBox:{
@@ -701,7 +701,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberPropertyValue:{
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
-        fontWeight: 700,
+        fontWeight: '700',
     },
     memberPortraitPTitle:{
         width: PixelUtil.size(132),
@@ -712,7 +712,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberPortraitPValue:{
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
-        fontWeight: 700,
+        fontWeight: '700',
     },
     memberCardsBox: {
         width: '100%',
@@ -1092,7 +1092,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     guestProfileOrderTxt:{
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
-        fontWeight: 400,
+        fontWeight: '400',
         textAlign: "center",
         textAlignVertical: 'center',
     }

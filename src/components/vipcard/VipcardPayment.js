@@ -102,7 +102,8 @@ export class VipcardPayment extends React.PureComponent {
                 card.vipCardName,
                 card.vipCardNo,
                 card.cardCateId,
-                card.cardType
+                card.cardType,
+                'tablet'
             ).then(backData => {
                 const data = backData.data;
                 if (data.tradeNo && data.codeUrl) {
@@ -141,7 +142,8 @@ export class VipcardPayment extends React.PureComponent {
                 card.vipCardName,
                 card.vipCardNo,
                 card.cardCateId,
-                card.cardType
+                card.cardType,
+                'tablet'
             ).then(backData => {
                 if (backData.code == '6000') {
                     that.setState({
