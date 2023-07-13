@@ -278,7 +278,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                 <TextInput
                                     keyboardType={'phone-pad'}
                                     style={showClear ? PanelReserveStyles.headSearchInputFull:PanelReserveStyles.headSearchInputEmpty}
-                                    placeholder={'请输入预约手机号'}
+                                    placeholder={'请输入顾客手机号'}
                                     placeholderTextColor={'#8e8e8e'}
                                     onChange={({nativeEvent})=>{
                                         const phone = nativeEvent.text

@@ -144,7 +144,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 <TextInput
                                                     keyboardType={'phone-pad'}
                                                     style={showClear ? PanelMultiProfiles.headSearchInputFull:PanelMultiProfiles.headSearchInputEmpty}
-                                                    placeholder={'请输入预约手机号'}
+                                                    placeholder={'请输入顾客手机号'}
                                                     placeholderTextColor={'#8e8e8e'}
                                                     onChange={({nativeEvent})=>{
                                                         const phone = nativeEvent.text
