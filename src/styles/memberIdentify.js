@@ -18,7 +18,7 @@ export const memberIdentifyStyle = StyleSheet.create({
     },
     Box: {
         // 左侧内容
-        width: PixelUtil.size(982),
+        width:'50%',
         height: '100%',
         borderRightColor: '#cbcbcb',
         borderRightWidth: PixelUtil.size(2),
@@ -34,6 +34,7 @@ export const memberIdentifyStyle = StyleSheet.create({
         width: '100%',
         height: '100%',
         position: 'relative',
+        // backgroundColor:'red'
     },
     noneCardBox: {
         //无卡展示
@@ -71,7 +72,8 @@ export const memberIdentifyStyle = StyleSheet.create({
         height: PixelUtil.size(108),
         width: '100%',
         borderBottomWidth: PixelUtil.size(1),
-        borderBottomColor: '#cbcbcb'
+        borderBottomColor: '#cbcbcb',
+        marginTop:PixelUtil.size(-10)
     },
     btnBox: {
         // 右侧按钮
@@ -79,9 +81,9 @@ export const memberIdentifyStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: PixelUtil.size(440),
+        // width: '50%',
         height: PixelUtil.size(106),
-        marginLeft: PixelUtil.size(-18),
+        // marginLeft: PixelUtil.size(-18),
     },
     rechargeBtnImg: {
         // 充值按钮

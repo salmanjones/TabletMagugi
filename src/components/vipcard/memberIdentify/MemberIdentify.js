@@ -154,7 +154,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                         />
 
                         {!searchStart && (
-                            <View style={{height:'87%'}}>
+                            <View style={{height:'90%'}}>
                                 <View style={memberIdentifyStyle.waitTextBox}>
                                     <Text style={memberIdentifyStyle.waitText}>当前等待的顾客:</Text>
                                     <TouchableOpacity  style={memberIdentifyStyle.waitTextBoxImg} onPress = {this.freshData}>
@@ -179,7 +179,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                         )}
 
                         {searchStart && (
-                            <View style={{height:'87%'}}>
+                            <View style={{height:'90%',width:'100%'}}>
                                 <FlatList
                                     data={list}
                                     keyExtractor={item => item.id}
@@ -201,6 +201,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
 
                         )}
                     </View>
+                    {/*右侧卡片区域*/}
                     <View style={{width: '50%',height:'100%'}}>
                         <CardSelectBox
                             searchStart={true}

@@ -337,7 +337,7 @@ export const commonStyles = StyleSheet.create({
     },
     MemberListBox: {
         //顾客识别-列
-        width: PixelUtil.rect(984, 143.8).width,
+        width: '100%',
         height: PixelUtil.rect(984, 143.8).height,
         color: '#151515',
         borderBottomColor: '#CFDDFF',
@@ -349,7 +349,7 @@ export const commonStyles = StyleSheet.create({
     },
     MemberListBoxActive: {
         //顾客识别-列-选中
-        width: PixelUtil.rect(984, 143.8).width,
+        width: '100%',
         height: PixelUtil.rect(984, 143.8).height,
         color: '#151515',
         borderBottomColor: '#CFDDFF',

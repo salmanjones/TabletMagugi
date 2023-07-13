@@ -6,7 +6,7 @@ import { ListStatus, PixelUtil } from '../utils';
 export class FlatListFooter extends PureComponent {
   render() {
     const { state, itemCount, pageSize, onRefresh } = this.props;
-
+    console.log(state,'state')
     let footer = null;
     if (state === ListStatus.loading) {
       footer = (
@@ -80,7 +80,7 @@ export class FlatListFooter extends PureComponent {
               justifyContent: 'center',
               alignContent: 'center',
               height: PixelUtil.size(50),
-              width: PixelUtil.size(80),
+              // width: PixelUtil.size(80),
               marginTop: PixelUtil.size(23),
               borderWidth: PixelUtil.size(2),
               borderColor: '#111c3c',
