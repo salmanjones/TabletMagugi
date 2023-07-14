@@ -284,6 +284,9 @@ export const ReserveBoardActivity = props => {
                                         [
                                             {
                                                 text: '知道了',
+                                                onPress: ()=>{
+                                                    getReserveList()
+                                                }
                                             }
                                         ]
                                     );
