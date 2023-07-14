@@ -148,9 +148,9 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
             saveCustomerReserve(params).then(backData=>{
                 const {code, data} = backData
                 if(code == '6000'){
-                    setLoading(false)
                     props.reloadReserveData(()=>{
                         hideRightPanel()
+                        setLoading(false)
                         showMessageExt("预约成功")
                     })
                 }else{
