@@ -4279,18 +4279,6 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-const styles = StyleSheet.create({
-    rowBack: {
-        alignItems: 'center',
-        backgroundColor: 'red',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        flex: 0,
-        height: 90,
-        paddingRight: 20,
-    }
-})
-
 export const CashierBillingActivity = connect(
     mapStateToProps,
     mapDispatchToProps

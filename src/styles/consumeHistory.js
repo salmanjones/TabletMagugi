@@ -96,10 +96,18 @@ export const consumeHistoryStyles = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#fff',
     },
+    historyInfoBox: {
+        backgroundColor: '#fff',
+        width: '100%',
+        flex: 1,
+        borderStyle: 'solid',
+        borderTopWidth: PixelUtil.size(2),
+        borderColor: '#cbcbcb'
+    },
     cardInfoBox: {
         backgroundColor: '#fff',
         width: '100%',
-        height: '76.96%',
+        flex: 1
     },
     subTitleBox: {
         // 副标题
