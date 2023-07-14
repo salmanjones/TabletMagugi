@@ -106,10 +106,9 @@ export const cardInfoStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     cardDetailStorageName:{
-        width: PixelUtil.size(1486),
         fontSize: PixelUtil.size(30),
         fontWeight: '700',
         lineHeight: PixelUtil.size(48),
@@ -119,6 +118,17 @@ export const cardInfoStyles = StyleSheet.create({
         fontSize: PixelUtil.size(40),
         fontWeight: '500',
         color: '#5E3F20'
+    },
+    cardDetailTimesName:{
+        fontSize: PixelUtil.size(30),
+        fontWeight: '700',
+        lineHeight: PixelUtil.size(48),
+        color: '#3C4C72'
+    },
+    cardDetailTimesPrice:{
+        fontSize: PixelUtil.size(40),
+        fontWeight: '500',
+        color: '#3C4C72'
     },
     cardDetailBody:{
         width: '100%',
@@ -140,6 +150,47 @@ export const cardInfoStyles = StyleSheet.create({
         backgroundColor: '#ffffff52',
         padding: PixelUtil.size(50),
         paddingTop: PixelUtil.size(80)
+    },
+    cardTimesDetailBodyBox:{
+        width: PixelUtil.size(1634),
+        height: PixelUtil.size(684),
+        borderRadius: PixelUtil.size(24),
+        marginTop: PixelUtil.size(80),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: '#ffffff52',
+        padding: PixelUtil.size(50),
+        paddingTop: PixelUtil.size(80)
+    },
+    cardDetailTimesLeft:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+    },
+    cardDetailTimesRow:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: PixelUtil.size(66),
+    },
+    cardDetailTimesRight:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingLeft: PixelUtil.size(100)
+    },
+    cardDetailRightItems:{
+        marginTop: PixelUtil.size(-22),
+        width: '100%',
+        height: PixelUtil.size(430)
     },
     cardDetailStorageRow:{
         width: '100%',
@@ -164,6 +215,14 @@ export const cardInfoStyles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingLeft: PixelUtil.size(100)
     },
+    cardDetailTimesRowRight:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingLeft: PixelUtil.size(100),
+    },
     cardDetailStoragePTitle:{
         fontSize: PixelUtil.size(26),
         color: '#898888',
@@ -175,6 +234,17 @@ export const cardInfoStyles = StyleSheet.create({
         color: '#2D2D2D',
         textAlign: 'left',
         fontWeight: '700'
+    },
+    cardDetailStoragePKey:{
+        width: PixelUtil.size(164),
+        height: PixelUtil.size(48),
+        backgroundColor: '#6075a8',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontWeight: '700',
+        color: '#ffffff',
+        fontSize: PixelUtil.size(30),
+        lineHeight: PixelUtil.size(46)
     },
     cardImg: {
         //储值卡

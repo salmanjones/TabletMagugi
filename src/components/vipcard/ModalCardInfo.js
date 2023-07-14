@@ -1,9 +1,8 @@
 import React from 'react';
-import {ImageBackground, Modal, Text, TouchableOpacity, View} from 'react-native';
-import {CardItem, ConsumeHistory} from '../../components';
-//self
+import {ImageBackground, Modal, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ConsumeHistory} from '../../components';
 import {cardInfoStyles, MemberQueryStyle, timeCardInfoStyles} from '../../styles';
-import {ButtonGroup} from 'react-native-elements';
+import {PixelUtil} from "../../utils";
 
 export class ModalCardInfo extends React.PureComponent {
     constructor(props) {
@@ -105,83 +104,93 @@ export class ModalCardInfo extends React.PureComponent {
 // 次卡信息
 const TimeCardInfo = ({data}) => {
     return (
-        <View style={timeCardInfoStyles.cardInfoBox}>
-            <View style={timeCardInfoStyles.cardInfoBody}>
-                <View style={timeCardInfoStyles.timeCardInfoLeft}>
-                    <View style={timeCardInfoStyles.cardImg}>
-                        <CardItem data={data}/>
-                    </View>
-                    <View style={timeCardInfoStyles.cardInfoItemBox}>
-                        <View style={timeCardInfoStyles.cardInfo}>
-                            <View style={timeCardInfoStyles.cardInfoItem}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>卡号</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText}>
-                                    {data.vipCardNo}
-                                </Text>
-                            </View>
-                            <View style={timeCardInfoStyles.cardInfoItem}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>分类</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText}>
-                                    {data.projectCategoryName}
-                                </Text>
-                            </View>
-                            <View style={timeCardInfoStyles.cardInfoItem}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>最低续充</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText}>
-                                    ￥{data.initialPrice}
-                                </Text>
-                            </View>
-                        </View>
-                        <View style={timeCardInfoStyles.cardInfo}>
-                            <View style={timeCardInfoStyles.cardInfoItem}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>有效期至</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText}>
-                                    {data.validity
-                                        ? data.validity.length > 9
-                                            ? data.validity.substring(0, 10)
-                                            : '无期限'
-                                        : '无期限'}
-                                </Text>
-                            </View>
-                            <View style={timeCardInfoStyles.cardInfoItemStore}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>开卡门店</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText} numberOfLines={1} ellipsizeMode={'tail'}>
-                                    {data.storeName}
-                                </Text>
-                            </View>
-                        </View>
-                        <View style={timeCardInfoStyles.cardInfoLast}>
-                            <View style={timeCardInfoStyles.cardInfoNote}>
-                                <Text style={timeCardInfoStyles.cardInfoText}>备注信息</Text>
-                                <Text style={timeCardInfoStyles.cardInfoText} numberOfLines={1} ellipsizeMode={'tail'}>
-                                    {data.remark}
-                                </Text>
-                            </View>
+        <View style={cardInfoStyles.cardInfoBox}>
+            <View style={cardInfoStyles.cardDetailBgBox}>
+                <ImageBackground
+                    resizeMode={'contain'}
+                    source={require('@imgPath/card_times_detail_bg_img.png')}
+                    style={cardInfoStyles.cardDetailBgImg}>
+                    <Text style={cardInfoStyles.cardStoreageDetailTitle}>
+                        {getCardTitle(data)}
+                    </Text>
+                    <View style={cardInfoStyles.cardDetailHeader}>
+                        <View style={cardInfoStyles.cardDetailHeaderBox}>
+                            <Text style={cardInfoStyles.cardDetailTimesName} ellipsizeMode={"tail"} numberOfLines={1}>
+                                {data.vipCardName}
+                            </Text>
+                            <Text style={cardInfoStyles.cardDetailTimesPrice}>
+                                {
+                                    data.validity
+                                    ? (data.validity.length > 9 ?  '有效期至：' + data.validity.substring(0, 10) : '无期限')
+                                    : '无期限'
+                                }
+                            </Text>
                         </View>
                     </View>
-                </View>
-                {/*次卡项目*/}
-                <View style={timeCardInfoStyles.timeCardInfoRight}>
-                    {data.attachProjectList.map((item, index) => {
-                        return (
-                            <View key={index} style={timeCardInfoStyles.rightItem}>
-                                <View style={timeCardInfoStyles.rightItemL}>
-                                    <Text style={timeCardInfoStyles.rightItemText}>
-                                        {item.projectName}
+                    <View style={cardInfoStyles.cardDetailBody}>
+                        <View style={cardInfoStyles.cardTimesDetailBodyBox}>
+                            <View style={cardInfoStyles.cardDetailTimesLeft}>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>卡号：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>{data.vipCardNo}</Text>
+                                </View>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>分类：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        {data.projectCategoryName}
                                     </Text>
                                 </View>
-                                <View style={timeCardInfoStyles.rightItemR}>
-                                    <Text style={timeCardInfoStyles.rightItemTextR}>
-                                        剩余:{data.consumeMode === '1' ? item.balance + '次' : '--'}
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>最低续充：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{data.rechargePrice}</Text>
+                                </View>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>有效期至：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        {data.validity
+                                            ? (data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限')
+                                            : '无期限'}
+                                    </Text>
+                                </View>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                        <Text style={cardInfoStyles.cardDetailStoragePTitle}>开卡门店：</Text>
+                                        <Text style={cardInfoStyles.cardDetailStoragePValue}>{data.storeName}</Text>
+                                    </View>
+                                </View>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>备注信息：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
+                                        {data.remark || '暂无'}
                                     </Text>
                                 </View>
                             </View>
-                        );
-                    })}
-                </View>
+                            <View style={cardInfoStyles.cardDetailTimesRight}>
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePKey}>次卡项目</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}></Text>
+                                </View>
+                                <ScrollView style={cardInfoStyles.cardDetailRightItems}>
+                                    {data.attachProjectList.map(
+                                        (item, index) => {
+                                            return (
+                                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>{item.projectName}：</Text>
+                                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
+                                                        剩余:{data.consumeMode === '1' ? item.balance + '次' : '--'}
+                                                    </Text>
+                                                </View>
+                                            )
+                                        })
+                                    }
+                                </ScrollView>
+                            </View>
+                        </View>
+                    </View>
+                </ImageBackground>
             </View>
         </View>
-    );
+    )
 };
 
 // 储值卡信息
@@ -280,7 +289,7 @@ const StoreageCardInfo = ({data}) => {
                                 <View style={cardInfoStyles.cardDetailStorageRowRight}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>备注信息：</Text>
                                     <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
-                                        {data.remark}
+                                        {data.remark || '暂无'}
                                     </Text>
                                 </View>
                             </View>
