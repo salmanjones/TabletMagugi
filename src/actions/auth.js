@@ -57,9 +57,8 @@ export const loginSubmitAction = () => {
 //用户注销
 export const logoutAction = () => {
     return function (dispatch, getState) {
-        dispatch(loginFormClearAction())
         dispatch(logoutSuccessAction());
-
+        dispatch(loginFormClearAction())
         resetNavigationTo('LoginActivity');
     }
 };
