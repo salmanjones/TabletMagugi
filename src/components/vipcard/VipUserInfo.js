@@ -1,10 +1,11 @@
 import React from 'react';
 import {RechargeStoredCardStyles} from '../../styles';
-import {connect} from "react-redux";
-import {View, Text, Image, TouchableOpacity, InteractionManager, ImageBackground} from "react-native";
-import {PixelUtil} from "../../utils";
+import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native";
 import {AppNavigate} from "../../navigators";
 import {getCustomerDetail} from '../../services/reserve'
+import {PanelCustomerStyles} from "../../styles/PanelCustomer";
+import {getImage, ImageQutity} from "../../utils";
+
 const pageCache = {
     checkReserveId: '', // 选中的预约id
     checkAppUserId: '' // 选中的app表用户Id
@@ -52,7 +53,7 @@ const pageCache = {
      }
 
     render() {
-         const {ckCount,czkCount,czkPriceSum,name,sex,phone,memberCardNo} =this.state
+         const {ckCount,czkCount,czkPriceSum,name,sex,phone,memberCardNo, imgUrl} =this.state
         return(
 
             <View style={{width:'100%'}}>
@@ -61,7 +62,11 @@ const pageCache = {
                     {/*nav中间个人信息*/}
                     <View style={RechargeStoredCardStyles.carduserInfo}>
                         <View style={RechargeStoredCardStyles.cardUserLeft}>
-                            <Image resizeMethod="resize" source={require('@imgPath/avater.jpg')} style={RechargeStoredCardStyles.avaterIamge}></Image>
+                            <Image
+                                style={PanelCustomerStyles.customerAvatar}
+                                resizeMethod="resize"
+                                source={getImage(imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                             <View style={RechargeStoredCardStyles.avaterInfo}>
                                 <View style={RechargeStoredCardStyles.avaterInfotop}>
                                     <Text style={RechargeStoredCardStyles.usertitleText} numberOfLines={1}
