@@ -106,13 +106,14 @@ export const cardInfoStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'flex-start',
     },
     cardDetailStorageName:{
+        width: PixelUtil.size(1086),
         fontSize: PixelUtil.size(30),
         fontWeight: '700',
         lineHeight: PixelUtil.size(48),
-        color: '#5E3F20'
+        color: '#5E3F20',
     },
     cardDetailStoragePrice:{
         fontSize: PixelUtil.size(40),
@@ -120,6 +121,7 @@ export const cardInfoStyles = StyleSheet.create({
         color: '#5E3F20'
     },
     cardDetailTimesName:{
+        width: PixelUtil.size(1086),
         fontSize: PixelUtil.size(30),
         fontWeight: '700',
         lineHeight: PixelUtil.size(48),
