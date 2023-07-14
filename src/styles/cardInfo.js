@@ -137,7 +137,44 @@ export const cardInfoStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#ffffff52'
+        backgroundColor: '#ffffff52',
+        padding: PixelUtil.size(50),
+        paddingTop: PixelUtil.size(80)
+    },
+    cardDetailStorageRow:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: PixelUtil.size(86)
+    },
+    cardDetailStorageRowLeft:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    cardDetailStorageRowRight:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingLeft: PixelUtil.size(100)
+    },
+    cardDetailStoragePTitle:{
+        fontSize: PixelUtil.size(26),
+        color: '#898888',
+        textAlign: 'left',
+        fontWeight: '500'
+    },
+    cardDetailStoragePValue:{
+        fontSize: PixelUtil.size(26),
+        color: '#2D2D2D',
+        textAlign: 'left',
+        fontWeight: '700'
     },
     cardImg: {
         //储值卡

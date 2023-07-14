@@ -218,65 +218,68 @@ const StoreageCardInfo = ({data}) => {
                     <View style={cardInfoStyles.cardDetailBody}>
                         <View style={cardInfoStyles.cardDetailBodyBox}>
                             <View style={cardInfoStyles.cardDetailStorageRow}>
-
-                            </View>
-
-                            <View style={cardInfoStyles.cardInfo}>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>卡号</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>{data.vipCardNo}</Text>
+                                <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>卡号：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>{data.vipCardNo}</Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>分类</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>
+                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>分类：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
                                         {data.projectCategoryName}
                                     </Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>最低续充</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>
-                                        ￥{data.rechargePrice}
+                            </View>
+                            <View style={cardInfoStyles.cardDetailStorageRow}>
+                                <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>最低续充：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{data.rechargePrice}</Text>
+                                </View>
+                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>卡内余额：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        ￥{data.balance}
                                     </Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>卡内余额</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>￥{data.balance}</Text>
+                            </View>
+                            <View style={cardInfoStyles.cardDetailStorageRow}>
+                                <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>赠金余额：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{attachMoney}</Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>赠金余额</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>￥{attachMoney}</Text>
+                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>欠款：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        ￥{data.oweMoney}
+                                    </Text>
                                 </View>
                             </View>
-                            <View style={cardInfoStyles.cardInfo}>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>欠款</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>￥{data.oweMoney}</Text>
-                                </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>有效期至</Text>
-                                    <Text style={cardInfoStyles.cardInfoText}>
+                            <View style={cardInfoStyles.cardDetailStorageRow}>
+                                <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>有效期至：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
                                         {data.validity
                                             ? (data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限')
                                             : '无期限'}
                                     </Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoItem}>
-                                    <Text style={cardInfoStyles.cardInfoText}>开卡门店</Text>
-                                    <Text style={cardInfoStyles.cardInfoText} numberOfLines={1} ellipsizeMode={'tail'}>
+                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>开卡门店：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
                                         {data.storeName}
                                     </Text>
                                 </View>
-                                <View style={cardInfoStyles.cardInfoDiscount}>
-                                    <Text style={cardInfoStyles.cardInfoText}>折扣方案</Text>
-                                    <Text style={cardInfoStyles.cardInfoText} numberOfLines={1} ellipsizeMode={'tail'}>
+                            </View>
+
+                            <View style={cardInfoStyles.cardDetailStorageRow}>
+                                <View style={cardInfoStyles.cardDetailStorageRowLeft}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>折扣方案：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
                                         {cardDetails.discountName}
                                     </Text>
                                 </View>
-                            </View>
-                            <View style={cardInfoStyles.cardInfoLast}>
-                                <View style={cardInfoStyles.cardInfoNote}>
-                                    <Text style={cardInfoStyles.cardInfoText}>备注信息</Text>
-                                    <Text style={cardInfoStyles.cardInfoText} numberOfLines={1} ellipsizeMode={'tail'}>
+                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>备注信息：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
                                         {data.remark}
                                     </Text>
                                 </View>
