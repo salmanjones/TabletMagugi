@@ -55,7 +55,7 @@ export const timeCardInfoStyles = StyleSheet.create({
     cardInfoBox: {
         backgroundColor: '#fff',
         width: '100%',
-        height: '76.96%',
+        flex: 1
     },
     cardInfoBody: {
         width: '100%',

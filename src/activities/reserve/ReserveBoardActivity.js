@@ -284,6 +284,9 @@ export const ReserveBoardActivity = props => {
                                         [
                                             {
                                                 text: '知道了',
+                                                onPress: ()=>{
+                                                    getReserveList()
+                                                }
                                             }
                                         ]
                                     );
@@ -645,7 +648,8 @@ export const ReserveBoardActivity = props => {
                                     isOldCustomer: memberCardInfo.isOldCustomer,
                                 },
                                 isShowReserve: true,
-                                checkReserveId: pageCache.checkReserveId
+                                checkReserveId: pageCache.checkReserveId,
+                                appUserId: pageCache.checkAppUserId
                             }
 
                             callBack && callBack()
@@ -837,6 +841,7 @@ export const ReserveBoardActivity = props => {
 
     /// 关闭所有侧边栏
     const hideAllPanel = ()=>{
+        clearPageCache()
         memberPanelRef.current.hideRightPanel()
         panelMultiProfilePanelRef.current.hideRightPanel()
         customerReservePanelRef.current.hideRightPanel()

@@ -57,6 +57,7 @@ import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, thro
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
+import {getMemberDetail} from "../../services/reserve";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -158,18 +159,20 @@ class CashierBillingView extends React.Component {
 
         // 请求数据
         InteractionManager.runAfterInteractions(() => {
+            // 获取员工操作权限、四舍五入模式
             selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
-                var resultMap = data.data;
-                var staffAclMap = resultMap.staffAclMap;
+                const resultMap = data.data;
+                const staffAclMap = resultMap.staffAclMap;
                 roundMode = resultMap.roundMode;
+                company_roundMode = roundMode;
+
+                // 更新状态
                 this.setState((prevState, props) => {
                     prevState.roundMode = roundMode;
                     prevState.companySetting.isUseCash = resultMap.isUseCash;
                     prevState.accessRights = resultMap.accessRights;
                     return prevState
                 });
-                company_roundMode = roundMode;
-                //company_settings.isUseCash=resultMap.isUseCash;//是否使用现金
 
                 if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
                     this.moduleCode = "1";
@@ -203,6 +206,27 @@ class CashierBillingView extends React.Component {
                     )
                 })
             });
+
+            // 获取顾客档案详情，左侧展示｜弹层展示
+            const {member, checkReserveId} = this.props.route.params
+            if(member){ // 会员进入
+                const queryArgs = {
+                    memberId: member.id,
+                }
+                if(checkReserveId){
+                    queryArgs['reserveId'] = checkReserveId
+                }
+
+                console.log("queryArgs", queryArgs)
+
+                getMemberDetail(queryArgs).then(backData=>{
+                    console.log("backData", JSON.stringify(backData))
+                }).catch(e=>{
+                    console.log("backData exception", e)
+                })
+            }else{ // 散客进入
+                console.log("=======================我是散客")
+            }
         });
     }
 
@@ -4278,18 +4302,6 @@ const mapDispatchToProps = (dispatch, props) => {
         }
     };
 };
-
-const styles = StyleSheet.create({
-    rowBack: {
-        alignItems: 'center',
-        backgroundColor: 'red',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        flex: 0,
-        height: 90,
-        paddingRight: 20,
-    }
-})
 
 export const CashierBillingActivity = connect(
     mapStateToProps,

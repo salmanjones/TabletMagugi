@@ -20,6 +20,8 @@ export class HeaderLogout extends React.PureComponent {
                     text: '确定',
                     onPress: () => {
                         clearFetchCache()
+                        AsyncStorage.setItem(AppConfig.staffRStore, null)
+                        AsyncStorage.setItem(AppConfig.sessionStaffId, null)
                         AsyncStorage.removeItem(AppConfig.staffRStore)
                         AsyncStorage.removeItem(AppConfig.sessionStaffId)
 

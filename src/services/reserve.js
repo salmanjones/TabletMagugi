@@ -87,6 +87,15 @@ export const getCustomerDetail = params => {
 }
 
 /**
+ * 获取当前会员所有信息
+ */
+export const getMemberDetail = params => {
+    return callService(api.getMemberDetail, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
  * 卡延期
  */
 export const updateCardValidity = params => {
