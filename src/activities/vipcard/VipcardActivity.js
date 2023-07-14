@@ -22,6 +22,7 @@ import {
     vipcardSetStaffAction,
 } from '../../actions';
 import {fetchStaffAcl} from '../../services';
+import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
@@ -55,6 +56,8 @@ class VipCard extends React.Component {
         InteractionManager.runAfterInteractions(() => {
             init(params);
         });
+
+        console.log(this.props.route,'路由参数')
     }
 
     onTabPress = index => {
@@ -130,8 +133,12 @@ class VipCard extends React.Component {
                 <View style={RechargeStoredCardStyles.openCardTitle}>
                     {/*标题*/}
                     <View style={RechargeStoredCardStyles.openCardTitleL}>
-                        <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
+
+                    {/*    <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>*/}
+                        <VipUserInfoComponent showMember={this.props.route} showBtn={false}></VipUserInfoComponent>
                     </View>
+
+
                     {/*Tbs*/}
                     <View style={RechargeStoredCardStyles.openCardTitleR}>
                         <View style={RechargeStoredCardStyles.openCardTitleRTitle}>

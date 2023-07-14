@@ -15,6 +15,7 @@ import {
     TabGroup,
     VipcardPayment,
 } from '../../components';
+import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
 
 const tabs = [
     {id: 1, name: '储值卡'},
@@ -80,8 +81,10 @@ class Recharge extends React.Component {
                     {/*左侧内容*/}
                     <View style={RechargeStoredCardStyles.LeftcontentNew}>
                         <View style={RechargeStoredCardStyles.title}>
-                            <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
+                            {/*<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>*/}
+                            <VipUserInfoComponent showMember={this.props.route} showBtn={true}></VipUserInfoComponent>
                         </View>
+
                         {/*已选择卡*/}
                         {currentCard && (
                             <View style={RechargeStoredCardStyles.cardOperateBoxOther}>

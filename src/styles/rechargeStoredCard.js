@@ -47,7 +47,6 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     openCardTitleR: {
@@ -83,23 +82,20 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // 左边主体
         width: '50%',
         height: '100%',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor:'#ccffcc'
     },
     title: {
         // 售卡-标题
         width: '100%',
         height: PixelUtil.size(106),
-        display: 'flex',
+        /*display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#f2f2f2',
         borderBottomColor: '#cbcbcb',
-        borderBottomWidth: PixelUtil.size(2),
-        borderRightColor: '#cbcbcb',
-        borderRightWidth: PixelUtil.size(2),
-        borderStyle: 'solid',
-        overflow: 'hidden'
+        borderBottomWidth: PixelUtil.size(2),*/
+        backgroundColor:'#ffcc00'
     },
     titleText: {
         // 标题-文字
@@ -764,4 +760,96 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         borderTopWidth: PixelUtil.size(2),
         borderTopColor: '#cbcbcb'
     },
+
+    //开卡售卡用户信息
+    //背景
+    userbg:{
+        width:'100%',
+        height:"100%",
+        flex:0,
+        flexDirection:'row',
+    },
+    cardNo:{
+        width:PixelUtil.size(180),
+        color:'#ffd99c',
+        fontSize:PixelUtil.size(25),
+        fontWeight:PixelUtil.size(700),
+        marginTop:PixelUtil.size(54),
+        marginLeft:PixelUtil.size(21)
+    },
+    carduserInfo:{
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    cardUserLeft:{
+        flex:0,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    avaterIamge:{
+        width: PixelUtil.rect(80, 80).width,
+        height: PixelUtil.rect(80, 80).height,
+        borderRadius:PixelUtil.size(500)
+    },
+    avaterInfo:{
+        marginLeft:PixelUtil.size(13),
+        // marginTop:PixelUtil.size(10)
+    },
+    avaterInfotop:{
+        flex:0,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    usertitleText:{
+        fontSize:PixelUtil.size(30),
+        color:'#2f2f2f',
+        fontWeight:PixelUtil.size(700),
+        width:PixelUtil.size(185),
+        overflow:'hidden',
+    },
+    sexText:{
+        fontSize:PixelUtil.size(22),
+        color:'#2f2f2f',
+        fontWeight:PixelUtil.size(400),
+        marginLeft:PixelUtil.size(10)
+    },
+    avaterlogo:{
+        width: PixelUtil.rect(38, 38).width,
+        height: PixelUtil.rect(38, 38).height,
+        resizeMode: 'contain',
+        marginLeft:PixelUtil.size(5)
+    },
+    phoneText:{
+        // marginTop:PixelUtil.size(5),
+        fontWeight:PixelUtil.size(400),
+        fontSize:PixelUtil.size(22),
+        color:'#2f2f2f'
+    },
+    storeInfo:{
+        marginLeft:PixelUtil.size(28),
+        flex:0,
+        flexDirection:'row'
+    },
+    secondCard:{
+        marginLeft:PixelUtil.size(15),
+        color:'#2F2F2F',
+        fontSize:PixelUtil.size(22),
+
+    },
+    storeNumberCard:{
+        textAlign:'center',
+        marginTop:PixelUtil.size(5)
+    },
+    application:{
+        marginRight:PixelUtil.size(24),
+        marginTop:PixelUtil.size(26)
+    },
+    appliimg:{
+        width:PixelUtil.size(128),
+        height:PixelUtil.size(68),
+        resizeMode: 'contain',
+    }
 });
