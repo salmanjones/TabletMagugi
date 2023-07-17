@@ -12,7 +12,7 @@ import {
     PanResponder,
     ScrollView,
     Text,
-    TouchableOpacity,
+    TouchableOpacity, TouchableWithoutFeedback,
     View
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -26,7 +26,6 @@ import {
     CashierBillInfo,
     CashierPay,
     HeadeOrderInfoLeft,
-    HeadeOrderInfoRight,
     ModalMemberIndentify,
     MultiplyPayModal,
     OtherPayFor,
@@ -40,6 +39,7 @@ import {
     StockTips,
     VipPayFor
 } from '../../components';
+import MemberPanel from "../../components/panelCustomer/MemberPanel";
 import {changeBillingOwner, getLimitItems, selectStaffAclInfoResult} from '../../services';
 import {
     CASHIERBILLING_CUSTOMER,
@@ -89,7 +89,7 @@ class CashierBillingView extends React.Component {
         const defaultState = defaultInfos(sex, isOldCustomer);
         // 获取预约的服务人
         const allWaiter = this.props.servicers
-        let reserveWaiter = null
+        let reserveWaiter = {}
         for(let key in allWaiter){
             const positionWaiters = allWaiter[key] || []
             const waiterList = positionWaiters.filter(waiter=>{
@@ -109,13 +109,26 @@ class CashierBillingView extends React.Component {
             waiterId: waiterId,
             memberProfile: {
                 isGuest: true, // 是否为散客
-                isBmsNew: 0 // 是否是bms的新用户，0否，1是
+                isBmsNew: 0, // 是否是bms的新用户，0否，1是
+                memberCountInfo: {},
+                reserveInfo: {
+                    reserveResoures: [],
+                    reserveInfoList: []
+                },
+                couponList: [],
+                cardsInfo: {},
+                czkCount: 0,
+                ckCount: 0
             },
-            reserveWaiter
+            reserveWaiter,
+            showMemberPanel: false // 是否展示会员面板
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
         this.moduleCode = props.route.params.moduleCode;
         this.cardCount = 0;
+
+        // 会员面板引用
+        this.memberPanelRef = null
     }
 
     UNSAFE_componentWillMount() {
@@ -231,7 +244,16 @@ class CashierBillingView extends React.Component {
             // 获取顾客档案详情，左侧展示｜弹层展示
             const defaultProfile = {
                 isGuest: true, // 是否为散客
-                isBmsNew: 0 // 是否是bms的新用户，0否，1是
+                isBmsNew: 0, // 是否是bms的新用户，0否，1是
+                memberCountInfo: {},
+                reserveInfo: {
+                    reserveResoures: [],
+                    reserveInfoList: []
+                },
+                couponList: [],
+                cardsInfo: {},
+                czkCount: 0,
+                ckCount: 0
             }
             const {member, checkReserveId} = this.props.route.params
             if(member){ // 会员进入
@@ -244,6 +266,7 @@ class CashierBillingView extends React.Component {
                 this.setState({
                     isLoading: true
                 })
+
                 getMemberDetail(queryArgs).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
@@ -252,21 +275,22 @@ class CashierBillingView extends React.Component {
 
                         // 更新会员状态
                         self.setState((prevState, props) => {
-                            prevState.memberProfile = memberProfile
-                            return prevState
+                            return {...prevState, "memberProfile":memberProfile}
+                        }, ()=>{
+                            if(memberProfile.isBmsNew == '1'){ // 是否是bms的新用户，0否，1是
+                                self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
+                            }
                         })
                     }else{ // 获取顾客档案信息失败
                         console.error("获取顾客档案信息失败", backData)
                         self.setState((prevState, props) => {
-                            prevState.memberProfile = defaultProfile
-                            return prevState
+                            return {...prevState, "memberProfile":defaultProfile}
                         })
                     }
                 }).catch(e=>{
                     console.error("获取顾客档案信息失败", e)
                     self.setState((prevState, props) => {
-                        prevState.memberProfile = defaultProfile
-                        return prevState
+                        return {...prevState, "memberProfile":defaultProfile}
                     })
                 }).finally(_=>{
                     this.setState({
@@ -275,8 +299,7 @@ class CashierBillingView extends React.Component {
                 })
             }else{ // 散客进入
                 self.setState((prevState, props) => {
-                    prevState.memberProfile = defaultProfile
-                    return prevState
+                    return {...prevState, memberProfile:defaultProfile}
                 })
             }
         });
@@ -1470,6 +1493,20 @@ class CashierBillingView extends React.Component {
         }
     }
 
+    /**
+     * 会员面板点击事件
+     * @param type
+     * @param extra
+     * @param callBack
+     * @returns {Promise<void>}
+     */
+    async customerPressEvent(type, extra, callBack){
+        switch (type) {
+            case 'updateMemberInfo':
+                break
+        }
+    }
+
     render() {
         let consumeItemLength = this.state.consumeItems.length;
         let editConsumeItemData = {};
@@ -1645,13 +1682,13 @@ class CashierBillingView extends React.Component {
                     />
                 </Modal>
 
-
                 {/* 会员识别 */}
-                <ModalMemberIndentify navigation={this.props.navigation}
-                                      visible={this.state.showMemberQueryModal}
-                                      onConfirm={this.onMemberConfirm.bind(this)}
-                                      onCancel={this.onMemberCanel.bind(this)}
-                                      loading={isLoading}
+                <ModalMemberIndentify
+                    navigation={this.props.navigation}
+                    visible={this.state.showMemberQueryModal}
+                    onConfirm={this.onMemberConfirm.bind(this)}
+                    onCancel={this.onMemberCanel.bind(this)}
+                    loading={isLoading}
                 />
                 <View style={cashierBillingStyle.bodybox}>
                     {/* 左侧区域 */}
@@ -1699,33 +1736,47 @@ class CashierBillingView extends React.Component {
                                             resizeMode={'stretch'}
                                             style={cashierBillingStyle.customerInfoBox}
                                             source={require('@imgPath/cashier_billing_customer_info.png')}>
-                                            <View style={cashierBillingStyle.customerInfoNumberBox}>
-                                                <Text style={cashierBillingStyle.customerInfoNumberTxt}>{memberProfile.memberNo}</Text>
-                                                {
-                                                    memberProfile.isBmsNew && (<Text style={cashierBillingStyle.customerInfoNewFlag}>新客</Text>)
-                                                }
-                                            </View>
-                                            <View style={cashierBillingStyle.customerInfoExtendBox}>
-                                                <Image
-                                                    style={cashierBillingStyle.customerInfoAvatar}
-                                                    resizeMethod="resize"
-                                                    source={getImage(memberProfile.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
-                                                    defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
-                                                <View style={cashierBillingStyle.customerInfoBase}>
-                                                    <View style={cashierBillingStyle.customerInfoBaseName}>
-                                                        <Text style={cashierBillingStyle.customerInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
-                                                            {memberProfile.nickName ? decodeURIComponent(memberProfile.nickName): '未填写姓名姓名'}
-                                                        </Text>
-                                                        <Image
-                                                            style={cashierBillingStyle.customerSexIcon}
-                                                            resizeMode={'contain'}
-                                                            source={memberProfile.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                            <TouchableOpacity
+                                                style={cashierBillingStyle.customerInfoExtendBox}
+                                                onPress={()=>{
+                                                    this.memberPanelRef && this.memberPanelRef.showRightPanel('CashierBillingActivity')
+                                                }}>
+                                                <View style={cashierBillingStyle.customerInfoExtendLeftBox}>
+                                                    <Image
+                                                        style={cashierBillingStyle.customerInfoAvatar}
+                                                        resizeMethod="resize"
+                                                        source={getImage(memberProfile.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                                        defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
+                                                    <View style={cashierBillingStyle.customerInfoBase}>
+                                                        <View style={cashierBillingStyle.customerInfoBaseName}>
+                                                            <Text style={cashierBillingStyle.customerInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                                {memberProfile.nickName ? decodeURIComponent(memberProfile.nickName): '未填写姓名'}
+                                                            </Text>
+                                                            <Image
+                                                                style={cashierBillingStyle.customerSexIcon}
+                                                                resizeMode={'contain'}
+                                                                source={memberProfile.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
+                                                            <Text style={cashierBillingStyle.customerSexText} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                                {memberProfile.sex == '1' ? '男':'女'}
+                                                            </Text>
+                                                            <Image
+                                                                style={cashierBillingStyle.customerSexIcon}
+                                                                resizeMode={'contain'}
+                                                                source={memberProfile.isWechatMember == '1'
+                                                                    ? require('@imgPath/wecom_store_friend.png')
+                                                                    : (memberProfile.isWechatMember == '2' ? require('@imgPath/wecom_company_friend.png') : require('@imgPath/wecom_not_friend.png'))}/>
+                                                        </View>
+                                                        <View style={cashierBillingStyle.customerInfoBaseName}>
+                                                            <Text style={cashierBillingStyle.customerInfoBasePhone}>
+                                                                {memberProfile.phoneShow || '暂无'}
+                                                            </Text>
+                                                            {
+                                                                memberProfile.isBmsNew == '0' && (<Text style={cashierBillingStyle.customerInfoNewFlag}>新客</Text>)
+                                                            }
+                                                        </View>
                                                     </View>
-                                                    <Text style={cashierBillingStyle.customerInfoBasePhone}>
-                                                        {memberProfile.phoneShow || '暂无'}
-                                                    </Text>
                                                 </View>
-                                                <View style={cashierBillingStyle.customerCardsInfo}>
+                                                <View style={cashierBillingStyle.customerInfoExtendRightBox}>
                                                     <View style={cashierBillingStyle.customerCardsInfoCZ}>
                                                         <Text style={cashierBillingStyle.customerCardsInfoName} ellipsizeMode={'tail'} numberOfLines={1}>
                                                             储值卡
@@ -1755,11 +1806,11 @@ class CashierBillingView extends React.Component {
                                                             预约
                                                         </Text>
                                                         <Text style={cashierBillingStyle.customerCardsRNum} ellipsizeMode={'tail'} numberOfLines={1}>
-                                                            {this.state.reserveWaiter.value}
+                                                            {this.state.memberProfile.reserveInfo.staffName}
                                                         </Text>
                                                     </View>
                                                 </View>
-                                            </View>
+                                            </TouchableOpacity>
                                         </ImageBackground>
                                     )
                                 }
@@ -2652,9 +2703,10 @@ class CashierBillingView extends React.Component {
                         </Animated.View>
                     )}
                 {/*------员工编辑--------*/}
-                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => {
-                    this.staffEditModal = ref;
-                }} onSave={this.onSaveEditServicer.bind(this)}/>
+                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => {this.staffEditModal = ref}} onSave={this.onSaveEditServicer.bind(this)}/>
+
+                {/* 会员信息 */}
+                <MemberPanel ref={ref => {this.memberPanelRef = ref}} memberInfo={this.state.memberProfile} reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
             </View>
         );
     }

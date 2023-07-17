@@ -177,7 +177,7 @@ export const ReserveBoardActivity = props => {
                         setCustomerState(data)
 
                         if(customerInfo.isMember == '1'){
-                            memberPanelRef.current.showRightPanel()
+                            memberPanelRef.current.showRightPanel('ReserveBoardActivity')
                         }else{
                             guestPanelRef.current.showRightPanel('withReserve', 'createOrder')
                         }
@@ -926,7 +926,7 @@ export const ReserveBoardActivity = props => {
                 </View>
             </View>
             {/*会员信息面板*/}
-            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerCardEvent={customerPressEvent}/>
+            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
             {/*散客信息面板*/}
             <GuestPanel ref={guestPanelRef} customerInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
             {/*顾客预约详情信息面板*/}

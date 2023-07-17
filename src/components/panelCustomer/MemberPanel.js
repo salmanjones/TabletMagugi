@@ -7,6 +7,7 @@ import {CardWidget} from "./widgets/CardWidget"
 import {ReserveWidget} from "./widgets/ReserveWidget"
 import {ProfileWidget} from "./widgets/ProfileWidget"
 import {PortraitWidget} from "./widgets/PortraitWidget"
+import {ModifyInfoWidget} from "./widgets/ModifyInfoWidget";
 
 /**
  * 会员预约详情、档案信息浮动面板
@@ -38,8 +39,14 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         }
     });
 
+    /// 页面来源
+    const [pagerName, setPagerName] = useState('ReserveBoardActivity')
+
     /// 展示面板
-    const showRightPanel = () => {
+    const showRightPanel = (pager = 'ReserveBoardActivity') => {
+        // 记录页面来源
+        setPagerName(pager)
+
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -90,6 +97,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     if((customerInfo.czkCount + customerInfo.ckCount) < 1){
         tabArray = tabArray.filter(item=> item != '顾客资产')
     }
+    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew){
+        tabArray = tabArray.filter(item=> item == '基础档案')
+    }
     // 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
     // 当前页签
@@ -137,7 +147,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
-                                        <Text style={PanelCustomerStyles.nameShowText}>{decodeURIComponent(customerInfo.nickName)}</Text>
+                                        <Text style={PanelCustomerStyles.nameShowText}>{customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}</Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
@@ -203,7 +213,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 : PanelCustomerStyles.memberExtraTabContentBox}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && (
-                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerCardEvent}/>
+                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerPressEvent}/>
                                     )
                                 }
                                 {
@@ -215,7 +225,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     tabArray[tabIndex] == '顾客资产' && (
                                         <CardWidget
                                             cardsInfo={customerInfo['cardsInfo']}
-                                            customerPressEvent={props.customerCardEvent}
+                                            customerPressEvent={props.customerPressEvent}
                                             extendsInfo={{
                                                 appUserId: customerInfo.appUserId,
                                                 reserveId: customerInfo['reserveInfo']['reserveId'],
@@ -230,33 +240,47 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     )
                                 }
                                 {
-                                    tabArray[tabIndex] == '基础档案' && (
-                                        <PortraitWidget portraitInfo={customerInfo}/>
-                                    )
+                                    (()=>{
+                                        if(tabArray[tabIndex] == '基础档案'){
+                                            if(pagerName == 'CashierBillingActivity'){
+                                                return (
+                                                    <ModifyInfoWidget portraitInfo={customerInfo}/>
+                                                )
+                                            }else{
+                                                return (
+                                                    <PortraitWidget portraitInfo={customerInfo}/>
+                                                )
+                                            }
+                                        }
+                                    })()
                                 }
                             </View>
                         </View>
                     </View>
                     {/*操作按钮*/}
-                    <ImageBackground
-                        resizeMode={'contain'}
-                        source={require('@imgPath/member_panel_operator_bg.png')}
-                        style={PanelCustomerStyles.operatorWrap}>
-                        <TouchableOpacity
-                            onPress={()=>{
-                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createCard'})
-                            }}
-                            style={PanelCustomerStyles.operatorBtnCashier}>
-                            <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={PanelCustomerStyles.operatorBtnCard}
-                            onPress={()=>{
-                                props['customerCardEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createOrder'})
-                            }}>
-                            <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
-                        </TouchableOpacity>
-                    </ImageBackground>
+                    {
+                        pagerName != 'CashierBillingActivity' && (
+                            <ImageBackground
+                                resizeMode={'contain'}
+                                source={require('@imgPath/member_panel_operator_bg.png')}
+                                style={PanelCustomerStyles.operatorWrap}>
+                                <TouchableOpacity
+                                    onPress={()=>{
+                                        props['customerPressEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createCard'})
+                                    }}
+                                    style={PanelCustomerStyles.operatorBtnCashier}>
+                                    <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={PanelCustomerStyles.operatorBtnCard}
+                                    onPress={()=>{
+                                        props['customerPressEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createOrder'})
+                                    }}>
+                                    <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
+                                </TouchableOpacity>
+                            </ImageBackground>
+                        )
+                    }
                 </View>
             </Animated.View>
         </View>

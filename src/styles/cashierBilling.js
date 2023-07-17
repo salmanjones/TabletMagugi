@@ -16,8 +16,6 @@ let queryInputBoxWidth = rightPanelWidth * 0.5;
 let rightCategoryWidth = PixelUtil.size(154);
 let topHeaderHeight = PixelUtil.screenSize.height * 0.1;
 let priceHeight = PixelUtil.size(72);
-let queryBoxWidth = rightBoxWidth - rightCategoryWidth - PixelUtil.size(2);
-let queryBoxHeight = PixelUtil.screenSize.height - naviBarHeight - topHeaderHeight - priceHeight;
 let queryBoxConsumableHeight = PixelUtil.screenSize.height - naviBarHeight - topHeaderHeight;
 let queryBoxConsumableWidth = rightBoxWidth - PixelUtil.size(2);
 export const cashierBillingStyle = StyleSheet.create({
@@ -59,17 +57,15 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     customerInfoBox: {
         width: "100%",
-        height: PixelUtil.size(148),
+        height: PixelUtil.size(146),
         borderStyle: 'solid',
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
-        borderTopWidth: 0,
-        marginTop: PixelUtil.size(-2),
         position: 'relative',
         display:'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start'
+        alignItems: 'center'
     },
     guestInfoBox:{
         width: "100%",
@@ -93,9 +89,22 @@ export const cashierBillingStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: PixelUtil.size(40),
+    },
+    customerInfoExtendLeftBox:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingHorizontal: PixelUtil.size(12),
-        marginLeft: PixelUtil.size(20)
+    },
+    customerInfoExtendRightBox:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
     },
     guestInfoExtendBox:{
         flex: 1,
@@ -108,8 +117,8 @@ export const cashierBillingStyle = StyleSheet.create({
         position: 'relative'
     },
     customerInfoAvatar:{
-        width: PixelUtil.size(70),
-        height: PixelUtil.size(70),
+        width: PixelUtil.size(64),
+        height: PixelUtil.size(64),
         overflow: 'hidden',
         borderRadius: PixelUtil.size(43)
     },
@@ -121,65 +130,69 @@ export const cashierBillingStyle = StyleSheet.create({
         marginTop: PixelUtil.size(6)
     },
     customerInfoNewFlag:{
-        paddingHorizontal: PixelUtil.size(10),
-        paddingVertical: PixelUtil.size(2),
-        backgroundColor: '#FFA200',
+        backgroundColor: '#FFB93E',
         color: '#ffffff',
         fontWeight: '700',
-        borderRadius: PixelUtil.size(12),
+        borderRadius: PixelUtil.size(4),
         overflow: 'hidden',
-        marginTop: PixelUtil.size(6),
-        fontSize: PixelUtil.size(18)
+        fontSize: PixelUtil.size(12),
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(20),
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        lineHeight: PixelUtil.size(20),
+        marginLeft: PixelUtil.size(16)
     },
     customerInfoBase:{
-        marginLeft: PixelUtil.size(12),
-        height: PixelUtil.size(80),
+        marginLeft: PixelUtil.size(18),
+        height: PixelUtil.size(64),
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start'
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
     },
     customerInfoBaseName:{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        height: PixelUtil.size(38)
     },
     customerSexIcon: {
         marginLeft: PixelUtil.size(10),
-        width: PixelUtil.size(36),
-        height: PixelUtil.size(36),
+        width: PixelUtil.size(32),
+        height: PixelUtil.size(32),
+    },
+    customerWecomIcon: {
+        marginLeft: PixelUtil.size(10),
+        width: PixelUtil.size(32),
+        height: PixelUtil.size(32),
+    },
+    customerSexText: {
+        marginLeft: PixelUtil.size(4),
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+        marginTop: PixelUtil.size(2)
     },
     customerInfoBaseNameTxt:{
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
-        fontSize: PixelUtil.size(22),
+        fontSize: PixelUtil.size(28),
         maxWidth: PixelUtil.size(126),
-        marginTop: PixelUtil.size(2),
     },
     guestInfoBaseNameTxt:{
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(28),
-        marginTop: PixelUtil.size(2),
     },
     customerInfoBasePhone:{
-        marginTop: PixelUtil.size(12),
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
-    },
-    customerCardsInfo:{
-        flex:1,
-        height: PixelUtil.size(80),
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginLeft: PixelUtil.size(16),
     },
     customerCardsInfoCZ:{
         height: '100%',
@@ -1334,7 +1347,7 @@ export const cashierBillingStyle = StyleSheet.create({
         height: '100%',
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     servicerGroupOther: {
         //服务人-发型师-分组
