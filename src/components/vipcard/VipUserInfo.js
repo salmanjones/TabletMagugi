@@ -4,7 +4,7 @@ import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native
 import {AppNavigate} from "../../navigators";
 import {getMemberDetail} from '../../services/reserve'
 import {PanelCustomerStyles} from "../../styles/PanelCustomer";
-import {getImage, ImageQutity} from "../../utils";
+import {getImage, ImageQutity, PixelUtil} from "../../utils";
 
 const pageCache = {
     checkReserveId: '', // 选中的预约id
@@ -32,12 +32,10 @@ export class VipUserInfoComponent extends React.PureComponent {
 
     componentDidMount() {
         const memberid = this.props.showMember.params.member.id
-        console.log(memberid, 'member')
         if (memberid) {
             getMemberDetail({
                 memberId: memberid,
             }).then(res => {
-                console.log(res, 'dddd')
                 const {code, data} = res
                 if (code === '6000') {
                     const datasource = res.data
@@ -68,11 +66,15 @@ export class VipUserInfoComponent extends React.PureComponent {
         return (
 
             <View style={{width: '100%'}}>
-                <ImageBackground resizeMethod="resize" source={require('@imgPath/userinfo_bg.png')}
+                <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
                                  style={RechargeStoredCardStyles.userbg}>
-                    <Text style={RechargeStoredCardStyles.cardNo}>{memberCardNo}</Text>
+                    <ImageBackground resizeMethod="resize" source={require('@imgPath/cardNo_bg.png')}
+                                     style={RechargeStoredCardStyles.cardNoImg}>
+                        <Text style={RechargeStoredCardStyles.cardNo}>.{memberCardNo}</Text>
+                    </ImageBackground>
                     {/*nav中间个人信息*/}
                     <View style={RechargeStoredCardStyles.carduserInfo}>
+                        {/*左侧用户信息*/}
                         <View style={RechargeStoredCardStyles.cardUserLeft}>
                             <Image
                                 style={RechargeStoredCardStyles.avaterIamge}
@@ -93,8 +95,10 @@ export class VipUserInfoComponent extends React.PureComponent {
                                 <Text style={RechargeStoredCardStyles.phoneText}>{phone}</Text>
                             </View>
                         </View>
+                        {/*nav*/}
                         <View style={RechargeStoredCardStyles.storeInfo}>
-                            <View style={this.props.showBtn == false ? RechargeStoredCardStyles.storeCard : ''}>
+                            <View
+                                style={RechargeStoredCardStyles.storeCard}>
                                 <Text style={RechargeStoredCardStyles.storeNameCard}>储值卡</Text>
                                 <Text style={RechargeStoredCardStyles.storeNumberCard}>{czkCount}张</Text>
                             </View>
@@ -109,19 +113,23 @@ export class VipUserInfoComponent extends React.PureComponent {
                                 <Text style={RechargeStoredCardStyles.storeNumberCard}>¥{czkPriceSum}</Text>
                             </View>
                         </View>
+                        {
+                            this.props.showBtn && (
+                                <TouchableOpacity onPress={() => {
+                                    this.bankcard(this.props.showMember.params.member)
+                                }}>
+                                    <Text style={RechargeStoredCardStyles.application}>
+                                        <Image resizeMethod="resize" source={require('@imgPath/application.png')}
+                                               style={RechargeStoredCardStyles.appliimg}></Image>
+                                    </Text>
+                                </TouchableOpacity>
+                            )
+                        }
+                        {/*<View style={RechargeStoredCardStyles.reservation}>*/}
+                        {/*    <Text style={RechargeStoredCardStyles.reservationText}>预约</Text>*/}
+                        {/*    <Text style={RechargeStoredCardStyles.reservationText}>王泽</Text>*/}
+                        {/*</View>*/}
                     </View>
-                    {
-                        this.props.showBtn && (
-                            <TouchableOpacity onPress={() => {
-                                this.bankcard(this.props.showMember.params.member)
-                            }}>
-                                <Text style={RechargeStoredCardStyles.application}>
-                                    <Image resizeMethod="resize" source={require('@imgPath/application.png')}
-                                           style={RechargeStoredCardStyles.appliimg}></Image>
-                                </Text>
-                            </TouchableOpacity>
-                        )
-                    }
                 </ImageBackground>
 
             </View>

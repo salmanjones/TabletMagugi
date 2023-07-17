@@ -23,7 +23,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
         // this.timer;
     }
 
-     /**
+    /**
      * 第一次渲染后调用
      */
     // componentDidMount(){
@@ -39,9 +39,9 @@ export class MemberIdentifyComponent extends React.PureComponent {
     /**
      * 执行完成后卸载组建
      */
-    // componentWillUnmount(){
-    //     this.timer && this.timer!=0 && clearInterval(this.timer);
-    // }
+        // componentWillUnmount(){
+        //     this.timer && this.timer!=0 && clearInterval(this.timer);
+        // }
 
     resetData = query => {
         this.setState({
@@ -52,7 +52,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
     freshData = query => {
         this.setState({
             searchStart: false,
-            loading:true
+            loading: true
         });
 
         this.selectWaitingMemberResult();
@@ -60,7 +60,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.clearData) {
-            this.setState({ member: {} });
+            this.setState({member: {}});
             this.props.reset();
         }
     }
@@ -72,7 +72,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                 member: {},
                 query,
             });
-            this.props.fetchMemberInfo(query, true,false);
+            this.props.fetchMemberInfo(query, true, false);
         }
     };
 
@@ -87,13 +87,13 @@ export class MemberIdentifyComponent extends React.PureComponent {
     };
 
     onMemberPress = member => {
-        this.setState({ member });
+        this.setState({member});
         this.props.onMemberPress && this.props.onMemberPress(member);
     };
 
     onRechargePress = card => {
-        const { navigation } = this.props;
-        const { member } = this.state;
+        const {navigation} = this.props;
+        const {member} = this.state;
         InteractionManager.runAfterInteractions(() => {
             navigation.navigate('RechargeActivity', {
                 card: card,
@@ -112,19 +112,19 @@ export class MemberIdentifyComponent extends React.PureComponent {
                 selected={memberId === e.item.id}
                 data={e.item}
                 onPress={this.onMemberPress}
-                isShowReserve={e.item.reserveStatus === '0' ? true: false}
+                isShowReserve={e.item.reserveStatus === '0' ? true : false}
             />
         );
     };
 
     renderWaitMemberItem = e => {
-        const { member: { id } } = this.state;
+        const {member: {id}} = this.state;
         return (
             <MemberListItem
                 selected={id === e.item.id}
                 data={e.item}
                 onPress={this.onMemberPress}
-                isShowReserve={e.item.reserveStatus === '0' ? true: false}
+                isShowReserve={e.item.reserveStatus === '0' ? true : false}
             />
         );
     };
@@ -140,7 +140,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
             navigation,
         } = this.props;
 
-        const { query, searchStart, member ,memberList } = this.state;
+        const {query, searchStart, member, memberList} = this.state;
 
         return (
             <View style={memberIdentifyStyle.cantioner}>
@@ -154,11 +154,13 @@ export class MemberIdentifyComponent extends React.PureComponent {
                         />
 
                         {!searchStart && (
-                            <View style={{height:'90%'}}>
+                            <View style={{height: '90%'}}>
                                 <View style={memberIdentifyStyle.waitTextBox}>
                                     <Text style={memberIdentifyStyle.waitText}>当前等待的顾客:</Text>
-                                    <TouchableOpacity  style={memberIdentifyStyle.waitTextBoxImg} onPress = {this.freshData}>
-                                        <Image resizeMethod="resize"  source={require('@imgPath/refresh_icon.png')} style={memberIdentifyStyle.waitRefreshTextImage} />
+                                    <TouchableOpacity style={memberIdentifyStyle.waitTextBoxImg}
+                                                      onPress={this.freshData}>
+                                        <Image resizeMethod="resize" source={require('@imgPath/refresh_icon.png')}
+                                               style={memberIdentifyStyle.waitRefreshTextImage}/>
                                         <Text style={memberIdentifyStyle.waitRefreshText}>刷新</Text>
                                     </TouchableOpacity>
                                     <Spinner
@@ -179,7 +181,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                         )}
 
                         {searchStart && (
-                            <View style={{height:'90%',width:'100%'}}>
+                            <View style={{height: '90%', width: '100%'}}>
                                 <FlatList
                                     data={list}
                                     keyExtractor={item => item.id}
@@ -202,7 +204,7 @@ export class MemberIdentifyComponent extends React.PureComponent {
                         )}
                     </View>
                     {/*右侧卡片区域*/}
-                    <View style={{width: '50%',height:'100%'}}>
+                    <View style={{width: '50%', height: '100%'}}>
                         <CardSelectBox
                             searchStart={true}
                             showRecharge={showRecharge}
@@ -224,33 +226,33 @@ export class MemberIdentifyComponent extends React.PureComponent {
         //     loading:true
         // });
 
-        if(!this.state.searchStart){
+        if (!this.state.searchStart) {
 
             let storeId = this.props.auth.userInfo.storeId;
             let showCard = '1';
-            var self =this;
-            fetchWaitingMembersResult(storeId ,showCard)
-            .then(data => {
-                self.setState(
-                    {
-                        memberList:data.data,
-                        loading:false
-                    }
-                );
+            var self = this;
+            fetchWaitingMembersResult(storeId, showCard)
+                .then(data => {
+                    self.setState(
+                        {
+                            memberList: data.data,
+                            loading: false
+                        }
+                    );
 
-            }).catch(err => {
+                }).catch(err => {
                 alert("刷新异常！！！");
-                    self.setState({
-                        memberList:[],
-                        loading:false
-                    })
+                self.setState({
+                    memberList: [],
+                    loading: false
+                })
             });
         }
     };
 }
 
 const mapStateToProps = state => {
-    const { memberIdentify } = state.component;
+    const {memberIdentify} = state.component;
     return {
         auth: state.auth,
         list: memberIdentify.list,
