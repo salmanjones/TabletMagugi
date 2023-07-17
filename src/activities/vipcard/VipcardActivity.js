@@ -57,7 +57,7 @@ class VipCard extends React.Component {
             init(params);
         });
 
-        console.log(this.props.route,'路由参数')
+        // console.log(this.props.route,'路由参数')
     }
 
     onTabPress = index => {
