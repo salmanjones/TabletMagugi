@@ -225,7 +225,7 @@ function RootNavigation() {
                     options={{
                         headerBackTitle: null,
                         headerRight: () => {
-                            return <View />;
+                            return <View/>;
                         },
                     }}>
                     <RootStack.Screen
@@ -638,25 +638,23 @@ function RootNavigation() {
  */
 function TabNavigation() {
     // tab栏位数量
-    const tabStackSize = 5
+    const tabStackSize = 3
     return (
         <TabStack.Navigator
             initialLayout={{width: Dimensions.get('window').width}}
             initialRouteName="ReserveBoardActivity"
             screenOptions={{
                 tabBarActiveTintColor: '#2D2D2D',
-                tabBarInactiveTintColor:'#6B6B6B',
+                tabBarInactiveTintColor: '#6B6B6B',
                 tabBarLabelStyle: {
                     fontSize: PixelUtil.size(32),
                     fontWeight: 'bold',
                 },
-                tabBarItemStyle: {
-
-                },
+                tabBarItemStyle: {},
                 tabBarStyle: {
                     backgroundColor: '#FFFFFF',
                 },
-                tabBarIndicatorContainerStyle:{
+                tabBarIndicatorContainerStyle: {
                     width: '100%',
                     borderBottomColor: '#ccc',
                     borderBottomWidth: PixelUtil.size(2)
@@ -665,7 +663,7 @@ function TabNavigation() {
                     width: PixelUtil.size(100),
                     height: PixelUtil.size(4),
                     backgroundColor: '#081539',
-                    marginLeft: ((Dimensions.get('window').width)/tabStackSize - PixelUtil.size(100))/2
+                    marginLeft: ((Dimensions.get('window').width) / tabStackSize - PixelUtil.size(100)) / 2
                 }
             }}>
             {/*老开单入口*/}
@@ -684,16 +682,16 @@ function TabNavigation() {
                 component={PendingOrderActivity}
                 options={{tabBarLabel: '取单'}}
             />
-            <TabStack.Screen
-                name="IdentifyActivity"
-                component={IdentifyActivity}
-                options={{tabBarLabel: '充值'}}
-            />
-            <TabStack.Screen
-                name="SelectCustomerType"
-                component={SelectCustomerType}
-                options={{tabBarLabel: '开卡'}}
-            />
+            {/*<TabStack.Screen*/}
+            {/*    name="IdentifyActivity"*/}
+            {/*    component={IdentifyActivity}*/}
+            {/*    options={{tabBarLabel: '充值'}}*/}
+            {/*/>*/}
+            {/*<TabStack.Screen*/}
+            {/*    name="SelectCustomerType"*/}
+            {/*    component={SelectCustomerType}*/}
+            {/*    options={{tabBarLabel: '开卡'}}*/}
+            {/*/>*/}
             <TabStack.Screen
                 name="BillManageActivity"
                 component={BillManageActivity}
