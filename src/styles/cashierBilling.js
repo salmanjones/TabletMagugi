@@ -53,15 +53,228 @@ export const cashierBillingStyle = StyleSheet.create({
         //左侧框
         width: '40%',
         height: '100%',
+        borderStyle: 'solid',
+        borderRightColor: '#cbcbcb',
+        borderRightWidth: PixelUtil.size(2)
     },
-    servicertitle: {
-        //左侧框-标题
-        width: PixelUtil.rect(824, 106).width,
-        height: '10%',
-        flex: 0,
+    customerInfoBox: {
+        width: "100%",
+        height: PixelUtil.size(148),
+        borderStyle: 'solid',
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2),
+        borderTopWidth: 0,
+        marginTop: PixelUtil.size(-2),
+        position: 'relative',
+        display:'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
+    },
+    guestInfoBox:{
+        width: "100%",
+        height: '100%',
+        display:'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingLeft: PixelUtil.size(90)
+    },
+    customerInfoNumberBox:{
+        height: '100%',
+        width: PixelUtil.size(134),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    customerInfoExtendBox:{
+        flex: 1,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingHorizontal: PixelUtil.size(12),
+        marginLeft: PixelUtil.size(20)
+    },
+    guestInfoExtendBox:{
+        flex: 1,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginLeft: PixelUtil.size(16),
+        position: 'relative'
+    },
+    customerInfoAvatar:{
+        width: PixelUtil.size(70),
+        height: PixelUtil.size(70),
+        overflow: 'hidden',
+        borderRadius: PixelUtil.size(43)
+    },
+    customerInfoNumberTxt:{
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+        marginTop: PixelUtil.size(6)
+    },
+    customerInfoNewFlag:{
+        paddingHorizontal: PixelUtil.size(10),
+        paddingVertical: PixelUtil.size(2),
+        backgroundColor: '#FFA200',
+        color: '#ffffff',
+        fontWeight: '700',
+        borderRadius: PixelUtil.size(12),
+        overflow: 'hidden',
+        marginTop: PixelUtil.size(6),
+        fontSize: PixelUtil.size(18)
+    },
+    customerInfoBase:{
+        marginLeft: PixelUtil.size(12),
+        height: PixelUtil.size(80),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    customerInfoBaseName:{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        height: PixelUtil.size(38)
+    },
+    customerSexIcon: {
+        marginLeft: PixelUtil.size(10),
+        width: PixelUtil.size(36),
+        height: PixelUtil.size(36),
+    },
+    customerInfoBaseNameTxt:{
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+        maxWidth: PixelUtil.size(126),
+        marginTop: PixelUtil.size(2),
+    },
+    guestInfoBaseNameTxt:{
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(28),
+        marginTop: PixelUtil.size(2),
+    },
+    customerInfoBasePhone:{
+        marginTop: PixelUtil.size(12),
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+    },
+    customerCardsInfo:{
+        flex:1,
+        height: PixelUtil.size(80),
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginLeft: PixelUtil.size(16),
+    },
+    customerCardsInfoCZ:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: PixelUtil.size(80),
+    },
+    customerCardsInfoCK:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: PixelUtil.size(80),
+    },
+    customerCardsInfoYE:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: PixelUtil.size(130),
+    },
+    customerCardsInfoFW:{
+        height: '100%',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: PixelUtil.size(130),
+    },
+    guestCardsInfoFW:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginLeft: PixelUtil.size(36)
+    },
+    customerCardsInfoName:{
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+        height: PixelUtil.size(38),
+    },
+    customerCardsInfoNum:{
+        width: PixelUtil.size(90),
+        marginTop: PixelUtil.size(6),
+        color: '#fff',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+    },
+    customerCardsRName:{
+        color: '#ffa608',
+        fontWeight: '900',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+        height: PixelUtil.size(38),
+    },
+    customerCardsRNum:{
+        width: PixelUtil.size(90),
+        marginTop: PixelUtil.size(6),
+        color: '#ffa608',
+        fontWeight: '900',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+    },
+    guestCardsRName:{
+        color: '#ffa608',
+        fontWeight: '900',
+        textAlign: 'left',
+        fontSize: PixelUtil.size(28),
+    },
+    guestCardsRNum:{
+        width: PixelUtil.size(160),
+        color: '#ffa608',
+        fontWeight: '900',
+        textAlign: 'left',
+        fontSize: PixelUtil.size(28),
+    },
+    servicertitle: {
+        //左侧框-标题
+        width: '100%',
+        height: PixelUtil.size(72),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        borderStyle: 'solid',
+        borderColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2)
     },
     servicerItemTitle: {
         //左侧框-标题-各项
@@ -84,8 +297,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     servicerBoxBorder: {
         //左侧框-主体
-        width: PixelUtil.rect(824, 1100).width,
-        height: '90%',
+        width: '100%',
+        flex: 1,
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
         borderStyle: 'solid',
@@ -97,9 +310,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     servicerBodyNone: {
         //无内容
-        width: PixelUtil.rect(824, 1100).width,
-        height: '85%',
-        flex: 0,
+        width: '100%',
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -112,7 +324,7 @@ export const cashierBillingStyle = StyleSheet.create({
     servicerBodyNew: {
         // 服务项
         width: '100%',
-        height: '85%',
+        flex: 1,
     },
     servicerBodyLiBox: {
         alignItems: 'center',
@@ -316,8 +528,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     addServicerBodyLi: {
         // 加服务人列
-        width: PixelUtil.rect(824, 100).width,
-        height: PixelUtil.rect(824, 100).height,
+        width: '100%',
+        height: PixelUtil.size(100),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -330,7 +542,7 @@ export const cashierBillingStyle = StyleSheet.create({
         alignItems: 'center',
         width: PixelUtil.rect(284, 100).width,
         height: PixelUtil.rect(284, 100).height,
-        marginTop: PixelUtil.size(30),
+        marginTop: PixelUtil.size(20),
         borderRadius: PixelUtil.size(20)
     },
     addServicerBodyLiIcon: {
@@ -346,7 +558,7 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     paymentInfoWarp: {
         width: '100%',
-        height: '15%',
+        height: PixelUtil.size(188),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -471,19 +683,28 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     consumeBoxNew: {
         //右侧框
-        width: rightBoxWidth,
+        width: '60%',
         height: '100%',
-        position: 'relative'
+        position: 'relative',
+    },
+    consumeBoxRightWrap:{
+        width: '100%',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
     },
     consumeTitle: {
         //右侧框-标题
         width: '100%',
-        height: '10%',
-        flex: 0,
+        height: PixelUtil.size(146),
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        borderStyle: 'solid',
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2)
     },
     consumeTitleNoInp: {
         //右侧框-标题-除inp
@@ -511,34 +732,35 @@ export const cashierBillingStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: PixelUtil.size(4),
-        borderBottomColor: '#fff',
         paddingLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),
     },
     consumeText: {
         //右侧框-标题-文字
-        fontSize: PixelUtil.size(32),
-        color: '#333',
+        fontSize: PixelUtil.size(30),
+        color: '#ffffff',
+        fontWeight: 'bold'
     },
     consumeTextBoxActive: {
         //右侧框-标题-选中
-        width: PixelUtil.size(240),
+        width: PixelUtil.size(260),
         height: '100%',
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#EAF0FF',
-        borderBottomWidth: PixelUtil.size(4),
-        borderBottomColor: '#B8CBFF',
         paddingLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),
     },
     consumeTextActive: {
-        fontSize: PixelUtil.size(32),
-        color: '#111c3c',
+        fontSize: PixelUtil.size(30),
+        color: '#ff9b1f',
+        fontWeight: 'bold',
+        paddingHorizontal: PixelUtil.size(16),
+        paddingVertical: PixelUtil.size(14),
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(30),
+        overflow: 'hidden'
     },
     consumeInpBox: {
         //右侧框-标题-输入框
@@ -565,45 +787,64 @@ export const cashierBillingStyle = StyleSheet.create({
     consumeBoxBorder: {
         //右侧框-主体
         width: '100%',
-        height: '90%',
-        borderWidth: 0,
-        borderColor: '#cbcbcb',
-        borderTopWidth: PixelUtil.size(2),
-        borderStyle: 'solid',
+        flex: 1,
         position: 'relative',
-        backgroundColor: '#fff',
-        borderLeftWidth: PixelUtil.size(2),
     },
     priceSegmentQueryBox: {
         //右边框-价格选择框
         width: '100%',
-        height: PixelUtil.rect(1186, 72).height,
-        backgroundColor: '#fff',
+        height: PixelUtil.size(72),
         position: 'relative',
-        zIndex: 2,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         borderWidth: PixelUtil.size(2),
         borderColor: '#cbcbcb',
-        borderTopWidth: 0,
         borderStyle: 'solid',
+        borderTopWidth: 0,
         borderLeftWidth: 0,
+        backgroundColor: '#ffffff'
+    },
+    consumeBoxRightContent:{
+        flex: 1,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: "flex-start",
+        alignItems: 'flex-start'
+    },
+    consumeBoxContentLeft:{
+        flex: 1,
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: "flex-start",
+        alignItems: 'flex-start',
+    },
+    consumeBoxContentCategory:{
+        width: PixelUtil.size(154),
+        height: '100%',
+        borderColor: '#cbcbcb',
+        borderLeftWidth: PixelUtil.size(2)
+    },
+    consumeBoxContentBody:{
+        flex: 1,
+        width: '100%'
+    },
+    consumeBoxContentServerDetail: {
+        width: '100%',
+        height: PixelUtil.size(188),
+        borderColor: '#cbcbcb',
+        borderTopWidth: PixelUtil.size(2)
     },
     priceItemQueryBoxBody: {
-        width: '86.6%',
-        height: PixelUtil.rect(1134, 72).height,
-        borderBottomWidth: PixelUtil.size(2),
-        borderBottomColor: '#cbcbcb',
-        backgroundColor: '#fff',
+        flex: 1,
+        height: '100%',
         position: 'relative',
-        zIndex: 2,
     },
     priceAllQuery: {
         //右边框-价格选择框-全部价格
-        height: PixelUtil.rect(162, 52).height,
-        width: PixelUtil.rect(162, 52).width,
+        width: PixelUtil.size(162),
+        height: PixelUtil.size(52),
         marginTop: PixelUtil.size(10),
         marginLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),
@@ -654,13 +895,12 @@ export const cashierBillingStyle = StyleSheet.create({
     consumeOrderGenreOther: {
         //右边框-单据类型
         width: PixelUtil.size(154),
-        height: '94%',
+        height: '100%',
         position: 'absolute',
         right: 0,
-        top: 0,
+        top: PixelUtil.size(72),
         borderLeftWidth: PixelUtil.size(2),
         borderLeftColor: '#cbcbcb',
-        marginTop: PixelUtil.size(72),
     },
     consumeOrderGenre: {
         //右边框-单据类型
@@ -712,18 +952,16 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     consumeBody: {
         // 右边框-主体内容
-        width: PixelUtil.size(1034),
+        width: '100%',
         height: '100%',
-        position: 'absolute',
-        left: 0,
-        top: 0,
+        paddingTop: PixelUtil.size(12)
     },
     consumeBodyHeight: {
         height: '100%',
-        marginBottom: PixelUtil.size(1),
     },
     consumeBodyNonmember: {
         // 无次卡项目-提示
+        width: '100%',
         height: '100%',
         marginBottom: PixelUtil.size(1),
         flex: 0,
@@ -749,14 +987,10 @@ export const cashierBillingStyle = StyleSheet.create({
         flexWrap: 'wrap',
         marginTop: PixelUtil.size(102),
     },
-    addServicerBox2: {
-        //加项目内容
-        marginTop: PixelUtil.size(102),
-    },
     addServicerLi: {
         //加项目内容-列
-        width: PixelUtil.rect(308, 148).width,
-        height: PixelUtil.rect(308, 148).height,
+        width: PixelUtil.size(332),
+        height: PixelUtil.size(148),
         backgroundColor: '#E8EEFF',
         borderColor: '#B8CBFF',
         borderWidth: PixelUtil.size(4),
@@ -825,12 +1059,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     servicerInfoBodyNew: {
         //服务人
-        width: '87.3%',
+        width: '100%',
         height: '100%',
-        position: 'absolute',
-        left: 0,
-        top: PixelUtil.size(2),
-        zIndex: 9,
     },
     servicerInfoBodyHeight: {
         height: '85%',
@@ -959,7 +1189,7 @@ export const cashierBillingStyle = StyleSheet.create({
     chooseItemNoneNew: {
         //无选中内容
         width: '100%',
-        height: '15%',
+        height: '100%',
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -1100,7 +1330,7 @@ export const cashierBillingStyle = StyleSheet.create({
         height: PixelUtil.rect(32, 38).height,
     },
     noItems: {
-        width: '86%',
+        width: '100%',
         height: '100%',
         flex: 1,
         justifyContent: 'flex-start',
@@ -1374,11 +1604,8 @@ export const cashierBillingStyle = StyleSheet.create({
         height: PixelUtil.rect(84, 168).height,
     },
     queryBox: {
-        width: queryBoxWidth,
-        height: queryBoxHeight,
-        position: 'absolute',
-        zIndex: 99,
-        top: priceHeight,
+        width: '100%',
+        height: '100%',
         backgroundColor: '#fff',
     },
     queryBoxConsumeable: {
@@ -1590,15 +1817,12 @@ export const cashierBillingStyle = StyleSheet.create({
     //服务人信息区域
     servicerWrap: {
         //有选中内容
-        width: queryBoxWidth,
-        height: '15%',
+        width: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        borderTopColor: '#cbcbcb',
-        borderTopWidth: PixelUtil.size(2),
-        marginTop: PixelUtil.size(-4),
         position: 'relative'
     },
     servicerNameInfo: {

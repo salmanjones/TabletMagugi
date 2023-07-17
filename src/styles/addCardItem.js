@@ -9,8 +9,6 @@ export const addCardItemStyles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#fff',
-        position: 'absolute',
-        zIndex: 99998,
     },
     addCardItemStylesTitle: {
         //   加次卡-标题
@@ -55,8 +53,7 @@ export const addCardItemStyles = StyleSheet.create({
     addCardItemStylesBody: {
         //   加次卡-主体
         width: '100%',
-        height: '90%',
-        flex: 0,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
@@ -64,7 +61,7 @@ export const addCardItemStyles = StyleSheet.create({
     addCardItemStylesList: {
         //   加次卡-每行
         width: '100%',
-        height: PixelUtil.rect(1133, 109).height,
+        height: PixelUtil.size(109),
         borderColor: '#fff',
         borderWidth: PixelUtil.size(4),
         borderRadius: PixelUtil.size(4),
