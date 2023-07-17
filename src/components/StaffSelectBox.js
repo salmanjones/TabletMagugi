@@ -17,8 +17,7 @@ class StaffListItem extends React.PureComponent {
                 }
                 onPress={() => {
                     onPress(data);
-                }}
-            >
+                }}>
                 <View style={cashierBillingStyle.servicerItemBox}>
                     <Image resizeMethod="resize"
                            source={getImage(

@@ -6,11 +6,11 @@ import {
     Animated,
     FlatList,
     Image,
+    ImageBackground,
     InteractionManager,
     Modal,
     PanResponder,
     ScrollView,
-    StyleSheet,
     Text,
     TouchableOpacity,
     View
@@ -87,11 +87,31 @@ class CashierBillingView extends React.Component {
 
         // 构建默认state
         const defaultState = defaultInfos(sex, isOldCustomer);
+        // 获取预约的服务人
+        const allWaiter = this.props.servicers
+        let reserveWaiter = null
+        for(let key in allWaiter){
+            const positionWaiters = allWaiter[key] || []
+            const waiterList = positionWaiters.filter(waiter=>{
+                return waiter.id == waiterId
+            })
+
+            if(waiterList.length > 0){
+                reserveWaiter = waiterList[0]
+                break
+            }
+        }
+
         this.state = {
             ...defaultState,
             sliderLeft: new Animated.Value(animateLeft),
             sliderDisplay: sliderDisplayStatus,
-            waiterId: waiterId
+            waiterId: waiterId,
+            memberProfile: {
+                isGuest: true, // 是否为散客
+                isBmsNew: 0 // 是否是bms的新用户，0否，1是
+            },
+            reserveWaiter
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
         this.moduleCode = props.route.params.moduleCode;
@@ -200,14 +220,19 @@ class CashierBillingView extends React.Component {
                 navigation.setOptions({
                     headerLeft: () => (
                         <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
-                    ),
-                    headerRight: () => (
-                        <HeadeOrderInfoRight navigation={navigation} router={route}/>
                     )
+                    // ,
+                    // headerRight: () => (
+                    //     <HeadeOrderInfoRight navigation={navigation} router={route}/>
+                    // )
                 })
             });
 
             // 获取顾客档案详情，左侧展示｜弹层展示
+            const defaultProfile = {
+                isGuest: true, // 是否为散客
+                isBmsNew: 0 // 是否是bms的新用户，0否，1是
+            }
             const {member, checkReserveId} = this.props.route.params
             if(member){ // 会员进入
                 const queryArgs = {
@@ -216,16 +241,43 @@ class CashierBillingView extends React.Component {
                 if(checkReserveId){
                     queryArgs['reserveId'] = checkReserveId
                 }
-
-                console.log("queryArgs", queryArgs)
-
+                this.setState({
+                    isLoading: true
+                })
                 getMemberDetail(queryArgs).then(backData=>{
-                    console.log("backData", JSON.stringify(backData))
+                    const {code, data} = backData
+                    if(code == '6000'){
+                        const memberProfile = data
+                        memberProfile['isGuest'] = false
+
+                        // 更新会员状态
+                        self.setState((prevState, props) => {
+                            prevState.memberProfile = memberProfile
+                            return prevState
+                        })
+                    }else{ // 获取顾客档案信息失败
+                        console.error("获取顾客档案信息失败", backData)
+                        self.setState((prevState, props) => {
+                            prevState.memberProfile = defaultProfile
+                            return prevState
+                        })
+                    }
                 }).catch(e=>{
-                    console.log("backData exception", e)
+                    console.error("获取顾客档案信息失败", e)
+                    self.setState((prevState, props) => {
+                        prevState.memberProfile = defaultProfile
+                        return prevState
+                    })
+                }).finally(_=>{
+                    this.setState({
+                        isLoading: false
+                    })
                 })
             }else{ // 散客进入
-                console.log("=======================我是散客")
+                self.setState((prevState, props) => {
+                    prevState.memberProfile = defaultProfile
+                    return prevState
+                })
             }
         });
     }
@@ -1478,6 +1530,7 @@ class CashierBillingView extends React.Component {
                         color: '#FFF'
                     }}
                 />
+
                 {
                     this.state.showEditConsumeItemModal && (
                         <AmendItemInfo
@@ -1506,6 +1559,7 @@ class CashierBillingView extends React.Component {
                             loading={isLoading}/>
                     )
                 }
+
                 {
 
                     this.state.showCashierPayModal && (
@@ -1523,6 +1577,7 @@ class CashierBillingView extends React.Component {
                         />
                     )
                 }
+
                 {
                     this.state.showToAppPayModal && (
                         <VipPayFor
@@ -1535,11 +1590,13 @@ class CashierBillingView extends React.Component {
                         />
                     )
                 }
+
                 {
                     this.state.showToMultiplyPayModal && (
                         <MultiplyPayModal/>
                     )
                 }
+
                 {
                     this.state.showToWXAppPayModal && (
                         <OtherPayFor
@@ -1552,6 +1609,7 @@ class CashierBillingView extends React.Component {
                         />
                     )
                 }
+
                 {
                     this.state.tradeInfo.tradeNo.length > 0 && (
                         <QRCodePaymentCashier visible={this.state.showToPayAliWxModal}
@@ -1565,6 +1623,7 @@ class CashierBillingView extends React.Component {
                         />
                     )
                 }
+
                 {
                     this.state.showStockTipsModal && (
                         <StockTips visible={this.state.showStockTipsModal}
@@ -1576,8 +1635,7 @@ class CashierBillingView extends React.Component {
                 <Modal
                     transparent={true}
                     visible={showPaySuccess}
-                    onRequestClose={() => null}
-                >
+                    onRequestClose={() => null}>
                     <QRCodePaymentNew
                         paymentStatus={PaymentResultStatus.success}
                         navigation={this.props.navigation}
@@ -1598,23 +1656,132 @@ class CashierBillingView extends React.Component {
                 <View style={cashierBillingStyle.bodybox}>
                     {/* 左侧区域 */}
                     <View style={cashierBillingStyle.servicerBoxNew}>
+                        {/*顾客信息*/}
+                        {
+                            (()=>{
+                                const {memberProfile} = this.state
+                                if(memberProfile.isGuest){
+                                    return (
+                                        <ImageBackground
+                                            resizeMode={'stretch'}
+                                            style={cashierBillingStyle.customerInfoBox}
+                                            source={require('@imgPath/cashier_billing_guest_info.png')}>
+                                            <View style={cashierBillingStyle.guestInfoBox}>
+                                                <Image
+                                                    style={cashierBillingStyle.customerInfoAvatar}
+                                                    resizeMethod="resize"
+                                                    source={getImage(memberProfile.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                                    defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
+                                                <View style={cashierBillingStyle.guestInfoExtendBox}>
+                                                    <Text style={cashierBillingStyle.guestInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                        散客
+                                                    </Text>
+                                                    <View style={cashierBillingStyle.guestCardsInfoFW}>
+                                                        <Text style={cashierBillingStyle.guestCardsRName} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            预约：
+                                                        </Text>
+                                                        <Text style={cashierBillingStyle.guestCardsRNum} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            {this.state.reserveWaiter.value}
+                                                        </Text>
+                                                    </View>
+                                                    <TouchableOpacity style={{
+                                                        position: 'absolute', zIndex: '100', right: PixelUtil.size(70),
+                                                        backgroundColor:'#FFA202', width: PixelUtil.size(206), height: PixelUtil.size(58), borderRadius: PixelUtil.size(30), display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                        <Text style={{fontSize: PixelUtil.size(28), color: '#ffffff', fontWeight: '700', textAlign: 'center', height: '100%', lineHeight: PixelUtil.size(56)}}>转为会员单</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        </ImageBackground>
+                                    )
+                                }else{
+                                    return (
+                                        <ImageBackground
+                                            resizeMode={'stretch'}
+                                            style={cashierBillingStyle.customerInfoBox}
+                                            source={require('@imgPath/cashier_billing_customer_info.png')}>
+                                            <View style={cashierBillingStyle.customerInfoNumberBox}>
+                                                <Text style={cashierBillingStyle.customerInfoNumberTxt}>{memberProfile.memberNo}</Text>
+                                                {
+                                                    memberProfile.isBmsNew && (<Text style={cashierBillingStyle.customerInfoNewFlag}>新客</Text>)
+                                                }
+                                            </View>
+                                            <View style={cashierBillingStyle.customerInfoExtendBox}>
+                                                <Image
+                                                    style={cashierBillingStyle.customerInfoAvatar}
+                                                    resizeMethod="resize"
+                                                    source={getImage(memberProfile.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                                    defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
+                                                <View style={cashierBillingStyle.customerInfoBase}>
+                                                    <View style={cashierBillingStyle.customerInfoBaseName}>
+                                                        <Text style={cashierBillingStyle.customerInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            {memberProfile.nickName ? decodeURIComponent(memberProfile.nickName): '未填写姓名姓名'}
+                                                        </Text>
+                                                        <Image
+                                                            style={cashierBillingStyle.customerSexIcon}
+                                                            resizeMode={'contain'}
+                                                            source={memberProfile.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                                    </View>
+                                                    <Text style={cashierBillingStyle.customerInfoBasePhone}>
+                                                        {memberProfile.phoneShow || '暂无'}
+                                                    </Text>
+                                                </View>
+                                                <View style={cashierBillingStyle.customerCardsInfo}>
+                                                    <View style={cashierBillingStyle.customerCardsInfoCZ}>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoName} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            储值卡
+                                                        </Text>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoNum} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            {memberProfile.czkCount}张
+                                                        </Text>
+                                                    </View>
+                                                    <View style={cashierBillingStyle.customerCardsInfoCK}>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoName} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            次卡
+                                                        </Text>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoNum} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            {memberProfile.ckCount}张
+                                                        </Text>
+                                                    </View>
+                                                    <View style={cashierBillingStyle.customerCardsInfoYE}>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoName} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            储值卡余额
+                                                        </Text>
+                                                        <Text style={cashierBillingStyle.customerCardsInfoNum} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                           ¥{memberProfile.czkPriceSum}
+                                                        </Text>
+                                                    </View>
+                                                    <View style={cashierBillingStyle.customerCardsInfoFW}>
+                                                        <Text style={cashierBillingStyle.customerCardsRName} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            预约
+                                                        </Text>
+                                                        <Text style={cashierBillingStyle.customerCardsRNum} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                            {this.state.reserveWaiter.value}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </ImageBackground>
+                                    )
+                                }
+                            })()
+                        }
+                        {/*左侧标题栏*/}
                         <View style={cashierBillingStyle.servicertitle}>
                             <Text style={cashierBillingStyle.servicerItemTitle}>项目/外卖</Text>
                             <Text style={cashierBillingStyle.servicerPerson}>服务人</Text>
                             <Text style={cashierBillingStyle.servicerPerson}>服务人</Text>
                             <Text style={cashierBillingStyle.servicerPerson}>服务人</Text>
                         </View>
+                        {/*项目&服务人信息*/}
                         <View style={cashierBillingStyle.servicerBoxBorder}>
                             {/* 默认信息 */}
-                            <View
-                                style={consumeItemLength < 1 ? [cashierBillingStyle.servicerBodyNone] : [cashierBillingStyle.servicerBodyNone, cashierBillingStyle.hidden]}>
+                            <View style={consumeItemLength < 1 ? [cashierBillingStyle.servicerBodyNone] : [cashierBillingStyle.servicerBodyNone, cashierBillingStyle.hidden]}>
                                 <Text style={cashierBillingStyle.servicerNoneText}>
                                     请在右侧菜单中，选择项目，外卖
                                 </Text>
                             </View>
                             {/* 消费项目|外卖 */}
-                            <View
-                                style={consumeItemLength < 1 ? [cashierBillingStyle.servicerBodyNew, cashierBillingStyle.hidden] : [cashierBillingStyle.servicerBodyNew]}>
+                            <View style={consumeItemLength < 1 ? [cashierBillingStyle.servicerBodyNew, cashierBillingStyle.hidden] : [cashierBillingStyle.servicerBodyNew]}>
                                 <ScrollView>
                                     {
                                         this.state.consumeItems.map((itemInfo, itemIndex) => {
@@ -1760,14 +1927,11 @@ class CashierBillingView extends React.Component {
 
                             </View>
                             {/* 支付信息 */}
-                            <View
-                                style={consumeItemLength < 1 ? [cashierBillingStyle.paymentInfoWarp, cashierBillingStyle.hidden] : [cashierBillingStyle.paymentInfoWarp]}>
+                            <View style={consumeItemLength < 1 ? [cashierBillingStyle.paymentInfoWarp, cashierBillingStyle.hidden] : [cashierBillingStyle.paymentInfoWarp]}>
                                 {/* 操作区域 */}
                                 <View style={cashierBillingStyle.paymentInfoLeft}>
-                                    <Text
-                                        style={cashierBillingStyle.showConsumeItemText}>应付：{this.state.totalConsumePrice}</Text>
-                                    <Text
-                                        style={cashierBillingStyle.showConsumeItemText}>次卡消费：{this.state.totalConsumeNum}项</Text>
+                                    <Text style={cashierBillingStyle.showConsumeItemText}>应付：{this.state.totalConsumePrice}</Text>
+                                    <Text style={cashierBillingStyle.showConsumeItemText}>次卡消费：{this.state.totalConsumeNum}项</Text>
                                 </View>
                                 <View style={cashierBillingStyle.paymentInfoRight}>
                                     {Boolean(billingInfo.id) && Boolean(billingInfo.billingNo) &&
@@ -1795,9 +1959,11 @@ class CashierBillingView extends React.Component {
                     {/* 右侧区域 */}
                     <View style={cashierBillingStyle.consumeBoxNew}>
                         {/* 标题切换 */}
-                        <View style={cashierBillingStyle.consumeTitle}>
-                            <View
-                                style={this.state.addConsumeType == 'servicer' ? cashierBillingStyle.hidden : cashierBillingStyle.consumeTitleNoInp}>
+                        <ImageBackground
+                            resizeMode={'stretch'}
+                            style={cashierBillingStyle.consumeTitle}
+                            source={require("@imgPath/cashier_billing_title_info.png")}>
+                            <View style={this.state.addConsumeType == 'servicer' ? cashierBillingStyle.hidden : cashierBillingStyle.consumeTitleNoInp}>
                                 <TouchableOpacity style={this.state.addProjStyle}
                                                   onPress={this.swipConsumeItem.bind(this, 'proj')}>
                                     <Text style={this.state.addProjTextStyle}>+服务项目</Text>
@@ -1822,13 +1988,13 @@ class CashierBillingView extends React.Component {
                                             text={this.state.queryInputText} onConfirm={this.searchConfirm.bind(this)}
                                             tips={this.state.queryInputTips} type={"cashier"}/>
                             )}
-                        </View>
+                        </ImageBackground>
                         {/* 项目/外卖/服务项 */}
-                        <View style={cashierBillingStyle.consumeBoxBorder}>
-                            {/* 项目价格 */}
-                            {this.state.addConsumeType == 'proj' && (
-                                <View
-                                    style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
+                        <View style={cashierBillingStyle.consumeBoxRightWrap}>
+                            {/* 项目价格筛选 */}
+                            {
+                                this.state.addConsumeType == 'proj' && (
+                                <View style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
                                     <View style={cashierBillingStyle.priceAllQuery}>
                                         <TouchableOpacity
                                             onPress={this.filterConsumeItem.bind(this, 'price', 'proj', "-1", -1)}
@@ -1841,7 +2007,7 @@ class CashierBillingView extends React.Component {
                                     </View>
                                     {/*可选价格区域*/}
                                     <View style={cashierBillingStyle.priceItemQueryBoxBody}>
-                                        <ScrollView horizontal={true}>
+                                        <ScrollView horizontal={true} style={{flex:1}}>
                                             {
                                                 this.state.showProjPriceChoose.map((item, index) => {
                                                     return (
@@ -1859,122 +2025,13 @@ class CashierBillingView extends React.Component {
                                             }
                                         </ScrollView>
                                     </View>
-                                </View>
-                            )}
-                            {/* 项目筛选 */}
-                            {this.state.addConsumeType == 'proj' && (
-                                <View
-                                    style={this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeOrderGenreOther : cashierBillingStyle.hidden}>
-                                    <ScrollView>
-                                        <View style={cashierBillingStyle.consumeOrderGenreLi}>
-                                            <TouchableOpacity
-                                                onPress={this.filterConsumeItem.bind(this, 'category', 'proj', '-1', -1)}
-                                                style={cashierBillingStyle.consumeOrderGenreLiItem}>
-                                                <Text
-                                                    style={this.state.choosedProjCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                    所有类
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        {
-                                            // 分类筛选
-                                            this.state.showProjCategoryChoose.map((item, index) => {
-                                                return (
-                                                    <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
-                                                        <TouchableOpacity
-                                                            onPress={this.filterConsumeItem.bind(this, 'category', 'proj', item.cid, index)}
-                                                            style={cashierBillingStyle.consumeOrderGenreLiItem}>
-                                                            <Text
-                                                                style={this.state.choosedProjCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                                {item.text}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                )
-                                            })
-                                        }
-                                    </ScrollView>
-                                </View>
-                            )}
-                            {/* 项目展示 */}
-                            {
-                                this.state.addConsumeType == 'proj' && !this.state.showFilterKeyBoard && this.state.currentShowProjDatas.length < 1 &&
-                                <View style={cashierBillingStyle.noItems}>
-                                    <SectionList noItems={true}/>
-                                </View>
+                                </View>)
                             }
-                            {
-                                // 项目列表
-                                this.state.addConsumeType == 'proj' && (
-                                <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
-                                    <View style={cashierBillingStyle.consumeBodyHeight}>
-                                        <FlatList
-                                            style={cashierBillingStyle.addServicerBox2}
-                                            data={this.state.currentShowProjDatas}
-                                            numColumns={3}
-                                            keyExtractor={item => item}
-                                            renderItem={({item}) => {
-                                                let projItem = this.state.allProjDatas[item];
-                                                return (
-                                                    <TouchableOpacity style={cashierBillingStyle.addServicerLi}
-                                                                      key={item}
-                                                                      onPress={this.addConsumeItem.bind(this, {
-                                                                          itemId: item,
-                                                                          itemName: projItem.name,
-                                                                          itemNo: projItem.itemNo,
-                                                                          itemPrice: projItem.sumPrice,
-                                                                          itemNum: 1,
-                                                                          itemType: 'proj',
-                                                                          isChoosed: false,
-                                                                          unitType: '',
-                                                                          canUse: true,
-                                                                          limitBuy: projItem.limitBuy
-                                                                      })}>
-                                                        <View style={cashierBillingStyle.addServicerLiBox}>
-                                                            <Text style={cashierBillingStyle.addServicerName}
-                                                                  numberOfLines={2}>
-                                                                {projItem.name}
-                                                            </Text>
-                                                            {
-                                                                (projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
-                                                                    <View style={cashierBillingStyle.addServicerInfo}>
-                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                            {projItem.itemNo}
-                                                                        </Text>
-                                                                        <Text style={cashierBillingStyle.addServicerLimit}>
-                                                                            可购{projItem.limitBuy.canBuyCount}件
-                                                                        </Text>
-                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                            {projItem.limitBuy.canBuyCount > 0 ? projItem.limitBuy.limitPrice:projItem.sumPrice}
-                                                                        </Text>
-                                                                    </View>
-                                                                )
-                                                            }
-                                                            {
-                                                                !(projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
-                                                                    <View style={cashierBillingStyle.addServicerInfo}>
-                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                            {projItem.itemNo}
-                                                                        </Text>
-                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                            {projItem.sumPrice}
-                                                                        </Text>
-                                                                    </View>
-                                                                )
-                                                            }
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                )
-                                            }}
-                                        />
-                                    </View>
-                                </View>
-                            )}
 
-                            {/* 外卖价格 */}
-                            {this.state.addConsumeType == 'item' && (
-                                <View
-                                    style={this.state.addConsumeType == 'item' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
+                            {/* 外卖价格筛选 */}
+                            {
+                                this.state.addConsumeType == 'item' && (
+                                <View style={this.state.addConsumeType == 'item' ? cashierBillingStyle.priceSegmentQueryBox : cashierBillingStyle.hidden}>
                                     <View style={cashierBillingStyle.priceAllQuery}>
                                         <TouchableOpacity
                                             onPress={this.filterConsumeItem.bind(this, 'price', 'item', "-1", -1)}
@@ -1985,8 +2042,9 @@ class CashierBillingView extends React.Component {
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
+                                    {/*可选价格区域*/}
                                     <View style={cashierBillingStyle.priceItemQueryBoxBody}>
-                                        <ScrollView horizontal={true}>
+                                        <ScrollView horizontal={true} style={{flex:1}}>
                                             {
                                                 this.state.showItemPriceChoose.map((item, index) => {
                                                     return (
@@ -2006,393 +2064,501 @@ class CashierBillingView extends React.Component {
 
                                         </ScrollView>
                                     </View>
-                                </View>
-                            )}
-
-                            {/* 外卖筛选 */}
-                            {this.state.addConsumeType == 'item' && (
-                                <View
-                                    style={this.state.addConsumeType == 'item' ? cashierBillingStyle.consumeOrderGenreOther : cashierBillingStyle.hidden}>
-                                    <ScrollView>
-                                        <View style={cashierBillingStyle.consumeOrderGenreLi}>
-                                            <TouchableOpacity
-                                                onPress={this.filterConsumeItem.bind(this, 'category', 'item', "-1", -1)}>
-                                                <Text
-                                                    style={this.state.choosedItemCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                    所有类
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        {
-                                            this.state.showItemCategoryChoose.map((item, index) => {
-                                                return (
-                                                    <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
-                                                        <TouchableOpacity
-                                                            onPress={this.filterConsumeItem.bind(this, 'category', 'item', item.cid, index)}>
-                                                            <Text
-                                                                style={this.state.choosedItemCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                                {item.text}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                )
-                                            })
-                                        }
-                                    </ScrollView>
-                                </View>
-                            )}
-
-                            {/* 外卖展示 */}
-                            {
-                                this.state.addConsumeType == 'item' && !this.state.showFilterKeyBoard && this.state.currentShowItemDatas.length < 1 &&
-                                <View style={cashierBillingStyle.noItems}>
-                                    <SectionList noItems={true}/>
-                                </View>
+                                </View>)
                             }
-                            {this.state.addConsumeType == 'item' && (
-                                <View
-                                    style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'item' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
-                                    <View style={cashierBillingStyle.consumeBodyHeight}>
-                                        <FlatList
-                                            style={cashierBillingStyle.addServicerBox2}
-                                            data={this.state.currentShowItemDatas}
-                                            numColumns={3}
-                                            keyExtractor={item => item}
-                                            renderItem={({item}) => {
-                                                let takeItem = this.state.allItemDatas[item];
-                                                return (
-                                                    <TouchableOpacity style={cashierBillingStyle.addServicerLi}
-                                                                      key={item}
-                                                                      onPress={this.addConsumeItem.bind(this, {
-                                                                          itemId: item,
-                                                                          itemName: takeItem.name,
-                                                                          itemNo: takeItem.itemNo,
-                                                                          itemPrice: takeItem.unitPrice,
-                                                                          itemNum: 1,
-                                                                          itemType: 'item',
-                                                                          isChoosed: false,
-                                                                          unitType: '1',
-                                                                          canUse: true,
-                                                                          limitBuy: takeItem.limitBuy
-                                                                      })}>
-                                                        <View style={cashierBillingStyle.addServicerLiBox}>
-                                                            <Text style={cashierBillingStyle.addServicerName}
-                                                                  numberOfLines={2}>
-                                                                {takeItem.name}
-                                                            </Text>
 
-                                                            {
-                                                                (takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
-                                                                    <View style={cashierBillingStyle.addServicerInfo}>
-                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                            {takeItem.itemNo}
+                            {/*右侧项目｜外卖｜分类筛选*/}
+                            <View style={cashierBillingStyle.consumeBoxRightContent}>
+                                {/*项目｜外卖｜服务人*/}
+                                <View style={cashierBillingStyle.consumeBoxContentLeft}>
+                                    <View style={cashierBillingStyle.consumeBoxContentBody}>
+                                        {/* 项目展示 */}
+                                        {
+                                            this.state.addConsumeType == 'proj' && !this.state.showFilterKeyBoard && this.state.currentShowProjDatas.length < 1 &&
+                                            <View style={cashierBillingStyle.noItems}>
+                                                <SectionList noItems={true}/>
+                                            </View>
+                                        }
+                                        {
+                                            // 项目列表
+                                            this.state.addConsumeType == 'proj' && (
+                                                <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
+                                                    <FlatList
+                                                        data={this.state.currentShowProjDatas}
+                                                        numColumns={3}
+                                                        keyExtractor={item => {
+                                                            const projItem = this.state.allProjDatas[item];
+                                                            return projItem.itemNo
+                                                        }}
+                                                        renderItem={({item}) => {
+                                                            let projItem = this.state.allProjDatas[item];
+                                                            return (
+                                                                <TouchableOpacity style={cashierBillingStyle.addServicerLi}
+                                                                                  key={item}
+                                                                                  onPress={this.addConsumeItem.bind(this, {
+                                                                                      itemId: item,
+                                                                                      itemName: projItem.name,
+                                                                                      itemNo: projItem.itemNo,
+                                                                                      itemPrice: projItem.sumPrice,
+                                                                                      itemNum: 1,
+                                                                                      itemType: 'proj',
+                                                                                      isChoosed: false,
+                                                                                      unitType: '',
+                                                                                      canUse: true,
+                                                                                      limitBuy: projItem.limitBuy
+                                                                                  })}>
+                                                                    <View style={cashierBillingStyle.addServicerLiBox}>
+                                                                        <Text style={cashierBillingStyle.addServicerName}
+                                                                              numberOfLines={2}>
+                                                                            {projItem.name}
                                                                         </Text>
-                                                                        <Text style={cashierBillingStyle.addServicerLimit}>可购{takeItem.limitBuy.canBuyCount}件</Text>
-                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                            {takeItem.limitBuy.canBuyCount > 0 ? takeItem.limitBuy.limitPrice:takeItem.unitPrice}
-                                                                        </Text>
+                                                                        {
+                                                                            (projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
+                                                                                <View style={cashierBillingStyle.addServicerInfo}>
+                                                                                    <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                                        {projItem.itemNo}
+                                                                                    </Text>
+                                                                                    <Text style={cashierBillingStyle.addServicerLimit}>
+                                                                                        可购{projItem.limitBuy.canBuyCount}件
+                                                                                    </Text>
+                                                                                    <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                                        {projItem.limitBuy.canBuyCount > 0 ? projItem.limitBuy.limitPrice:projItem.sumPrice}
+                                                                                    </Text>
+                                                                                </View>
+                                                                            )
+                                                                        }
+                                                                        {
+                                                                            !(projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
+                                                                                <View style={cashierBillingStyle.addServicerInfo}>
+                                                                                    <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                                        {projItem.itemNo}
+                                                                                    </Text>
+                                                                                    <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                                        {projItem.sumPrice}
+                                                                                    </Text>
+                                                                                </View>
+                                                                            )
+                                                                        }
                                                                     </View>
-                                                                )
-                                                            }
-                                                            {
-                                                                !(takeItem.limitBuy && takeItem.limitBuy.hidden !== true)  && (
-                                                                    <View style={cashierBillingStyle.addServicerInfo}>
-                                                                        <Text style={cashierBillingStyle.addServicerNumber}>
-                                                                            {takeItem.itemNo}
-                                                                        </Text>
-                                                                        <Text style={cashierBillingStyle.addServicerPrice}>
-                                                                            {takeItem.unitPrice}
-                                                                        </Text>
-                                                                    </View>
-                                                                )
-                                                            }
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                )
-                                            }}
-                                        />
-                                        {/* <SimulateKeyboardInp /> */}
-                                    </View>
-                                </View>
-                            )}
-
-                            {/* 次卡项目 */}
-                            {this.state.addConsumeType == 'card' && (
-                                <View
-                                    style={this.state.addConsumeType == 'card' ? cashierBillingStyle.consumeBodyNonmember : cashierBillingStyle.hidden}>
-                                    {
-                                        this.state.memberType == '0' ?
-                                            (
-                                                <View
-                                                    style={this.state.timesProjectDatas.length < 1 ? null : cashierBillingStyle.hidden}>
-                                                    <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
-                                                        您没有次卡消费项目哦！
-                                                    </Text>
+                                                                </TouchableOpacity>
+                                                            )
+                                                        }}
+                                                    />
                                                 </View>
                                             )
-                                            :
-                                            (
-                                                <View
-                                                    style={this.state.timesProjectDatas.length < 1 ? null : cashierBillingStyle.hidden}>
-                                                    <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
-                                                        非会员用户，无次卡项目
-                                                    </Text>
-                                                    <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
-                                                        会员用户，请点击顾客识别
-                                                    </Text>
-                                                </View>
-                                            )
-                                    }
+                                        }
 
-                                    <View
-                                        style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
-                                        <View style={addCardItemStyles.addCardItemStylesTitle}>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
-                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    项目名称
-                                                </Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
-                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    开卡门店
-                                                </Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
-                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    次卡信息
-                                                </Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiBalance}>
-                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    余次
-                                                </Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
-                                                <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
-                                                    是否可用
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View style={addCardItemStyles.addCardItemStylesBody}>
-                                            <ScrollView>
-                                                {
-                                                    this.state.timesProjectDatas.map((project, index) => {
-                                                        let currStoreId = this.state.storeId
-                                                        let isCross = project.isCross  //0允许 1不允许 -1不限定
-                                                        let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(",") : [] //跨店消费门店
-                                                        crossStores = crossStores.filter(item=>item.trim().length > 1)
-                                                        crossStores.push(project.storeId + "")
-
-                                                        // 当前卡是否可用
-                                                        let canUse = true
-                                                        let validStores = crossStores.filter(item => item + '' == currStoreId + '')
-                                                        if(isCross == -1){
-                                                            canUse = true
-                                                        }else{
-                                                            if(crossStores.length > 0 && validStores.length < 1){
-                                                                canUse = false
-                                                            }else{
-                                                                canUse = true
-                                                            }
-                                                        }
-
+                                        {/* 外卖展示 */}
+                                        {
+                                            this.state.addConsumeType == 'item' && !this.state.showFilterKeyBoard && this.state.currentShowItemDatas.length < 1 &&
+                                            <View style={cashierBillingStyle.noItems}>
+                                                <SectionList noItems={true}/>
+                                            </View>
+                                        }
+                                        {this.state.addConsumeType == 'item' && (
+                                            <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'item' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
+                                                <FlatList
+                                                    data={this.state.currentShowItemDatas}
+                                                    numColumns={3}
+                                                    keyExtractor={item => {
+                                                        const takeItem = this.state.allItemDatas[item];
+                                                        return takeItem.itemNo
+                                                    }}
+                                                    renderItem={({item}) => {
+                                                        let takeItem = this.state.allItemDatas[item];
                                                         return (
-                                                            <TouchableOpacity
-                                                                style={addCardItemStyles.addCardItemStylesList}
-                                                                key={index}
-                                                                onPress={this.addConsumeItem.bind(this, {
-                                                                    itemId: project.itemId,
-                                                                    itemName: project.projName,
-                                                                    itemNo: project.itemNo,
-                                                                    itemPrice: project.price,
-                                                                    itemNum: 1,
-                                                                    itemType: 'card',
-                                                                    isChoosed: false,
-                                                                    unitType: '',
-                                                                    vipCardNo: project.vipCardNo,
-                                                                    canUse
-                                                                })}>
-                                                                <View
-                                                                    style={addCardItemStyles.addCardItemStylesListNameBox}>
-                                                                    <Text
-                                                                        style={canUse ? addCardItemStyles.addCardItemStylesListName : addCardItemStyles.addCardItemStylesListNameGray}>
-                                                                        {project.projName}
+                                                            <TouchableOpacity style={cashierBillingStyle.addServicerLi}
+                                                                              key={item}
+                                                                              onPress={this.addConsumeItem.bind(this, {
+                                                                                  itemId: item,
+                                                                                  itemName: takeItem.name,
+                                                                                  itemNo: takeItem.itemNo,
+                                                                                  itemPrice: takeItem.unitPrice,
+                                                                                  itemNum: 1,
+                                                                                  itemType: 'item',
+                                                                                  isChoosed: false,
+                                                                                  unitType: '1',
+                                                                                  canUse: true,
+                                                                                  limitBuy: takeItem.limitBuy
+                                                                              })}>
+                                                                <View style={cashierBillingStyle.addServicerLiBox}>
+                                                                    <Text style={cashierBillingStyle.addServicerName}
+                                                                          numberOfLines={2}>
+                                                                        {takeItem.name}
                                                                     </Text>
+
+                                                                    {
+                                                                        (takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
+                                                                            <View style={cashierBillingStyle.addServicerInfo}>
+                                                                                <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                                    {takeItem.itemNo}
+                                                                                </Text>
+                                                                                <Text style={cashierBillingStyle.addServicerLimit}>可购{takeItem.limitBuy.canBuyCount}件</Text>
+                                                                                <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                                    {takeItem.limitBuy.canBuyCount > 0 ? takeItem.limitBuy.limitPrice:takeItem.unitPrice}
+                                                                                </Text>
+                                                                            </View>
+                                                                        )
+                                                                    }
+                                                                    {
+                                                                        !(takeItem.limitBuy && takeItem.limitBuy.hidden !== true)  && (
+                                                                            <View style={cashierBillingStyle.addServicerInfo}>
+                                                                                <Text style={cashierBillingStyle.addServicerNumber}>
+                                                                                    {takeItem.itemNo}
+                                                                                </Text>
+                                                                                <Text style={cashierBillingStyle.addServicerPrice}>
+                                                                                    {takeItem.unitPrice}
+                                                                                </Text>
+                                                                            </View>
+                                                                        )
+                                                                    }
                                                                 </View>
-                                                                <Text
-                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListTime : addCardItemStyles.addCardItemStylesListTimeGray}>
-                                                                    {project.storeName}
-                                                                </Text>
-                                                                <View
-                                                                    style={addCardItemStyles.addCardItemStylesListInfoBox}>
-                                                                    <Text
-                                                                        style={canUse ? addCardItemStyles.addCardItemStylesListInfo : addCardItemStyles.addCardItemStylesListInfoGray}>
-                                                                        {project.cardName}
-                                                                    </Text>
-                                                                </View>
-                                                                <Text
-                                                                    style={canUse ? addCardItemStyles.addCardItemStylesBalance : addCardItemStyles.addCardItemStylesBalanceGray}>
-                                                                    {project.blance}次
-                                                                </Text>
-                                                                <Text
-                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListPrice : addCardItemStyles.addCardItemStylesListPriceGray}>
-                                                                    {canUse ? '可用' : '不可跨店消费'}
-                                                                </Text>
                                                             </TouchableOpacity>
                                                         )
-                                                    })
+                                                    }}
+                                                />
+                                            </View>)
+                                        }
+
+                                        {/* 次卡项目 */}
+                                        {this.state.addConsumeType == 'card' && (
+                                            <View style={this.state.addConsumeType == 'card' ? cashierBillingStyle.consumeBodyNonmember : cashierBillingStyle.hidden}>
+                                                {
+                                                    this.state.memberType == '0' ?
+                                                        (
+                                                            <View style={this.state.timesProjectDatas.length < 1 ? null : cashierBillingStyle.hidden}>
+                                                                <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
+                                                                    您没有次卡消费项目哦！
+                                                                </Text>
+                                                            </View>
+                                                        )
+                                                        :
+                                                        (
+                                                            <View style={this.state.timesProjectDatas.length < 1 ? null : cashierBillingStyle.hidden}>
+                                                                <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
+                                                                    非会员用户，无次卡项目
+                                                                </Text>
+                                                                <Text style={cashierBillingStyle.consumeBodyNonmemberText}>
+                                                                    会员用户，请点击顾客识别
+                                                                </Text>
+                                                            </View>
+                                                        )
                                                 }
-                                            </ScrollView>
+
+                                                <View style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
+                                                    <View style={addCardItemStyles.addCardItemStylesTitle}>
+                                                        <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
+                                                            <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                                项目名称
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
+                                                            <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                                开卡门店
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLi}>
+                                                            <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                                次卡信息
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiBalance}>
+                                                            <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                                余次
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity style={addCardItemStyles.addCardItemStylesTitleLiOnther}>
+                                                            <Text style={addCardItemStyles.addCardItemStylesTitleLiText}>
+                                                                是否可用
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    <View style={addCardItemStyles.addCardItemStylesBody}>
+                                                        <ScrollView>
+                                                            {
+                                                                this.state.timesProjectDatas.map((project, index) => {
+                                                                    let currStoreId = this.state.storeId
+                                                                    let isCross = project.isCross  //0允许 1不允许 -1不限定
+                                                                    let crossStores = project.crossConsumeStores ? project.crossConsumeStores.split(",") : [] //跨店消费门店
+                                                                    crossStores = crossStores.filter(item=>item.trim().length > 1)
+                                                                    crossStores.push(project.storeId + "")
+
+                                                                    // 当前卡是否可用
+                                                                    let canUse = true
+                                                                    let validStores = crossStores.filter(item => item + '' == currStoreId + '')
+                                                                    if(isCross == -1){
+                                                                        canUse = true
+                                                                    }else{
+                                                                        if(crossStores.length > 0 && validStores.length < 1){
+                                                                            canUse = false
+                                                                        }else{
+                                                                            canUse = true
+                                                                        }
+                                                                    }
+
+                                                                    return (
+                                                                        <TouchableOpacity
+                                                                            style={addCardItemStyles.addCardItemStylesList}
+                                                                            key={index}
+                                                                            onPress={this.addConsumeItem.bind(this, {
+                                                                                itemId: project.itemId,
+                                                                                itemName: project.projName,
+                                                                                itemNo: project.itemNo,
+                                                                                itemPrice: project.price,
+                                                                                itemNum: 1,
+                                                                                itemType: 'card',
+                                                                                isChoosed: false,
+                                                                                unitType: '',
+                                                                                vipCardNo: project.vipCardNo,
+                                                                                canUse
+                                                                            })}>
+                                                                            <View
+                                                                                style={addCardItemStyles.addCardItemStylesListNameBox}>
+                                                                                <Text
+                                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListName : addCardItemStyles.addCardItemStylesListNameGray}>
+                                                                                    {project.projName}
+                                                                                </Text>
+                                                                            </View>
+                                                                            <Text
+                                                                                style={canUse ? addCardItemStyles.addCardItemStylesListTime : addCardItemStyles.addCardItemStylesListTimeGray}>
+                                                                                {project.storeName}
+                                                                            </Text>
+                                                                            <View
+                                                                                style={addCardItemStyles.addCardItemStylesListInfoBox}>
+                                                                                <Text
+                                                                                    style={canUse ? addCardItemStyles.addCardItemStylesListInfo : addCardItemStyles.addCardItemStylesListInfoGray}>
+                                                                                    {project.cardName}
+                                                                                </Text>
+                                                                            </View>
+                                                                            <Text
+                                                                                style={canUse ? addCardItemStyles.addCardItemStylesBalance : addCardItemStyles.addCardItemStylesBalanceGray}>
+                                                                                {project.blance}次
+                                                                            </Text>
+                                                                            <Text
+                                                                                style={canUse ? addCardItemStyles.addCardItemStylesListPrice : addCardItemStyles.addCardItemStylesListPriceGray}>
+                                                                                {canUse ? '可用' : '不可跨店消费'}
+                                                                            </Text>
+                                                                        </TouchableOpacity>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </ScrollView>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        )}
+
+
+                                        {/* 服务人展示 */}
+                                        {
+                                            (this.state.addConsumeType == 'servicer' && !this.state.showFilterKeyBoard && this.state.currentShowServicerDatas.length < 1) ||
+                                            ((this.state.currentShowServicerDatas.length > 0 && this.state.currentShowServicerDatas[0] == '-1')) &&
+                                            <View style={cashierBillingStyle.noItems}>
+                                                <SectionList noItems={true}/>
+                                            </View>
+                                        }
+                                        <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ? cashierBillingStyle.servicerInfoBodyNew : cashierBillingStyle.hidden}>
+                                            <StaffSelectBox isFilter={this.state.filterServicer}
+                                                            filterServicerKey={this.state.filterServicerKey}
+                                                            filterServicerData={this.state.currentShowServicerDatas}
+                                                            onSelected={this.onStaffSelected.bind(this)}
+                                                            clearServicerGridChoose={this.state.clearServicerGridChoose}/>
+                                        </View>
+
+                                        {
+                                            (this.state.showFilterMsgBoard == 0 || this.state.showFilterMsgBoard == -1) && (
+                                                <SearchInput onCancel={this.searchCancel.bind(this)}
+                                                             showFilterMsgBoard={this.state.showFilterMsgBoard}/>
+                                            )
+                                        }
+                                    </View>
+                                    <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ?  cashierBillingStyle.consumeBoxContentServerDetail:cashierBillingStyle.hidden}>
+                                        <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ? cashierBillingStyle.servicerInfoBodyNew : cashierBillingStyle.hidden}>
+                                            {/* 指定非指定 */}
+                                            {
+                                                !isShowAppoint ?
+                                                    (
+                                                        <View style={cashierBillingStyle.chooseItemNoneNew}>
+                                                            <Text style={cashierBillingStyle.chooseItemNoneText}>
+                                                                请选择服务人
+                                                            </Text>
+                                                        </View>
+                                                    )
+                                                    :
+                                                    (
+                                                        <View style={cashierBillingStyle.servicerWrap}>
+                                                            {/*个人信息*/}
+                                                            <View style={cashierBillingStyle.servicerNameInfo}>
+                                                                <Text style={cashierBillingStyle.servicerNameTxt}
+                                                                      numberOfLines={2}>{currentServicerInfo.value}</Text>
+                                                                <View style={cashierBillingStyle.serviceNumber}>
+                                                                    <Image resizeMethod="resize"
+                                                                           source={require('@imgPath/store-staff-No.png')}
+                                                                           style={cashierBillingStyle.storeStaffImg}
+                                                                           resizeMode={'contain'}/>
+                                                                    <Text style={cashierBillingStyle.serviceNumberText}
+                                                                          numberOfLines={1}>{currentServicerInfo.storeStaffNo}</Text>
+                                                                </View>
+                                                            </View>
+                                                            <View
+                                                                style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>
+                                                                <View style={cashierBillingStyle.servicerWayChooseWay}>
+                                                                    <TouchableOpacity
+                                                                        style={currentServicerInfo.appoint == 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
+                                                                        onPress={this.onAppoint.bind(this, '0')}>
+                                                                        <Text style={cashierBillingStyle.servicerChooseWayText}>
+                                                                            轮牌
+                                                                        </Text>
+                                                                    </TouchableOpacity>
+                                                                    <TouchableOpacity
+                                                                        style={currentServicerInfo.appoint != 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
+                                                                        onPress={this.onAppoint.bind(this, '1')}>
+                                                                        <Text style={cashierBillingStyle.servicerChooseWayText}>
+                                                                            指定
+                                                                        </Text>
+                                                                    </TouchableOpacity>
+                                                                </View>
+                                                                <Image resizeMethod="resize"
+                                                                       style={cashierBillingStyle.servicerAppoint}
+                                                                       source={require('@imgPath/assign.png')}/>
+                                                            </View>
+                                                            {/*职位*/}
+                                                            <View style={cashierBillingStyle.servicerPosition}>
+                                                                <Text
+                                                                    style={cashierBillingStyle.servicerPositionText}>{currentServicerInfo.workTypeDesc}</Text>
+                                                            </View>
+                                                            {/*业绩｜提成*/}
+                                                            <View style={cashierBillingStyle.servicerYeJi}>
+                                                                <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
+                                                                      ellipsizeMode={'tail'}>业绩 {currentServicerInfo.performance || '--'}</Text>
+                                                                <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
+                                                                      ellipsizeMode={'tail'}>提成 {currentServicerInfo.workerFee || '--'}</Text>
+                                                            </View>
+                                                            <View style={cashierBillingStyle.servicerOperator}>
+                                                                {/*编辑*/}
+                                                                <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
+                                                                                  onPress={this.editServicer.bind(this)}>
+                                                                    <Image resizeMethod="resize"
+                                                                           source={require('@imgPath/edit.png')}
+                                                                           style={cashierBillingStyle.servicerOperatorEdit}
+                                                                           resizeMode={'contain'}/>
+                                                                </TouchableOpacity>
+                                                                {/*删除*/}
+                                                                <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
+                                                                                  onPress={this.removeServicer.bind(this)}>
+                                                                    <Image resizeMethod="resize"
+                                                                           source={require('@imgPath/delete.png')}
+                                                                           style={cashierBillingStyle.servicerOperatorDelete}
+                                                                           resizeMode={'contain'}/>
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                        </View>
+                                                    )
+                                            }
                                         </View>
                                     </View>
                                 </View>
-                            )}
-                            {/* 服务人筛选 */}
-                            {this.state.addConsumeType == 'servicer' && (
-                                <View
-                                    style={this.state.addConsumeType == 'servicer' ? cashierBillingStyle.consumeOrderGenre : cashierBillingStyle.hidden}>
-                                    <ScrollView>
-                                        <View style={cashierBillingStyle.consumeOrderGenreLi}>
-                                            <TouchableOpacity
-                                                onPress={this.filterConsumeItem.bind(this, 'category', 'servicer', "-1", -1)}>
-                                                <Text
-                                                    style={this.state.choosedServicerCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                    所有人
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        {
-
-                                            this.state.showServicerCategoryChoose.map((item, index) => {
-                                                return (
-                                                    <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
-                                                        <TouchableOpacity
-                                                            onPress={this.filterConsumeItem.bind(this, 'category', 'servicer', item.cid, index)}>
-                                                            <Text numberOfLines={1}
-                                                                  style={this.state.choosedServicerCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
-                                                                {item.text}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                )
-                                            })
-                                        }
-                                    </ScrollView>
-                                </View>
-                            )}
-                            {/* 服务人展示 */}
-                            {
-                                (this.state.addConsumeType == 'servicer' && !this.state.showFilterKeyBoard && this.state.currentShowServicerDatas.length < 1) ||
-                                ((this.state.currentShowServicerDatas.length > 0 && this.state.currentShowServicerDatas[0] == '-1')) &&
-                                <View style={cashierBillingStyle.noItems}>
-                                    <SectionList noItems={true}/>
-                                </View>
-                            }
-                            <View
-                                style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'servicer' ? cashierBillingStyle.servicerInfoBodyNew : cashierBillingStyle.hidden}>
-                                <View style={cashierBillingStyle.servicerInfoBodyHeight}>
-                                    <StaffSelectBox isFilter={this.state.filterServicer}
-                                                    filterServicerKey={this.state.filterServicerKey}
-                                                    filterServicerData={this.state.currentShowServicerDatas}
-                                                    onSelected={this.onStaffSelected.bind(this)}
-                                                    clearServicerGridChoose={this.state.clearServicerGridChoose}/>
-                                </View>
-                                {/* 指定非指定 */}
-                                {
-                                    !isShowAppoint ?
-                                        (
-                                            <View style={cashierBillingStyle.chooseItemNoneNew}>
-                                                <Text style={cashierBillingStyle.chooseItemNoneText}>
-                                                    请选择服务人
-                                                </Text>
-                                            </View>
-                                        )
-                                        :
-                                        (
-                                            <View style={cashierBillingStyle.servicerWrap}>
-                                                {/*个人信息*/}
-                                                <View style={cashierBillingStyle.servicerNameInfo}>
-                                                    <Text style={cashierBillingStyle.servicerNameTxt}
-                                                          numberOfLines={2}>{currentServicerInfo.value}</Text>
-                                                    <View style={cashierBillingStyle.serviceNumber}>
-                                                        <Image resizeMethod="resize"
-                                                               source={require('@imgPath/store-staff-No.png')}
-                                                               style={cashierBillingStyle.storeStaffImg}
-                                                               resizeMode={'contain'}/>
-                                                        <Text style={cashierBillingStyle.serviceNumberText}
-                                                              numberOfLines={1}>{currentServicerInfo.storeStaffNo}</Text>
-                                                    </View>
-                                                </View>
-                                                <View
-                                                    style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>
-                                                    <View style={cashierBillingStyle.servicerWayChooseWay}>
-                                                        <TouchableOpacity
-                                                            style={currentServicerInfo.appoint == 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
-                                                            onPress={this.onAppoint.bind(this, '0')}>
-                                                            <Text style={cashierBillingStyle.servicerChooseWayText}>
-                                                                轮牌
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity
-                                                            style={currentServicerInfo.appoint != 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
-                                                            onPress={this.onAppoint.bind(this, '1')}>
-                                                            <Text style={cashierBillingStyle.servicerChooseWayText}>
-                                                                指定
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                    <Image resizeMethod="resize"
-                                                           style={cashierBillingStyle.servicerAppoint}
-                                                           source={require('@imgPath/assign.png')}/>
-                                                </View>
-                                                {/*职位*/}
-                                                <View style={cashierBillingStyle.servicerPosition}>
+                                {/*分类筛选*/}
+                                <View style={this.state.addConsumeType != 'card' ? cashierBillingStyle.consumeBoxContentCategory:cashierBillingStyle.hidden}>
+                                    {/* 项目分类筛选 */}
+                                    {this.state.addConsumeType == 'proj' && (
+                                        <ScrollView>
+                                            <View style={cashierBillingStyle.consumeOrderGenreLi}>
+                                                <TouchableOpacity
+                                                    onPress={this.filterConsumeItem.bind(this, 'category', 'proj', '-1', -1)}
+                                                    style={cashierBillingStyle.consumeOrderGenreLiItem}>
                                                     <Text
-                                                        style={cashierBillingStyle.servicerPositionText}>{currentServicerInfo.workTypeDesc}</Text>
-                                                </View>
-                                                {/*业绩｜提成*/}
-                                                <View style={cashierBillingStyle.servicerYeJi}>
-                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
-                                                          ellipsizeMode={'tail'}>业绩 {currentServicerInfo.performance || '--'}</Text>
-                                                    <Text style={cashierBillingStyle.servicerYeJiText} numberOfLines={1}
-                                                          ellipsizeMode={'tail'}>提成 {currentServicerInfo.workerFee || '--'}</Text>
-                                                </View>
-                                                <View style={cashierBillingStyle.servicerOperator}>
-                                                    {/*编辑*/}
-                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
-                                                                      onPress={this.editServicer.bind(this)}>
-                                                        <Image resizeMethod="resize"
-                                                               source={require('@imgPath/edit.png')}
-                                                               style={cashierBillingStyle.servicerOperatorEdit}
-                                                               resizeMode={'contain'}/>
-                                                    </TouchableOpacity>
-                                                    {/*删除*/}
-                                                    <TouchableOpacity style={cashierBillingStyle.servicerOperatorBtn}
-                                                                      onPress={this.removeServicer.bind(this)}>
-                                                        <Image resizeMethod="resize"
-                                                               source={require('@imgPath/delete.png')}
-                                                               style={cashierBillingStyle.servicerOperatorDelete}
-                                                               resizeMode={'contain'}/>
-                                                    </TouchableOpacity>
-                                                </View>
+                                                        style={this.state.choosedProjCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                        所有类
+                                                    </Text>
+                                                </TouchableOpacity>
                                             </View>
-                                        )
-                                }
+                                            {
+                                                // 分类筛选
+                                                this.state.showProjCategoryChoose.map((item, index) => {
+                                                    return (
+                                                        <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
+                                                            <TouchableOpacity
+                                                                onPress={this.filterConsumeItem.bind(this, 'category', 'proj', item.cid, index)}
+                                                                style={cashierBillingStyle.consumeOrderGenreLiItem}>
+                                                                <Text
+                                                                    style={this.state.choosedProjCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                                    {item.text}
+                                                                </Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )
+                                                })
+                                            }
+                                        </ScrollView>
+                                    )}
+
+                                    {/* 外卖筛选 */}
+                                    {this.state.addConsumeType == 'item' && (
+                                        <ScrollView>
+                                            <View style={cashierBillingStyle.consumeOrderGenreLi}>
+                                                <TouchableOpacity
+                                                    onPress={this.filterConsumeItem.bind(this, 'category', 'item', "-1", -1)}>
+                                                    <Text
+                                                        style={this.state.choosedItemCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                        所有类
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            {
+                                                this.state.showItemCategoryChoose.map((item, index) => {
+                                                    return (
+                                                        <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
+                                                            <TouchableOpacity
+                                                                onPress={this.filterConsumeItem.bind(this, 'category', 'item', item.cid, index)}>
+                                                                <Text
+                                                                    style={this.state.choosedItemCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                                    {item.text}
+                                                                </Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )
+                                                })
+                                            }
+                                        </ScrollView>
+                                    )}
+
+                                    {/* 服务人筛选 */}
+                                    {this.state.addConsumeType == 'servicer' && (
+                                        <ScrollView>
+                                            <View style={cashierBillingStyle.consumeOrderGenreLi}>
+                                                <TouchableOpacity
+                                                    onPress={this.filterConsumeItem.bind(this, 'category', 'servicer', "-1", -1)}>
+                                                    <Text style={this.state.choosedServicerCategoryIndex == -1 ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                        所有人
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            {
+
+                                                this.state.showServicerCategoryChoose.map((item, index) => {
+                                                    return (
+                                                        <View style={cashierBillingStyle.consumeOrderGenreLi} key={index}>
+                                                            <TouchableOpacity
+                                                                onPress={this.filterConsumeItem.bind(this, 'category', 'servicer', item.cid, index)}>
+                                                                <Text numberOfLines={1}
+                                                                      style={this.state.choosedServicerCategoryIndex == index ? cashierBillingStyle.consumeOrderGenreTextActive : cashierBillingStyle.consumeOrderGenreText}>
+                                                                    {item.text}
+                                                                </Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )
+                                                })
+                                            }
+                                        </ScrollView>
+                                    )}
+                                </View>
                             </View>
-
-                            {
-                                (this.state.showFilterMsgBoard == 0 || this.state.showFilterMsgBoard == -1) && (
-                                    <SearchInput onCancel={this.searchCancel.bind(this)}
-                                                 showFilterMsgBoard={this.state.showFilterMsgBoard}/>
-                                )
-                            }
-
                         </View>
                     </View>
                 </View>
                 {/* ------------会员卡信息------------ */}
-                <View
-                    style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
+                <View style={this.state.sliderDisplay ? cashierBillingStyle.rightPositionBoxShow : {display: 'none'}}></View>
                 {
                     this.props.route.params.member && (
                         <Animated.View style={this.state.sliderDisplay ? [cashierBillingStyle.rightPositionBox, {left: this.state.sliderLeft}] : {display: 'none'}} {...this._pinchResponder.panHandlers}>
