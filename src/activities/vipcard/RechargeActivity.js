@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
 import {groupBy, showMessage} from '../../utils';
 import {RechargeStoredCardStyles,} from '../../styles';
 
@@ -82,7 +82,18 @@ class Recharge extends React.Component {
                     <View style={RechargeStoredCardStyles.LeftcontentNew}>
                         <View style={RechargeStoredCardStyles.title}>
                             {/*<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>*/}
-                            <VipUserInfoComponent showMember={this.props.route} showBtn={true}></VipUserInfoComponent>
+                            {
+                                member.id != '' && (
+                                    <VipUserInfoComponent showMember={this.props.route}
+                                                          showBtn={true}></VipUserInfoComponent>
+                                )
+                            }
+                            {
+                                member.id == '' && (
+                                    <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
+                                )
+                            }
+
                         </View>
 
                         {/*已选择卡*/}
@@ -124,13 +135,16 @@ class Recharge extends React.Component {
                     <View style={RechargeStoredCardStyles.Rightcontent}>
                         {/*顶部Tab*/}
                         <View style={RechargeStoredCardStyles.openCardTitleRO}>
-                            <View style={RechargeStoredCardStyles.openCardTitleRTitleO}>
+                            {/*<View style={RechargeStoredCardStyles.openCardTitleRTitleO}>*/}
+                            <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
+                                             style={RechargeStoredCardStyles.openCardTitleRTitleO}>
                                 <TabGroup
                                     selectedIndex={currentTabIndex}
                                     displayField={'name'}
                                     data={tabs}
                                     onSelected={this.onTabsSelected}/>
-                            </View>
+                            </ImageBackground>
+                            {/*</View>*/}
                         </View>
                         {/*中间区域*/}
                         <View style={RechargeStoredCardStyles.ShowMemberCardBox}>
@@ -148,8 +162,10 @@ class Recharge extends React.Component {
                                     card={currentCard}/>
                             )}
 
-                            <View style={[{display: currentTabIndex === 2 ? 'flex' : 'none'}, RechargeStoredCardStyles.RightServicecontent]}>
-                                <StaffSelectBox onSelected={this.onStaffSelected} clearServicerGridChoose={this.state.clearServicerGridChoose}/>
+                            <View
+                                style={[{display: currentTabIndex === 2 ? 'flex' : 'none'}, RechargeStoredCardStyles.RightServicecontent]}>
+                                <StaffSelectBox onSelected={this.onStaffSelected}
+                                                clearServicerGridChoose={this.state.clearServicerGridChoose}/>
                             </View>
                         </View>
                         {/*底部区域*/}
@@ -201,7 +217,7 @@ class Recharge extends React.Component {
                 <View style={RechargeStoredCardStyles.cardOperateNew}>
                     <View style={RechargeStoredCardStyles.showPayPrice}>
                         <Text style={RechargeStoredCardStyles.showPayPriceText}>
-                            应付：{rechargeAmt && rechargeAmt.toString().length > 0 ? rechargeAmt: '0.00'}
+                            应付：{rechargeAmt && rechargeAmt.toString().length > 0 ? rechargeAmt : '0.00'}
                         </Text>
                     </View>
                     <View style={RechargeStoredCardStyles.PayForBtn}>

@@ -2,6 +2,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {PixelUtil} from '../utils';
+import {color} from "react-native-elements/dist/helpers";
 
 let naviBarHeight = PixelUtil.size(120);
 let rightPanelWidth = PixelUtil.screenSize.width * 0.5;
@@ -23,7 +24,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     openCardTitle: {
         // 售卡-标题
         width: '100%',
-        height: PixelUtil.size(106),
+        height: PixelUtil.size(140),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -88,7 +89,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     title: {
         // 售卡-标题
         width: '100%',
-        height: PixelUtil.size(106),
+        height: PixelUtil.size(145),
         /*display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -101,6 +102,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // 标题-文字
         fontSize: PixelUtil.size(32),
         color: '#333',
+        width: '100%',
+        textAlign: 'center'
     },
     cardOperateBox: {
         // 主体-顶部
@@ -394,7 +397,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     openCardTitleRO: {
         width: '100%',
-        height: PixelUtil.size(106),
+        height: PixelUtil.size(146),
         position: 'relative',
         borderBottomWidth: PixelUtil.size(2),
         borderBottomColor: '#cbcbcb',
@@ -497,7 +500,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     openCardTitleRTitle: {
@@ -505,7 +508,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     openCardCategory: {
@@ -766,21 +769,27 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     userbg: {
         width: '100%',
         height: "100%",
-        flex: 0,
-        flexDirection: 'row',
+        // flex: 0,
+        // flexDirection: 'row',
     },
     cardNo: {
-        width: PixelUtil.size(180),
-        color: '#ffd99c',
-        fontSize: PixelUtil.size(25),
-        fontWeight: PixelUtil.size(700),
-        marginTop: PixelUtil.size(54),
-        textAlign: 'center'
+        width: '100%',
+        color: '#fff',
+        fontSize: PixelUtil.size(18),
+        fontWeight: PixelUtil.size(500),
+        textAlign: 'center',
+        lineHeight: PixelUtil.size(29),
+    },
+    cardNoImg: {
+        width: PixelUtil.size(138),
+        height: PixelUtil.size(29),
+        marginTop: PixelUtil.size(5)
     },
     carduserInfo: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: PixelUtil.size(-20)
     },
     cardUserLeft: {
         flex: 0,
@@ -789,10 +798,10 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         justifyContent: 'center'
     },
     avaterIamge: {
-        width: PixelUtil.rect(62, 62).width,
-        height: PixelUtil.rect(62, 62).height,
+        width: PixelUtil.rect(64, 64).width,
+        height: PixelUtil.rect(64, 64).height,
         borderRadius: PixelUtil.size(500),
-        marginLeft: PixelUtil.size(18)
+        marginLeft: PixelUtil.size(40)
     },
     avaterInfo: {
         marginLeft: PixelUtil.size(13),
@@ -806,14 +815,14 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     usertitleText: {
         fontSize: PixelUtil.size(30),
-        color: '#2f2f2f',
+        color: '#FFFFFF',
         fontWeight: PixelUtil.size(700),
         maxWidth: PixelUtil.size(185),
         overflow: 'hidden',
     },
     sexText: {
         fontSize: PixelUtil.size(22),
-        color: '#2f2f2f',
+        color: '#FFFFFF',
         fontWeight: PixelUtil.size(400),
         marginLeft: PixelUtil.size(10)
     },
@@ -827,7 +836,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // marginTop:PixelUtil.size(5),
         fontWeight: PixelUtil.size(400),
         fontSize: PixelUtil.size(22),
-        color: '#2f2f2f'
+        color: '#FFFFFF'
     },
     storeInfo: {
         marginLeft: PixelUtil.size(28),
@@ -835,29 +844,43 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         flexDirection: 'row'
     },
     secondCard: {
-        marginLeft: PixelUtil.size(15),
-        color: '#2F2F2F',
+        marginLeft: PixelUtil.size(50),
+        color: '#FFFFFF',
         fontSize: PixelUtil.size(22),
     },
     storeCard: {
-        marginLeft: PixelUtil.size(10),
+        marginLeft: PixelUtil.size(50),
     },
     threeCard: {
-        marginLeft: PixelUtil.size(50),
-        color: '#2F2F2F',
+        marginLeft: PixelUtil.size(60),
+        color: '#FFFFFF',
         fontSize: PixelUtil.size(22),
+    },
+    storeNameCard: {
+        color: '#FFFFFF'
     },
     storeNumberCard: {
         textAlign: 'center',
-        marginTop: PixelUtil.size(5)
+        marginTop: PixelUtil.size(5),
+        color: '#FFFFFF'
     },
     application: {
         marginRight: PixelUtil.size(24),
-        marginTop: PixelUtil.size(26)
+        // marginTop: PixelUtil.size(15),
+        marginLeft: PixelUtil.size(50)
     },
     appliimg: {
-        width: PixelUtil.size(128),
-        height: PixelUtil.size(68),
+        width: PixelUtil.size(168),
+        height: PixelUtil.size(70),
         resizeMode: 'contain',
+    },
+    reservation: {
+        marginLeft: PixelUtil.size(66),
+
+    },
+    reservationText: {
+        color: '#FFA200',
+        fontSize: PixelUtil.size(20),
+        fontWeight: PixelUtil.size(500)
     }
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
+import {Image, ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
 import {RechargeStoredCardStyles} from '../../styles';
 import {showMessage} from '../../utils';
@@ -40,7 +40,7 @@ class VipCard extends React.Component {
     }
 
     componentDidMount() {
-        const { init, operateUser } = this.props;
+        const {init, operateUser} = this.props;
         let aclTxt = 'ncashier_opencard_card_money';
         fetchStaffAcl(aclTxt, operateUser).then(o => {
             if (o.data) {
@@ -68,13 +68,13 @@ class VipCard extends React.Component {
 
     onStaffPress = staff => {
         if (this.state.tabIndex !== 2) {
-            this.setState({ tabIndex: 2 });
+            this.setState({tabIndex: 2});
         }
         this.props.selectStaff(staff);
     };
 
     submitOrder = () => {
-        const { card, staffs } = this.props;
+        const {card, staffs} = this.props;
         if (!card.id) {
             showMessage(Msg.noCard);
             return;
@@ -94,7 +94,7 @@ class VipCard extends React.Component {
             <View style={RechargeStoredCardStyles.cardOperateBottom}>
                 <View style={RechargeStoredCardStyles.showPayPrice}>
                     <Text style={RechargeStoredCardStyles.showPayPriceText}>
-                        应付：{totalPrice && totalPrice.toString().length > 0 ? totalPrice: '0.00'}
+                        应付：{totalPrice && totalPrice.toString().length > 0 ? totalPrice : '0.00'}
                     </Text>
                 </View>
                 <View style={RechargeStoredCardStyles.PayForBtn}>
@@ -123,8 +123,7 @@ class VipCard extends React.Component {
             setStaff,
             navigation,
         } = this.props;
-
-        const { tabIndex } = this.state;
+        const {tabIndex} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
         return (
@@ -133,21 +132,32 @@ class VipCard extends React.Component {
                 <View style={RechargeStoredCardStyles.openCardTitle}>
                     {/*标题*/}
                     <View style={RechargeStoredCardStyles.openCardTitleL}>
+                        {
+                            member.id != '' && (
+                                <VipUserInfoComponent showMember={this.props.route} showBtn={false}></VipUserInfoComponent>
+                            )
+                        }
+                        {
+                            member.id == '' && (
+                                <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
+                            )
+                        }
 
-                    {/*    <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>*/}
-                        <VipUserInfoComponent showMember={this.props.route} showBtn={false}></VipUserInfoComponent>
                     </View>
 
 
                     {/*Tbs*/}
                     <View style={RechargeStoredCardStyles.openCardTitleR}>
-                        <View style={RechargeStoredCardStyles.openCardTitleRTitle}>
+                        {/*<View style={RechargeStoredCardStyles.openCardTitleRTitle}>*/}
+                        <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
+                                         style={RechargeStoredCardStyles.openCardTitleRTitle}>
                             <TabGroup
                                 selectedIndex={this.state.tabIndex}
                                 data={['储值卡', '次卡', '服务人']}
                                 onSelected={this.onTabPress}
                             />
-                        </View>
+                        </ImageBackground>
+                        {/*</View>*/}
                     </View>
                 </View>
                 {/*内容区域*/}
@@ -164,7 +174,7 @@ class VipCard extends React.Component {
                                 acl={this.acl}
                             />
                             {/*服务人信息*/}
-                            <StaffServiceBar data={staffs} onSelected={this.onStaffPress} />
+                            <StaffServiceBar data={staffs} onSelected={this.onStaffPress}/>
                             {/*总金额*/}
                             <View style={RechargeStoredCardStyles.openActiveArea}>
                                 <View style={RechargeStoredCardStyles.openActiveAreaL}>
@@ -178,7 +188,7 @@ class VipCard extends React.Component {
                         {/*右侧卡列表*/}
                         <View style={RechargeStoredCardStyles.ShowOpenCardBox}>
                             {/*卡列表*/}
-                            <View style={{ display: tabIndex !== 2 ? 'flex' : 'none', flex: 1}}>
+                            <View style={{display: tabIndex !== 2 ? 'flex' : 'none', flex: 1}}>
                                 <VipcardSaleCardList
                                     cardType={tabIndex == 0 ? 1 : 2}
                                     card={card}
@@ -228,7 +238,7 @@ class VipCard extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const { vipcard } = state;
+    const {vipcard} = state;
 
     return {
         staffs: vipcard.staffs,

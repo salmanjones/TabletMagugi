@@ -41,9 +41,9 @@ export class TabGroup extends React.PureComponent {
                 selectedButtonStyle={tabGroupStyles.selectedButtonStyle}
                 textStyle={tabGroupStyles.textStyle}
                 selectedTextStyle={tabGroupStyles.selectedTextStyle}
-                innerBorderStyle={{color: '#fff'}}
                 underlayColor={'transparent'}
             />
+
         );
     }
 }
