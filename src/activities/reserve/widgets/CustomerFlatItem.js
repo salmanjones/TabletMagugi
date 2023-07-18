@@ -11,7 +11,16 @@ import {getImage, ImageQutity, PixelUtil} from "../../../utils";
  */
 
 // 顾客预约列表
-export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCancel, reserveTime, staffId, reserveFlag, customerCardEvent}) => {
+export default React.memo(({
+                               reserveInfoArray,
+                               reserveStatus,
+                               timeIndex,
+                               canCancel,
+                               reserveTime,
+                               staffId,
+                               reserveFlag,
+                               customerCardEvent
+                           }) => {
     const [checkCustomerIndex, setCheckCustomerIndex] = useState('')
     const [timerReserveList, setTimerReserveList] = useState(reserveInfoArray)
 
@@ -22,13 +31,14 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
     )
 
     // 处理点击事件
-    const customerClickEvent = (type, extra)=>{
+    const customerClickEvent = (type, extra) => {
         customerCardEvent(type, extra)
     }
 
     if (reserveInfoArray.length > 0) {
         return (
-            <View style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
+            <View
+                style={reserveStatus == '1' ? ReserveBoardStyles.reserveCustomerListRecentWrap : ReserveBoardStyles.reserveCustomerListWaitWrap}>
                 {
                     timerReserveList.map((customer, idx) => {
                         // 顾客是否已到店 0:否 1:是
@@ -51,7 +61,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
 
                         // 是否选中
                         const isCheck = checkCustomerIndex == globalIndex
-                        if(customer.isReseve == '3'){ // 占用状态
+                        if (customer.isReseve == '3') { // 占用状态
                             cardStyle.push(ReserveBoardStyles.reserveCustomerBusyBox)
 
                             // 是否过期预约
@@ -83,7 +93,11 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                             <TouchableOpacity
                                                 style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                                 onPress={() => {
-                                                    customerClickEvent('cancelReserve', {type: '1', recordId: customer.recordId, index: idx}) // 占用取消
+                                                    customerClickEvent('cancelReserve', {
+                                                        type: '1',
+                                                        recordId: customer.recordId,
+                                                        index: idx
+                                                    }) // 占用取消
                                                 }}>
                                                 <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                        resizeMode={'contain'}
@@ -102,7 +116,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                     </ImageBackground>
                                 </TouchableOpacity>
                             )
-                        }else if (customer.isReseve == '0' || customer.isReseve == '2') { // 0占用｜预约 2仅预约
+                        } else if (customer.isReseve == '0' || customer.isReseve == '2') { // 0占用｜预约 2仅预约
                             cardStyle.push(ReserveBoardStyles.reserveCustomerReadyBox)
 
                             // 选中
@@ -124,20 +138,24 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                         {/*预约*/}
                                         <TouchableOpacity
                                             style={ReserveBoardStyles.reserveCustomerIconBox}
-                                            onPress={()=>{
+                                            onPress={() => {
                                                 customerClickEvent('memberReserve', {staffId, reserveTime}) // 顾客预约
                                             }}>
                                             <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                    resizeMode={'contain'}
-                                                   source={require('@imgPath/reserve_customer_yuyue.png') }/>
+                                                   source={require('@imgPath/reserve_customer_yuyue.png')}/>
                                         </TouchableOpacity>
                                         {/*占用*/}
                                         {
                                             customer.isReseve == '0' && (
                                                 <TouchableOpacity
                                                     style={[ReserveBoardStyles.reserveCustomerIconBox, ReserveBoardStyles.reserveCustomerBtnRight]}
-                                                    onPress={()=>{
-                                                        customerClickEvent('addOccupy', {staffId, reserveTime: customer.reserveTime, index: idx}) // 占用
+                                                    onPress={() => {
+                                                        customerClickEvent('addOccupy', {
+                                                            staffId,
+                                                            reserveTime: customer.reserveTime,
+                                                            index: idx
+                                                        }) // 占用
                                                     }}>
                                                     <Image style={ReserveBoardStyles.reserveCustomerBtnIcon}
                                                            resizeMode={'contain'}
@@ -148,7 +166,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                     </View>
                                 </TouchableOpacity>
                             )
-                        } else if(customer.isReseve == '1') { // 预约
+                        } else if (customer.isReseve == '1') { // 预约
                             // 预约顾客是否需要换行展示
                             if (reserveInfoArray.length > 3) {
                                 cardStyle.push({marginBottom: PixelUtil.size(30)})
@@ -168,7 +186,7 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                             }
 
                             let staffName = customer.reserveStaffName || ""
-                            if(staffName && staffName.length > 3){
+                            if (staffName && staffName.length > 3) {
                                 staffName = staffName.substring(0, 3)
                             }
 
@@ -202,7 +220,11 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                                 <TouchableOpacity
                                                     style={ReserveBoardStyles.reserveCustomerDelIconBox}
                                                     onPress={() => {
-                                                        customerClickEvent('cancelReserve', {type: '0', recordId: customer.recordId, index: idx}) // 取消预约
+                                                        customerClickEvent('cancelReserve', {
+                                                            type: '0',
+                                                            recordId: customer.recordId,
+                                                            index: idx
+                                                        }) // 取消预约
                                                     }}>
                                                     <Image style={ReserveBoardStyles.reserveCustomerDelIcon}
                                                            resizeMode={'contain'}
@@ -234,27 +256,23 @@ export default React.memo(({reserveInfoArray, reserveStatus, timeIndex, canCance
                                                 </Text>
                                                 {/*男女*/}
                                                 {
-                                                    customer.isMember == '1'  && (
-                                                    <Image
-                                                        style={ReserveBoardStyles.reserveCustomerSexIcon}
-                                                        resizeMode={'contain'}
-                                                        source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                                    customer.isMember == '1' && (
+                                                        <Image
+                                                            style={ReserveBoardStyles.reserveCustomerSexIcon}
+                                                            resizeMode={'contain'}
+                                                            source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
                                                     )
                                                 }
 
                                                 {/*企微*/}
-                                                {
-                                                    customer.isWechatMember == '1' && (
-                                                        <Image
-                                                            style={ReserveBoardStyles.reserveCustomerWxIcon}
-                                                            resizeMode={'contain'}
-                                                            source={require('@imgPath/reserve_customer_detail_wecom.png')}/>
-                                                    )
-                                                }
+                                                <Image
+                                                    style={ReserveBoardStyles.reserveCustomeriswechatIcon}
+                                                    resizeMode={'contain'}
+                                                    source={customer.isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (customer.isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}/>
                                             </View>
                                             {/*手机号码*/}
                                             {
-                                                customer.isMember == '1' &&  customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0 && (
+                                                customer.isMember == '1' && customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0 && (
                                                     <View style={ReserveBoardStyles.reserveCustomerPhoneBox}>
                                                         <Text style={customer.isMember == '1'
                                                             ? ReserveBoardStyles.reserveCustomerPhoneText // 有档案
