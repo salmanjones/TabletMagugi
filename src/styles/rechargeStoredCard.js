@@ -818,14 +818,14 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     usertitleText: {
         fontSize: PixelUtil.size(30),
-        color: '#FFFFFF',
+        color: '#fff',
         fontWeight: PixelUtil.size(700),
         maxWidth: PixelUtil.size(185),
         overflow: 'hidden',
     },
     sexText: {
         fontSize: PixelUtil.size(22),
-        color: '#FFFFFF',
+        color: '#fff',
         fontWeight: PixelUtil.size(400),
         marginLeft: PixelUtil.size(10)
     },
@@ -839,7 +839,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         // marginTop:PixelUtil.size(5),
         fontWeight: PixelUtil.size(400),
         fontSize: PixelUtil.size(22),
-        color: '#FFFFFF'
+        color: '#fff'
     },
     storeInfo: {
         marginLeft: PixelUtil.size(28),
@@ -849,7 +849,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     secondCard: {
         marginLeft: PixelUtil.size(50),
         color: '#FFFFFF',
-        fontSize: PixelUtil.size(22),
+        fontSize: PixelUtil.size(20),
     },
     storeCard: {
         marginLeft: PixelUtil.size(50),
@@ -857,7 +857,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     threeCard: {
         marginLeft: PixelUtil.size(60),
         color: '#FFFFFF',
-        fontSize: PixelUtil.size(22),
+        fontSize: PixelUtil.size(20),
     },
     storeNameCard: {
         color: '#FFFFFF'
