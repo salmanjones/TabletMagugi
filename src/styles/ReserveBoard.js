@@ -9,7 +9,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
-    floatButtonBox:{
+    floatButtonBox: {
         position: 'absolute',
         right: PixelUtil.size(-18),
         bottom: PixelUtil.size(52),
@@ -17,7 +17,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: PixelUtil.size(480),
         zIndex: 1000,
     },
-    reserveButtonSanke:{
+    reserveButtonSanke: {
         position: "absolute",
         right: PixelUtil.size(0),
         bottom: PixelUtil.size(320),
@@ -25,7 +25,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: PixelUtil.size(160),
         zIndex: 1001
     },
-    reserveButtonRefresh:{
+    reserveButtonRefresh: {
         position: "absolute",
         right: PixelUtil.size(0),
         bottom: PixelUtil.size(160),
@@ -33,11 +33,11 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: PixelUtil.size(160),
         zIndex: 1001
     },
-    reserveButtonSankeIcon:{
+    reserveButtonSankeIcon: {
         width: '100%',
         height: '100%'
     },
-    reserveButtonGoTop:{
+    reserveButtonGoTop: {
         position: "absolute",
         right: PixelUtil.size(0),
         bottom: PixelUtil.size(0),
@@ -45,11 +45,11 @@ export const ReserveBoardStyles = StyleSheet.create({
         height: PixelUtil.size(160),
         zIndex: 1001
     },
-    reserveButtonRevertIcon:{
+    reserveButtonRevertIcon: {
         width: '100%',
         height: '100%'
     },
-    reserveFlagBox:{
+    reserveFlagBox: {
         width: '100%',
         height: PixelUtil.size(142),
         backgroundColor: '#ffffff',
@@ -59,7 +59,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: PixelUtil.size(36)
     },
-    reserveValidStyle:{
+    reserveValidStyle: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         overflow: 'hidden',
@@ -75,7 +75,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveValidActiveStyle:{
+    reserveValidActiveStyle: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         overflow: 'hidden',
@@ -91,7 +91,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveInvalidStyle:{
+    reserveInvalidStyle: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         overflow: 'hidden',
@@ -107,7 +107,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveInvalidActiveStyle:{
+    reserveInvalidActiveStyle: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         overflow: 'hidden',
@@ -123,22 +123,22 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveFlagTxt:{
+    reserveFlagTxt: {
         fontWeight: '400',
         fontSize: PixelUtil.size(32),
         color: '#111c3c'
     },
-    reserveFlagTxtActive:{
+    reserveFlagTxtActive: {
         fontWeight: '400',
         fontSize: PixelUtil.size(32),
         color: '#ffffff'
     },
-    reserveInfoBox:{
+    reserveInfoBox: {
         flex: 1,
         position: 'relative',
         backgroundColor: '#ffffff'
     },
-    reserveDetailWrap:{
+    reserveDetailWrap: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -146,14 +146,14 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'flex-start',
         flexDirection: 'row'
     },
-    reserveStylistBox:{
+    reserveStylistBox: {
         width: PixelUtil.size(306),
         height: '100%',
         borderRightWidth: PixelUtil.size(2),
         borderColor: '#cbcbcb',
         borderStyle: 'solid',
     },
-    reserveStylistItemBox:{
+    reserveStylistItemBox: {
         width: '100%',
         height: PixelUtil.size(124),
         display: "flex",
@@ -161,7 +161,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center'
     },
-    reserveStylistItem:{
+    reserveStylistItem: {
         width: PixelUtil.size(236),
         height: PixelUtil.size(100),
         backgroundColor: '#ffffff',
@@ -175,7 +175,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveStylistItemActive:{
+    reserveStylistItemActive: {
         width: PixelUtil.size(236),
         height: PixelUtil.size(100),
         backgroundColor: '#111c3c',
@@ -189,36 +189,36 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    reserveStylistItemText:{
+    reserveStylistItemText: {
         fontSize: PixelUtil.size(28),
         color: '#2d2d2d',
         fontWeight: "700"
     },
-    reserveStylistItemTextActive:{
+    reserveStylistItemTextActive: {
         fontSize: PixelUtil.size(30),
         color: '#ffffff',
         fontWeight: "500"
     },
-    reserveCustomerBox:{
+    reserveCustomerBox: {
         flex: 1,
         position: 'relative'
     },
-    reserveCustomersWrap:{
+    reserveCustomersWrap: {
         width: '100%',
         marginBottom: PixelUtil.size(24),
-        display:'flex',
+        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    reserveCustomersBox:{
+    reserveCustomersBox: {
         width: PixelUtil.size(1676),
         display: "flex",
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
-    reserveCustomerTimersBox:{
+    reserveCustomerTimersBox: {
         width: '100%',
         height: PixelUtil.size(60),
         borderRadius: PixelUtil.size(6),
@@ -228,31 +228,31 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    reserveTimerRecent:{
+    reserveTimerRecent: {
         marginLeft: PixelUtil.size(16),
         width: PixelUtil.size(36),
         height: PixelUtil.size(36)
     },
-    reserveTimerPass:{
+    reserveTimerPass: {
         marginLeft: PixelUtil.size(16),
         width: PixelUtil.size(36),
         height: PixelUtil.size(36)
     },
-    reserveCustomerTimerRecentTxt:{
+    reserveCustomerTimerRecentTxt: {
         width: PixelUtil.size(98),
         fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#ffa200',
         marginLeft: PixelUtil.size(12),
     },
-    reserveCustomerTimerWaitTxt:{
+    reserveCustomerTimerWaitTxt: {
         width: PixelUtil.size(98),
         fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#111C3C',
         marginLeft: PixelUtil.size(12)
     },
-    reserveCustomerRecentTips:{
+    reserveCustomerRecentTips: {
         width: PixelUtil.size(134),
         height: PixelUtil.size(44),
         borderRadius: PixelUtil.size(6),
@@ -264,12 +264,12 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    reserveCustomerRecentTipsTxt:{
+    reserveCustomerRecentTipsTxt: {
         fontWeight: '700',
         fontSize: PixelUtil.size(27),
         color: '#ffffff',
     },
-    reserveCustomerListRecentWrap:{
+    reserveCustomerListRecentWrap: {
         marginTop: PixelUtil.size(24),
         width: PixelUtil.size(1614),
         padding: PixelUtil.size(30),
@@ -281,7 +281,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
-    reserveCustomerListWaitWrap:{
+    reserveCustomerListWaitWrap: {
         marginTop: PixelUtil.size(24),
         width: PixelUtil.size(1614),
         padding: PixelUtil.size(30),
@@ -294,21 +294,21 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
-    reserveCustomerDetailWrap:{
-        position:"relative",
+    reserveCustomerDetailWrap: {
+        position: "relative",
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),
         marginBottom: PixelUtil.size(32)
     },
-    reserveCustomerDetailMiddleWrap:{
-        position:"relative",
+    reserveCustomerDetailMiddleWrap: {
+        position: "relative",
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),
         marginLeft: PixelUtil.size(32),
         marginRight: PixelUtil.size(32),
         marginBottom: PixelUtil.size(32)
     },
-    reserveCustomerServing:{
+    reserveCustomerServing: {
         width: PixelUtil.size(92),
         height: PixelUtil.size(36),
         position: 'absolute',
@@ -316,7 +316,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         top: PixelUtil.size(-6),
         right: PixelUtil.size(-12),
     },
-    reserveCustomerDetailBox:{
+    reserveCustomerDetailBox: {
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),
         paddingHorizontal: PixelUtil.size(20),
@@ -327,12 +327,12 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        position:"relative",
+        position: "relative",
         borderWidth: PixelUtil.size(4),
         borderStyle: 'solid',
         borderColor: '#00000000'
     },
-    reserveCustomerBusyBox:{
+    reserveCustomerBusyBox: {
         width: PixelUtil.size(496),
         height: PixelUtil.size(164),
         paddingHorizontal: PixelUtil.size(20),
@@ -343,12 +343,12 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        position:"relative",
+        position: "relative",
         borderWidth: PixelUtil.size(4),
         borderStyle: 'solid',
         borderColor: '#00000000'
     },
-    reserveCustomerReadyBox:{
+    reserveCustomerReadyBox: {
         backgroundColor: '#ffffff',
         borderWidth: PixelUtil.size(2),
         borderStyle: 'solid',
@@ -358,23 +358,23 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    reserveStylistBusyBox:{
+    reserveStylistBusyBox: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
     },
-    reserveStylistBusyIcon:{
+    reserveStylistBusyIcon: {
         width: PixelUtil.size(60),
         height: PixelUtil.size(60),
     },
-    reserveStylistBusyText:{
+    reserveStylistBusyText: {
         marginTop: PixelUtil.size(2),
         fontSize: PixelUtil.size(26),
         fontWeight: '500',
         color: '#ffffff'
     },
-    reserveCustomerDelIconBox:{
+    reserveCustomerDelIconBox: {
         width: PixelUtil.size(48),
         height: PixelUtil.size(48),
         position: 'absolute',
@@ -382,7 +382,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         left: PixelUtil.size(430),
         zIndex: 2000
     },
-    reserveCustomerDelIcon:{
+    reserveCustomerDelIcon: {
         width: PixelUtil.size(44),
         height: PixelUtil.size(44),
     },
@@ -409,7 +409,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    reserveCustomerNameNoPhoneBox:{
+    reserveCustomerNameNoPhoneBox: {
         width: '100%',
         position: 'relative',
         display: 'flex',
@@ -418,32 +418,38 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginTop: PixelUtil.size(12)
     },
-    reserveCustomerBlackTxt:{
+    reserveCustomerBlackTxt: {
         color: '#4D4D4D',
     },
-    reserveCustomerNameTxt:{
+    reserveCustomerNameTxt: {
         fontWeight: '700',
         fontSize: PixelUtil.size(28),
         color: '#ffffff',
         maxWidth: PixelUtil.size(146),
     },
-    reserveCustomerSexIcon:{
+    reserveCustomerSexIcon: {
         marginLeft: PixelUtil.size(12),
         width: PixelUtil.size(36),
         height: PixelUtil.size(36),
         marginTop: PixelUtil.size(4)
     },
-    reserveCustomerWxIcon:{
+    reserveCustomeriswechatIcon: {
+        marginLeft: PixelUtil.size(12),
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(40),
+        marginTop: PixelUtil.size(4)
+    },
+    reserveCustomerWxIcon: {
         marginLeft: PixelUtil.size(12),
         width: PixelUtil.size(30),
         height: PixelUtil.size(30),
         marginTop: PixelUtil.size(4)
     },
-    reserveCustomerPhoneBox:{
+    reserveCustomerPhoneBox: {
         width: '100%',
         marginTop: PixelUtil.size(10)
     },
-    reserveCustomerPhoneText:{
+    reserveCustomerPhoneText: {
         color: '#ffffff',
         fontSize: PixelUtil.size(20)
     },
@@ -454,7 +460,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
-    reserveCustomerTypeNoPhoneBox:{
+    reserveCustomerTypeNoPhoneBox: {
         width: '100%',
         display: "flex",
         flexDirection: 'row',
@@ -466,41 +472,41 @@ export const ReserveBoardStyles = StyleSheet.create({
         width: PixelUtil.size(30),
         height: PixelUtil.size(30),
     },
-    reserveCustomerTypeText:{
+    reserveCustomerTypeText: {
         fontWeight: '500',
         fontSize: PixelUtil.size(26),
         color: '#ffffff',
         marginLeft: PixelUtil.size(10)
     },
-    reserveCustomerTypeSplit:{
+    reserveCustomerTypeSplit: {
         marginLeft: PixelUtil.size(10),
         width: PixelUtil.size(2),
         height: PixelUtil.size(18),
         backgroundColor: '#fff'
     },
-    reserveCustomerTypeSplitBlack:{
+    reserveCustomerTypeSplitBlack: {
         marginLeft: PixelUtil.size(10),
         width: PixelUtil.size(2),
         height: PixelUtil.size(18),
         backgroundColor: '#4d4d4d'
     },
-    reserveCustomerTypeStaff:{
+    reserveCustomerTypeStaff: {
         fontWeight: '500',
         fontSize: PixelUtil.size(26),
         color: '#ffffff',
         marginLeft: PixelUtil.size(10)
     },
-    reserveCustomerIconBox:{
+    reserveCustomerIconBox: {
         width: PixelUtil.size(166),
         height: PixelUtil.size(64),
         borderRadius: PixelUtil.size(32),
         overflow: 'hidden'
     },
-    reserveCustomerBtnIcon:{
+    reserveCustomerBtnIcon: {
         width: '100%',
         height: '100%'
     },
-    reserveCustomerBtnRight:{
+    reserveCustomerBtnRight: {
         marginLeft: PixelUtil.size(32)
     },
     noReserveEmptyBox: {
@@ -508,7 +514,7 @@ export const ReserveBoardStyles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     noReserveEmpty: {
         width: PixelUtil.size(440),

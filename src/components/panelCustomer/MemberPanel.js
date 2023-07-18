@@ -8,6 +8,7 @@ import {ReserveWidget} from "./widgets/ReserveWidget"
 import {ProfileWidget} from "./widgets/ProfileWidget"
 import {PortraitWidget} from "./widgets/PortraitWidget"
 import {ModifyInfoWidget} from "./widgets/ModifyInfoWidget";
+import {ReserveBoardStyles} from "../../styles/ReserveBoard";
 
 /**
  * 会员预约详情、档案信息浮动面板
@@ -73,7 +74,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }
 
     /// 获取控件展示状态
-    const getShowState = ()=>{
+    const getShowState = () => {
         return animateState.sliderShow
     }
 
@@ -91,14 +92,14 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     // 页签数据
     // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
     let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
-    if(customerInfo.couponList.length < 1){
-        tabArray = tabArray.filter(item=> item != '优惠券')
+    if (customerInfo.couponList.length < 1) {
+        tabArray = tabArray.filter(item => item != '优惠券')
     }
-    if((customerInfo.czkCount + customerInfo.ckCount) < 1){
-        tabArray = tabArray.filter(item=> item != '顾客资产')
+    if ((customerInfo.czkCount + customerInfo.ckCount) < 1) {
+        tabArray = tabArray.filter(item => item != '顾客资产')
     }
-    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1'){
-        tabArray = tabArray.filter(item=> item == '基础档案')
+    if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
+        tabArray = tabArray.filter(item => item == '基础档案')
     }
     // 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
@@ -106,7 +107,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     const reserveFlag = props['reserveFlag']
 
     // 打开时，重置tab
-    useEffect(()=>{
+    useEffect(() => {
         setTabIndex(0)
     }, [animateState.sliderShow])
 
@@ -116,7 +117,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
-                <TouchableOpacity onPress={() => {hideRightPanel()}}
+                <TouchableOpacity onPress={() => {
+                    hideRightPanel()
+                }}
                                   activeOpacity={1}
                                   style={PanelCustomerStyles.leftPanMask}>
                     <View style={PanelCustomerStyles.hideIconBox}>
@@ -147,11 +150,16 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
-                                        <Text style={PanelCustomerStyles.nameShowText}>{customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}</Text>
+                                        <Text
+                                            style={PanelCustomerStyles.nameShowText}>{customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}</Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
                                             source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                        <Image
+                                            style={ReserveBoardStyles.reserveCustomeriswechatIcon}
+                                            resizeMode={'contain'}
+                                            source={customerInfo.isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (customerInfo.isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}/>
                                     </View>
                                     <Text style={PanelCustomerStyles.phoneShowText}>
                                         {customerInfo.reserveInfo.memberPhoneShow}
@@ -159,7 +167,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 </View>
                             </View>
                             <View style={PanelCustomerStyles.propertyInfoBaseBox}>
-                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
+                                <View
+                                    style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox : PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡
                                     </Text>
@@ -167,7 +176,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         {customerInfo.czkCount}张
                                     </Text>
                                 </View>
-                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
+                                <View
+                                    style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox : PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         次卡
                                     </Text>
@@ -175,7 +185,8 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         {customerInfo.ckCount}张
                                     </Text>
                                 </View>
-                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
+                                <View
+                                    style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox : PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡余额
                                     </Text>
@@ -184,10 +195,11 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     </Text>
                                 </View>
                                 {
-                                    pagerName == 'CashierBillingActivity' && (<View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
+                                    pagerName == 'CashierBillingActivity' && (<View
+                                        style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox : PanelCustomerStyles.propertyInfoItemBox}>
                                         <TouchableOpacity
                                             style={PanelCustomerStyles.propertyInfoItemBtn}
-                                            onPress={()=>{
+                                            onPress={() => {
                                                 props['customerPressEvent']("createCard")
                                             }}>
                                             <Image
@@ -206,28 +218,33 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                         <View style={PanelCustomerStyles.memberExtraTabWrap}>
                             {/*tab页签*/}
                             <View style={PanelCustomerStyles.memberExtraTabBox}>
-                            {
-                                tabArray.map((tab, index)=>{
-                                    return (
-                                        <TouchableOpacity
-                                            style={PanelCustomerStyles.memberExtraTabItem}
-                                            onPress={()=>{
-                                                setTabIndex(index)
-                                            }}>
-                                            <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive:PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
-                                            <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
+                                {
+                                    tabArray.map((tab, index) => {
+                                        return (
+                                            <TouchableOpacity
+                                                style={PanelCustomerStyles.memberExtraTabItem}
+                                                onPress={() => {
+                                                    setTabIndex(index)
+                                                }}>
+                                                <Text
+                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive : PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
+                                                <View
+                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
                             </View>
                             {/*tab内容*/}
-                            <View style={tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'
-                                ? PanelCustomerStyles.memberExtraTabReserveBox
-                                : PanelCustomerStyles.memberExtraTabContentBox}>
+                            <View
+                                style={tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'
+                                    ? PanelCustomerStyles.memberExtraTabReserveBox
+                                    : PanelCustomerStyles.memberExtraTabContentBox}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && (
-                                        <ReserveWidget pagerName={pagerName} reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerPressEvent}/>
+                                        <ReserveWidget pagerName={pagerName} reserveInfo={customerInfo['reserveInfo']}
+                                                       reserveFlag={reserveFlag}
+                                                       customerPressEvent={props.customerPressEvent}/>
                                     )
                                 }
                                 {
@@ -254,13 +271,14 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     )
                                 }
                                 {
-                                    (()=>{
-                                        if(tabArray[tabIndex] == '基础档案'){
-                                            if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1'){
+                                    (() => {
+                                        if (tabArray[tabIndex] == '基础档案') {
+                                            if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
                                                 return (
-                                                    <ModifyInfoWidget portraitInfo={customerInfo} customerPressEvent={props.customerPressEvent}/>
+                                                    <ModifyInfoWidget portraitInfo={customerInfo}
+                                                                      customerPressEvent={props.customerPressEvent}/>
                                                 )
-                                            }else{
+                                            } else {
                                                 return (
                                                     <PortraitWidget portraitInfo={customerInfo}/>
                                                 )
@@ -279,16 +297,28 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 source={require('@imgPath/member_panel_operator_bg.png')}
                                 style={PanelCustomerStyles.operatorWrap}>
                                 <TouchableOpacity
-                                    onPress={()=>{
-                                        props['customerPressEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createCard'})
+                                    onPress={() => {
+                                        props['customerPressEvent']("toCreateOrder", {
+                                            appUserId: customerInfo.appUserId,
+                                            queryType: 'appUserId',
+                                            showType: 'member',
+                                            waiterId,
+                                            actionType: 'createCard'
+                                        })
                                     }}
                                     style={PanelCustomerStyles.operatorBtnCashier}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>办卡</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
-                                    onPress={()=>{
-                                        props['customerPressEvent']("toCreateOrder", {appUserId: customerInfo.appUserId, queryType:'appUserId', showType: 'member', waiterId, actionType: 'createOrder'})
+                                    onPress={() => {
+                                        props['customerPressEvent']("toCreateOrder", {
+                                            appUserId: customerInfo.appUserId,
+                                            queryType: 'appUserId',
+                                            showType: 'member',
+                                            waiterId,
+                                            actionType: 'createOrder'
+                                        })
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>
                                 </TouchableOpacity>
