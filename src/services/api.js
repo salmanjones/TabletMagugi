@@ -153,3 +153,5 @@ export const getMemberInfo=`${hostBms}/tablet/new/reserve/find/bms/member/info`
 export const getGuestQRImg=`${hostBms}/tablet/new/reserve/wx/qr/image`
 //获取二维码扫描状态
 export const getScanQRState = `${hostBms}/tablet/new/reserve/find/vcord/record`
+//更新会员个人档案
+export const updateMemberProfile = `${hostBms}/tablet/new/reserve/update/customer/base/info`

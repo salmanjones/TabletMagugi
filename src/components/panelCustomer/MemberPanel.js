@@ -97,7 +97,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     if((customerInfo.czkCount + customerInfo.ckCount) < 1){
         tabArray = tabArray.filter(item=> item != '顾客资产')
     }
-    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '0'){
+    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1'){
         tabArray = tabArray.filter(item=> item == '基础档案')
     }
     // 命中的页签
@@ -256,7 +256,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 {
                                     (()=>{
                                         if(tabArray[tabIndex] == '基础档案'){
-                                            if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '0'){
+                                            if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1'){
                                                 return (
                                                     <ModifyInfoWidget portraitInfo={customerInfo} customerPressEvent={props.customerPressEvent}/>
                                                 )

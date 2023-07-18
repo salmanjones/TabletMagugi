@@ -67,7 +67,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                 <View style={PanelCustomerStyles.memberPropertyValueBox}>
                     <TextInput
                         style={PanelCustomerStyles.memberPropertyValueInput}
-                        multiline={1}
+                        multiline={false}
                         value={dayjs(memberBirthday).format("YYYY-MM-DD")}
                         editable={false}
                         onPressIn={()=>{setOpen(true)}}/>
@@ -82,7 +82,12 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                 <TouchableOpacity
                     style={PanelCustomerStyles.memberInfoModify}
                     onPress={()=>{
-                        customerPressEvent('', {})
+                        customerPressEvent('updateProfile', {
+                            memberName,
+                            memberSex,
+                            birthday: memberBirthday,
+                            memberId: portraitInfo.memberId
+                        })
                     }}>
                     <Text style={PanelCustomerStyles.memberReserveModifyText}>确定</Text>
                 </TouchableOpacity>

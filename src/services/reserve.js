@@ -188,3 +188,14 @@ export const getScanQRState = params => {
         return backData;
     });
 }
+
+/**
+ * 更新会员个人档案
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const updateMemberProfile = params => {
+    return callService(api.updateMemberProfile, params).then(backData => {
+        return backData;
+    });
+}
