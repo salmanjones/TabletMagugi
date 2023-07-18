@@ -740,7 +740,7 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     consumeTextBox: {
         //右侧框-标题-各项
-        width: PixelUtil.size(240),
+        width: PixelUtil.size(253),
         height: '100%',
         flex: 0,
         flexDirection: 'row',
@@ -757,7 +757,7 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     consumeTextBoxActive: {
         //右侧框-标题-选中
-        width: PixelUtil.size(260),
+        width: PixelUtil.size(253),
         height: '100%',
         flex: 0,
         flexDirection: 'row',
