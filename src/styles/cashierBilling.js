@@ -74,7 +74,7 @@ export const cashierBillingStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft: PixelUtil.size(90)
+        paddingLeft: PixelUtil.size(68)
     },
     customerInfoExtendBox:{
         flex: 1,

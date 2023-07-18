@@ -135,7 +135,7 @@ class CashierBillingView extends React.Component {
                 czkCount: 0,
                 ckCount: 0
             },
-            reserveWaiter,
+            reserveWaiter: reserveWaiter,
             showMemberPanel: false // 是否展示会员面板
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
@@ -1477,8 +1477,11 @@ class CashierBillingView extends React.Component {
             if(checkReserveId){
                 queryArgs['reserveId'] = checkReserveId
             }
-            this.setState({
-                isLoading: true
+            this.setState((prevState, props)=>{
+                return {
+                    ...prevState,
+                    isLoading: true
+                }
             })
 
             getMemberDetail(queryArgs).then(backData=>{
@@ -1686,7 +1689,12 @@ class CashierBillingView extends React.Component {
                 }catch (e){
                     // 错误
                     showMessageExt("充值失败")
-                    this.setState({isLoading: false})
+                    this.setState((prevState, props)=>{
+                        return {
+                            ...prevState,
+                            isLoading: false
+                        }
+                    })
                     console.error("获取会员档案失败", e)
                 }
                 break
@@ -1742,6 +1750,7 @@ class CashierBillingView extends React.Component {
         }
 
         const accessRights = this.state.accessRights;
+        const reserveWaiter = this.state.reserveWaiter
 
         return (
             <View style={cashierBillingStyle.container}>
@@ -1904,7 +1913,7 @@ class CashierBillingView extends React.Component {
                                                             预约：
                                                         </Text>
                                                         <Text style={cashierBillingStyle.guestCardsRNum} ellipsizeMode={'tail'} numberOfLines={1}>
-                                                            {this.state.reserveWaiter.value}
+                                                            {reserveWaiter.value}
                                                         </Text>
                                                     </View>
                                                     <TouchableOpacity style={{
