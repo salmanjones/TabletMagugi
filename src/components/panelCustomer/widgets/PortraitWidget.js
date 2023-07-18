@@ -17,7 +17,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                     手机号码：
                 </Text>
                 <Text style={PanelCustomerStyles.memberPortraitPValue}>
-                    {portraitInfo.reserveInfo.memberPhoneShow}
+                    {portraitInfo.phoneShow}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberPropertyBox}>

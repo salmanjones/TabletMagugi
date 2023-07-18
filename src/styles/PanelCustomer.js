@@ -120,7 +120,8 @@ export const PanelCustomerStyles = StyleSheet.create({
     nameShowText: {
         fontSize: PixelUtil.size(32),
         fontWeight: '700',
-        color: '#ffffff'
+        color: '#ffffff',
+        width: PixelUtil.size(160),
     },
     nameShowTextCustomer: {
         fontSize: PixelUtil.size(34),
