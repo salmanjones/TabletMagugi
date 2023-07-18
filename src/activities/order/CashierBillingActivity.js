@@ -72,6 +72,7 @@ import {
     updateCardValidity,
     updateMemberProfile
 } from "../../services/reserve";
+import dayjs from "dayjs";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -1539,7 +1540,7 @@ class CashierBillingView extends React.Component {
                     memberId,
                     memberName,
                     memberSex,
-                    birthday
+                    birthday: dayjs(birthday).format("YYYY-MM-DD")
                 }).then(backData=>{
                     showMessage("保存成功")
                     // 更新个人信息

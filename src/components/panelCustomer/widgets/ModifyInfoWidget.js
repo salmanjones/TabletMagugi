@@ -10,7 +10,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
     const [memberBirthday, setMemberBirthday] = useState(
         portraitInfo.birthday && portraitInfo.birthday.length > 0
             ? new Date(portraitInfo.birthday)
-            : new Date('1990-01-01'))
+            : new Date())
     const [open, setOpen] = useState(false)
 
     return (
@@ -37,6 +37,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                 <TextInput
                     style={PanelCustomerStyles.memberPropertyValueInput}
                     multiline={1}
+                    maxLength={10}
                     value={memberName}
                     onChange={({nativeEvent})=>{
                         const name = nativeEvent.text

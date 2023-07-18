@@ -150,8 +150,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
-                                        <Text
-                                            style={PanelCustomerStyles.nameShowText}>{customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}</Text>
+                                        <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>{'未填写姓名姓名'}</Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
@@ -162,7 +161,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                             source={customerInfo.isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (customerInfo.isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}/>
                                     </View>
                                     <Text style={PanelCustomerStyles.phoneShowText}>
-                                        {customerInfo.reserveInfo.memberPhoneShow}
+                                        {customerInfo.phoneShow || '暂无'}
                                     </Text>
                                 </View>
                             </View>
