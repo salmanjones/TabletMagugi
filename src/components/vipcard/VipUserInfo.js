@@ -3,13 +3,7 @@ import {RechargeStoredCardStyles} from '../../styles';
 import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native";
 import {AppNavigate} from "../../navigators";
 import {getMemberDetail} from '../../services/reserve'
-import {PanelCustomerStyles} from "../../styles/PanelCustomer";
-import {getImage, ImageQutity, PixelUtil} from "../../utils";
-
-const pageCache = {
-    checkReserveId: '', // 选中的预约id
-    checkAppUserId: '' // 选中的app表用户Id
-}
+import {getImage, ImageQutity} from "../../utils";
 
 export class VipUserInfoComponent extends React.PureComponent {
 
@@ -26,7 +20,6 @@ export class VipUserInfoComponent extends React.PureComponent {
             memberCardNo: paramsprop.params.member.memberCardNo,
             isWechatMember: '',
             member: '',
-
         }
     }
 
@@ -64,7 +57,6 @@ export class VipUserInfoComponent extends React.PureComponent {
     render() {
         const {ckCount, czkCount, czkPriceSum, name, sex, phone, memberCardNo, imgUrl, isWechatMember} = this.state
         return (
-
             <View style={{width: '100%'}}>
                 <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
                                  style={RechargeStoredCardStyles.userbg}>

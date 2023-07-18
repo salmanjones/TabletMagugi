@@ -139,11 +139,10 @@ export const PanelCustomerStyles = StyleSheet.create({
         color: '#ffffff'
     },
     propertyInfoBaseBox: {
-        width: PixelUtil.size(510),
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
         alignItems: 'flex-start'
     },
     propertyInfoItemBox: {
@@ -153,6 +152,18 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    propertyInfoItemBtnBox: {
+        marginLeft: PixelUtil.size(50),
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    propertyInfoItemBtn:{
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(56),
     },
     propertyInfoItemTitle: {
         fontSize: PixelUtil.size(26),
@@ -311,6 +322,15 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
+    memberEditPropertyOperator:{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: PixelUtil.size(48),
+        marginTop: PixelUtil.size(48),
+    },
     memberReservePropertyBtnWrap:{
         display: 'flex',
         justifyContent: 'flex-start',
@@ -419,6 +439,19 @@ export const PanelCustomerStyles = StyleSheet.create({
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
         marginLeft: PixelUtil.size(32),
+        borderRadius: PixelUtil.size(34),
+        borderStyle: 'solid',
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#111c3c',
+        backgroundColor: '#111c3c',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    memberInfoModify:{
+        width: PixelUtil.size(200),
+        height: PixelUtil.size(68),
+        marginLeft: PixelUtil.size(180),
         borderRadius: PixelUtil.size(34),
         borderStyle: 'solid',
         borderWidth: PixelUtil.size(2),
@@ -648,6 +681,17 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingBottom: 0,
         position: 'relative'
     },
+    memberModifyBox:{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(26),
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        padding: PixelUtil.size(50),
+        paddingBottom: 0,
+        position: 'relative'
+    },
     memberProfileTitle:{
         width: '100%',
         display: "flex",
@@ -702,6 +746,67 @@ export const PanelCustomerStyles = StyleSheet.create({
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
+    },
+    memberPropertyValueBox:{
+        height: PixelUtil.size(50),
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+        position: "relative"
+    },
+    memberPropertyValueInput:{
+        color: '#2D2D2D',
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+        backgroundColor: '#F9FAFB',
+        borderRadius: PixelUtil.size(26),
+        width: PixelUtil.size(440),
+        height: PixelUtil.size(50),
+        paddingLeft: PixelUtil.size(14)
+    },
+    contentBodyCalendarIcon:{
+        width: PixelUtil.size(30),
+        height: PixelUtil.size(26),
+        marginLeft: PixelUtil.size(-56)
+    },
+    memberPropertyButtons:{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    memberSexButton:{
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(50),
+        backgroundColor: '#FFF7EA',
+        borderRadius: PixelUtil.size(25),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: PixelUtil.size(32)
+    },
+    memberSexActiveButton:{
+        width: PixelUtil.size(146),
+        height: PixelUtil.size(50),
+        backgroundColor: '#FFA200',
+        borderRadius: PixelUtil.size(25),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: PixelUtil.size(32)
+    },
+    memberSexButtonTxt:{
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+        color: '#FFA200'
+    },
+    memberSexActiveButtonTxt:{
+        fontSize: PixelUtil.size(24),
+        fontWeight: '700',
+        color: '#ffffff'
     },
     memberPortraitPTitle:{
         width: PixelUtil.size(132),

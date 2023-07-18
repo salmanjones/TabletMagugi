@@ -97,7 +97,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     if((customerInfo.czkCount + customerInfo.ckCount) < 1){
         tabArray = tabArray.filter(item=> item != '顾客资产')
     }
-    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew){
+    if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '0'){
         tabArray = tabArray.filter(item=> item == '基础档案')
     }
     // 命中的页签
@@ -159,7 +159,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 </View>
                             </View>
                             <View style={PanelCustomerStyles.propertyInfoBaseBox}>
-                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡
                                     </Text>
@@ -167,7 +167,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         {customerInfo.czkCount}张
                                     </Text>
                                 </View>
-                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         次卡
                                     </Text>
@@ -175,7 +175,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         {customerInfo.ckCount}张
                                     </Text>
                                 </View>
-                                <View style={PanelCustomerStyles.propertyInfoItemBox}>
+                                <View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
                                     <Text style={PanelCustomerStyles.propertyInfoItemTitle}>
                                         储值卡余额
                                     </Text>
@@ -183,6 +183,20 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         ¥{customerInfo.czkPriceSum}
                                     </Text>
                                 </View>
+                                {
+                                    pagerName == 'CashierBillingActivity' && (<View style={pagerName == 'CashierBillingActivity' ? PanelCustomerStyles.propertyInfoItemBtnBox: PanelCustomerStyles.propertyInfoItemBox}>
+                                        <TouchableOpacity
+                                            style={PanelCustomerStyles.propertyInfoItemBtn}
+                                            onPress={()=>{
+
+                                            }}>
+                                            <Image
+                                                style={PanelCustomerStyles.propertyInfoItemBtn}
+                                                resizeMode={'contain'}
+                                                source={require("@imgPath/cashier_billing_customer_newcard.png")}></Image>
+                                        </TouchableOpacity>
+                                    </View>)
+                                }
                             </View>
                         </View>
                         <View style={PanelCustomerStyles.memberInfoSplit}></View>
@@ -242,9 +256,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 {
                                     (()=>{
                                         if(tabArray[tabIndex] == '基础档案'){
-                                            if(pagerName == 'CashierBillingActivity'){
+                                            if(pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '0'){
                                                 return (
-                                                    <ModifyInfoWidget portraitInfo={customerInfo}/>
+                                                    <ModifyInfoWidget portraitInfo={customerInfo} customerPressEvent={props.customerPressEvent}/>
                                                 )
                                             }else{
                                                 return (

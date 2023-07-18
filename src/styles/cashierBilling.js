@@ -76,13 +76,6 @@ export const cashierBillingStyle = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: PixelUtil.size(90)
     },
-    customerInfoNumberBox:{
-        height: '100%',
-        width: PixelUtil.size(134),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     customerInfoExtendBox:{
         flex: 1,
         height: '100%',
@@ -91,6 +84,17 @@ export const cashierBillingStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: PixelUtil.size(40),
+        position: 'relative',
+        paddingTop: PixelUtil.size(6)
+    },
+    customerInfoNumberBox:{
+        width: PixelUtil.size(136),
+        height: PixelUtil.size(28),
+        marginTop: PixelUtil.size(4),
+        position: 'absolute',
+        zIndex: 10,
+        top: PixelUtil.size(0),
+        left: PixelUtil.size(0)
     },
     customerInfoExtendLeftBox:{
         height: '100%',
@@ -100,11 +104,11 @@ export const cashierBillingStyle = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     customerInfoExtendRightBox:{
-        height: '100%',
+        height: PixelUtil.size(70),
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
     },
     guestInfoExtendBox:{
         flex: 1,
@@ -123,11 +127,14 @@ export const cashierBillingStyle = StyleSheet.create({
         borderRadius: PixelUtil.size(43)
     },
     customerInfoNumberTxt:{
+        width: '100%',
+        height: '100%',
         color: '#fff',
-        fontWeight: '700',
+        fontSize: PixelUtil.size(18),
+        fontWeight: PixelUtil.size(500),
         textAlign: 'center',
-        fontSize: PixelUtil.size(22),
-        marginTop: PixelUtil.size(6)
+        lineHeight: PixelUtil.size(28),
+        textAlignVertical: 'center'
     },
     customerInfoNewFlag:{
         backgroundColor: '#FFB93E',
@@ -145,7 +152,7 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     customerInfoBase:{
         marginLeft: PixelUtil.size(18),
-        height: PixelUtil.size(64),
+        height: PixelUtil.size(70),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -198,33 +205,31 @@ export const cashierBillingStyle = StyleSheet.create({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: PixelUtil.size(80),
     },
     customerCardsInfoCK:{
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: PixelUtil.size(80),
+        marginLeft: PixelUtil.size(10)
     },
     customerCardsInfoYE:{
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: PixelUtil.size(130),
+        marginLeft: PixelUtil.size(10)
     },
     customerCardsInfoFW:{
         height: '100%',
-        flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: PixelUtil.size(130),
+        marginLeft: PixelUtil.size(10)
     },
     guestCardsInfoFW:{
         height: '100%',
@@ -239,11 +244,9 @@ export const cashierBillingStyle = StyleSheet.create({
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
-        height: PixelUtil.size(38),
     },
     customerCardsInfoNum:{
         width: PixelUtil.size(90),
-        marginTop: PixelUtil.size(6),
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
@@ -254,11 +257,9 @@ export const cashierBillingStyle = StyleSheet.create({
         fontWeight: '900',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
-        height: PixelUtil.size(38),
     },
     customerCardsRNum:{
         width: PixelUtil.size(90),
-        marginTop: PixelUtil.size(6),
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'center',

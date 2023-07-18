@@ -12,7 +12,7 @@ import {
     PanResponder,
     ScrollView,
     Text,
-    TouchableOpacity, TouchableWithoutFeedback,
+    TouchableOpacity,
     View
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -1736,11 +1736,18 @@ class CashierBillingView extends React.Component {
                                             resizeMode={'stretch'}
                                             style={cashierBillingStyle.customerInfoBox}
                                             source={require('@imgPath/cashier_billing_customer_info.png')}>
+                                            <ImageBackground
+                                                resizeMethod="resize"
+                                                source={require('@imgPath/cardNo_bg.png')}
+                                                style={cashierBillingStyle.customerInfoNumberBox}>
+                                                <Text style={cashierBillingStyle.customerInfoNumberTxt}>.{memberProfile.memberNo}</Text>
+                                            </ImageBackground>
                                             <TouchableOpacity
                                                 style={cashierBillingStyle.customerInfoExtendBox}
                                                 onPress={()=>{
                                                     this.memberPanelRef && this.memberPanelRef.showRightPanel('CashierBillingActivity')
                                                 }}>
+
                                                 <View style={cashierBillingStyle.customerInfoExtendLeftBox}>
                                                     <Image
                                                         style={cashierBillingStyle.customerInfoAvatar}
@@ -1771,7 +1778,7 @@ class CashierBillingView extends React.Component {
                                                                 {memberProfile.phoneShow || '暂无'}
                                                             </Text>
                                                             {
-                                                                memberProfile.isBmsNew == '0' && (<Text style={cashierBillingStyle.customerInfoNewFlag}>新客</Text>)
+                                                                memberProfile.isBmsNew == '1' && (<Text style={cashierBillingStyle.customerInfoNewFlag}>新客</Text>)
                                                             }
                                                         </View>
                                                     </View>
