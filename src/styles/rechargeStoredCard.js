@@ -781,7 +781,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(18),
         fontWeight: PixelUtil.size(500),
         textAlign: 'center',
-        lineHeight: PixelUtil.size(29),
+        lineHeight: PixelUtil.size(29)
     },
     cardNoImg: {
         width: PixelUtil.size(138),
@@ -819,14 +819,14 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     usertitleText: {
         fontSize: PixelUtil.size(30),
         color: '#fff',
-        fontWeight: PixelUtil.size(700),
+        fontWeight: '700',
         maxWidth: PixelUtil.size(185),
         overflow: 'hidden',
     },
     sexText: {
         fontSize: PixelUtil.size(22),
         color: '#fff',
-        fontWeight: PixelUtil.size(400),
+        fontWeight: '700',
         marginLeft: PixelUtil.size(10)
     },
     avaterlogo: {
@@ -837,7 +837,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     phoneText: {
         // marginTop:PixelUtil.size(5),
-        fontWeight: PixelUtil.size(400),
+        fontWeight: '700',
         fontSize: PixelUtil.size(22),
         color: '#fff'
     },

@@ -62,7 +62,10 @@ export class VipUserInfoComponent extends React.PureComponent {
                                  style={RechargeStoredCardStyles.userbg}>
                     <ImageBackground resizeMethod="resize" source={require('@imgPath/cardNo_bg.png')}
                                      style={RechargeStoredCardStyles.cardNoImg}>
-                        <Text style={RechargeStoredCardStyles.cardNo}>.{memberCardNo}</Text>
+                        <Text style={RechargeStoredCardStyles.cardNo}>
+
+
+                            ·{memberCardNo}</Text>
                     </ImageBackground>
                     {/*nav中间个人信息*/}
                     <View style={RechargeStoredCardStyles.carduserInfo}>
@@ -78,13 +81,13 @@ export class VipUserInfoComponent extends React.PureComponent {
                                     <Text style={RechargeStoredCardStyles.usertitleText} numberOfLines={1} ß
                                           ellipsizeMode={'tail'}>{decodeURIComponent(name == '' ? '未填写姓名' : name)}</Text>
                                     <Image resizeMethod="resize" style={RechargeStoredCardStyles.avaterlogo}
-                                           source={require('@imgPath/vipavater.png')}></Image>
+                                           source={sex == 0 ? require('@imgPath/female.png') : require('@imgPath/vipavater.png')}></Image>
                                     <Text style={RechargeStoredCardStyles.sexText}>{sex == 0 ? '女' : '男'}</Text>
                                     <Image resizeMethod="resize"
                                            source={isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}
                                            style={RechargeStoredCardStyles.avaterlogo}></Image>
                                 </View>
-                                <Text style={RechargeStoredCardStyles.phoneText}>{phone}</Text>
+                                <Text style={RechargeStoredCardStyles.phoneText}>{phone || '暂无'}</Text>
                             </View>
                         </View>
                         {/*nav*/}
