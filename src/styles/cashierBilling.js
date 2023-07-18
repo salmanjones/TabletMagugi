@@ -722,7 +722,7 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     consumeTitleNoInp: {
         //右侧框-标题-除inp
-        width: PixelUtil.rect(760, 106).width,
+        width: PixelUtil.size(760),
         height: '100%',
         display: 'flex',
         flexDirection: 'row',

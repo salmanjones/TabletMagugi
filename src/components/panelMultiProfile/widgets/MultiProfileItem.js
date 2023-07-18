@@ -38,7 +38,7 @@ export const MultiProfileItem = React.memo(({
                     </View>
                     <View style={PanelMultiProfiles.numberBox}>
                         <Text style={PanelMultiProfiles.titleText}>会员号</Text>
-                        <Text style={PanelMultiProfiles.numbernameText} ellipsizeMode={"tail"} numberOfLines={1}>
+                        <Text style={PanelMultiProfiles.valueText} ellipsizeMode={"tail"} numberOfLines={1}>
                             {profileItem.memberNo}
                         </Text>
                     </View>
