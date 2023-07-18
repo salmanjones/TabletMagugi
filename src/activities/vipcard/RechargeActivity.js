@@ -220,6 +220,7 @@ class Recharge extends React.Component {
                         card={currentCard}
                         member={member}
                         navigation={this.props.navigation}
+                        pagerName={this.props.route.params.pagerName || 'RechargeActivity.js'}
                     />
                 )}
             </View>

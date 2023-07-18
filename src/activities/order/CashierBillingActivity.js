@@ -2215,7 +2215,7 @@ class CashierBillingView extends React.Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={this.state.addCardStyle}
                                                   onPress={this.swipConsumeItem.bind(this, 'card')}>
-                                    <Text style={this.state.addCardTextStyle}>+次卡项目({this.cardCount})</Text>
+                                    <Text style={this.state.addCardTextStyle}>+次卡项目({99})</Text>
                                 </TouchableOpacity>
                             </View>
                             <View

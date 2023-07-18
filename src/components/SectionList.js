@@ -6,32 +6,30 @@ import {PixelUtil} from '../utils';
 const DefaultNoItemMsg = '暂时没有内容~';
 
 const MarginContainer = styled.View`
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 90%;
-  flex: 0;
-  justify-content: center;
-  align-items: center;
+    width: ${PixelUtil.size(1060)};
+    height: ${PixelUtil.size(1060)};
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const NoneMsg = styled.Text`
-  font-size: ${PixelUtil.size(32)};
-  text-align: center;
-  margin-top: ${PixelUtil.size(32)};
-  display: none;
+    font-size: ${PixelUtil.size(32)};
+    text-align: center;
+    margin-top: ${PixelUtil.size(32)};
+    display: none;
 `;
 
 const ViewContainer = styled.View`
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  display: ${({hide}) => (hide ? 'none' : 'flex')};
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    display: ${({hide}) => (hide ? 'none' : 'flex')};
 `;
 
 const ImageNoContent = styled.Image`
-  width: ${PixelUtil.rect(450, 380).width};
-  height: ${PixelUtil.rect(450, 380).height};
+    width: ${PixelUtil.rect(450, 380).width};
+    height: ${PixelUtil.rect(450, 380).height};
 `;
 
 export const SectionList = ({

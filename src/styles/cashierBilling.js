@@ -724,7 +724,7 @@ export const cashierBillingStyle = StyleSheet.create({
         //右侧框-标题-除inp
         width: PixelUtil.rect(760, 106).width,
         height: '100%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -749,12 +749,6 @@ export const cashierBillingStyle = StyleSheet.create({
         paddingLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),
     },
-    consumeText: {
-        //右侧框-标题-文字
-        fontSize: PixelUtil.size(30),
-        color: '#ffffff',
-        fontWeight: 'bold'
-    },
     consumeTextBoxActive: {
         //右侧框-标题-选中
         width: PixelUtil.size(253),
@@ -766,15 +760,24 @@ export const cashierBillingStyle = StyleSheet.create({
         paddingLeft: PixelUtil.size(10),
         paddingRight: PixelUtil.size(10),
     },
+    consumeText: {
+        //右侧框-标题-文字
+        fontSize: PixelUtil.size(30),
+        color: '#ffffff',
+        fontWeight: 'bold',
+        width: PixelUtil.size(230),
+        textAlign: 'center'
+    },
     consumeTextActive: {
         fontSize: PixelUtil.size(30),
         color: '#ff9b1f',
         fontWeight: 'bold',
-        paddingHorizontal: PixelUtil.size(16),
         paddingVertical: PixelUtil.size(14),
+        width: PixelUtil.size(230),
         backgroundColor: '#ffffff',
         borderRadius: PixelUtil.size(30),
-        overflow: 'hidden'
+        overflow: 'hidden',
+        textAlign: 'center'
     },
     consumeInpBox: {
         //右侧框-标题-输入框
@@ -1347,7 +1350,7 @@ export const cashierBillingStyle = StyleSheet.create({
         width: '100%',
         height: '100%',
         flex: 1,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     servicerGroupOther: {

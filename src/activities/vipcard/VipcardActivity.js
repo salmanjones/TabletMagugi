@@ -247,6 +247,7 @@ class VipCard extends React.Component {
                     totalPrice={totalPrice}
                     card={card}
                     model={'vipcard'}
+                    pagerName={this.props.route.params.pagerName || 'RechargeActivity.js'}
                 />
             </View>
         );

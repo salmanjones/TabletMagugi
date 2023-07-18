@@ -7,8 +7,9 @@ import {DeptList, MemberInfo, QRCodePayment, QRCodePaymentNew, SaleCardItem,} fr
 import {displayError, showMessage} from '../../utils';
 import {fetchCreateCardOrder, fetchOtherPayment, fetchOtherPayType} from '../../services';
 import Spinner from "react-native-loading-spinner-overlay";
+import {connect} from "react-redux";
 
-export class VipcardPayment extends React.PureComponent {
+export class VipcardPaymentView extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +26,7 @@ export class VipcardPayment extends React.PureComponent {
             otherPayTypeList: {},
             showOtherPaymentResult: false,
             otherPaymentStatus: '',
-            isUseCash: true
+            isUseCash: true,
         };
     }
 
@@ -206,6 +207,7 @@ export class VipcardPayment extends React.PureComponent {
             member,
             navigation,
             model,
+            pagerName
         } = this.props;
         const {
             title,
@@ -357,6 +359,7 @@ export class VipcardPayment extends React.PureComponent {
                                     qrUrl={qrUrl}
                                     navigation={navigation}
                                     model={model}
+                                    pagerName={pagerName}
                                     onClose={this.hideModal}
                                 />
                             )}
@@ -365,7 +368,11 @@ export class VipcardPayment extends React.PureComponent {
                                     paymentStatus={otherPaymentStatus}
                                     navigation={navigation}
                                     onClose={() => {
-                                        navigation.navigate('CashierActivity')
+                                        if(pagerName == 'CashierBillingActivity'){ // 来自于收银
+                                            navigation.goBack()
+                                        }else{
+                                            navigation.navigate('CashierActivity')
+                                        }
                                     }}
                                     title={title}
                                     type={'1'}
@@ -400,3 +407,19 @@ export class VipcardPayment extends React.PureComponent {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+
+    }
+}
+export const VipcardPayment = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(VipcardPaymentView)

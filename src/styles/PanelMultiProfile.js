@@ -245,10 +245,11 @@ export const PanelMultiProfiles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
+        width: PixelUtil.size(160)
     },
     timeBox:{
-        marginLeft: PixelUtil.size(60),
+        marginLeft: PixelUtil.size(30),
         width: PixelUtil.size(280),
         height: '100%',
         display: 'flex',
