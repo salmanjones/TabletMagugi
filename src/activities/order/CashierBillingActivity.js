@@ -53,11 +53,25 @@ import {
     deleteBillingAction,
     getPendingListAction
 } from '../../actions';
-import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, throttle} from '../../utils';
+import {
+    getImage,
+    ImageQutity,
+    PaymentResultStatus,
+    PixelUtil,
+    showMessage,
+    showMessageExt,
+    throttle
+} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {getMemberDetail, updateMemberProfile} from "../../services/reserve";
+import {
+    getCustomerDetail,
+    getMemberDetail,
+    getMemberPortrait,
+    updateCardValidity,
+    updateMemberProfile
+} from "../../services/reserve";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -241,67 +255,8 @@ class CashierBillingView extends React.Component {
                 })
             });
 
-            // 获取顾客档案详情，左侧展示｜弹层展示
-            const defaultProfile = {
-                isGuest: true, // 是否为散客
-                isBmsNew: 0, // 是否是bms的新用户，0否，1是
-                memberCountInfo: {},
-                reserveInfo: {
-                    reserveResoures: [],
-                    reserveInfoList: []
-                },
-                couponList: [],
-                cardsInfo: {},
-                czkCount: 0,
-                ckCount: 0
-            }
-            const {member, checkReserveId} = this.props.route.params
-            if(member){ // 会员进入
-                const queryArgs = {
-                    memberId: member.id,
-                }
-                if(checkReserveId){
-                    queryArgs['reserveId'] = checkReserveId
-                }
-                this.setState({
-                    isLoading: true
-                })
-
-                getMemberDetail(queryArgs).then(backData=>{
-                    const {code, data} = backData
-                    if(code == '6000'){
-                        const memberProfile = data
-                        memberProfile['isGuest'] = false
-
-                        // 更新会员状态
-                        self.setState((prevState, props) => {
-                            return {...prevState, "memberProfile":memberProfile}
-                        }, ()=>{
-                            if(memberProfile.isBmsNew == '1'){ // 是否是bms的新用户，0否，1是
-                                self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
-                            }
-                        })
-                    }else{ // 获取顾客档案信息失败
-                        console.error("获取顾客档案信息失败", backData)
-                        self.setState((prevState, props) => {
-                            return {...prevState, "memberProfile":defaultProfile}
-                        })
-                    }
-                }).catch(e=>{
-                    console.error("获取顾客档案信息失败", e)
-                    self.setState((prevState, props) => {
-                        return {...prevState, "memberProfile":defaultProfile}
-                    })
-                }).finally(_=>{
-                    this.setState({
-                        isLoading: false
-                    })
-                })
-            }else{ // 散客进入
-                self.setState((prevState, props) => {
-                    return {...prevState, memberProfile:defaultProfile}
-                })
-            }
+            // 获取顾客档案
+            self.getCustomerProfile(self)
         });
     }
 
@@ -1494,13 +1449,84 @@ class CashierBillingView extends React.Component {
     }
 
     /**
+     * 获取过客档案
+     */
+    getCustomerProfile(self, reload = false, callBack){
+        // 获取顾客档案详情，左侧展示｜弹层展示
+        const defaultProfile = {
+            isGuest: true, // 是否为散客
+            isBmsNew: 0, // 是否是bms的新用户，0否，1是
+            memberCountInfo: {},
+            reserveInfo: {
+                reserveResoures: [],
+                reserveInfoList: []
+            },
+            couponList: [],
+            cardsInfo: {},
+            czkCount: 0,
+            ckCount: 0
+        }
+        const {member, checkReserveId} = this.props.route.params
+        if(member){ // 会员进入
+            const queryArgs = {
+                memberId: member.id,
+            }
+            if(checkReserveId){
+                queryArgs['reserveId'] = checkReserveId
+            }
+            this.setState({
+                isLoading: true
+            })
+
+            getMemberDetail(queryArgs).then(backData=>{
+                const {code, data} = backData
+                if(code == '6000'){
+                    const memberProfile = data
+                    memberProfile['isGuest'] = false
+
+                    // 更新会员状态
+                    self.setState((prevState, props) => {
+                        return {...prevState, "memberProfile":memberProfile}
+                    }, ()=>{
+                        if(reload){
+                            callBack && callBack()
+                        }else{
+                            if(memberProfile.isBmsNew == '1'){ // 是否是bms的新用户，0否，1是
+                                self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
+                            }
+                        }
+                    })
+                }else{ // 获取顾客档案信息失败
+                    console.error("获取顾客档案信息失败", backData)
+                    self.setState((prevState, props) => {
+                        return {...prevState, "memberProfile":defaultProfile}
+                    })
+                }
+            }).catch(e=>{
+                console.error("获取顾客档案信息失败", e)
+                self.setState((prevState, props) => {
+                    return {...prevState, "memberProfile":defaultProfile}
+                })
+            }).finally(_=>{
+                this.setState({
+                    isLoading: false
+                })
+            })
+        }else{ // 散客进入
+            self.setState((prevState, props) => {
+                return {...prevState, memberProfile:defaultProfile}
+            })
+        }
+    }
+
+    /**
      * 会员面板点击事件
      * @param type
      * @param extra
      * @param callBack
      * @returns {Promise<void>}
      */
-     customerPressEvent(type, extra, callBack){
+     async customerPressEvent(type, extra, callBack){
         switch (type) {
             case 'updateProfile': // 更新会员资料
                 this.setState({
@@ -1539,6 +1565,127 @@ class CashierBillingView extends React.Component {
                         isLoading: false
                     })
                 })
+                break
+            case 'editCardValidity': // 卡延期
+                Alert.alert('系统提示', "该卡确定要延期吗", [
+                    {
+                        text: '是',
+                        onPress: () => {
+                            this.setState({isLoading: true})
+                            updateCardValidity({
+                                cardId: extra.cardId
+                            }).then(backData=>{
+                                const {code, data} = backData
+                                if(code != '6000') { // 取消异常
+                                    Alert.alert(
+                                        '系统提示',
+                                        data || '卡延期失败',
+                                        [
+                                            {
+                                                text: '知道了',
+                                            }
+                                        ]
+                                    )
+                                }else{
+                                    // 重新获取会员信息
+                                    this.setState({isLoading: false})
+                                    this.getCustomerProfile(this, true, ()=>showMessageExt("卡延期成功"))
+                                }
+                            }).catch(e=>{
+                                console.log(e)
+                                showMessageExt("卡延期失败")
+                            }).finally(_=>{
+                                this.setState({isLoading: false})
+                            })
+                        }
+                    },
+                    {
+                        text: '否',
+                    },
+                ])
+                break;
+            case 'createCard': // 开卡
+                // 加载中
+                this.setState({isLoading: true})
+                try {
+                    // 开始准备开单的数据-获取BMS会员档案
+                    const portraitBackData = await getMemberPortrait({
+                        p: 1,
+                        ps: 1000,
+                        cardInfoFlag: false,
+                        solrSearchType: 0,
+                        kw: this.state.memberProfile.memberId
+                    })
+                    // 会员档案
+                    if(portraitBackData.code != '6000'){
+                        // 错误
+                        showMessageExt("开卡失败")
+                        this.setState({isLoading: false})
+                    }else{
+                        this.setState({isLoading: false})
+                        // 关闭所有面板
+                        // BMS会员档案
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        InteractionManager.runAfterInteractions(() => {
+                            AppNavigate.navigate('VipcardActivity', {
+                                type: 'vip',
+                                member: memberPortrait,
+                                pagerName: 'CashierBillingActivity'
+                            })
+                        });
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("开卡失败")
+                    this.setState({isLoading: false})
+                    console.error("获取会员档案失败", e)
+                }
+                break
+            case 'rechargeCardItem': // 充值
+                // 加载中
+                this.setState({isLoading: true})
+                try {
+                    // 开始准备开单的数据-获取BMS会员档案
+                    const portraitBackData = await getMemberPortrait({
+                        p: 1,
+                        ps: 1000,
+                        cardInfoFlag: true,
+                        solrSearchType: 0,
+                        kw: extra.memberId
+                    })
+                    // 会员档案
+                    if(portraitBackData.code != '6000'){
+                        // 错误
+                        showMessageExt("充值失败")
+                        this.setState({isLoading: false})
+                    }else{
+                        this.setState({isLoading: false})
+                        // BMS会员档案
+                        const cardId = extra['cardId']
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const cardList = memberPortrait['vipStorageCardList'] || []
+                        const selectCard = cardList.filter(card=>{
+                            return card.id == cardId
+                        })
+
+                        if(selectCard && selectCard.length == 1){
+                            InteractionManager.runAfterInteractions(() => {
+                                AppNavigate.navigate('RechargeActivity', {
+                                    card: selectCard[0],
+                                    member: memberPortrait,
+                                    pagerName: 'CashierBillingActivity'
+                                });
+                            })
+                        }else{
+                            showMessageExt("充值失败")
+                        }
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("充值失败")
+                    this.setState({isLoading: false})
+                    console.error("获取会员档案失败", e)
+                }
                 break
         }
     }

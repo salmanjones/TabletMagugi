@@ -2,7 +2,7 @@ import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInpu
 import React, {useEffect, useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
-export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPressEvent})=>{
+export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, pagerName, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
     const isStartWork = reserveInfo.isStartWork
     const canCancel = reserveInfo.isDelete
@@ -37,10 +37,11 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
 
     return (
         <View style={PanelCustomerStyles.memberReserveBox}>
-            <Image
+            { pagerName != 'CashierBillingActivity' && (<Image
                 resizeMode={'contain'}
                 source={isStartWork == '0' ? require('@imgPath/reserve_customer_panel_wait.png'):require('@imgPath/reserve_customer_panel_serviced.png')}
-                style={PanelCustomerStyles.startWorkStyle}></Image>
+                style={PanelCustomerStyles.startWorkStyle}></Image>)
+            }
             <View style={PanelCustomerStyles.memberReserveProperty}>
                 <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     预约手机号：
@@ -49,7 +50,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, customerPres
                     {reserveInfo.memberPhoneShow && reserveInfo.memberPhoneShow.length > 0 ? reserveInfo.memberPhoneShow : '暂无'}
                 </Text>
                 {
-                    isStartWork == '0' && canCancel == '1' && (
+                    isStartWork == '0' && canCancel == '1' && pagerName != 'CashierBillingActivity' && (
                         <TouchableOpacity
                             style={PanelCustomerStyles.memberReserveCancel}
                             onPress={()=>{
