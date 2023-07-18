@@ -833,7 +833,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         width: PixelUtil.rect(38, 38).width,
         height: PixelUtil.rect(38, 38).height,
         resizeMode: 'contain',
-        marginLeft: PixelUtil.size(5)
+        marginLeft: PixelUtil.size(15)
     },
     phoneText: {
         // marginTop:PixelUtil.size(5),
