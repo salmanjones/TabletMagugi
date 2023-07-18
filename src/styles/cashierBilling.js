@@ -229,7 +229,7 @@ export const cashierBillingStyle = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginLeft: PixelUtil.size(10)
+        marginLeft: PixelUtil.size(20)
     },
     guestCardsInfoFW:{
         height: '100%',
@@ -259,7 +259,7 @@ export const cashierBillingStyle = StyleSheet.create({
         fontSize: PixelUtil.size(22),
     },
     customerCardsRNum:{
-        width: PixelUtil.size(90),
+        width: PixelUtil.size(100),
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'center',
