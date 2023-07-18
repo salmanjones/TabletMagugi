@@ -13,6 +13,7 @@ import {
     CASHIERBILLING_PAY_REAL_V4,
     CASHIERBILLING_PREPAY,
     CASHIERBILLING_RELOAD_ORDER,
+    CASHIERBILLING_RELOAD_PROFILE,
     CASHIERBILLING_SAVE,
     CASHIERBILLING_STOCK,
     CASHIERBILLING_TOAPP,
@@ -54,6 +55,11 @@ export const billingOrderReducer = handleActions({
                 lastFlowNumber: state.orderData.flowNumber,
             }
         };
+    },
+    [CASHIERBILLING_RELOAD_PROFILE]:()=>{
+       return {
+           propChangeType: 'reloadProfile'
+       }
     },
     //开单
     [CASHIERBILLING_INIT.PENDING]: (state) => {
@@ -352,6 +358,11 @@ export const billingOrderReducer = handleActions({
         return {
             ...state,
             propChangeType: 'reloadOrder',
+        };
+    },
+    [CASHIERBILLING_RELOAD_PROFILE]: () => {
+        return {
+            propChangeType: 'reloadProfile'
         };
     }
 }, defaultOrderState);

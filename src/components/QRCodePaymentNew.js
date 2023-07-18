@@ -17,18 +17,8 @@ export class QRCodePaymentNew extends React.PureComponent {
     }
 
     onPaymentClose = () => {
-
-        const {navigation, onClose} = this.props;
-        const {paymentStatus} = this.state;
-        //if (paymentStatus === PaymentResultStatus.success) {
+        const {onClose} = this.props;
         onClose && onClose();
-        // navigation.dispatch({
-        //   routeName: 'CashierActivity',
-        //   type: 'backToRoute',
-        // });
-        //} else {
-        //onClose && onClose();
-        //}
     };
 
     render() {

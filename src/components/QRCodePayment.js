@@ -5,12 +5,11 @@ import QRCode from 'react-native-qrcode-svg';
 import {openCardAccountStyle, payForPersonStyle} from '../styles';
 import {fetchPaymentResult} from '../services';
 import {PaymentResultStatus,} from '../utils';
-import {MemberInfoNew, PaymentResult, VipcardPaymentView} from '../components';
-import {connect} from "react-redux";
+import {MemberInfoNew, PaymentResult} from '../components';
 
 const MAX_RETRY_COUNT = 100;
 
-export class QRCodePaymentView extends React.PureComponent {
+export class QRCodePayment extends React.PureComponent {
     constructor(props, context) {
         super(props);
         this.state = {
@@ -72,12 +71,13 @@ export class QRCodePaymentView extends React.PureComponent {
     };
 
     onPaymentClose = () => {
-        const {model, navigation, onClose, pagerName} = this.props;
+        const {model, navigation, onClose, pagerName, reloadCashierProfile} = this.props;
         const {paymentStatus} = this.state;
         if (paymentStatus === PaymentResultStatus.success) {
             onClose && onClose();
 
             if(pagerName == 'CashierBillingActivity'){
+                reloadCashierProfile()
                 navigation.goBack()
             }else{
                 navigation.navigate('CashierActivity');
@@ -154,19 +154,3 @@ export class QRCodePaymentView extends React.PureComponent {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        auth: state.auth
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-
-    }
-}
-export const QRCodePayment = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(QRCodePaymentView)

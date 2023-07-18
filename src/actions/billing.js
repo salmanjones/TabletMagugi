@@ -27,6 +27,7 @@ import {
     CASHIERBILLING_PAY,
     CASHIERBILLING_PAY_REAL_V4,
     CASHIERBILLING_PREPAY,
+    CASHIERBILLING_RELOAD_PROFILE,
     CASHIERBILLING_SAVE,
     CASHIERBILLING_STOCK,
     CASHIERBILLING_TOAPP,
@@ -41,6 +42,13 @@ import {
 export const clearBillingCacheAction = () => {
     return {
         type: CASHIERBILLING_CLEAR,
+    };
+};
+
+//收银-重新加载会员资料
+export const reloadProfileAction = () => {
+    return {
+        type: CASHIERBILLING_RELOAD_PROFILE,
     };
 };
 
@@ -189,12 +197,12 @@ export const cashierBillingSaveAction = billingData => {
                 displayError('', '水单号已存在', true);
             }
         })
-        .catch(err => {
-            displayError(err, '校验水单号失败，请稍后再试');
-            dispatch({
-                type: CASHIERBILLING_FLOWNUMBER.ERROR,
+            .catch(err => {
+                displayError(err, '校验水单号失败，请稍后再试');
+                dispatch({
+                    type: CASHIERBILLING_FLOWNUMBER.ERROR,
+                });
             });
-        });
     };
 };
 
@@ -635,7 +643,6 @@ export const getServiceStaffsAction = () => {
 };
 
 export const deleteBillingAction = (param) => {
-
     return function (dispatch, getState) {
         dispatch({
             type: CASHIERBILLING_DELETE.PENDING,
@@ -693,6 +700,4 @@ export const deleteBillingAction = (param) => {
                 });
             });
     };
-
-
 }

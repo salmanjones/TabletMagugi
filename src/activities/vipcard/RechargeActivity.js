@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Image, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
+import {Image, ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import {groupBy, showMessage} from '../../utils';
 import {RechargeStoredCardStyles,} from '../../styles';
 
@@ -12,10 +12,10 @@ import {
     StaffSelectBox,
     StaffServiceBar,
     StaffServiceEdit,
-    TabGroup,
     VipcardPayment,
 } from '../../components';
 import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
+import {reloadProfileAction} from "../../actions";
 
 const tabs = [
     {id: 1, name: '储值卡'},
@@ -73,6 +73,7 @@ class Recharge extends React.Component {
             currentTabIndex,
             currentServicerIndex,
         } = this.state;
+        const reloadCashierProfile = this.props.reloadCashierProfile
         let currentServicer = servicers[currentServicerIndex];
 
         return (
@@ -220,6 +221,7 @@ class Recharge extends React.Component {
                         card={currentCard}
                         member={member}
                         navigation={this.props.navigation}
+                        reloadCashierProfile={reloadCashierProfile}
                         pagerName={this.props.route.params.pagerName || 'RechargeActivity.js'}
                     />
                 )}
@@ -434,7 +436,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-    return {};
+    return {
+        reloadCashierProfile: ()=>{
+            dispatch(reloadProfileAction())
+        }
+    };
 };
 
 export const RechargeActivity = connect(mapStateToProps, mapDispatchToProps)(

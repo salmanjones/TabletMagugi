@@ -1,20 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Image, ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
+import {ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
-import {RechargeStoredCardStyles, tabGroupStyles} from '../../styles';
+import {RechargeStoredCardStyles} from '../../styles';
 import {showMessage} from '../../utils';
 import {
     StaffSelectBox,
     StaffServiceBar,
     StaffServiceEdit,
-    TabGroup,
     VipcardDetailSection,
     VipcardPayment,
     VipcardSaleCardList,
 } from '../../components';
 import {
+    reloadProfileAction,
     vipcardInitAction,
     vipcardSelectCardAction,
     vipcardSelectStaffAction,
@@ -37,6 +37,7 @@ class VipCard extends React.Component {
             tabIndex: 0,
         };
         this.acl = {};
+        this.paymentModal = null
     }
 
     componentDidMount() {
@@ -122,6 +123,7 @@ class VipCard extends React.Component {
             selectCard,
             setStaff,
             navigation,
+            reloadCashierProfile
         } = this.props;
         const {tabIndex} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
@@ -247,6 +249,7 @@ class VipCard extends React.Component {
                     totalPrice={totalPrice}
                     card={card}
                     model={'vipcard'}
+                    reloadCashierProfile={reloadCashierProfile}
                     pagerName={this.props.route.params.pagerName || 'RechargeActivity.js'}
                 />
             </View>
@@ -268,17 +271,19 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators(
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
         {
             init: vipcardInitAction,
             selectCard: vipcardSelectCardAction,
             setCount: vipcardSetCountAction,
             selectStaff: vipcardSelectStaffAction,
             setStaff: vipcardSetStaffAction,
+            reloadCashierProfile: reloadProfileAction
         },
         dispatch
     );
+}
 
 export const VipcardActivity = connect(mapStateToProps, mapDispatchToProps)(
     VipCard

@@ -64,7 +64,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberInfoBaseBox: {
         width: '100%',
         height: PixelUtil.size(164),
-        paddingHorizontal: PixelUtil.size(66),
+        paddingHorizontal: PixelUtil.size(50),
         paddingVertical: PixelUtil.size(36),
         display: 'flex',
         flexDirection: 'row',
@@ -121,7 +121,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         fontWeight: '700',
         color: '#ffffff',
-        width: PixelUtil.size(160),
+        width: PixelUtil.size(130),
     },
     nameShowTextCustomer: {
         fontSize: PixelUtil.size(34),

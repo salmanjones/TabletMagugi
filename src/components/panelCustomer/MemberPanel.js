@@ -150,7 +150,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
-                                        <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>{'未填写姓名姓名'}</Text>
+                                        <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>{'未填写姓名'}</Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}

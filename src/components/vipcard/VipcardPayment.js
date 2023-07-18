@@ -7,9 +7,8 @@ import {DeptList, MemberInfo, QRCodePayment, QRCodePaymentNew, SaleCardItem,} fr
 import {displayError, showMessage} from '../../utils';
 import {fetchCreateCardOrder, fetchOtherPayment, fetchOtherPayType} from '../../services';
 import Spinner from "react-native-loading-spinner-overlay";
-import {connect} from "react-redux";
 
-export class VipcardPaymentView extends React.PureComponent {
+export class VipcardPayment extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -207,7 +206,8 @@ export class VipcardPaymentView extends React.PureComponent {
             member,
             navigation,
             model,
-            pagerName
+            pagerName,
+            reloadCashierProfile
         } = this.props;
         const {
             title,
@@ -360,6 +360,7 @@ export class VipcardPaymentView extends React.PureComponent {
                                     navigation={navigation}
                                     model={model}
                                     pagerName={pagerName}
+                                    reloadCashierProfile={reloadCashierProfile}
                                     onClose={this.hideModal}
                                 />
                             )}
@@ -369,6 +370,7 @@ export class VipcardPaymentView extends React.PureComponent {
                                     navigation={navigation}
                                     onClose={() => {
                                         if(pagerName == 'CashierBillingActivity'){ // 来自于收银
+                                            reloadCashierProfile()
                                             navigation.goBack()
                                         }else{
                                             navigation.navigate('CashierActivity')
@@ -407,19 +409,3 @@ export class VipcardPaymentView extends React.PureComponent {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        auth: state.auth
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-
-    }
-}
-export const VipcardPayment = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(VipcardPaymentView)
