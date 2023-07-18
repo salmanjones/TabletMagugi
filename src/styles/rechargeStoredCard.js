@@ -781,7 +781,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(18),
         fontWeight: PixelUtil.size(500),
         textAlign: 'center',
-        lineHeight: PixelUtil.size(29),
+        lineHeight: PixelUtil.size(29)
     },
     cardNoImg: {
         width: PixelUtil.size(138),

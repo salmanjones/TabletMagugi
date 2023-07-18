@@ -53,11 +53,11 @@ export const PanelMultiProfiles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#f4f4f4',
     },
-    headerBox:{
+    headerBox: {
         width: '100%',
         height: PixelUtil.size(210),
     },
-    contentHeadWrap:{
+    contentHeadWrap: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -67,7 +67,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         paddingTop: PixelUtil.size(24),
         paddingHorizontal: PixelUtil.size(30)
     },
-    contentHeadTxtWrap:{
+    contentHeadTxtWrap: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -76,14 +76,14 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: PixelUtil.size(30)
     },
-    contentHeadTitle:{
+    contentHeadTitle: {
         width: '100%',
         fontWeight: '700',
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         textAlign: 'left'
     },
-    contentHeadTitleTxt:{
+    contentHeadTitleTxt: {
         width: '100%',
         fontWeight: '700',
         fontSize: PixelUtil.size(32),
@@ -91,7 +91,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         textAlign: 'left',
         marginTop: PixelUtil.size(-27)
     },
-    headSearchBox:{
+    headSearchBox: {
         width: '100%',
         height: PixelUtil.size(68),
         marginTop: PixelUtil.size(16),
@@ -101,14 +101,14 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    headSearchIcon:{
+    headSearchIcon: {
         position: "absolute",
         left: PixelUtil.size(20),
         width: PixelUtil.size(42),
         height: PixelUtil.size(42),
         zIndex: 2002
     },
-    headSearchInputEmpty:{
+    headSearchInputEmpty: {
         width: PixelUtil.size(752),
         height: PixelUtil.size(68),
         backgroundColor: '#fff',
@@ -118,7 +118,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         color: '#292929',
         fontSize: PixelUtil.size(30)
     },
-    headSearchInputFull:{
+    headSearchInputFull: {
         width: PixelUtil.size(560),
         height: PixelUtil.size(68),
         backgroundColor: '#fff',
@@ -128,27 +128,27 @@ export const PanelMultiProfiles = StyleSheet.create({
         color: '#292929',
         fontSize: PixelUtil.size(30)
     },
-    headSearchButton:{
+    headSearchButton: {
         marginLeft: PixelUtil.size(36),
         width: PixelUtil.size(172),
         height: PixelUtil.size(68),
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-    headSearchButtonImg:{
+    headSearchButtonImg: {
         width: '100%',
         height: '100%',
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-    headClearButton:{
+    headClearButton: {
         marginLeft: PixelUtil.size(20),
         width: PixelUtil.size(172),
         height: PixelUtil.size(68),
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-    headClearButtonImg:{
+    headClearButtonImg: {
         width: '100%',
         height: '100%',
         overflow: "hidden",
@@ -169,7 +169,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    memberBodyEmptyImage:{
+    memberBodyEmptyImage: {
         width: PixelUtil.size(440),
         height: PixelUtil.size(440),
     },
@@ -178,7 +178,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         fontSize: PixelUtil.size(30),
         color: '#aeaeae'
     },
-    profileItemSplit:{
+    profileItemSplit: {
         width: '100%',
         height: PixelUtil.size(0),
     },
@@ -187,7 +187,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         height: PixelUtil.size(146),
         paddingHorizontal: PixelUtil.size(40)
     },
-    profileItemWrap:{
+    profileItemWrap: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -199,7 +199,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         borderColor: '#e3e3e3',
         borderStyle: 'solid'
     },
-    profileItemLastWrap:{
+    profileItemLastWrap: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -208,7 +208,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative',
     },
-    leftWrap:{
+    leftWrap: {
         height: PixelUtil.size(98),
         display: 'flex',
         flexDirection: 'row',
@@ -216,7 +216,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    rightWrap:{
+    rightWrap: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -224,7 +224,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    nameBox:{
+    nameBox: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -232,13 +232,13 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'flex-start',
         position: 'relative'
     },
-    nameWrap:{
+    nameWrap: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    numberBox:{
+    numberBox: {
         marginLeft: PixelUtil.size(70),
         height: '100%',
         display: 'flex',
@@ -247,7 +247,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    timeBox:{
+    timeBox: {
         marginLeft: PixelUtil.size(60),
         width: PixelUtil.size(280),
         height: '100%',
@@ -257,40 +257,48 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative',
     },
-    nameText:{
+    nameText: {
         fontSize: PixelUtil.size(34),
         fontWeight: '700',
         color: '#000000',
         width: PixelUtil.size(184),
     },
-    sexWrap:{
+    sexWrap: {
         width: PixelUtil.size(40),
         height: PixelUtil.size(40),
     },
-    titleText:{
+    titleText: {
         marginTop: PixelUtil.size(6),
         fontSize: PixelUtil.size(26),
         fontWeight: '500',
         color: '#7C7C7C'
     },
-    valueText:{
+    valueText: {
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
-        color: '#2E2E2E'
+        color: '#2E2E2E',
     },
-    createBtnBox:{
+    numbernameText: {
+        fontSize: PixelUtil.size(26),
+        fontWeight: '700',
+        color: '#2E2E2E',
+
+        maxWidth: PixelUtil.size(150),
+        overflow: "hidden"
+    },
+    createBtnBox: {
         width: PixelUtil.size(172),
         height: PixelUtil.size(68),
         borderRadius: PixelUtil.size(34)
     },
-    createBtnImg:{
+    createBtnImg: {
         width: '100%',
         height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    createBtnTxt:{
+    createBtnTxt: {
         fontSize: PixelUtil.size(32),
         fontWeight: '700',
         color: '#ffffff',
