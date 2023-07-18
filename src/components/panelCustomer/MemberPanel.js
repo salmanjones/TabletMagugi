@@ -188,7 +188,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         <TouchableOpacity
                                             style={PanelCustomerStyles.propertyInfoItemBtn}
                                             onPress={()=>{
-
+                                                props['customerPressEvent']("createCard")
                                             }}>
                                             <Image
                                                 style={PanelCustomerStyles.propertyInfoItemBtn}
@@ -227,7 +227,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 : PanelCustomerStyles.memberExtraTabContentBox}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && (
-                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerPressEvent}/>
+                                        <ReserveWidget pagerName={pagerName} reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={props.customerPressEvent}/>
                                     )
                                 }
                                 {
