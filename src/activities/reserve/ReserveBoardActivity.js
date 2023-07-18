@@ -175,7 +175,6 @@ export const ReserveBoardActivity = props => {
                             data.cardsInfo = {}
                         }
                         setCustomerState(data)
-
                         if(customerInfo.isMember == '1'){
                             memberPanelRef.current.showRightPanel('ReserveBoardActivity')
                         }else{
