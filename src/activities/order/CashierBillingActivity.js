@@ -57,7 +57,7 @@ import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, thro
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {getMemberDetail} from "../../services/reserve";
+import {getMemberDetail, updateMemberProfile} from "../../services/reserve";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -1500,9 +1500,45 @@ class CashierBillingView extends React.Component {
      * @param callBack
      * @returns {Promise<void>}
      */
-    async customerPressEvent(type, extra, callBack){
+     customerPressEvent(type, extra, callBack){
         switch (type) {
-            case 'updateMemberInfo':
+            case 'updateProfile': // 更新会员资料
+                this.setState({
+                    isLoading: true
+                })
+
+                // 更新信息
+                const {memberId, memberName, memberSex, birthday} = extra
+                updateMemberProfile({
+                    memberId,
+                    memberName,
+                    memberSex,
+                    birthday
+                }).then(backData=>{
+                    showMessage("保存成功")
+                    // 更新个人信息
+                    this.setState((prevState, props)=>{
+                        const memberProfile = prevState.memberProfile
+                        memberProfile.nickName = memberName
+                        memberProfile.sex = memberSex
+                        memberProfile.birthday = birthday
+
+                        return {
+                           ...prevState,
+                            memberProfile
+                        }
+                    })
+
+                    // 关闭右侧面板
+                    this.memberPanelRef && this.memberPanelRef.hideRightPanel()
+                }).catch(e=>{
+                    console.log("更新个人资料失败", e)
+                    showMessage("更新个人资料失败")
+                }).finally(_=>{
+                    this.setState({
+                        isLoading: false
+                    })
+                })
                 break
         }
     }
@@ -1515,7 +1551,7 @@ class CashierBillingView extends React.Component {
         }
 
         let isLoading = false;
-        if (this.props.orderInfo.loading || this.props.servicers.loading) {
+        if (this.props.orderInfo.loading || this.props.servicers.loading || this.state.isLoading) {
             isLoading = true;
         } else {
             isLoading = false;
