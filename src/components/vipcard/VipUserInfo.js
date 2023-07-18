@@ -84,7 +84,7 @@ export class VipUserInfoComponent extends React.PureComponent {
                                            source={isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}
                                            style={RechargeStoredCardStyles.avaterlogo}></Image>
                                 </View>
-                                <Text style={RechargeStoredCardStyles.phoneText}>{phone}</Text>
+                                <Text style={RechargeStoredCardStyles.phoneText}>{phone || '暂无'}</Text>
                             </View>
                         </View>
                         {/*nav*/}
