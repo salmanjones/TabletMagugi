@@ -82,7 +82,7 @@ export class VipUserInfoComponent extends React.PureComponent {
                                           ellipsizeMode={'tail'}>{decodeURIComponent(name == '' ? '未填写姓名' : name)}</Text>
                                     <Image resizeMethod="resize" style={RechargeStoredCardStyles.avaterlogo}
                                            source={sex == 0 ? require('@imgPath/female.png') : require('@imgPath/vipavater.png')}></Image>
-                                    <Text style={RechargeStoredCardStyles.sexText}>{sex == 0 ? '女' : '男'}</Text>
+                                    {/*<Text style={RechargeStoredCardStyles.sexText}>{sex == 0 ? '女' : '男'}</Text>*/}
                                     <Image resizeMethod="resize"
                                            source={isWechatMember == 1 ? require('@imgPath/vipqiye.png') : (isWechatMember == 2 ? require('@imgPath/noselect.png') : require('@imgPath/quesheng.png'))}
                                            style={RechargeStoredCardStyles.avaterlogo}></Image>
