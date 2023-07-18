@@ -1946,9 +1946,6 @@ class CashierBillingView extends React.Component {
                                                                 style={cashierBillingStyle.customerSexIcon}
                                                                 resizeMode={'contain'}
                                                                 source={memberProfile.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
-                                                            <Text style={cashierBillingStyle.customerSexText} ellipsizeMode={'tail'} numberOfLines={1}>
-                                                                {memberProfile.sex == '1' ? '男':'女'}
-                                                            </Text>
                                                             <Image
                                                                 style={cashierBillingStyle.customerSexIcon}
                                                                 resizeMode={'contain'}
@@ -2215,7 +2212,7 @@ class CashierBillingView extends React.Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={this.state.addCardStyle}
                                                   onPress={this.swipConsumeItem.bind(this, 'card')}>
-                                    <Text style={this.state.addCardTextStyle}>+次卡项目({99})</Text>
+                                    <Text style={this.state.addCardTextStyle}>+次卡项目({this.cardCount})</Text>
                                 </TouchableOpacity>
                             </View>
                             <View
