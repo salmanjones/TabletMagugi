@@ -1,6 +1,7 @@
 import React from 'react';
 import {ButtonGroup} from 'react-native-elements';
-import {tabGroupStyles} from '../styles';
+import {RechargeStoredCardStyles, tabGroupStyles} from '../styles';
+import {ImageBackground} from "react-native";
 
 export class TabGroup extends React.PureComponent {
     constructor(props) {

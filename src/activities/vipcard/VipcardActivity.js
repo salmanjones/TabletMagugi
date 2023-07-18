@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Image, ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
-import {RechargeStoredCardStyles} from '../../styles';
+import {RechargeStoredCardStyles, tabGroupStyles} from '../../styles';
 import {showMessage} from '../../utils';
 import {
     StaffSelectBox,
@@ -149,13 +149,29 @@ class VipCard extends React.Component {
                     {/*Tbs*/}
                     <View style={RechargeStoredCardStyles.openCardTitleR}>
                         {/*<View style={RechargeStoredCardStyles.openCardTitleRTitle}>*/}
-                        <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
+                        <ImageBackground resizeMethod="resize" resizeMode={'stretch'}
+                                         source={require('@imgPath/store_bg.png')}
                                          style={RechargeStoredCardStyles.openCardTitleRTitle}>
-                            <TabGroup
-                                selectedIndex={this.state.tabIndex}
-                                data={['储值卡', '次卡', '服务人']}
-                                onSelected={this.onTabPress}
-                            />
+                            {/*<TabGroup*/}
+                            {/*    selectedIndex={this.state.tabIndex}*/}
+                            {/*    data={['储值卡', '次卡', '服务人']}*/}
+                            {/*    onSelected={this.onTabPress}*/}
+                            {/*/>*/}
+                            <View style={RechargeStoredCardStyles.containerStyle}>
+                                <TouchableOpacity onPress={this.onTabPress.bind(this, 0)}>
+                                    <Text
+                                        style={tabIndex == 0 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>储值卡</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.onTabPress.bind(this, 1)}>
+                                    <Text
+                                        style={tabIndex == 1 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>次卡</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onTabPress.bind(this, 2)}>
+                                    <Text
+                                        style={tabIndex == 2 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>服务人</Text>
+                                </TouchableOpacity>
+                            </View>
                         </ImageBackground>
                         {/*</View>*/}
                     </View>

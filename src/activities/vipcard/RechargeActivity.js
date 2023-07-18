@@ -138,11 +138,26 @@ class Recharge extends React.Component {
                             {/*<View style={RechargeStoredCardStyles.openCardTitleRTitleO}>*/}
                             <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
                                              style={RechargeStoredCardStyles.openCardTitleRTitleO}>
-                                <TabGroup
-                                    selectedIndex={currentTabIndex}
-                                    displayField={'name'}
-                                    data={tabs}
-                                    onSelected={this.onTabsSelected}/>
+                                {/*<TabGroup*/}
+                                {/*    selectedIndex={currentTabIndex}*/}
+                                {/*    displayField={'name'}*/}
+                                {/*    data={tabs}*/}
+                                {/*    onSelected={this.onTabsSelected}/>*/}
+                                <View style={RechargeStoredCardStyles.containerStyle}>
+                                    <TouchableOpacity onPress={this.onTabsSelected.bind(this, 0)}>
+                                        <Text
+                                            style={currentTabIndex == 0 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>储值卡</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onTabsSelected.bind(this, 1)}>
+                                        <Text
+                                            style={currentTabIndex == 1 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>次卡</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={this.onTabsSelected.bind(this, 2)}>
+                                        <Text
+                                            style={currentTabIndex == 2 ? RechargeStoredCardStyles.selectedButtonStyle : RechargeStoredCardStyles.buttonStyle}>服务人</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </ImageBackground>
                             {/*</View>*/}
                         </View>

@@ -52,7 +52,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     },
     openCardTitleR: {
         width: '50%',
-        height: '100%',
+        height: PixelUtil.size(142),
     },
     contentBox: {
         width: '100%',
@@ -510,6 +510,9 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        borderStyle: 'solid',
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2)
     },
     openCardCategory: {
         width: '60%',
@@ -882,5 +885,33 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         color: '#FFA200',
         fontSize: PixelUtil.size(20),
         fontWeight: PixelUtil.size(500)
+    },
+    //自定义nav样式
+    containerStyle: {
+        width: '100%',
+        height: '100%',
+        flex: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        // justifyContent: 'center'
+    },
+    buttonStyle: {
+        color: '#fff',
+        fontSize: PixelUtil.size(32),
+        marginLeft: PixelUtil.size(80),
+        width: PixelUtil.size(178),
+        textAlign: 'center'
+    },
+    selectedButtonStyle: {
+        width: PixelUtil.size(178),
+        height: PixelUtil.size(66),
+        textAlign: 'center',
+        lineHeight: PixelUtil.size(60),
+        fontSize: PixelUtil.size(32),
+        marginLeft: PixelUtil.size(80),
+        color: '#FFA200',
+        borderRadius: PixelUtil.size(35),
+        backgroundColor: '#fff',
+        overflow: 'hidden'
     }
 });
