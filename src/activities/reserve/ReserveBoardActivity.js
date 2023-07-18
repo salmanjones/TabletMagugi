@@ -296,6 +296,7 @@ export const ReserveBoardActivity = props => {
 
                                     if(hideRightPanel === true){ // 关闭右侧面板
                                         memberPanelRef.current.hideRightPanel()
+                                        guestPanelRef.current.hideRightPanel()
                                     }
 
                                     // 重新加载数据
