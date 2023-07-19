@@ -1773,7 +1773,7 @@ class CashierBillingView extends React.Component {
                         if (showType == 'searchPhone' || data.length > 1) { // 多档案
                             if (showType == 'scanCode') { // 扫码成功:多档案
                                 this.guestPanelRef.hideRightPanel()
-                                this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', waiterId, 'createOrder', 'CashierBillingActivity')
+                                this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', waiterId, 'createOrder', 'CashierBillingActivity')
                             }
                         } else if (data.length == 1) { // 单档案直接变更为会员单
                             this.customerPressEvent('naviToCashier', {

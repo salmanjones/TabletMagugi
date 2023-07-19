@@ -44,6 +44,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
         setWaiterId(waiterId)
         setShowClear(phone && phone.length > 0)
         setPagerName(pagerName)
+
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,

@@ -9,15 +9,16 @@ import {BackgroundImage} from "react-native-elements/dist/config";
  * @type {React.NamedExoticComponent<{readonly size?: *, readonly customerClickEvent?: *, readonly index?: *, readonly profileItem?: *}>}
  */
 export const MultiProfileItem = React.memo(({
-                                                profileItem,
-                                                index,
-                                                size,
-                                                customerClickEvent,
-                                                showMode,
-                                                waiterId,
-                                                actionType,
-                                                pagerName
-                                            }) => {
+    profileItem,
+    index,
+    size,
+    customerClickEvent,
+    showMode,
+    waiterId,
+    actionType,
+    pagerName
+}) => {
+
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
             <View
@@ -74,7 +75,9 @@ export const MultiProfileItem = React.memo(({
                             resizeMode={"contain"}
                             source={require('@imgPath/reserve_customer_multi_profile_btn.png')}
                             style={PanelMultiProfiles.createBtnImg}>
-                            <Text style={PanelMultiProfiles.createBtnTxt}>{pagerName == 'CashierBillingActivity' ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}</Text>
+                            <Text style={PanelMultiProfiles.createBtnTxt}>
+                                {pagerName == 'CashierBillingActivity' ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
+                            </Text>
                         </BackgroundImage>
                     </TouchableOpacity>
                 </View>
