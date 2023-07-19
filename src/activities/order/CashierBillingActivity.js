@@ -391,7 +391,7 @@ class CashierBillingView extends React.Component {
                 this.props.resetToCashier(true);
             } else {
                 // 2023.07.08 最新需求，所有挂单成功均返回挂单页面
-                this.props.resetToCashier(true);
+                this.props.resetToCashier(false);
             }
         } else if (nextProps.orderInfo.propChangeType == 'toApp') {
             this.setState((prevState, props) => {

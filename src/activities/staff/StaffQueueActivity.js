@@ -8,7 +8,6 @@ import {StarRating} from "../../components";
 import Toast from "react-native-root-toast";
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {ReserveBoardStyles} from "../../styles/ReserveBoard";
 import {
     getBillFlowNO,
     getMemberBillCards,
@@ -190,6 +189,7 @@ export class StaffQueueView extends React.Component {
         this.setState({worksList}, ()=>{
             const imgUrl = this.props.route.params.imgUrl
             const memberId = this.props.route.params.memberId
+            const pagerName = this.props.route.params.pagerName
 
             // 跳转参数
             let params = {
@@ -197,6 +197,7 @@ export class StaffQueueView extends React.Component {
                 staffInfo: staffSelected,
                 memberId,
                 imgUrl,
+                pagerName
             }
             // 页面跳转
             AppNavigate.navigate('StaffWorksActivity', params)
@@ -218,6 +219,9 @@ export class StaffQueueView extends React.Component {
         this.setState({
             isLoading: true
         })
+
+        // 来源页面
+        const {pagerName} = this.props.route.params
 
         try {
             // 服务人信息
@@ -308,7 +312,7 @@ export class StaffQueueView extends React.Component {
                         isSynthesis: isSynthesis,
                         numType: "flownum",
                         numValue: flowNumber,
-                        page: 'ReserveBoardActivity',
+                        page: pagerName,
                         member: Object.assign({}, memberPortrait, {
                             userImgUrl: getImage(
                                 imgUrl,
@@ -390,7 +394,7 @@ export class StaffQueueView extends React.Component {
                         isSynthesis: isSynthesis,
                         numType: "flownum",
                         numValue: flowNumber,
-                        page: "ReserveBoardActivity",
+                        page: pagerName,
                         member:null,
                         type: "vip",
                         roundMode: roundMode,

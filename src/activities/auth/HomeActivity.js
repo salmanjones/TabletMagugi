@@ -156,7 +156,7 @@ class Home extends React.Component {
                             <TouchableHighlight
                                 underlayColor="white"
                                 onPress={() =>
-                                    AppNavigate.navigate('StaffQueueActivity')
+                                    AppNavigate.navigate('StaffQueueActivity', {pagerName: 'HomeActivity'})
                                 }
                                 onPressIn={() => this.activeButton('staff')}>
                                 <ToggleImageBackground

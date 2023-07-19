@@ -73,6 +73,9 @@ export class StaffWorksView extends React.Component {
                 isLoading: true
             })
 
+            // 来源页面
+            const {pagerName} = this.props.route.params
+
             try {
                 // 服务人信息
                 const waiterId =  this.state.staffInfo['staffId']
@@ -162,7 +165,7 @@ export class StaffWorksView extends React.Component {
                             isSynthesis: isSynthesis,
                             numType: "flownum",
                             numValue: flowNumber,
-                            page: 'ReserveBoardActivity',
+                            page: pagerName,
                             member: Object.assign({}, memberPortrait, {
                                 userImgUrl: getImage(
                                     imgUrl,
@@ -244,7 +247,7 @@ export class StaffWorksView extends React.Component {
                             isSynthesis: isSynthesis,
                             numType: "flownum",
                             numValue: flowNumber,
-                            page: "ReserveBoardActivity",
+                            page: pagerName,
                             member:null,
                             type: "vip",
                             roundMode: roundMode,
@@ -303,8 +306,6 @@ export class StaffWorksView extends React.Component {
                             source={require('@imgPath/reserve_customer_button_kaidan.png')}/>
                     </TouchableOpacity>
                 </View>
-
-
                 {
                     showVideo && workInfo.contentType == 1 ?
                         (

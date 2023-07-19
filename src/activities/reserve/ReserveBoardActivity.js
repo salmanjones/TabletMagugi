@@ -673,7 +673,7 @@ export const ReserveBoardActivity = props => {
                     if(eventType == 'createOrder'){// 未预约直接开单.跳转选牌
                         const memberId = extra['memberId'] // 未预约散客扫码转会员后有会员ID
                         const imgUrl = extra['imgUrl'] // 未预约散客扫码转会员后有会员ID
-                        AppNavigate.navigate('StaffQueueActivity', {memberId, imgUrl})
+                        AppNavigate.navigate('StaffQueueActivity', {memberId, imgUrl, pagerName: 'ReserveBoardActivity'})
                     }else if(eventType == 'createCard'){ // 未预约直接开卡，新增会员页面
                         setLoading(true)
                         fetchMemberNO().then(res => {
