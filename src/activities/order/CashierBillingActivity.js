@@ -2125,8 +2125,10 @@ class CashierBillingView extends React.Component {
                                                 resizeMethod="resize"
                                                 source={require('@imgPath/cardNo_bg.png')}
                                                 style={cashierBillingStyle.customerInfoNumberBox}>
-                                                <Text
-                                                    style={cashierBillingStyle.customerInfoNumberTxt}>.{memberProfile.memberNo}</Text>
+                                                <Text style={cashierBillingStyle.customerInfoFixTxt}>
+                                                    .
+                                                </Text>
+                                                <Text style={cashierBillingStyle.customerInfoNumberTxt}>{memberProfile.memberNo}</Text>
                                             </ImageBackground>
                                             <TouchableOpacity
                                                 style={cashierBillingStyle.customerInfoExtendBox}

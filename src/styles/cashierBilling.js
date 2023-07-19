@@ -94,7 +94,11 @@ export const cashierBillingStyle = StyleSheet.create({
         position: 'absolute',
         zIndex: 10,
         top: PixelUtil.size(0),
-        left: PixelUtil.size(0)
+        left: PixelUtil.size(0),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     customerInfoExtendLeftBox: {
         height: '100%',
@@ -126,9 +130,16 @@ export const cashierBillingStyle = StyleSheet.create({
         overflow: 'hidden',
         borderRadius: PixelUtil.size(43)
     },
+    customerInfoFixTxt: {
+        color: '#fff',
+        fontSize: PixelUtil.size(18),
+        fontWeight: PixelUtil.size(500),
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        lineHeight: PixelUtil.size(10),
+        marginRight: PixelUtil.size(2),
+    },
     customerInfoNumberTxt: {
-        width: '100%',
-        height: '100%',
         color: '#fff',
         fontSize: PixelUtil.size(18),
         fontWeight: PixelUtil.size(500),
