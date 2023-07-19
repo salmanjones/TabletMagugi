@@ -85,7 +85,7 @@ export class Payment extends React.PureComponent {
         const showPaymentResult = paymentStatus.length > 0;
 
         return (
-            <View style={{height: '90%'}}>
+            <View style={{height: '100%'}}>
                 <View style={payForPersonStyle.billInfoOtherBox}>
                     {showPaymentResult && <PaymentResult status={paymentStatus}/>}
                 </View>
