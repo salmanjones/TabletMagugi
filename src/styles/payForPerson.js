@@ -18,14 +18,14 @@ export const payForPersonStyle = StyleSheet.create({
     //外部弹框里面内容
     wrapper: {
         backgroundColor: '#fff',
-        height: '90%',
+        height: '100%',
         width: '95%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
         position: 'relative',
-        marginTop: PixelUtil.size(60),
+        // marginTop: PixelUtil.size(60),
         zIndex: 300
 
     },

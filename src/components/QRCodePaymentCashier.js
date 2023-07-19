@@ -47,7 +47,7 @@ export class QRCodePaymentCashier extends React.PureComponent {
             let retry = false;
             if (code === '6000') {
                 that.setPaymentResult(PaymentResultStatus.success);
-            }else if (code === '9002') {
+            } else if (code === '9002') {
                 if (data.buildStat || data.executeStat == 'close') {
                     that.setPaymentResult(PaymentResultStatus.error);
                 } else if (data.executeStat == 'thirdPayEnd') {
