@@ -87,7 +87,8 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                             memberName,
                             memberSex,
                             birthday: memberBirthday,
-                            memberId: portraitInfo.memberId
+                            memberId: portraitInfo.memberId,
+                            phone: portraitInfo.phone
                         })
                     }}>
                     <Text style={PanelCustomerStyles.memberReserveModifyText}>确定</Text>

@@ -1538,8 +1538,9 @@ class CashierBillingView extends React.Component {
                 })
 
                 // 更新信息
-                const {memberId, memberName, memberSex, birthday} = extra
+                const {memberId, memberName, memberSex, birthday, phone} = extra
                 updateMemberProfile({
+                    phone,
                     memberId,
                     memberName,
                     memberSex,
