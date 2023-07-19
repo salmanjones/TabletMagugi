@@ -25,7 +25,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                     顾客姓名：
                 </Text>
                 <Text style={PanelCustomerStyles.memberPortraitPValue}>
-                    {decodeURIComponent(portraitInfo.nickName)}
+                    { portraitInfo.nickName ? decodeURIComponent(portraitInfo.nickName) : '未填写姓名'}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberPropertyBox}>

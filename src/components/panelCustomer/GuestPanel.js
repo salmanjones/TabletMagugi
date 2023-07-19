@@ -60,17 +60,21 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     const loginUser = ReduxStore.getState().auth.userInfo
 
     /// 生成唯一id
-    const getUniqueId = ()=>{
+    const getUniqueId = () => {
         // 唯一ID
         glUniqueId = loginUser.storeId + new Date().getTime() + "" + parseInt(Math.random() * 1000)
     }
 
     /// 展示面板
     const showRightPanel = (mode, actionType, pagerName) => {
-        if(mode == 'noReserve'){ // 无预约信息
+        if (mode == 'noReserve') { // 无预约信息
             setTabArray(['基础档案'])
-        }else{
-            setTabArray(['预约信息', '基础档案'])
+        } else {
+            if(customerInfo.reserveInfo){
+                setTabArray(['预约信息', '基础档案'])
+            }else{
+                setTabArray(['基础档案'])
+            }
         }
         setActionType(actionType)
         setWxQRImg('')
@@ -104,7 +108,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 获取控件展示状态
-    const getShowState = ()=>{
+    const getShowState = () => {
         return animateState.sliderShow
     }
 
@@ -116,7 +120,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }))
 
     /// 获取待扫描的二维码
-    const getScanCode = (callBack)=> {
+    const getScanCode = (callBack) => {
         const source = '0' // 来自于平板扫码
         const scene = loginUser.companyId + "@" + loginUser.storeId + "@" + source + "@" + glUniqueId
         const qrArgs = {
@@ -146,23 +150,23 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 展示加载二维码
-    useEffect(()=>{
-        if(animateState.sliderShow){ // 展示请求二维码
+    useEffect(() => {
+        if (animateState.sliderShow) { // 展示请求二维码
             getUniqueId()
             setScanState(null)
-            getScanCode(()=>{
-                if(showMode == 'noReserve'){
+            getScanCode(() => {
+                if (showMode == 'noReserve') {
                     refreshQRCodeState()
                 }
             })
-        }else{ // 隐藏销毁定时器
+        } else { // 隐藏销毁定时器
             setTabIndex(0)
             clearTimer()
         }
     }, [animateState.sliderShow, showMode])
 
     /// 刷新二维码状态
-    const refreshQRCodeState = ()=>{
+    const refreshQRCodeState = () => {
         // 销毁已存在的定时器
         clearTimer()
 
@@ -174,13 +178,13 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                 const {state, appUserId} = result.data // -1 授权超时 0扫码成功 1授权成功
                 if (resCode == '6000' && state !== null && state !== undefined) {
                     setScanState(state)
-                    if(state == 1){ // 授权成功
+                    if (state == 1) { // 授权成功
                         // 清除循环定时
                         clearTimer()
 
                         // 进入开单页面
-                        let tmpTimerId = setTimeout(()=>{
-                            if(tmpTimerId !== null && tmpTimerId !== undefined){
+                        let tmpTimerId = setTimeout(() => {
+                            if (tmpTimerId !== null && tmpTimerId !== undefined) {
                                 clearTimeout(tmpTimerId)
                             }
                             naviToCashier(appUserId)
@@ -194,32 +198,32 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 销毁定时器
-    const clearTimer = ()=>{
-        if(loopTimerId != null){
+    const clearTimer = () => {
+        if (loopTimerId != null) {
             clearInterval(loopTimerId)
             loopTimerId = null
         }
     }
 
     /// 点击tab
-    const tabPressEvent = (index, actionType = 'createOrder')=>{
+    const tabPressEvent = (index, actionType = 'createOrder') => {
         setTabIndex(index)
         setActionType(actionType)
 
         // 扫码标签
-        if(index == 1){
+        if (index == 1) {
             refreshQRCodeState()
         }
     }
 
     /// 更新扫码状态
-    const rescanQRCode = (state)=>{
+    const rescanQRCode = (state) => {
         // 清除时间循环
         clearTimer()
         // 重新生成二维码
         getUniqueId()
         // 获取新二维码
-        getScanCode(()=>{
+        getScanCode(() => {
             // 刷新页面状态
             setScanState(state)
             // 重新启动定时
@@ -227,10 +231,36 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         })
     }
 
+    if(!customerInfo){
+        customerInfo = {
+            isBmsNew: 0, // 是否是bms的新用户，0否，1是
+            memberCountInfo: {},
+            reserveInfo: {
+                reserveResoures: [],
+                reserveInfoList: []
+            },
+            couponList: [],
+            cardsInfo: {},
+            czkCount: 0,
+            ckCount: 0
+        }
+    }
+
     /// 进入开单页面
-    const naviToCashier = (appUserId)=>{
-        const waiterId = customerInfo['reserveInfo']['staffId'] || ''
-        customerPressEvent('toCreateOrder', {queryType:'appUserId', appUserId, showType:'scanCode', showMode, waiterId, actionType})
+    const naviToCashier = (appUserId) => {
+        let waiterId =  ''
+        if(customerInfo['reserveInfo'] && customerInfo['reserveInfo']['staffId']){
+            waiterId = customerInfo['reserveInfo']['staffId']
+        }
+
+        customerPressEvent('toCreateOrder', {
+            queryType: 'appUserId',
+            appUserId,
+            showType: 'scanCode',
+            showMode,
+            waiterId,
+            actionType
+        })
     }
 
     return (
@@ -240,7 +270,9 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
-                <TouchableOpacity onPress={() => {hideRightPanel()}}
+                <TouchableOpacity onPress={() => {
+                    hideRightPanel()
+                }}
                                   activeOpacity={1}
                                   style={PanelCustomerStyles.leftPanMask}>
                     <View style={PanelCustomerStyles.hideIconBox}>
@@ -268,7 +300,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 resizeMethod="resize"
                                 source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                 defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
-                            <Text style={PanelCustomerStyles.nameShowTextCustomer}>{decodeURIComponent(customerInfo['reserveInfo'].memberName)}</Text>
+                            <Text
+                                style={PanelCustomerStyles.nameShowTextCustomer}>{customerInfo['reserveInfo'] ? decodeURIComponent(customerInfo['reserveInfo'].memberName):''}</Text>
                         </View>
                         <View style={PanelCustomerStyles.memberInfoSplit}></View>
                     </ImageBackground>
@@ -278,15 +311,17 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                             {/*tab页签*/}
                             <View style={PanelCustomerStyles.memberExtraTabBox}>
                                 {
-                                    tabArray.map((tab, index)=>{
+                                    tabArray.map((tab, index) => {
                                         return (
                                             <TouchableOpacity
                                                 style={PanelCustomerStyles.memberExtraTabItem}
-                                                onPress={()=>{
+                                                onPress={() => {
                                                     tabPressEvent(index)
                                                 }}>
-                                                <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive:PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
-                                                <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
+                                                <Text
+                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive : PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
+                                                <View
+                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
                                             </TouchableOpacity>
                                         )
                                     })
@@ -295,8 +330,10 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                             {/*tab内容*/}
                             <View style={PanelCustomerStyles.memberExtraTabReserveBox}>
                                 {
-                                    tabArray[tabIndex] == '预约信息' && (
-                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
+                                    tabArray[tabIndex] == '预约信息' &&
+                                    customerInfo['reserveInfo'] && (
+                                        <ReserveWidget reserveInfo={customerInfo['reserveInfo']} reserveFlag={reserveFlag}
+                                                       customerPressEvent={customerPressEvent}/>
                                     )
                                 }
                                 {
@@ -319,14 +356,14 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                     </View>
                     {/*操作按钮*/}
                     {
-                        showMode!='noReserve' && tabIndex == 0 && (
+                        showMode != 'noReserve' && tabIndex == 0 && (
                             <ImageBackground
                                 resizeMode={'contain'}
                                 source={require('@imgPath/guest_panel_operator_bg.png')}
                                 style={PanelCustomerStyles.operatorGuestWrap}>
                                 <TouchableOpacity
                                     style={PanelCustomerStyles.operatorBtnCard}
-                                    onPress={()=>{
+                                    onPress={() => {
                                         tabPressEvent(1, 'createOrder')
                                     }}>
                                     <Text style={PanelCustomerStyles.operatorBtnTxt}>开单</Text>

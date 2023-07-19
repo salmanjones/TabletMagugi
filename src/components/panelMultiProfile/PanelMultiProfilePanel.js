@@ -202,7 +202,15 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                             data={multiProfileArray}
                             renderItem={
                                 ({item, index}) => {
-                                    return <MultiProfileItem profileItem={item} index={index} size={multiProfileArray.length} customerClickEvent={customerClickEvent} showMode={showMode} waiterId={waiterId} actionType={actionType}/>
+                                    return <MultiProfileItem
+                                        profileItem={item}
+                                        index={index}
+                                        size={multiProfileArray.length}
+                                        customerClickEvent={customerClickEvent}
+                                        showMode={showMode}
+                                        waiterId={waiterId}
+                                        actionType={actionType}
+                                        pagerName={pagerName}/>
                                 }
                             }
                             keyExtractor={(item)=>item.memberNo}

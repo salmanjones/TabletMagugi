@@ -2,18 +2,21 @@ import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInpu
 import React, {useEffect, useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
-export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, pagerName, customerPressEvent})=>{
+export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerName, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
     const isStartWork = reserveInfo.isStartWork
     const canCancel = reserveInfo.isDelete
 
     let sourceName = ''
-    if(reserveInfo.sourceShowType == '1'){ // 可编辑
+    if(reserveInfo.sourceShowType == '1' && reserveInfo.reserveResoures){ // 可编辑
         sourceName = (reserveInfo.reserveResoures.filter(item=>item.value == reserveInfo.source)[0] ||[{name: ''}])['name'] || '--'
     }else{
         sourceName = reserveInfo.sourceShowName && reserveInfo.sourceShowName.length > 0  ?reserveInfo.sourceShowName :  '--'
     }
-    const serviceType = (reserveInfo.reserveInfoList.filter(item=>item.reserveId == reserveInfo.reserveProjectId)[0] ||[{reserveName: ''}])['reserveName']
+    let serviceType = ""
+    if(reserveInfo.reserveInfoList){
+        serviceType = (reserveInfo.reserveInfoList.filter(item=>item.reserveId == reserveInfo.reserveProjectId)[0] ||[{reserveName: ''}])['reserveName']
+    }
     const [sourceValue, setSourceValue] = useState(reserveInfo.source)
     const [serviceValue, setServiceValue] = useState(reserveInfo.reserveProjectId)
     const [serviceNameValue, setServiceNameValue] = useState(serviceType)
@@ -69,7 +72,7 @@ export const ReserveWidget = React.memo(({reserveInfo, reserveFlag, pagerName, c
                     顾客姓名：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
-                    {decodeURIComponent(reserveInfo.memberName)}
+                    {decodeURIComponent(decodeURIComponent(reserveInfo.memberName))}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberReserveProperty}>

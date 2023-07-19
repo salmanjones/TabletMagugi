@@ -15,7 +15,8 @@ export const MultiProfileItem = React.memo(({
                                                 customerClickEvent,
                                                 showMode,
                                                 waiterId,
-                                                actionType
+                                                actionType,
+                                                pagerName
                                             }) => {
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
@@ -73,8 +74,7 @@ export const MultiProfileItem = React.memo(({
                             resizeMode={"contain"}
                             source={require('@imgPath/reserve_customer_multi_profile_btn.png')}
                             style={PanelMultiProfiles.createBtnImg}>
-                            <Text
-                                style={PanelMultiProfiles.createBtnTxt}>{actionType == 'createOrder' ? '开单' : '办卡'}</Text>
+                            <Text style={PanelMultiProfiles.createBtnTxt}>{pagerName == 'CashierBillingActivity' ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}</Text>
                         </BackgroundImage>
                     </TouchableOpacity>
                 </View>

@@ -52,7 +52,7 @@ export const billingOrderReducer = handleActions({
                 ...state.orderData,
                 flowNumber: '',
                 handNumber: '',
-                lastFlowNumber: state.orderData.flowNumber,
+                lastFlowNumber: state.orderData  && state.orderData.flowNumber? state.orderData.flowNumber : '',
             }
         };
     },

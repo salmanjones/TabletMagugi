@@ -10,7 +10,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 服务人ID
-    const waiterId = reserveInfo.staffId || ''
+    const waiterId = reserveInfo && reserveInfo.staffId  ? reserveInfo.staffId : ''
 
     return (
         <View style={PanelCustomerStyles.guestProfileBox}>
@@ -31,7 +31,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     <TouchableOpacity
                                         style={PanelCustomerStyles.headSearchBox}
                                         onPress={()=>{
-                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType})
+                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
                                         }}>
                                         {/*输入框*/}
                                         <Image
@@ -49,7 +49,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                                 setUserPhone(phone)
                                             }}
                                             onPressIn={()=>{
-                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType})
+                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
                                             }}
                                             value={userPhone}
                                             maxLength={11}/>

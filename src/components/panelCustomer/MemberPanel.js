@@ -86,9 +86,23 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }))
 
     // 预约顾客信息
-    const customerInfo = props['memberInfo']
+    const customerInfo = props['memberInfo'] || {
+        isBmsNew: 0, // 是否是bms的新用户，0否，1是
+        memberCountInfo: {},
+        reserveInfo: {
+            reserveResoures: [],
+            reserveInfoList: []
+        },
+        couponList: [],
+        cardsInfo: {},
+        czkCount: 0,
+        ckCount: 0
+    }
     // 服务人ID
-    const waiterId = customerInfo['reserveInfo']['staffId']
+    let waiterId = ''
+    if(customerInfo['reserveInfo'] && customerInfo['reserveInfo']['staffId']){
+        waiterId = customerInfo['reserveInfo']['staffId']
+    }
     // 页签数据
     // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
     let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
@@ -101,6 +115,10 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
         tabArray = tabArray.filter(item => item == '基础档案')
     }
+    if(!customerInfo['reserveInfo']){
+        tabArray = tabArray.filter(item => item != '预约信息')
+    }
+
     // 命中的页签
     const [tabIndex, setTabIndex] = useState(0)
     // 当前页签
@@ -240,8 +258,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     ? PanelCustomerStyles.memberExtraTabReserveBox
                                     : PanelCustomerStyles.memberExtraTabContentBox}>
                                 {
-                                    tabArray[tabIndex] == '预约信息' && (
-                                        <ReserveWidget pagerName={pagerName} reserveInfo={customerInfo['reserveInfo']}
+                                    tabArray[tabIndex] == '预约信息' && customerInfo['reserveInfo'] &&(
+                                        <ReserveWidget pagerName={pagerName}
+                                                       reserveInfo={customerInfo['reserveInfo']}
                                                        reserveFlag={reserveFlag}
                                                        customerPressEvent={props.customerPressEvent}/>
                                     )
@@ -258,7 +277,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                             customerPressEvent={props.customerPressEvent}
                                             extendsInfo={{
                                                 appUserId: customerInfo.appUserId,
-                                                reserveId: customerInfo['reserveInfo']['reserveId'],
+                                                reserveId: customerInfo['reserveInfo'] &&  customerInfo['reserveInfo']['reserveId'] ? customerInfo['reserveInfo']['reserveId']: '',
                                                 waiterId
                                             }}
                                         />
