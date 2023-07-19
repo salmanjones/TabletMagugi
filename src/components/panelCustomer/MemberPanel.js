@@ -135,11 +135,12 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                 {...panResponder.panHandlers}
                 style={animateState.sliderShow ? [PanelCustomerStyles.rightPanelBox, {left: animateState.sliderLeft}] : {display: 'none'}}>
                 {/*左侧点击区域*/}
-                <TouchableOpacity onPress={() => {
-                    hideRightPanel()
-                }}
-                                  activeOpacity={1}
-                                  style={PanelCustomerStyles.leftPanMask}>
+                <TouchableOpacity
+                    onPress={() => {
+                        hideRightPanel()
+                    }}
+                    activeOpacity={1}
+                    style={PanelCustomerStyles.leftPanMask}>
                     <View style={PanelCustomerStyles.hideIconBox}>
                         <TouchableOpacity onPress={() => {
                             hideRightPanel()
@@ -168,7 +169,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
-                                        <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>{'未填写姓名'}</Text>
+                                        <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>
+                                            {customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}
+                                        </Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
