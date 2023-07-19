@@ -435,8 +435,8 @@ export const ReserveBoardStyles = StyleSheet.create({
     },
     reserveCustomeriswechatIcon: {
         marginLeft: PixelUtil.size(12),
-        width: PixelUtil.size(40),
-        height: PixelUtil.size(40),
+        width: PixelUtil.size(37),
+        height: PixelUtil.size(37),
         marginTop: PixelUtil.size(4)
     },
     reserveCustomerWxIcon: {

@@ -62,21 +62,21 @@ export const cashierBillingStyle = StyleSheet.create({
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
         position: 'relative',
-        display:'flex',
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    guestInfoBox:{
+    guestInfoBox: {
         width: "100%",
         height: '100%',
-        display:'flex',
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingLeft: PixelUtil.size(68)
     },
-    customerInfoExtendBox:{
+    customerInfoExtendBox: {
         flex: 1,
         height: '100%',
         display: 'flex',
@@ -87,7 +87,7 @@ export const cashierBillingStyle = StyleSheet.create({
         position: 'relative',
         paddingTop: PixelUtil.size(6)
     },
-    customerInfoNumberBox:{
+    customerInfoNumberBox: {
         width: PixelUtil.size(136),
         height: PixelUtil.size(28),
         marginTop: PixelUtil.size(4),
@@ -96,21 +96,21 @@ export const cashierBillingStyle = StyleSheet.create({
         top: PixelUtil.size(0),
         left: PixelUtil.size(0)
     },
-    customerInfoExtendLeftBox:{
+    customerInfoExtendLeftBox: {
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    customerInfoExtendRightBox:{
+    customerInfoExtendRightBox: {
         height: PixelUtil.size(70),
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
     },
-    guestInfoExtendBox:{
+    guestInfoExtendBox: {
         flex: 1,
         height: '100%',
         display: 'flex',
@@ -120,13 +120,13 @@ export const cashierBillingStyle = StyleSheet.create({
         marginLeft: PixelUtil.size(16),
         position: 'relative'
     },
-    customerInfoAvatar:{
+    customerInfoAvatar: {
         width: PixelUtil.size(64),
         height: PixelUtil.size(64),
         overflow: 'hidden',
         borderRadius: PixelUtil.size(43)
     },
-    customerInfoNumberTxt:{
+    customerInfoNumberTxt: {
         width: '100%',
         height: '100%',
         color: '#fff',
@@ -136,7 +136,7 @@ export const cashierBillingStyle = StyleSheet.create({
         lineHeight: PixelUtil.size(28),
         textAlignVertical: 'center'
     },
-    customerInfoNewFlag:{
+    customerInfoNewFlag: {
         backgroundColor: '#FFB93E',
         color: '#ffffff',
         fontWeight: '700',
@@ -150,7 +150,7 @@ export const cashierBillingStyle = StyleSheet.create({
         lineHeight: PixelUtil.size(20),
         marginLeft: PixelUtil.size(16)
     },
-    customerInfoBase:{
+    customerInfoBase: {
         marginLeft: PixelUtil.size(18),
         height: PixelUtil.size(70),
         display: 'flex',
@@ -158,7 +158,7 @@ export const cashierBillingStyle = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
     },
-    customerInfoBaseName:{
+    customerInfoBaseName: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -166,8 +166,8 @@ export const cashierBillingStyle = StyleSheet.create({
     },
     customerSexIcon: {
         marginLeft: PixelUtil.size(10),
-        width: PixelUtil.size(32),
-        height: PixelUtil.size(32),
+        width: PixelUtil.size(37),
+        height: PixelUtil.size(37),
     },
     customerWecomIcon: {
         marginLeft: PixelUtil.size(10),
@@ -182,41 +182,33 @@ export const cashierBillingStyle = StyleSheet.create({
         fontSize: PixelUtil.size(22),
         marginTop: PixelUtil.size(2)
     },
-    customerInfoBaseNameTxt:{
+    customerInfoBaseNameTxt: {
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(28),
         maxWidth: PixelUtil.size(126),
     },
-    guestInfoBaseNameTxt:{
+    guestInfoBaseNameTxt: {
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(28),
     },
-    customerInfoBasePhone:{
+    customerInfoBasePhone: {
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    customerCardsInfoCZ:{
+    customerCardsInfoCZ: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    customerCardsInfoCK:{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginLeft: PixelUtil.size(10)
-    },
-    customerCardsInfoYE:{
+    customerCardsInfoCK: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -224,14 +216,22 @@ export const cashierBillingStyle = StyleSheet.create({
         alignItems: 'center',
         marginLeft: PixelUtil.size(10)
     },
-    customerCardsInfoFW:{
+    customerCardsInfoYE: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginLeft: PixelUtil.size(10)
+    },
+    customerCardsInfoFW: {
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginLeft: PixelUtil.size(20)
     },
-    guestCardsInfoFW:{
+    guestCardsInfoFW: {
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -239,39 +239,39 @@ export const cashierBillingStyle = StyleSheet.create({
         alignItems: 'center',
         marginLeft: PixelUtil.size(36)
     },
-    customerCardsInfoName:{
+    customerCardsInfoName: {
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    customerCardsInfoNum:{
+    customerCardsInfoNum: {
         width: PixelUtil.size(90),
         color: '#fff',
         fontWeight: '700',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    customerCardsRName:{
+    customerCardsRName: {
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    customerCardsRNum:{
+    customerCardsRNum: {
         width: PixelUtil.size(100),
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    guestCardsRName:{
+    guestCardsRName: {
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'left',
         fontSize: PixelUtil.size(28),
     },
-    guestCardsRNum:{
+    guestCardsRNum: {
         width: PixelUtil.size(160),
         color: '#ffa608',
         fontWeight: '900',
@@ -427,13 +427,13 @@ export const cashierBillingStyle = StyleSheet.create({
         paddingRight: PixelUtil.size(6),
         paddingBottom: PixelUtil.size(6),
     },
-    limitItemInfo:{
+    limitItemInfo: {
         display: 'flex',
         position: "absolute",
         top: PixelUtil.size(60),
         left: PixelUtil.size(10),
     },
-    limitItemInfoText:{
+    limitItemInfoText: {
         //加项目内容-列-其他
         fontSize: PixelUtil.size(20),
         color: '#fff',
@@ -701,7 +701,7 @@ export const cashierBillingStyle = StyleSheet.create({
         height: '100%',
         position: 'relative',
     },
-    consumeBoxRightWrap:{
+    consumeBoxRightWrap: {
         width: '100%',
         flex: 1,
         flexDirection: 'column',
@@ -824,27 +824,27 @@ export const cashierBillingStyle = StyleSheet.create({
         borderLeftWidth: 0,
         backgroundColor: '#ffffff'
     },
-    consumeBoxRightContent:{
+    consumeBoxRightContent: {
         flex: 1,
         width: '100%',
         flexDirection: 'row',
         justifyContent: "flex-start",
         alignItems: 'flex-start'
     },
-    consumeBoxContentLeft:{
+    consumeBoxContentLeft: {
         flex: 1,
         height: '100%',
         flexDirection: 'column',
         justifyContent: "flex-start",
         alignItems: 'flex-start',
     },
-    consumeBoxContentCategory:{
+    consumeBoxContentCategory: {
         width: PixelUtil.size(154),
         height: '100%',
         borderColor: '#cbcbcb',
         borderLeftWidth: PixelUtil.size(2)
     },
-    consumeBoxContentBody:{
+    consumeBoxContentBody: {
         flex: 1,
         width: '100%'
     },

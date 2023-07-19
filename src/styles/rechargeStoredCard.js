@@ -830,8 +830,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         marginLeft: PixelUtil.size(10)
     },
     avaterlogo: {
-        width: PixelUtil.rect(38, 38).width,
-        height: PixelUtil.rect(38, 38).height,
+        width: PixelUtil.rect(37, 37).width,
+        height: PixelUtil.rect(37, 37).height,
         resizeMode: 'contain',
         marginLeft: PixelUtil.size(15)
     },
