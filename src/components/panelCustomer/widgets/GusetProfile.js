@@ -6,7 +6,7 @@ import React, {useState} from "react";
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode, reserveInfo, actionType})=>{
+export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode, reserveInfo, actionType, pagerName})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 服务人ID
@@ -26,7 +26,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                 {/*小程序二维码*/}
                                 <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>
                                 {/*查询顾客*/}
-                                <View style={PanelCustomerStyles.guestProfileSearchBox}>
+                                <View style={pagerName != 'CashierBillingActivity' ? PanelCustomerStyles.guestProfileSearchBox:PanelCustomerStyles.guestProfileCashierBox}>
                                     <Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>
                                     <TouchableOpacity
                                         style={PanelCustomerStyles.headSearchBox}
@@ -63,22 +63,26 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                     </TouchableOpacity>
                                 </View>
                                 {/*直接开单*/}
-                                <View style={PanelCustomerStyles.guestProfileOrderBox}>
-                                    <TouchableOpacity
-                                        style={PanelCustomerStyles.guestProfileOrderWrap}
-                                        onPress={()=>{
-                                            customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})
-                                        }}>
-                                        <ImageBackground
-                                            resizeMode={"contain"}
-                                            style={PanelCustomerStyles.guestProfileOrderImg}
-                                            source={require('@imgPath/reserve_panel_customer_create_order.png')}>
-                                            <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
-                                                {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}
-                                            </Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                </View>
+                                {
+                                    pagerName != 'CashierBillingActivity' && (
+                                        <View style={PanelCustomerStyles.guestProfileOrderBox}>
+                                            <TouchableOpacity
+                                                style={PanelCustomerStyles.guestProfileOrderWrap}
+                                                onPress={()=>{
+                                                    customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})
+                                                }}>
+                                                <ImageBackground
+                                                    resizeMode={"contain"}
+                                                    style={PanelCustomerStyles.guestProfileOrderImg}
+                                                    source={require('@imgPath/reserve_panel_customer_create_order.png')}>
+                                                    <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
+                                                        {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}
+                                                    </Text>
+                                                </ImageBackground>
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                }
                             </View>
                         )
                     }else if(scanState == 0){ // 已扫码

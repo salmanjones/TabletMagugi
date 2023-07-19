@@ -178,7 +178,7 @@ export const ReserveBoardActivity = props => {
                         if(customerInfo.isMember == '1'){
                             memberPanelRef.current.showRightPanel('ReserveBoardActivity')
                         }else{
-                            guestPanelRef.current.showRightPanel('withReserve', 'createOrder')
+                            guestPanelRef.current.showRightPanel('withReserve', 'createOrder', 'ReserveBoardActivity')
                         }
                     }else{
                         showMessageExt("获取顾客信息失败")
@@ -229,7 +229,7 @@ export const ReserveBoardActivity = props => {
                     }
                 }
                 setCustomerState(customerData)
-                guestPanelRef.current.showRightPanel('noReserve', 'createOrder')
+                guestPanelRef.current.showRightPanel('noReserve', 'createOrder', 'ReserveBoardActivity')
                 break;
             case 'addOccupy':  // 时间占用
                 Alert.alert('系统提示', "确定要占用该时段吗", [
@@ -434,7 +434,7 @@ export const ReserveBoardActivity = props => {
                 if(showType == 'guestPhone'){
                     setMultiProfiles([])
                     guestPanelRef.current.hideRightPanel()
-                    panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId, actionType)
+                    panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId, actionType, 'ReserveBoardActivity')
                     return
                 }
 
@@ -459,13 +459,13 @@ export const ReserveBoardActivity = props => {
                             setMultiProfiles(data)
                             if(showType == 'scanCode'){ // 散客扫码开单
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId, actionType)
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId, actionType, 'ReserveBoardActivity')
                             }else if(showType == 'guestPhone'){ // 散客手机号查询顾客
                                 guestPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId, actionType)
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'query', extra['phone'], waiterId, actionType, 'ReserveBoardActivity')
                             }else if(showType == 'member'){ // 会员面板开单
                                 memberPanelRef.current.hideRightPanel()
-                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId, actionType)
+                                panelMultiProfilePanelRef.current.showRightPanel(reserveMode, 'member', '', waiterId, actionType, 'ReserveBoardActivity')
                             }else if(showType == 'searchPhone'){ // 手机号查询档案面板
                                 console.log("通过手机号查询档案")
                             }

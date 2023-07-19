@@ -1108,6 +1108,17 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
+    guestProfileCashierBox:{
+        marginTop: PixelUtil.size(80),
+        width: '100%',
+        height: PixelUtil.size(236),
+        backgroundColor: '#F7F9FF',
+        borderRadius: PixelUtil.size(28),
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
     guestProfileSearchTitle:{
         fontSize: PixelUtil.size(34),
         textAlign: 'center',

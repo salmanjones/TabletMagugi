@@ -65,14 +65,10 @@ import {
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {
-    getCustomerDetail,
-    getMemberDetail,
-    getMemberPortrait,
-    updateCardValidity,
-    updateMemberProfile
-} from "../../services/reserve";
+import {getMemberDetail, getMemberPortrait, updateCardValidity, updateMemberProfile} from "../../services/reserve";
 import dayjs from "dayjs";
+import GuestPanel from "../../components/panelCustomer/GuestPanel";
+import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -136,7 +132,7 @@ class CashierBillingView extends React.Component {
                 ckCount: 0
             },
             reserveWaiter: reserveWaiter,
-            showMemberPanel: false // 是否展示会员面板
+            multiProfiles: []
         }
         this.addCosumableT = throttle(this.addCosumable, 600);
         this.moduleCode = props.route.params.moduleCode;
@@ -144,6 +140,8 @@ class CashierBillingView extends React.Component {
 
         // 会员面板引用
         this.memberPanelRef = null
+        this.guestPanelRef = null
+        this.panelMultiProfilePanelRef = null
     }
 
     UNSAFE_componentWillMount() {
@@ -1698,6 +1696,21 @@ class CashierBillingView extends React.Component {
                     console.error("获取会员档案失败", e)
                 }
                 break
+            case 'toCreateOrder': // 为了兼容预约面板，故判定类型不变
+                // 查询类型
+                const showType = extra['showType']
+                const waiterId = this.state.waiterId
+                if(showType == 'guestPhone'){ // 不想扫码，进入手机号查询界面
+                    this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', waiterId, 'createOrder', 'CashierBillingActivity')
+                }else if(showType == 'searchPhone'){ // 手机号搜索
+
+                }else if(showType == 'scanCode'){
+                    const {appUserId} = extra['appUserId']
+                }
+                break
+            case 'confirmMember': // 确定手机号对应的会员
+                const profileId = extra['memberId']
+                break
         }
     }
 
@@ -1916,7 +1929,27 @@ class CashierBillingView extends React.Component {
                                                             {reserveWaiter.value}
                                                         </Text>
                                                     </View>
-                                                    <TouchableOpacity style={{
+                                                    <TouchableOpacity
+                                                        onPress={()=>{
+                                                            this.setState({
+                                                                memberProfile: {
+                                                                    isGuest: true,
+                                                                    couponList: [],
+                                                                    czkCount: [],
+                                                                    ckCount: [],
+                                                                    memberCountInfo: [],
+                                                                    cardsInfo: [],
+                                                                    imgUrl: null,
+                                                                    reserveInfo:{
+                                                                        memberName: '散客',
+                                                                        reserveResoures: [],
+                                                                        reserveInfoList: []
+                                                                    }
+                                                                }
+                                                            })
+                                                            this.guestPanelRef && this.guestPanelRef.showRightPanel('noReserve', 'createOrder', 'CashierBillingActivity')
+                                                        }}
+                                                        style={{
                                                         position: 'absolute', zIndex: '100', right: PixelUtil.size(70),
                                                         backgroundColor:'#FFA202', width: PixelUtil.size(206), height: PixelUtil.size(58), borderRadius: PixelUtil.size(30), display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                                         <Text style={{fontSize: PixelUtil.size(28), color: '#ffffff', fontWeight: '700', textAlign: 'center', height: '100%', lineHeight: PixelUtil.size(56)}}>转为会员单</Text>
@@ -2906,6 +2939,10 @@ class CashierBillingView extends React.Component {
 
                 {/* 会员信息 */}
                 <MemberPanel ref={ref => {this.memberPanelRef = ref}} memberInfo={this.state.memberProfile} reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
+                {/*散客转会员*/}
+                <GuestPanel ref={ref => {this.guestPanelRef = ref}}  customerInfo={this.state.memberProfile}  reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
+                {/*顾客多档案信息面板*/}
+                <PanelMultiProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={customerPressEvent}/>
             </View>
         );
     }

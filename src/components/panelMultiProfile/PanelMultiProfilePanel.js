@@ -36,13 +36,14 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     });
 
     /// 展示面板
-    const showRightPanel = (showMode = 'withReserve', showType = 'member', phone, waiterId, actionType) => {
+    const showRightPanel = (showMode = 'withReserve', showType = 'member', phone, waiterId, actionType, pagerName) => {
         setShowMode(showMode)
         setShowType(showType)
         setActionType(actionType)
         setUserPhone(phone)
         setWaiterId(waiterId)
         setShowClear(phone && phone.length > 0)
+        setPagerName(pagerName)
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
             duration: 500,
@@ -96,6 +97,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     const [waiterId, setWaiterId] = useState('')
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
+    /// 页面来源
+    const [pagerName, setPagerName] = useState('')
     /// 是否展示清除按钮
     const [showClear, setShowClear] = useState(false)
     /// 多会员数据

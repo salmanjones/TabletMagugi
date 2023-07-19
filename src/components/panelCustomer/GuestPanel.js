@@ -54,6 +54,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     const [wxQRImg, setWxQRImg] = useState(null)
     /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
     const [scanState, setScanState] = useState(null)
+    /// 来源页面
+    const [pagerName, setPagerName] = useState(null)
     /// 登录用户信息
     const loginUser = ReduxStore.getState().auth.userInfo
 
@@ -64,7 +66,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     }
 
     /// 展示面板
-    const showRightPanel = (mode, actionType) => {
+    const showRightPanel = (mode, actionType, pagerName) => {
         if(mode == 'noReserve'){ // 无预约信息
             setTabArray(['基础档案'])
         }else{
@@ -74,6 +76,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         setWxQRImg('')
         setShowMode(mode)
         setTabIndex(0)
+        setPagerName(pagerName)
 
         Animated.timing(animateState.sliderLeft, {
             toValue: 0,
@@ -307,7 +310,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                             showMode={showMode}
                                             customerPressEvent={customerPressEvent}
                                             reserveInfo={customerInfo['reserveInfo']}
-                                            actionType={actionType}/>
+                                            actionType={actionType}
+                                            pagerName={pagerName}/>
                                     )
                                 }
                             </View>
