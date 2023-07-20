@@ -108,14 +108,17 @@ class MultiPay extends React.Component {
     }
 
     componentDidMount() {
+        // 准备订单基础数据
         let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
+
+        // 获取页面基础数据
         this.getInitialData(billingInfo, memberInfo, items, (data) => {
             let stateData = {...this.state, paymentTimesCard};
             if (data) {
                 let {othersPaymentList, coupons} = data;
-                let otherPayTypes = othersPaymentList
-                    ? othersPaymentList.map((x) => ({
+                // 处理外联支付
+                let otherPayTypes = othersPaymentList ? othersPaymentList.map((x) => ({
                         payType: 3,
                         payTypeId: x.id,
                         payTypeNo: x.id,
@@ -124,21 +127,26 @@ class MultiPay extends React.Component {
                         payMode: 0,
                     }))
                     : [];
-                stateData.payTypes = stateData.payTypes.concat(otherPayTypes); //外联
-
+                // 拼接外联支付
+                stateData.payTypes = stateData.payTypes.concat(otherPayTypes);
+                // 是否拥有优惠券
                 if (coupons && coupons.length) {
-                    stateData.coupons = coupons; //优惠券
+                    //优惠券
+                    stateData.coupons = coupons;
                     let couponPayType = stateData.payTypes.find((x) => x.payType == 5);
                     if (couponPayType) couponPayType.itemAmt = coupons.length;
                 } else {
+                    // 无优惠券过滤掉优惠券选项
                     stateData.payTypes = stateData.payTypes.filter((x) => x.payType != 5);
                 }
             }
 
+            // 获取公司设置，是否使用现金/银行卡;0:使用;1:不使用
             if (companySetting && !companySetting.isUseCash) {
                 stateData.payTypes = stateData.payTypes.filter((x) => x.payType != 1 && (x.payType != 3 || x.payTypeId != 5));
             }
 
+            // 会员有效卡
             let availableCards =
                 (memberInfo &&
                     memberInfo.vipStorageCardList &&
@@ -148,6 +156,8 @@ class MultiPay extends React.Component {
                         return x.cardType == 1 && (x.consumeMode != 0 || balance > 0);
                     })) ||
                 [];
+
+            // 组装有效卡展示
             if (availableCards.length) {
                 stateData.cards = availableCards.map((x) => ({
                     id: x.id,
@@ -182,7 +192,14 @@ class MultiPay extends React.Component {
             this.calculateBilling(this.state, (data) => {
                 try {
                     this.checkResult(data);
-                    let {alreadyPaidPrice, alreadyCouponPrice, alreadyWaitPayPrice, willPayPrice, alreadyDiscountPrice, timesProjectsPayEndNum} = data.data;
+                    let {
+                        alreadyPaidPrice,
+                        alreadyCouponPrice,
+                        alreadyWaitPayPrice,
+                        willPayPrice,
+                        alreadyDiscountPrice,
+                        timesProjectsPayEndNum
+                    } = data.data;
                     //进入页面应付计算
                     this.setState({
                         paymentInfo: {
@@ -227,13 +244,13 @@ class MultiPay extends React.Component {
         let selectedItemAmtInfo =
             selectedPayType && selectedPayType.payType == 5
                 ? selectedCoupons.length
-                ? '已选优惠券' + selectedCoupons.length + '张'
-                : ''
-                : selectedPayType && selectedPayType.payType == 2
-                ? selectedCardsId.length
-                    ? '已选会员卡' + selectedCardsId.length + '张'
+                    ? '已选优惠券' + selectedCoupons.length + '张'
                     : ''
-                : '';
+                : selectedPayType && selectedPayType.payType == 2
+                    ? selectedCardsId.length
+                        ? '已选会员卡' + selectedCardsId.length + '张'
+                        : ''
+                    : '';
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Spinner
@@ -351,7 +368,8 @@ class MultiPay extends React.Component {
                             <View style={multiplyPayStyle.footerLeft}>
                                 <View style={multiplyPayStyle.footerLeftTop}>
                                     <Text style={multiplyPayStyle.footerLeftItem}>应付：{paymentInfo.willPayPrice}</Text>
-                                    <Text style={multiplyPayStyle.footerLeftItem}>已付：{paymentInfo.alreadyPaidPrice}</Text>
+                                    <Text
+                                        style={multiplyPayStyle.footerLeftItem}>已付：{paymentInfo.alreadyPaidPrice}</Text>
                                     <Text style={[multiplyPayStyle.footerLeftItem, multiplyPayStyle.leftItemRed]}>
                                         待付：{paymentInfo.wait4PayAmt}
                                     </Text>
@@ -369,10 +387,12 @@ class MultiPay extends React.Component {
                                 </View>
                             </View>
                             <View style={multiplyPayStyle.footerRight}>
-                                <TouchableOpacity style={multiplyPayStyle.canelBtn} onPress={throttle(this.onCancel, 600)}>
+                                <TouchableOpacity style={multiplyPayStyle.canelBtn}
+                                                  onPress={throttle(this.onCancel, 600)}>
                                     <Text style={multiplyPayStyle.btnText}>取消</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={multiplyPayStyle.confirmBtn} onPress={throttle(this.onPay.bind(this), 800)}>
+                                <TouchableOpacity style={multiplyPayStyle.confirmBtn}
+                                                  onPress={throttle(this.onPay.bind(this), 800)}>
                                     <Text style={multiplyPayStyle.btnText}>确认支付</Text>
                                 </TouchableOpacity>
                             </View>
@@ -433,7 +453,7 @@ class MultiPay extends React.Component {
             phone: '',
             consumeItems: JSON.stringify(items)
         }
-        if(memberInfo && memberInfo.phone){
+        if (memberInfo && memberInfo.phone) {
             params.phone = memberInfo.phone
         }
 
@@ -638,17 +658,17 @@ class MultiPay extends React.Component {
             }
         } else if (payResultCode == '-2') {
             throw {type: 'error', msg: msg};
-        } else if (payResultCode =='4') {
+        } else if (payResultCode == '4') {
             throw {type: 'error', msg: '单据已结单'};
-        }else if (payResultCode =='0') {
+        } else if (payResultCode == '0') {
             throw {type: 'error', msg: '正在支付'};
-        }else if (payResultCode =='3') {
+        } else if (payResultCode == '3') {
             throw {type: 'error', msg: '订单状态异常，不允许支付'};
-        }else if (payResultCode =='-4') {
+        } else if (payResultCode == '-4') {
             throw {type: 'error', msg: '有非法从单或消费项，请刷新后重试'};
-        }else if (payResultCode =='-5') {
+        } else if (payResultCode == '-5') {
             throw {type: 'error', msg: '外卖存店异常'};
-        }else {
+        } else {
             if (payTypeMoreList && payTypeMoreList.length) {
                 let sample = payTypeMoreList[0];
                 throw {type: 'error', msg: sample.paymentName + ' 支付方式多出'};
@@ -733,18 +753,18 @@ class MultiPay extends React.Component {
         // 如果优惠券支付选中，自动补齐卡扣金额
         const usedCoupon = selectedCoupons.length > 0
         let cards = JSON.parse(JSON.stringify(this.state.cards))
-        if(usedCoupon){
-            cards.forEach(card=>{
+        if (usedCoupon) {
+            cards.forEach(card => {
                 card.paidAmt = null
-                if(card.attachMoneyList){
-                    card.attachMoneyList.forEach(attch=>{
+                if (card.attachMoneyList) {
+                    card.attachMoneyList.forEach(attch => {
                         attch.paidAmt = null
                     })
                 }
             })
-            paySequence.forEach(item=>{
-                let {payType}  = item.value
-                if(payType == '2'){
+            paySequence.forEach(item => {
+                let {payType} = item.value
+                if (payType == '2') {
                     item.value['payAmount'] = ''
                 }
             })
@@ -759,10 +779,10 @@ class MultiPay extends React.Component {
                 // 根据后台扣券返回结果处理券前端展示
                 let couponItems = payTypeUsedList && payTypeUsedList.length ? payTypeUsedList.filter((x) => x.payType == 5) : [];
                 let totalCouponPrice = couponItems.length ? couponItems.reduce((rs, x) => rs + x.consumeActualMoney, 0) : null;
-                let checkedCoupons = couponItems.map(item=>{
+                let checkedCoupons = couponItems.map(item => {
                     return item.couponInfo.couponNo
                 })
-                selectedCoupons = selectedCoupons.filter(item=>{
+                selectedCoupons = selectedCoupons.filter(item => {
                     return checkedCoupons.indexOf(item.couponNo) != -1
                 })
 
@@ -1174,10 +1194,10 @@ class MultiPay extends React.Component {
                     this.setState({
                         errorStockList: stockData || [],
                     });
-                }else if(backData && backData.payResultCode=='5'){
-                    showMessage(backData.payMsg,true);
-                }else{
-                    showMessage('库存检查异常',true);
+                } else if (backData && backData.payResultCode == '5') {
+                    showMessage(backData.payMsg, true);
+                } else {
+                    showMessage('库存检查异常', true);
                 }
             })
             .finally(() => {
@@ -1236,34 +1256,32 @@ class MultiPay extends React.Component {
         // 处理支付方式所扣金额
         let payWayList = clone(state.payTypes)
         let payTypeUsedList = payResult.payTypeUsedList // 最终支使用的支付方式:由后台决定如何抵扣
-        payWayList.forEach(payway=>{
-            payway.paidAmt =  payTypeUsedList.filter(item=>{
+        payWayList.forEach(payway => {
+            payway.paidAmt = payTypeUsedList.filter(item => {
                 return item.payType == payway.payType
-            }).reduce((paidAmt, item)=>{
+            }).reduce((paidAmt, item) => {
                 let consumeActualMoney = parseFloat(item.consumeActualMoney || 0)
                 let discountPrice = parseFloat(item.discountPrice || 0)
-                if(item.payType == '5'){ // 优惠券支付
-                    if(item.payMode == '0' || item.payMode == '2'){ // 0现金 1折扣 2抵扣
+                if (item.payType == '5') { // 优惠券支付
+                    if (item.payMode == '0' || item.payMode == '2') { // 0现金 1折扣 2抵扣
                         return paidAmt + consumeActualMoney
-                    }else{
+                    } else {
                         return paidAmt + discountPrice
                     }
-                }else if(item.payType == '2'){ // 储值卡抵扣
-
-
+                } else if (item.payType == '2') { // 储值卡抵扣
 
 
                     return paidAmt + consumeActualMoney
-                }else if(item.payType == '6'){ // 微信或支付宝
-                    if(item.payTypeId == payway.payTypeId){ // 区别微信与支付宝
+                } else if (item.payType == '6') { // 微信或支付宝
+                    if (item.payTypeId == payway.payTypeId) { // 区别微信与支付宝
                         return paidAmt + consumeActualMoney
-                    }else{
+                    } else {
                         return paidAmt
                     }
-                }else{
-                    if(item.payTypeId == payway.payTypeId){
+                } else {
+                    if (item.payTypeId == payway.payTypeId) {
                         return paidAmt + consumeActualMoney
-                    }else{
+                    } else {
                         return paidAmt
                     }
                 }
@@ -1280,64 +1298,64 @@ class MultiPay extends React.Component {
             const payKeyArray = payKey.split("_")
 
             // 处理每个扣费项
-            if(payKeyArray.length == 4){ // 项目赠金
+            if (payKeyArray.length == 4) { // 项目赠金
                 let delIndex = -2
                 const attachWay = payUsedArray.filter((payUsed, index) => {
                     const tmpKey = payUsed.payType + "_" + payUsed.payTypeId + "_-1_" + payUsed.payModeId
-                    if(tmpKey == payKey){
+                    if (tmpKey == payKey) {
                         delIndex = index
                         return true
-                    }else{
+                    } else {
                         return false
                     }
                 })
 
-                if(attachWay.length > 0){ // 当前赠金已用于支付
+                if (attachWay.length > 0) { // 当前赠金已用于支付
                     // 移除已处理的支付方式
                     sequence.value.payAmount = attachWay[0].consumeActualMoney
-                    delIndex !=-2 && payUsedArray.splice(delIndex, 1)
+                    delIndex != -2 && payUsedArray.splice(delIndex, 1)
                     return true
-                }else{
+                } else {
                     return false
                 }
-            }else if(payKeyArray.length == 3){ // 有赠金的储值卡
+            } else if (payKeyArray.length == 3) { // 有赠金的储值卡
                 let delIndex = -2
                 const attachWay = payUsedArray.filter((payUsed, index) => {
                     const tmpKey = payUsed.payType + "_" + payUsed.payTypeId + '_' + payUsed.payMode
-                    if(tmpKey == payKey){
+                    if (tmpKey == payKey) {
                         delIndex = index
                         return true
-                    }else{
+                    } else {
                         return false
                     }
                 })
 
-                if(attachWay.length > 0){ // 当前赠金已用于支付
+                if (attachWay.length > 0) { // 当前赠金已用于支付
                     sequence.value.payAmount = attachWay[0].consumeActualMoney
-                    delIndex !=-2 &&  payUsedArray.splice(delIndex, 1)
+                    delIndex != -2 && payUsedArray.splice(delIndex, 1)
                     return true
-                }else{
+                } else {
                     return false
                 }
-            }else if(payKeyArray.length == 2){ // 其它
+            } else if (payKeyArray.length == 2) { // 其它
                 let delIndex = -2
                 const attachWay = payUsedArray.filter((payUsed, index) => {
                     const tmpKey = payUsed.payType + "_" + payUsed.payTypeId
-                    if(tmpKey == payKey){
+                    if (tmpKey == payKey) {
                         delIndex = index
                         return true
-                    }else{
+                    } else {
                         return false
                     }
                 })
 
-                if(attachWay.length > 0){
-                    if(attachWay[0].payType != '4' && attachWay[0].payType != '5'){ // 非次卡按照实际进行扣减，次卡项目按照实际进行扣减
+                if (attachWay.length > 0) {
+                    if (attachWay[0].payType != '4' && attachWay[0].payType != '5') { // 非次卡按照实际进行扣减，次卡项目按照实际进行扣减
                         sequence.value.payAmount = attachWay[0].consumeActualMoney
                     }
-                    delIndex !=-2 && payUsedArray.splice(delIndex, 1)
+                    delIndex != -2 && payUsedArray.splice(delIndex, 1)
                     return true
-                }else{
+                } else {
                     return false
                 }
             }
@@ -1350,34 +1368,34 @@ class MultiPay extends React.Component {
             let payType = item.value.payType
             return (payType != '5' && payType != '4')
         }).length > 0
-        if(!usedOtherPay){ // 仅优惠券支付及次卡支付
+        if (!usedOtherPay) { // 仅优惠券支付及次卡支付
             // 如果抵扣券已完成扣费，则会员卡还原扣费金额
-            cards.forEach(card=>{
+            cards.forEach(card => {
                 card.paidAmt = null
-                if(card.attachMoneyList){
-                    card.attachMoneyList.forEach(attch=>{
+                if (card.attachMoneyList) {
+                    card.attachMoneyList.forEach(attch => {
                         attch.paidAmt = null
                     })
                 }
             })
-        }else{ // 使用了卡、现金、支付宝等支付方式
+        } else { // 使用了卡、现金、支付宝等支付方式
             // 处理最终会员卡的抵扣金额:会员卡实际扣费由后台决定，因为券抵扣金额未知，故会员卡是浮动金额
             paidSequence.filter(item => {
                 let payType = item.value.payType
                 return (payType == '2')
-            }).forEach(item=>{
+            }).forEach(item => {
                 let cardId = item.value.payTypeId
                 let payAmount = item.value.payAmount
                 let attachId = item.value.payModeId || ''
-                cards.forEach(card=>{
-                    if(card.id == cardId){ // 处理当前会员卡的值
-                        if(attachId && attachId.length > 0){ // 当前为赠金扣费
-                            card.attachMoneyList.forEach(attachMoney=>{
-                                if(attachMoney.id == attachId){
+                cards.forEach(card => {
+                    if (card.id == cardId) { // 处理当前会员卡的值
+                        if (attachId && attachId.length > 0) { // 当前为赠金扣费
+                            card.attachMoneyList.forEach(attachMoney => {
+                                if (attachMoney.id == attachId) {
                                     attachMoney.paidAmt = payAmount
                                 }
                             })
-                        }else{ // 当前为本金扣费
+                        } else { // 当前为本金扣费
                             card.paidAmt = payAmount
                         }
                     }
@@ -1385,7 +1403,7 @@ class MultiPay extends React.Component {
             })
         }
         state.cards = cards
-        state.usedOtherPay = usedOtherPay ? 'used':'unused'
+        state.usedOtherPay = usedOtherPay ? 'used' : 'unused'
 
         // 返回汇总项
         return {
