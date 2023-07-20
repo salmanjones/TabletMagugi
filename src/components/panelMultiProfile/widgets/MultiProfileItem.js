@@ -21,8 +21,7 @@ export const MultiProfileItem = React.memo(({
 
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
-            <View
-                style={index == size - 1 ? PanelMultiProfiles.profileItemLastWrap : PanelMultiProfiles.profileItemWrap}>
+            <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastWrap : PanelMultiProfiles.profileItemWrap}>
                 <View style={PanelMultiProfiles.leftWrap}>
                     <View style={PanelMultiProfiles.nameBox}>
                         <View style={PanelMultiProfiles.nameWrap}>
@@ -38,7 +37,7 @@ export const MultiProfileItem = React.memo(({
                             {getPhoneSecurity(profileItem.bmsPhone)}
                         </Text>
                     </View>
-                    <View style={PanelMultiProfiles.numberBox}>
+                    <View style={pagerName == 'MultiPayActivity' ? PanelMultiProfiles.numberOtherBox : PanelMultiProfiles.numberBox}>
                         <Text style={PanelMultiProfiles.titleText}>会员号</Text>
                         <Text style={PanelMultiProfiles.valueText} ellipsizeMode={"tail"} numberOfLines={1}>
                             {profileItem.memberNo}
@@ -53,7 +52,7 @@ export const MultiProfileItem = React.memo(({
                 </View>
                 <View style={PanelMultiProfiles.rightWrap}>
                     <TouchableOpacity
-                        style={PanelMultiProfiles.createBtnBox}
+                        style={pagerName == 'MultiPayActivity' ? PanelMultiProfiles.createBtnOtherBox : PanelMultiProfiles.createBtnBox}
                         onPress={() => {
                             if (showMode == 'noReserve') { // 未预约，跳转选牌
                                 customerClickEvent('forwardToCashier', {
@@ -76,7 +75,7 @@ export const MultiProfileItem = React.memo(({
                             source={require('@imgPath/reserve_customer_multi_profile_btn.png')}
                             style={PanelMultiProfiles.createBtnImg}>
                             <Text style={PanelMultiProfiles.createBtnTxt}>
-                                {pagerName == 'CashierBillingActivity' ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
+                                {(pagerName == 'CashierBillingActivity' || pagerName == 'MultiPayActivity') ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
                             </Text>
                         </BackgroundImage>
                     </TouchableOpacity>

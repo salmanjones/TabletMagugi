@@ -3171,23 +3171,13 @@ class CashierBillingView extends React.Component {
                         </Animated.View>
                     )}
                 {/*------员工编辑--------*/}
-                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => {
-                    this.staffEditModal = ref
-                }} onSave={this.onSaveEditServicer.bind(this)}/>
+                <StaffModifyModal enableChangeStaff={false} useWriteAccessRigths={true} ref={ref => {this.staffEditModal = ref}} onSave={this.onSaveEditServicer.bind(this)}/>
                 {/* 会员信息 */}
-                <MemberPanel ref={ref => {
-                    this.memberPanelRef = ref
-                }} memberInfo={this.state.memberProfile} reserveFlag={'invalid'}
-                             customerPressEvent={this.customerPressEvent.bind(this)}/>
+                <MemberPanel ref={ref => {this.memberPanelRef = ref }} memberInfo={this.state.memberProfile} reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
                 {/*散客转会员*/}
-                <GuestPanel ref={ref => {
-                    this.guestPanelRef = ref
-                }} customerInfo={this.state.memberProfile} reserveFlag={'invalid'}
-                            customerPressEvent={this.customerPressEvent.bind(this)}/>
+                <GuestPanel ref={ref => {this.guestPanelRef = ref}} customerInfo={this.state.memberProfile} reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
                 {/*顾客多档案信息面板*/}
-                <PanelMultiProfilePanel ref={ref => {
-                    this.panelMultiProfilePanelRef = ref
-                }} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                <PanelMultiProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
             </View>
         );
     }

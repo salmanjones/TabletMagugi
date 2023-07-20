@@ -131,10 +131,15 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             "line_color": {"r": 0, "g": 0, "b": 0},
             "is_hyaline": true
         }
+        // 预约ID
+        const reserveId = customerInfo.reserveInfo && customerInfo.reserveInfo.reserveId ? customerInfo.reserveInfo.reserveId : ''
 
         setLoading(true)
         getGuestQRImg({
-            args: JSON.stringify(qrArgs)
+            args: JSON.stringify(qrArgs),
+            storeId: loginUser.storeId,
+            uniqueId: glUniqueId,
+            reserveId: reserveId
         }).then(backData => {
             const {code, data} = backData
             if (code == '6000') {

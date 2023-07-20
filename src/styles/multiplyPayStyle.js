@@ -28,7 +28,9 @@ export const multiplyPayStyle = StyleSheet.create({
         width: '100%',
         height: '100%',
         position: 'absolute',
-        zIndex: 100
+        zIndex: 100,
+        left: PixelUtil.size(0),
+        top: PixelUtil.size(0)
     },
     contentWrapper: {
         backgroundColor: '#FFF',
@@ -80,39 +82,43 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     header: {
         width: '100%',
-        height: headerHeight,
+        height: PixelUtil.size(120),
         borderBottomWidth: PixelUtil.size(2),
         borderBottomColor: '#cbcbcb',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     headerLeft: {
-        height: headerHeight,
+        width: '50%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingTop: PixelUtil.size(8),
-        marginLeft: PixelUtil.size(40),
+        paddingLeft: PixelUtil.size(40),
     },
     leftTitle: {
         fontSize: PixelUtil.size(32),
         color: '#333',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        paddingTop: PixelUtil.size(8),
     },
     leftValue: {
         fontSize: PixelUtil.size(32),
+        paddingTop: PixelUtil.size(8),
         marginLeft: PixelUtil.size(20),
-        color: '#9c9c9c'
+        color: '#444'
     },
     headerRight: {
+        width: '50%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginRight: PixelUtil.size(40),
+        paddingRight: PixelUtil.size(40),
     },
     headerAvatar: {
         width: PixelUtil.size(80),
@@ -124,11 +130,11 @@ export const multiplyPayStyle = StyleSheet.create({
     rightValue: {
         fontSize: PixelUtil.size(32),
         marginLeft: PixelUtil.size(20),
-        color: '#9c9c9c'
+        color: '#444'
     },
     bodyer: {
         width: '100%',
-        height: bodyerHeight,
+        flex: 1,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -156,7 +162,7 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     bodyLeftItemContent: {
         width: '100%',
-        height: PixelUtil.size(145),
+        height: PixelUtil.size(114),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -184,7 +190,6 @@ export const multiplyPayStyle = StyleSheet.create({
         alignItems: 'center'
     },
     img_left: {
-        width: '40%',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center'
@@ -237,6 +242,66 @@ export const multiplyPayStyle = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
+    payWayWrap:{
+        width: '100%',
+        height: PixelUtil.size(114),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    payWaySelfWrap:{
+        width: '50%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(40),
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+    },
+    payWaySelfWrapActive:{
+        width: '50%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(40),
+        borderRightColor: '#cbcbcb',
+        borderRightWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+    },
+    payWayOtherWrap:{
+        width: '50%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(40),
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+    },
+    payWayOtherWrapActive:{
+        width: '50%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(40),
+        borderLeftColor: '#cbcbcb',
+        borderLeftWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+    },
+    payContentWrap:{
+        width: '100%',
+        flex: 1,
+    },
     rightDefault: {
         width: '100%',
         height: '100%',
@@ -260,7 +325,7 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     rightWrapperTitle: {
         width: '100%',
-        height: rightTitleHeight,
+        height: PixelUtil.size(100),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -279,7 +344,7 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     rightWrapperContent: {
         width: '100%',
-        height: rightContentHeight,
+        flex: 1,
     },
     rightWrapperCoupon: {
         width: '100%',
@@ -455,7 +520,8 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     editCardWrap: {
         width: '100%',
-        marginTop: PixelUtil.size(30),
+        height: '100%',
+        paddingTop: PixelUtil.size(30),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -526,14 +592,14 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     otherPayWrap: {
         width: '100%',
-        height: rightContentHeight,
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     footer: {
         width: '100%',
-        height: footerHeight,
+        height: PixelUtil.size(150),
         borderTopWidth: PixelUtil.size(2),
         borderTopColor: '#cbcbcb',
         display: 'flex',
@@ -620,4 +686,8 @@ export const multiplyPayStyle = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#fff',
     },
+    anotherPayBox:{
+        flex: 1,
+        backgroundColor: '#3300ff'
+    }
 });

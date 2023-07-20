@@ -9,7 +9,7 @@ import {
     getAvailablePaymentInfo,
     payBillingV4,
 } from '../../services';
-import {clone, PaymentResultStatus, showMessage, throttle} from '../../utils';
+import {clone, PaymentResultStatus, showMessage, showMessageExt, throttle} from '../../utils';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
@@ -25,7 +25,103 @@ import {CASHIERBILLING_RELOAD_ORDER,} from '../../actions';
 import {multiplyPayStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
+import MultiPayProfilePanel from "../../components/panelMultiProfile/MultiPayProfilePanel";
+import {getMemberInfo} from "../../services/reserve";
 
+// 自己支付支付方式
+const defaultPayTypes = [
+    {
+        payType: 5,
+        payTypeId: null,
+        name: '优惠券抵扣',
+        icon: require('@imgPath/pay-multiply-coupon.png'),
+    },
+    {
+        payType: 2,
+        payTypeId: 2,
+        name: '会员卡支付', // 储值卡支付
+        icon: require('@imgPath/pay-multiply-card.png'),
+    },
+    {
+        payType: 6,
+        payTypeId: 19,
+        payTypeNo: 19,
+        name: '微信支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-wechat.png'),
+    },
+    // {
+    //     payType: 6,
+    //     payTypeId: 18,
+    //     payTypeNo: 18,
+    //     name: '支付宝支付',
+    //     payMode: 0,
+    //     icon: require('@imgPath/pay-multiply-ali.png'),
+    // },
+    {
+        payType: 1,
+        payTypeId: -1,
+        payTypeNo: -1,
+        name: '现金支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-cash.png'),
+    },
+    {
+        payType: 3,
+        payTypeId: 5,
+        payTypeNo: 5,
+        name: '银联支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-unipay.png'),
+    },
+]
+// 他人代付支付方式
+const anotherPayTypes = [
+    {
+        payType: 5,
+        payTypeId: null,
+        name: '优惠券抵扣',
+        icon: require('@imgPath/pay-multiply-coupon.png'),
+    },
+    {
+        payType: 2,
+        payTypeId: 2,
+        name: '他人代付',
+        icon: require('@imgPath/cashier_billing_pay_other.png'),
+    },
+    {
+        payType: 6,
+        payTypeId: 19,
+        payTypeNo: 19,
+        name: '微信支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-wechat.png'),
+    },
+    // {
+    //     payType: 6,
+    //     payTypeId: 18,
+    //     payTypeNo: 18,
+    //     name: '支付宝支付',
+    //     payMode: 0,
+    //     icon: require('@imgPath/pay-multiply-ali.png'),
+    // },
+    {
+        payType: 1,
+        payTypeId: -1,
+        payTypeNo: -1,
+        name: '现金支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-cash.png'),
+    },
+    {
+        payType: 3,
+        payTypeId: 5,
+        payTypeNo: 5,
+        name: '银联支付',
+        payMode: 0,
+        icon: require('@imgPath/pay-multiply-unipay.png'),
+    },
+]
 class MultiPay extends React.Component {
     constructor(props) {
         super(props);
@@ -42,53 +138,7 @@ class MultiPay extends React.Component {
             selectedCardsId: [], //已选卡
             selectedPayTypeIndex: null,
             editCard: null, //正在编辑卡
-            payTypes: [
-                //支付方式
-                {
-                    payType: 5,
-                    payTypeId: null,
-                    name: '优惠券抵扣',
-                    icon: require('@imgPath/pay-multiply-coupon.png'),
-                },
-                {
-                    payType: 2,
-                    payTypeId: 2,
-                    name: '会员卡支付', // 储值卡支付
-                    icon: require('@imgPath/pay-multiply-card.png'),
-                },
-                {
-                    payType: 6,
-                    payTypeId: 19,
-                    payTypeNo: 19,
-                    name: '微信支付',
-                    payMode: 0,
-                    icon: require('@imgPath/pay-multiply-wechat.png'),
-                },
-                // {
-                //     payType: 6,
-                //     payTypeId: 18,
-                //     payTypeNo: 18,
-                //     name: '支付宝支付',
-                //     payMode: 0,
-                //     icon: require('@imgPath/pay-multiply-ali.png'),
-                // },
-                {
-                    payType: 1,
-                    payTypeId: -1,
-                    payTypeNo: -1,
-                    name: '现金支付',
-                    payMode: 0,
-                    icon: require('@imgPath/pay-multiply-cash.png'),
-                },
-                {
-                    payType: 3,
-                    payTypeId: 5,
-                    payTypeNo: 5,
-                    name: '银联支付',
-                    payMode: 0,
-                    icon: require('@imgPath/pay-multiply-unipay.png'),
-                },
-            ],
+            payTypes: [],
             paymentInfo: {
                 //支付信息
                 willPayPrice: null, //应付
@@ -103,11 +153,22 @@ class MultiPay extends React.Component {
             isPaySuccess: false,
             errorStockList: [],
             paySequence: [],
+            payWayType: 'self', // self:自己支付 other:他人代付
+            multiProfiles: [] // 他人档案
         };
         this.savedBilling = null;
+        this.panelMultiProfilePanelRef = null
     }
 
     componentDidMount() {
+        this.setState({
+            payTypes: defaultPayTypes
+        }, ()=>{
+            this.getInitData()
+        })
+    }
+
+    getInitData(callBack){
         // 准备订单基础数据
         let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
@@ -129,6 +190,7 @@ class MultiPay extends React.Component {
                     : [];
                 // 拼接外联支付
                 stateData.payTypes = stateData.payTypes.concat(otherPayTypes);
+
                 // 是否拥有优惠券
                 if (coupons && coupons.length) {
                     //优惠券
@@ -174,8 +236,11 @@ class MultiPay extends React.Component {
                 }));
 
                 let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
-                if (cardPayType) cardPayType.itemAmt = availableCards.length;
+                if (cardPayType) {
+                    cardPayType.itemAmt = availableCards.length
+                }
             } else {
+                // 无会员卡
                 stateData.payTypes = stateData.payTypes.filter((x) => x.payType != 2);
             }
 
@@ -212,6 +277,8 @@ class MultiPay extends React.Component {
                             timesProjectsPayEndNum: timesProjectsPayEndNum,
                         },
                     });
+
+                    callBack && callBack()
                 } catch (e) {
                     showMessage(e.msg, true, () => {
                         this.props.navigation.goBack();
@@ -219,6 +286,82 @@ class MultiPay extends React.Component {
                 }
             });
         });
+    }
+
+    // 切换他人代付与自己支付
+    switchPayWay(type){
+        const {payWayType} = this.state
+        if(payWayType == type){
+            return
+        }
+
+        // 初始化数据
+        this.setState({
+            payWayType: type,
+            payTypes: type == 'other'? anotherPayTypes : defaultPayTypes
+        }, ()=>{
+            // 展示他人档案信息
+            if(type == 'other'){
+                this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
+            }else{
+                this.panelMultiProfilePanelRef.hideRightPanel()
+            }
+
+            // 重新加载支付数据
+            this.getInitData(()=>{
+                // 刷新UI
+                this.setState({
+                    selectedCoupons: [], //已选优惠券
+                    selectedCardsId: [], //已选卡
+                    selectedPayTypeIndex: null,
+                    editCard: null, //正在编辑卡
+                    errorStockList: [],
+                    paySequence: [],
+                })
+            })
+        })
+    }
+
+    // 档案确定
+    async customerPressEvent(type, extra, callBack) {
+        switch (type) {
+            case 'toCreateOrder':
+                const queryType = extra['queryType']
+                const params = {}
+                if (queryType == 'phone') {
+                    params['value'] = extra['phone']
+                    params['paramType'] = '1'  // 1 手机号
+                }
+
+                // 手机号查询组件手机号为空，清空列表
+                if ((!params['value'] || params['value'].length < 1)
+                    && params['paramType'] == '1') {
+                    this.setState((prevState, props) => {
+                        return {...prevState, multiProfiles: []}
+                    })
+                    return
+                }
+
+                // 获取会员档案
+                this.setState({isLoading: true})
+                getMemberInfo(params).then(async backData => {
+                    const {code, data} = backData
+                    this.setState({isLoading: false})
+                    if (code != '6000') {
+                        showMessageExt("获取会员档案失败")
+                    } else {
+                        // 档案数据
+                        this.setState((prevState, props) => {
+                            return {...prevState, multiProfiles: data}
+                        })
+                    }
+                }).catch(e => {
+                    console.error("通过appUserId获取会员档案失败", e)
+                    showMessageExt("获取会员档案失败")
+                    this.setState({isLoading: false})
+                })
+                break
+        }
     }
 
     render() {
@@ -233,24 +376,19 @@ class MultiPay extends React.Component {
             cards,
             selectedCardsId,
             paymentInfo,
-            paymentTimesCard,
             editCard,
             qrCode,
             isPaySuccess,
             errorStockList,
-            usedOtherPay
+            usedOtherPay,
+            payWayType
         } = this.state;
         let selectedPayType = payTypes[selectedPayTypeIndex];
         let selectedItemAmtInfo =
             selectedPayType && selectedPayType.payType == 5
-                ? selectedCoupons.length
-                    ? '已选优惠券' + selectedCoupons.length + '张'
-                    : ''
-                : selectedPayType && selectedPayType.payType == 2
-                    ? selectedCardsId.length
-                        ? '已选会员卡' + selectedCardsId.length + '张'
-                        : ''
-                    : '';
+                ? (selectedCoupons.length ? '已选优惠券' + selectedCoupons.length + '张' : '')
+                : (selectedPayType && selectedPayType.payType == 2 ? (selectedCardsId.length ? '已选会员卡' + selectedCardsId.length + '张' : '') : '')
+        // 开始渲染
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Spinner
@@ -284,7 +422,7 @@ class MultiPay extends React.Component {
                                         style={multiplyPayStyle.headerAvatar}
                                         resizeMethod="resize"
                                         source={require('@imgPath/rotate-portrait.png')}
-                                    ></Image>
+                                    />
                                     <Text style={multiplyPayStyle.rightValue}>{memberInfo.name || ''}</Text>
                                     <Text style={multiplyPayStyle.rightValue}>{memberInfo.phone || ''}</Text>
                                     <Text style={multiplyPayStyle.rightValue}>{memberInfo.sex == 1 ? '男' : '女'}</Text>
@@ -302,63 +440,102 @@ class MultiPay extends React.Component {
                             />
                             {/*主体信息-右侧列表*/}
                             <View style={multiplyPayStyle.bodyerRight}>
-                                {/* 默认｜为空 */}
-                                <View style={selectedPayType ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
-                                    <Image source={require('@imgPath/no-content.png')} resizeMode={'contain'}
-                                           style={multiplyPayStyle.noContentImg}/>
-                                    <Text style={multiplyPayStyle.noContentTxt}>请选择支付方式</Text>
-                                </View>
-                                {/* 已选择支付方式 */}
-                                <View style={selectedPayType ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
-                                    <View style={multiplyPayStyle.rightWrapperTitle}>
-
+                                {/*右侧Tab栏*/}
+                                <View style={multiplyPayStyle.payWayWrap}>
+                                    <TouchableOpacity
+                                        style={payWayType == 'self' ? multiplyPayStyle.payWaySelfWrapActive:multiplyPayStyle.payWaySelfWrap}
+                                        onPress={()=>{
+                                            this.switchPayWay('self')
+                                        }}>
                                         <View style={multiplyPayStyle.img_left}>
-                                            {selectedPayType && selectedPayType.icon && (
-                                                <Image style={multiplyPayStyle.itemLeftImg} resizeMethod="resize"
-                                                       source={selectedPayType.icon}></Image>
-                                            )}
-                                            <Text
-                                                style={multiplyPayStyle.rightTitleTxt}>{selectedPayType ? selectedPayType.name : ''}</Text>
+                                            <Image style={multiplyPayStyle.itemLeftImg}
+                                                   resizeMethod="resize"
+                                                   source={selectedPayType && selectedPayType.icon ? selectedPayType.icon: require("@imgPath/pay-multiply-card.png")}></Image>
+                                            <Text style={multiplyPayStyle.rightTitleTxt}>{selectedPayType ? selectedPayType.name : '选择支付方式'}</Text>
                                         </View>
-
-                                        <View><Text style={multiplyPayStyle.rightTitleTxt0}>{selectedItemAmtInfo}</Text></View>
+                                        {/*
+                                            取消已选择几张会员卡提示
+                                            <Text style={multiplyPayStyle.rightTitleTxt0}>{selectedItemAmtInfo}</Text>
+                                        */}
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={payWayType == 'other' ? multiplyPayStyle.payWayOtherWrapActive:multiplyPayStyle.payWayOtherWrap}
+                                        onPress={()=>{
+                                            this.switchPayWay('other')
+                                        }}>
+                                        <View style={multiplyPayStyle.img_left}>
+                                            <Image style={multiplyPayStyle.itemLeftImg}
+                                                   resizeMethod="resize"
+                                                   source={require("@imgPath/cashier_billing_pay_other.png")}></Image>
+                                            <Text style={multiplyPayStyle.rightTitleTxt}>他人代付</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={multiplyPayStyle.payContentWrap}>
+                                    {/* 默认｜为空 */}
+                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
+                                        <Image source={require('@imgPath/no-content.png')} resizeMode={'contain'}
+                                               style={multiplyPayStyle.noContentImg}/>
+                                        <Text style={multiplyPayStyle.noContentTxt}>请选择支付方式</Text>
                                     </View>
-                                    <View style={multiplyPayStyle.rightWrapperContent}>
-                                        {
-                                            /*优惠券*/
-                                            selectedPayType && selectedPayType.payType == 5 && (
-                                                <CouponList selectedCoupons={selectedCoupons} data={coupons}
-                                                            onSeleted={this.onCouponSelected}/>
-                                            )
-                                        }
-                                        {
-                                            /*会员卡列表*/
-                                            selectedPayType && selectedPayType.payType == 2 && !editCard && (
-                                                <MemberCardList
-                                                    onSeleted={this.onCardSelected}
-                                                    selectedCardsId={selectedCardsId}
-                                                    data={cards}
-                                                    onEdit={this.onEditCard}
-                                                />
-                                            )
-                                        }
-                                        {selectedPayType && selectedPayType.payType == 2 && editCard && (
-                                            <EditCardPay card={editCard}
-                                                         waitPayMoney={paymentInfo.wait4PayAmt}
-                                                         usedOtherPay={usedOtherPay}
-                                                         onCancel={this.onEditCardCancel}
-                                                         onConfirm={this.onEditCardConfirm}/>
-                                        )}
-                                        {
-                                            /*其他支付方式*/
-                                            selectedPayType && selectedPayType.payType != 2 && selectedPayType.payType != 5 && (
-                                                <View style={multiplyPayStyle.otherPayWrap}>
-                                                    <SimulateKeyboardPay showInput={true}
-                                                                         showCanel={false}
-                                                                         onConfirm={this.onKeyBoardFinish}/>
-                                                </View>
-                                            )
-                                        }
+                                    {/* 已选择支付方式 */}
+                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
+                                        <View style={multiplyPayStyle.rightWrapperContent}>
+                                            {
+                                                /*优惠券*/
+                                                selectedPayType && selectedPayType.payType == 5 && (
+                                                    <CouponList selectedCoupons={selectedCoupons} data={coupons}
+                                                                onSeleted={this.onCouponSelected}/>
+                                                )
+                                            }
+                                            {
+                                                // 自己支付或他人代付
+                                                (()=>{
+                                                    if(payWayType == 'self'){ // 自己支付
+                                                        if(selectedPayType && selectedPayType.payType == 2){
+                                                            if(editCard){
+                                                                /*会员卡列表*/
+                                                                return (
+                                                                    <EditCardPay card={editCard}
+                                                                                 waitPayMoney={paymentInfo.wait4PayAmt}
+                                                                                 usedOtherPay={usedOtherPay}
+                                                                                 onCancel={this.onEditCardCancel}
+                                                                                 onConfirm={this.onEditCardConfirm}/>
+                                                                )
+                                                            }else{
+                                                                /*会员卡列表*/
+                                                                return (
+                                                                    <MemberCardList
+                                                                        onSeleted={this.onCardSelected}
+                                                                        selectedCardsId={selectedCardsId}
+                                                                        data={cards}
+                                                                        onEdit={this.onEditCard}
+                                                                    />
+                                                                )
+                                                            }
+                                                        }else{
+                                                            return (<View></View>)
+                                                        }
+                                                    }else{ // 他人代付
+                                                        return (
+                                                            <View style={multiplyPayStyle.anotherPayBox}>
+                                                                <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                                                            </View>
+                                                        )
+                                                    }
+                                                })()
+                                            }
+                                            {
+                                                /*其他支付方式*/
+                                                selectedPayType && selectedPayType.payType != 2 && selectedPayType.payType != 5 && (
+                                                    <View style={multiplyPayStyle.otherPayWrap}>
+                                                        <SimulateKeyboardPay showInput={true}
+                                                                             showCanel={false}
+                                                                             onConfirm={this.onKeyBoardFinish}/>
+                                                    </View>
+                                                )
+                                            }
+                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -689,7 +866,6 @@ class MultiPay extends React.Component {
     //支付方式checkBox 选中
     onPayTypeChecked = (index) => {
         let payType = this.state.payTypes[index];
-
         if (payType.paidAmt == null || payType.paidAmt == undefined) {
             this.onPayTypeSelected(index);
             return;
