@@ -32,37 +32,54 @@ export class MemberCardList extends PureComponent {
                             }}
                         >
                             {/*isSelected ? require('@imgPath/pay-multiply-card-checked.png') : require('@imgPath/pay-multiply-card-normal.png')*/}
+
+                            {/**/}
                             <ImageBackground
                                 style={multiplyPayStyle.rightWrapperCardImg}
-                                source={require('@imgPath/member_storecard.png')}
+                                source={item.cardStatus == '-2' ? require('@imgPath/member_expired.png') : require('@imgPath/member_storecard.png')}
                                 resizeMethod="resize"
                                 resizeMode={'stretch'}
                             >
                                 <View style={multiplyPayStyle.rightWrapperCardDesc}>
-                                    <View style={multiplyPayStyle.rightWrapperCardTop}>
-                                        <View style={multiplyPayStyle.rightCardName}>
-                                            <Text style={multiplyPayStyle.storeCard}>储值卡</Text>
-                                            <Text ellipsizeMode={'tail'} numberOfLines={2}
-                                                  style={multiplyPayStyle.storeCardname}>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{item.storeName + '测试测试测试测试测试测试测试测试测试测试测试测试测试测试'}</Text>
+
+                                    <View style={multiplyPayStyle.rightall}>
+                                        <View style={multiplyPayStyle.rightWrapperCardTop}>
+                                            <View style={multiplyPayStyle.rightCardName}>
+                                                <Text style={multiplyPayStyle.storeCard}>储值卡</Text>
+                                                <Text ellipsizeMode={'tail'} numberOfLines={2}
+                                                      style={multiplyPayStyle.storeCardname}>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{item.vipCardName}</Text>
+                                            </View>
+
+                                            <Image
+                                                style={multiplyPayStyle.rightCardConsumeselectImg}
+                                                resizeMethod="resize"
+                                                resizeMode={'contain'}
+                                                source={isSelected ? require('@imgPath/member_select.png') : require('@imgPath/member_noselect.png')}
+                                            ></Image>
+                                        </View>
+                                        <View style={multiplyPayStyle.rightWrappercenter}>
+                                            <Text style={multiplyPayStyle.rightcenterleftName}>{item.storeName}</Text>
+                                            <View style={multiplyPayStyle.rightcenterInfo}>
+                                                {item.cardStatus != '-2' && (
+                                                    <Text
+                                                        style={multiplyPayStyle.rightcenterrightName}>{item.validityShow}</Text>
+                                                )}
+                                                {
+                                                    item.cardStatus == '-2' && (
+                                                        <Text
+                                                            style={multiplyPayStyle.rightcenterextensionName}>已过期
+                                                            {item.validityShow}</Text>
+                                                    )
+                                                }
+                                                {
+                                                    item.cardStatus == '-2' && (
+                                                        <Text style={multiplyPayStyle.rightextension}>延期</Text>
+                                                    )
+                                                }
+
+                                            </View>
                                         </View>
 
-                                        <Image
-                                            style={multiplyPayStyle.rightCardConsumeselectImg}
-                                            resizeMethod="resize"
-                                            resizeMode={'contain'}
-                                            source={isSelected ? require('@imgPath/member_select.png') : require('@imgPath/member_noselect.png')}
-                                        ></Image>
-                                    </View>
-                                    <View style={multiplyPayStyle.rightWrappercenter}>
-                                        <Text style={multiplyPayStyle.rightcenterleftName}>{item.vipCardName}</Text>
-                                        <View style={multiplyPayStyle.rightcenterInfo}>
-                                            <Text
-                                                style={multiplyPayStyle.rightcenterrightName}>有效期至2022-08-14</Text>
-                                            {/*<Text*/}
-                                            {/*    style={multiplyPayStyle.rightcenterextensionName}>已过期*/}
-                                            {/*    有效期至2022-08-14</Text>*/}
-                                            {/*<Text style={multiplyPayStyle.rightextension}>延期</Text>*/}
-                                        </View>
                                     </View>
                                     <View style={multiplyPayStyle.rightWrapperBottom}>
                                         {isNotDiscountCard && <Text

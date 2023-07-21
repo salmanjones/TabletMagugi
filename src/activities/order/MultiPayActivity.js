@@ -122,6 +122,7 @@ const anotherPayTypes = [
         icon: require('@imgPath/pay-multiply-unipay.png'),
     },
 ]
+
 class MultiPay extends React.Component {
     constructor(props) {
         super(props);
@@ -164,12 +165,12 @@ class MultiPay extends React.Component {
     componentDidMount() {
         this.setState({
             payTypes: defaultPayTypes
-        }, ()=>{
+        }, () => {
             this.getInitData()
         })
     }
 
-    getInitData(callBack){
+    getInitData(callBack) {
         // 准备订单基础数据
         let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
@@ -234,13 +235,15 @@ class MultiPay extends React.Component {
                     attachMoneyList: x.attachMoneyList,
                     consumeMode: x.consumeMode,
                     cardType: x.cardType,
+                    cardStatus: x.status,
+                    validityShow: x.validityShow
                 }));
 
                 let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
                 if (cardPayType && stateData.payWayType == 'self') {
                     cardPayType.itemAmt = availableCards.length
                 }
-            } else if(stateData.payWayType == 'self'){
+            } else if (stateData.payWayType == 'self') {
                 // 无会员卡
                 stateData.payTypes = stateData.payTypes.filter((x) => x.payType != 2);
             }
@@ -290,26 +293,26 @@ class MultiPay extends React.Component {
     }
 
     // 切换他人代付与自己支付
-    switchPayWay(type){
+    switchPayWay(type) {
         const {payWayType} = this.state
-        if(payWayType == type){
+        if (payWayType == type) {
             return
         }
 
         // 初始化数据
         this.setState({
             payWayType: type,
-            payTypes: type == 'other'? anotherPayTypes : defaultPayTypes
-        }, ()=>{
+            payTypes: type == 'other' ? anotherPayTypes : defaultPayTypes
+        }, () => {
             // 展示他人档案信息
-            if(type == 'other'){
+            if (type == 'other') {
                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
-            }else{
+            } else {
                 this.panelMultiProfilePanelRef.hideRightPanel()
             }
 
             // 重新加载支付数据
-            this.getInitData(()=>{
+            this.getInitData(() => {
                 // 刷新UI
                 this.setState({
                     selectedCoupons: [], //已选优惠券
@@ -446,13 +449,15 @@ class MultiPay extends React.Component {
                                 attachMoneyList: x.attachMoneyList,
                                 consumeMode: x.consumeMode,
                                 cardType: x.cardType,
+                                cardStatus: x.status,
+                                validityShow: x.validityShow
                             }));
                         }
 
                         this.setState({
                             anotherPortrait: memberInfo,
                             cards: finalCards
-                        }, ()=>{
+                        }, () => {
                             this.panelMultiProfilePanelRef.hideRightPanel()
                         })
                     }
@@ -467,14 +472,14 @@ class MultiPay extends React.Component {
     }
 
     // 取消当前档案
-    cancelAnother(){
+    cancelAnother() {
         // 取消卡选中
-        this.onPayTypeChecked(1, ()=>{
+        this.onPayTypeChecked(1, () => {
             // 处理呈现
             this.setState({
                 anotherPortrait: null,
                 cards: []
-            }, ()=>{
+            }, () => {
                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
             })
         })
@@ -560,21 +565,21 @@ class MultiPay extends React.Component {
                                 {/*右侧Tab栏*/}
                                 <View style={multiplyPayStyle.payWayWrap}>
                                     <TouchableOpacity
-                                        style={payWayType == 'self' ? multiplyPayStyle.payWaySelfWrapActive:multiplyPayStyle.payWaySelfWrap}
-                                        onPress={()=>{
+                                        style={payWayType == 'self' ? multiplyPayStyle.payWaySelfWrapActive : multiplyPayStyle.payWaySelfWrap}
+                                        onPress={() => {
                                             this.switchPayWay('self')
                                         }}>
                                         <View style={multiplyPayStyle.img_left}>
                                             <Image style={multiplyPayStyle.itemLeftImg}
                                                    resizeMethod="resize"
                                                    source={selectedPayType && selectedPayType.icon
-                                                       ? (selectedPayType.name == '他人代付' || selectedPayType.name == '会员卡支付' ? require("@imgPath/pay-multiply-card.png"):selectedPayType.icon)
+                                                       ? (selectedPayType.name == '他人代付' || selectedPayType.name == '会员卡支付' ? require("@imgPath/pay-multiply-card.png") : selectedPayType.icon)
                                                        : require("@imgPath/pay-multiply-card.png")}/>
                                             <Text style={multiplyPayStyle.rightTitleTxt}>
                                                 {
                                                     payWayType == 'self'
-                                                        ?  (selectedPayType ? selectedPayType.name : '选择支付方式')
-                                                        : (!selectedPayType || selectedPayType.name == '他人代付' ? '选择支付方式': selectedPayType.name)
+                                                        ? (selectedPayType ? selectedPayType.name : '选择支付方式')
+                                                        : (!selectedPayType || selectedPayType.name == '他人代付' ? '选择支付方式' : selectedPayType.name)
                                                 }
                                             </Text>
                                         </View>
@@ -584,8 +589,8 @@ class MultiPay extends React.Component {
                                         */}
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        style={payWayType == 'other' ? multiplyPayStyle.payWayOtherWrapActive:multiplyPayStyle.payWayOtherWrap}
-                                        onPress={()=>{
+                                        style={payWayType == 'other' ? multiplyPayStyle.payWayOtherWrapActive : multiplyPayStyle.payWayOtherWrap}
+                                        onPress={() => {
                                             this.switchPayWay('other')
                                         }}>
                                         <View style={multiplyPayStyle.img_left}>
@@ -599,18 +604,21 @@ class MultiPay extends React.Component {
                                 {/*右侧内容栏*/}
                                 <View style={multiplyPayStyle.payContentWrap}>
                                     {/* 默认｜为空 */}
-                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
+                                    <View
+                                        style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
                                         <Image source={require('@imgPath/no-content.png')} resizeMode={'contain'}
                                                style={multiplyPayStyle.noContentImg}/>
                                         <Text style={multiplyPayStyle.noContentTxt}>请选择支付方式</Text>
                                     </View>
                                     {/* 已选择支付方式 */}
-                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
+                                    <View
+                                        style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
                                         <View style={multiplyPayStyle.rightWrapperContent}>
                                             {
                                                 /*优惠券*/
                                                 selectedPayType && selectedPayType.payType == 5 && (
-                                                    <CouponList selectedCoupons={selectedCoupons} data={coupons} onSeleted={this.onCouponSelected}/>
+                                                    <CouponList selectedCoupons={selectedCoupons} data={coupons}
+                                                                onSeleted={this.onCouponSelected}/>
                                                 )
                                             }
                                             {
@@ -636,9 +644,13 @@ class MultiPay extends React.Component {
                                                 )
                                             }
                                             {/*他人代付*/}
-                                            <View style={payWayType == 'other' ? multiplyPayStyle.anotherPayBox:multiplyPayStyle.hide}>
+                                            <View
+                                                style={payWayType == 'other' ? multiplyPayStyle.anotherPayBox : multiplyPayStyle.hide}>
                                                 {/*他人档案*/}
-                                                <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                                                <MultiPayProfilePanel ref={ref => {
+                                                    this.panelMultiProfilePanelRef = ref
+                                                }} multiProfileData={this.state.multiProfiles}
+                                                                      customerClickEvent={this.customerPressEvent.bind(this)}/>
                                                 {/*他人卡信息*/}
                                                 {
                                                     anotherPortrait && (
@@ -652,7 +664,9 @@ class MultiPay extends React.Component {
                                                                         defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                                                     <View style={multiplyPayStyle.anotherInfoBase}>
                                                                         <View style={multiplyPayStyle.anotherInfoBaseName}>
-                                                                            <Text style={multiplyPayStyle.anotherInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                                            <Text
+                                                                                style={multiplyPayStyle.anotherInfoBaseNameTxt}
+                                                                                ellipsizeMode={'tail'} numberOfLines={1}>
                                                                                 {anotherPortrait.name ? decodeURIComponent(anotherPortrait.name) : '未填写姓名'}
                                                                             </Text>
                                                                             <Image
@@ -662,7 +676,8 @@ class MultiPay extends React.Component {
                                                                         </View>
 
                                                                         <View style={multiplyPayStyle.anotherInfoBaseName}>
-                                                                            <Text style={multiplyPayStyle.anotherInfoBasePhone}>
+                                                                            <Text
+                                                                                style={multiplyPayStyle.anotherInfoBasePhone}>
                                                                                 {anotherPortrait.phone.substring(0, 3) + "****" + anotherPortrait.phone.substring(7, 12) || '暂无'}
                                                                             </Text>
                                                                         </View>
@@ -670,10 +685,11 @@ class MultiPay extends React.Component {
                                                                 </View>
                                                                 <TouchableOpacity
                                                                     style={multiplyPayStyle.anotherPortraitTitleRight}
-                                                                    onPress={()=>{
+                                                                    onPress={() => {
                                                                         this.cancelAnother()
                                                                     }}>
-                                                                    <Text style={multiplyPayStyle.anotherPortraitTitleRightTxt}>取消</Text>
+                                                                    <Text
+                                                                        style={multiplyPayStyle.anotherPortraitTitleRightTxt}>取消</Text>
                                                                 </TouchableOpacity>
                                                             </View>
                                                             <View style={multiplyPayStyle.anotherPortraitBodyBox}>
@@ -691,10 +707,10 @@ class MultiPay extends React.Component {
                                                                 {
                                                                     cards && cards.length > 0 && editCard && (
                                                                         <EditCardPay card={editCard}
-                                                                                 waitPayMoney={paymentInfo.wait4PayAmt}
-                                                                                 usedOtherPay={usedOtherPay}
-                                                                                 onCancel={this.onEditCardCancel}
-                                                                                 onConfirm={this.onEditCardConfirm}/>
+                                                                                     waitPayMoney={paymentInfo.wait4PayAmt}
+                                                                                     usedOtherPay={usedOtherPay}
+                                                                                     onCancel={this.onEditCardCancel}
+                                                                                     onConfirm={this.onEditCardConfirm}/>
                                                                     )
                                                                 }
                                                             </View>
@@ -1081,7 +1097,7 @@ class MultiPay extends React.Component {
                 this.setState({
                     ...preState,
                     paymentInfo: {...this.state.paymentInfo, ...paymentInfo},
-                }, ()=>{
+                }, () => {
                     callBack && callBack()
                 });
             } catch (e) {

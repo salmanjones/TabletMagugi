@@ -435,8 +435,9 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     rightWrapperCardDesc: {
         width: PixelUtil.size(724),
-        height: PixelUtil.size(170),
+        height: '100%',
         marginLeft: PixelUtil.size(32),
+        paddingHorizontal: PixelUtil.size(30)
     },
     rightWrapperCardEditDesc: {
         width: PixelUtil.size(724),
@@ -448,26 +449,32 @@ export const multiplyPayStyle = StyleSheet.create({
     },
 
     //更改后的样式
+    rightall: {
+        paddingTop: PixelUtil.size(34),
+        width: '100%',
+        height: PixelUtil.size(195),
+    },
     rightWrapperCardTop: {
         flex: 1,
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         // alignItems: 'center',
         justifyContent: 'space-between',
-        height: "100%",
+
     },
     rightCardName: {
-        width: PixelUtil.size(579),
-        height: PixelUtil.size(64),
+        width: PixelUtil.size(570),
+        // height: PixelUtil.size(64),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        // alignItems: 'flex-start',
+        // alignItems: 'center',
         position: 'relative',
     },
     storeCard: {
         width: PixelUtil.size(105),
-        height: PixelUtil.size(38),
+        // height: PixelUtil.size(38),
         textAlign: 'center',
         lineHeight: PixelUtil.size(38),
         backgroundColor: '#5e3f20',
@@ -476,13 +483,16 @@ export const multiplyPayStyle = StyleSheet.create({
         color: '#fff2dc',
         fontSize: PixelUtil.size(22),
         fontWeight: '700',
-        position: 'absolute'
+        position: 'absolute',
+
     },
     storeCardname: {
         width: '100%',
         lineHeight: PixelUtil.size(48),
         color: '#5e3f20',
-        fontSize: PixelUtil.size(24)
+        fontSize: PixelUtil.size(24),
+        marginTop: PixelUtil.size(-8),
+        marginLeft: PixelUtil.size(10)
     },
     rightCardConsumeselectImg: {
         width: PixelUtil.size(46.13),
@@ -494,9 +504,7 @@ export const multiplyPayStyle = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: PixelUtil.size(15),
-        height: PixelUtil.size(30),
-        marginBottom: PixelUtil.size(10)
+        height: PixelUtil.size(60),
     },
     rightcenterInfo: {
         flex: 0,
@@ -533,6 +541,7 @@ export const multiplyPayStyle = StyleSheet.create({
         marginLeft: PixelUtil.size(26)
     },
     rightWrapperBottom: {
+        width: '100%',
         flex: 0,
         flexDirection: 'row',
         alignItems: 'center',
@@ -791,20 +800,20 @@ export const multiplyPayStyle = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#fff',
     },
-    anotherPayBox:{
+    anotherPayBox: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    anotherPortraitBox:{
+    anotherPortraitBox: {
         width: '100%',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    anotherPortraitTitleBox:{
+    anotherPortraitTitleBox: {
         width: '100%',
         height: PixelUtil.size(114),
         backgroundColor: '#f1f4f4',
@@ -814,7 +823,7 @@ export const multiplyPayStyle = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: PixelUtil.size(40)
     },
-    anotherPortraitTitleLeft:{
+    anotherPortraitTitleLeft: {
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -859,11 +868,11 @@ export const multiplyPayStyle = StyleSheet.create({
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    anotherPortraitBodyBox:{
+    anotherPortraitBodyBox: {
         flex: 1,
         width: '100%'
     },
-    anotherPortraitTitleRight:{
+    anotherPortraitTitleRight: {
         width: PixelUtil.size(156),
         height: PixelUtil.size(62),
         borderRadius: PixelUtil.size(34),
@@ -874,7 +883,7 @@ export const multiplyPayStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    anotherPortraitTitleRightTxt:{
+    anotherPortraitTitleRightTxt: {
         fontSize: PixelUtil.size(30),
         color: '#111c3c'
     }
