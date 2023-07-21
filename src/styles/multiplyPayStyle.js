@@ -240,7 +240,7 @@ export const multiplyPayStyle = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
-    payWayWrap:{
+    payWayWrap: {
         width: '100%',
         height: PixelUtil.size(114),
         display: 'flex',
@@ -248,7 +248,7 @@ export const multiplyPayStyle = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    payWaySelfWrap:{
+    payWaySelfWrap: {
         width: '50%',
         height: '100%',
         display: 'flex',
@@ -260,7 +260,7 @@ export const multiplyPayStyle = StyleSheet.create({
         borderBottomWidth: PixelUtil.size(2),
         borderStyle: 'solid',
     },
-    payWaySelfWrapActive:{
+    payWaySelfWrapActive: {
         width: '50%',
         height: '100%',
         display: 'flex',
@@ -272,7 +272,7 @@ export const multiplyPayStyle = StyleSheet.create({
         borderRightWidth: PixelUtil.size(2),
         borderStyle: 'solid',
     },
-    payWayOtherWrap:{
+    payWayOtherWrap: {
         width: '50%',
         height: '100%',
         display: 'flex',
@@ -284,7 +284,7 @@ export const multiplyPayStyle = StyleSheet.create({
         borderBottomWidth: PixelUtil.size(2),
         borderStyle: 'solid',
     },
-    payWayOtherWrapActive:{
+    payWayOtherWrapActive: {
         width: '50%',
         height: '100%',
         display: 'flex',
@@ -296,7 +296,7 @@ export const multiplyPayStyle = StyleSheet.create({
         borderLeftWidth: PixelUtil.size(2),
         borderStyle: 'solid',
     },
-    payContentWrap:{
+    payContentWrap: {
         width: '100%',
         flex: 1,
     },
@@ -416,12 +416,12 @@ export const multiplyPayStyle = StyleSheet.create({
         alignItems: 'center'
     },
     rightWrapperCardImg: {
-        width: PixelUtil.size(860),
-        height: PixelUtil.size(240),
+        width: PixelUtil.size(777),
+        height: PixelUtil.size(280),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     rightWrapperCardEditImg: {
         width: PixelUtil.size(860),
@@ -433,12 +433,9 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     rightWrapperCardDesc: {
         width: PixelUtil.size(724),
-        height: PixelUtil.size(170),
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginLeft: PixelUtil.size(33),
+        height: '100%',
+        marginLeft: PixelUtil.size(32),
+        paddingHorizontal: PixelUtil.size(30)
     },
     rightWrapperCardEditDesc: {
         width: PixelUtil.size(724),
@@ -448,74 +445,191 @@ export const multiplyPayStyle = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start'
     },
-    rightWrapperCardLeft: {
-        width: PixelUtil.size(85),
-        height: PixelUtil.size(85),
-        borderRadius: PixelUtil.size(43),
-        overflow: 'hidden'
+
+    //更改后的样式
+    rightall: {
+        paddingTop: PixelUtil.size(34),
+        width: '100%',
+        height: PixelUtil.size(195),
     },
-    rightWrapperCardRight: {
-        marginLeft: PixelUtil.size(25),
-        height: '100%',
-        width: PixelUtil.size(613),
+    rightWrapperCardTop: {
+        flex: 1,
+        width: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'flex-start'
+        flexDirection: 'row',
+        // alignItems: 'center',
+        justifyContent: 'space-between',
+
     },
     rightCardName: {
-        width: '100%',
-        fontSize: PixelUtil.size(34),
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-    rightCardMiddleInfo: {
-        width: '100%',
+        width: PixelUtil.size(570),
+        // height: PixelUtil.size(64),
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        // alignItems: 'center',
+        position: 'relative',
     },
-    rightCardStoreName: {
-        width: '45%',
-        fontSize: PixelUtil.size(32),
-        color: '#fff'
-    },
-    rightCardConsume: {
-        width: '50%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    rightCardConsumeMoney: {
-        fontSize: PixelUtil.size(32),
-        color: '#fff'
-    },
-    rightCardConsumeEditBtn: {
+    storeCard: {
+        width: PixelUtil.size(105),
+        // height: PixelUtil.size(38),
+        textAlign: 'center',
+        lineHeight: PixelUtil.size(38),
+        backgroundColor: '#5e3f20',
+        borderRadius: PixelUtil.size(20),
+        overflow: 'hidden',
+        color: '#fff2dc',
+        fontSize: PixelUtil.size(22),
+        fontWeight: '700',
         position: 'absolute',
-        width: PixelUtil.size(80),
-        height: PixelUtil.size(80),
-        marginBottom: PixelUtil.size(18),
-        right: PixelUtil.size(20),
+
     },
-    rightCardConsumeEditImg: {
-        width: PixelUtil.size(50),
-        height: PixelUtil.size(50),
-        marginTop: PixelUtil.size(10),
+    storeCardname: {
+        width: '100%',
+        lineHeight: PixelUtil.size(48),
+        color: '#5e3f20',
+        fontSize: PixelUtil.size(24),
+        marginTop: PixelUtil.size(-8),
         marginLeft: PixelUtil.size(10)
     },
-    rightCardFooterInfo: {
-        width: '100%',
-        display: 'flex',
+    rightCardConsumeselectImg: {
+        width: PixelUtil.size(46.13),
+        height: PixelUtil.size(46.13),
+        marginRight: PixelUtil.size(34),
+    },
+    rightWrappercenter: {
+        flex: 0,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        height: PixelUtil.size(60),
     },
-    rightCardConsumeSpace: {
-        width: PixelUtil.size(50),
-        height: PixelUtil.size(50)
+    rightcenterInfo: {
+        flex: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: PixelUtil.size(32),
     },
+    rightcenterleftName: {
+        color: '#985500',
+        fontWeight: '500',
+        fontSize: PixelUtil.size(22),
+    },
+    rightcenterrightName: {
+        color: '#985500',
+        fontWeight: '500',
+        fontSize: PixelUtil.size(22),
+    },
+    rightcenterextensionName: {
+        color: '#ff3636',
+        fontSize: PixelUtil.size(22),
+        fontWeight: '500'
+    },
+    rightextension: {
+        width: PixelUtil.size(129),
+        height: PixelUtil.size(45),
+        backgroundColor: '#767676',
+        textAlign: 'center',
+        lineHeight: PixelUtil.size(45),
+        color: '#ffffff',
+        fontWeight: '500',
+        fontSize: PixelUtil.size(18),
+        borderRadius: PixelUtil.size(20),
+        overflow: 'hidden',
+        marginLeft: PixelUtil.size(26)
+    },
+    rightWrapperBottom: {
+        width: '100%',
+        flex: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: PixelUtil.size(72),
+    },
+    rightBalance: {
+        color: '#5e3f20',
+        fontSize: PixelUtil.size(30),
+        fontWeight: '500',
+    },
+    rightpaid: {
+        flex: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: PixelUtil.size(32),
+    },
+    rightpaidName: {
+        color: '#ffaa17',
+        fontSize: PixelUtil.size(30),
+        fontWeight: '500',
+    },
+    rightCardConsumeEditImg: {
+        width: PixelUtil.size(32),
+        height: PixelUtil.size(32),
+        marginLeft: PixelUtil.size(12)
+    },
+    // rightWrapperCardRight: {
+    //     marginLeft: PixelUtil.size(25),
+    //     height: '100%',
+    //     width: PixelUtil.size(613),
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //     justifyContent: 'space-around',
+    //     alignItems: 'flex-start'
+    // },
+    // rightCardName: {
+    //     width: '100%',
+    //     fontSize: PixelUtil.size(34),
+    //     fontWeight: 'bold',
+    //     color: '#fff'
+    // },
+    // rightCardMiddleInfo: {
+    //     width: '100%',
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     alignItems: 'center'
+    // },
+    // rightCardStoreName: {
+    //     width: '45%',
+    //     fontSize: PixelUtil.size(32),
+    //     color: '#fff'
+    // },
+    // rightCardConsume: {
+    //     width: '50%',
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     alignItems: 'center'
+    // },
+    // rightCardConsumeMoney: {
+    //     fontSize: PixelUtil.size(32),
+    //     color: '#fff'
+    // },
+    // rightCardConsumeEditBtn: {
+    //     position: 'absolute',
+    //     width: PixelUtil.size(80),
+    //     height: PixelUtil.size(80),
+    //     marginBottom: PixelUtil.size(18),
+    //     right: PixelUtil.size(20),
+    // },
+    // rightCardConsumeEditImg: {
+    //     width: PixelUtil.size(50),
+    //     height: PixelUtil.size(50),
+    //     marginTop: PixelUtil.size(10),
+    //     marginLeft: PixelUtil.size(10)
+    // },
+    // rightCardFooterInfo: {
+    //     width: '100%',
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     alignItems: 'center'
+    // },
+    // rightCardConsumeSpace: {
+    //     width: PixelUtil.size(50),
+    //     height: PixelUtil.size(50)
+    // },
     editCardWrap: {
         width: '100%',
         height: '100%',
@@ -685,20 +799,20 @@ export const multiplyPayStyle = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         color: '#fff',
     },
-    anotherPayBox:{
+    anotherPayBox: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    anotherPortraitBox:{
+    anotherPortraitBox: {
         width: '100%',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    anotherPortraitTitleBox:{
+    anotherPortraitTitleBox: {
         width: '100%',
         height: PixelUtil.size(114),
         backgroundColor: '#f1f4f4',
@@ -708,7 +822,7 @@ export const multiplyPayStyle = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: PixelUtil.size(40)
     },
-    anotherPortraitTitleLeft:{
+    anotherPortraitTitleLeft: {
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -753,11 +867,11 @@ export const multiplyPayStyle = StyleSheet.create({
         textAlign: 'center',
         fontSize: PixelUtil.size(22),
     },
-    anotherPortraitBodyBox:{
+    anotherPortraitBodyBox: {
         flex: 1,
         width: '100%'
     },
-    anotherPortraitTitleRight:{
+    anotherPortraitTitleRight: {
         width: PixelUtil.size(156),
         height: PixelUtil.size(62),
         borderRadius: PixelUtil.size(34),
@@ -768,7 +882,7 @@ export const multiplyPayStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    anotherPortraitTitleRightTxt:{
+    anotherPortraitTitleRightTxt: {
         fontSize: PixelUtil.size(30),
         color: '#111c3c'
     }
