@@ -221,7 +221,7 @@ class MultiPay extends React.Component {
                 [];
 
             // 组装有效卡展示
-            if (availableCards.length) {
+            if (availableCards.length > 0) {
                 stateData.cards = availableCards.map((x) => ({
                     id: x.id,
                     balance: x.balance,
@@ -237,10 +237,10 @@ class MultiPay extends React.Component {
                 }));
 
                 let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
-                if (cardPayType) {
+                if (cardPayType && stateData.payWayType == 'self') {
                     cardPayType.itemAmt = availableCards.length
                 }
-            } else {
+            } else if(stateData.payWayType == 'self'){
                 // 无会员卡
                 stateData.payTypes = stateData.payTypes.filter((x) => x.payType != 2);
             }
@@ -301,7 +301,6 @@ class MultiPay extends React.Component {
             payWayType: type,
             payTypes: type == 'other'? anotherPayTypes : defaultPayTypes
         }, ()=>{
-            console.log("this.panelMultiProfilePanelRef", this.panelMultiProfilePanelRef)
             // 展示他人档案信息
             if(type == 'other'){
                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
@@ -328,7 +327,6 @@ class MultiPay extends React.Component {
 
     // 档案确定
     async customerPressEvent(type, extra, callBack) {
-        const self = this
         switch (type) {
             case 'toCreateOrder':
                 const queryType = extra['queryType']
@@ -455,10 +453,8 @@ class MultiPay extends React.Component {
                             anotherPortrait: memberInfo,
                             cards: finalCards
                         }, ()=>{
-                            // self.panelMultiProfilePanelRef.hideRightPanel()
+                            this.panelMultiProfilePanelRef.hideRightPanel()
                         })
-
-                        console.log("this.panelMultiProfilePanelRef", this.panelMultiProfilePanelRef)
                     }
                 } catch (e) {
                     // 错误
@@ -468,6 +464,20 @@ class MultiPay extends React.Component {
                 }
                 break
         }
+    }
+
+    // 取消当前档案
+    cancelAnother(){
+        // 取消卡选中
+        this.onPayTypeChecked(1, ()=>{
+            // 处理呈现
+            this.setState({
+                anotherPortrait: null,
+                cards: []
+            }, ()=>{
+                this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
+            })
+        })
     }
 
     render() {
@@ -557,8 +567,16 @@ class MultiPay extends React.Component {
                                         <View style={multiplyPayStyle.img_left}>
                                             <Image style={multiplyPayStyle.itemLeftImg}
                                                    resizeMethod="resize"
-                                                   source={selectedPayType && selectedPayType.icon ? selectedPayType.icon: require("@imgPath/pay-multiply-card.png")}></Image>
-                                            <Text style={multiplyPayStyle.rightTitleTxt}>{selectedPayType ? selectedPayType.name : '选择支付方式'}</Text>
+                                                   source={selectedPayType && selectedPayType.icon
+                                                       ? (selectedPayType.name == '他人代付' || selectedPayType.name == '会员卡支付' ? require("@imgPath/pay-multiply-card.png"):selectedPayType.icon)
+                                                       : require("@imgPath/pay-multiply-card.png")}/>
+                                            <Text style={multiplyPayStyle.rightTitleTxt}>
+                                                {
+                                                    payWayType == 'self'
+                                                        ?  (selectedPayType ? selectedPayType.name : '选择支付方式')
+                                                        : (!selectedPayType || selectedPayType.name == '他人代付' ? '选择支付方式': selectedPayType.name)
+                                                }
+                                            </Text>
                                         </View>
                                         {/*
                                             取消已选择几张会员卡提示
@@ -592,61 +610,98 @@ class MultiPay extends React.Component {
                                             {
                                                 /*优惠券*/
                                                 selectedPayType && selectedPayType.payType == 5 && (
-                                                    <CouponList selectedCoupons={selectedCoupons} data={coupons}
-                                                                onSeleted={this.onCouponSelected}/>
+                                                    <CouponList selectedCoupons={selectedCoupons} data={coupons} onSeleted={this.onCouponSelected}/>
                                                 )
                                             }
                                             {
-                                                // 自己支付或他人代付
-                                                (()=>{
-                                                    if(payWayType == 'self'){ // 自己支付
-                                                        if(selectedPayType && selectedPayType.payType == 2){
-                                                            if(editCard){
-                                                                /*会员卡列表*/
-                                                                return (
-                                                                    <EditCardPay card={editCard}
+                                                /*自己付：卡列表*/
+                                                payWayType == 'self' && selectedPayType && selectedPayType.payType == 2 && !editCard && (
+                                                    <MemberCardList
+                                                        onSeleted={this.onCardSelected}
+                                                        selectedCardsId={selectedCardsId}
+                                                        data={cards}
+                                                        onEdit={this.onEditCard}
+                                                        payWayType={payWayType}
+                                                    />
+                                                )
+                                            }
+                                            {
+                                                /*自己付：卡编辑*/
+                                                payWayType == 'self' && selectedPayType && selectedPayType.payType == 2 && editCard && (
+                                                    <EditCardPay card={editCard}
+                                                                 waitPayMoney={paymentInfo.wait4PayAmt}
+                                                                 usedOtherPay={usedOtherPay}
+                                                                 onCancel={this.onEditCardCancel}
+                                                                 onConfirm={this.onEditCardConfirm}/>
+                                                )
+                                            }
+                                            {/*他人代付*/}
+                                            <View style={payWayType == 'other' ? multiplyPayStyle.anotherPayBox:multiplyPayStyle.hide}>
+                                                {/*他人档案*/}
+                                                <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                                                {/*他人卡信息*/}
+                                                {
+                                                    anotherPortrait && (
+                                                        <View style={multiplyPayStyle.anotherPortraitBox}>
+                                                            <View style={multiplyPayStyle.anotherPortraitTitleBox}>
+                                                                <View style={multiplyPayStyle.anotherPortraitTitleLeft}>
+                                                                    <Image
+                                                                        style={multiplyPayStyle.anotherInfoAvatar}
+                                                                        resizeMethod="resize"
+                                                                        source={getImage(anotherPortrait.userImgUrl.uri, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
+                                                                        defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
+                                                                    <View style={multiplyPayStyle.anotherInfoBase}>
+                                                                        <View style={multiplyPayStyle.anotherInfoBaseName}>
+                                                                            <Text style={multiplyPayStyle.anotherInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
+                                                                                {anotherPortrait.name ? decodeURIComponent(anotherPortrait.name) : '未填写姓名'}
+                                                                            </Text>
+                                                                            <Image
+                                                                                style={multiplyPayStyle.anotherSexIcon}
+                                                                                resizeMode={'contain'}
+                                                                                source={anotherPortrait.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
+                                                                        </View>
+
+                                                                        <View style={multiplyPayStyle.anotherInfoBaseName}>
+                                                                            <Text style={multiplyPayStyle.anotherInfoBasePhone}>
+                                                                                {anotherPortrait.phone.substring(0, 3) + "****" + anotherPortrait.phone.substring(7, 12) || '暂无'}
+                                                                            </Text>
+                                                                        </View>
+                                                                    </View>
+                                                                </View>
+                                                                <TouchableOpacity
+                                                                    style={multiplyPayStyle.anotherPortraitTitleRight}
+                                                                    onPress={()=>{
+                                                                        this.cancelAnother()
+                                                                    }}>
+                                                                    <Text style={multiplyPayStyle.anotherPortraitTitleRightTxt}>取消</Text>
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                            <View style={multiplyPayStyle.anotherPortraitBodyBox}>
+                                                                {
+                                                                    cards && cards.length > 0 && !editCard && (
+                                                                        <MemberCardList
+                                                                            onSeleted={this.onCardSelected}
+                                                                            selectedCardsId={selectedCardsId}
+                                                                            data={cards}
+                                                                            onEdit={this.onEditCard}
+                                                                            payWayType={payWayType}
+                                                                        />
+                                                                    )
+                                                                }
+                                                                {
+                                                                    cards && cards.length > 0 && editCard && (
+                                                                        <EditCardPay card={editCard}
                                                                                  waitPayMoney={paymentInfo.wait4PayAmt}
                                                                                  usedOtherPay={usedOtherPay}
                                                                                  onCancel={this.onEditCardCancel}
                                                                                  onConfirm={this.onEditCardConfirm}/>
-                                                                )
-                                                            }else{
-                                                                /*会员卡列表*/
-                                                                return (
-                                                                    <MemberCardList
-                                                                        onSeleted={this.onCardSelected}
-                                                                        selectedCardsId={selectedCardsId}
-                                                                        data={cards}
-                                                                        onEdit={this.onEditCard}
-                                                                    />
-                                                                )
-                                                            }
-                                                        }else{
-                                                            return (<View></View>)
-                                                        }
-                                                    }else{ // 他人代付
-                                                        return (
-                                                            <View style={multiplyPayStyle.anotherPayBox}>
-                                                                {
-                                                                    (()=>{
-                                                                        if(!anotherPortrait){ // 查询他人档案
-                                                                            return (<MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>)
-                                                                        }else{ // 他人档案信息
-                                                                            return (
-                                                                                <View style={multiplyPayStyle.anotherPortraitBox}>
-                                                                                    <View style={multiplyPayStyle.anotherPortraitTitleBox}>
-
-                                                                                    </View>
-                                                                                </View>
-                                                                            )
-                                                                        }
-                                                                    })()
+                                                                    )
                                                                 }
                                                             </View>
-                                                        )
-                                                    }
-                                                })()
-                                            }
+                                                        </View>
+                                                    )
+                                                }
+                                            </View>
                                             {
                                                 /*其他支付方式*/
                                                 selectedPayType && selectedPayType.payType != 2 && selectedPayType.payType != 5 && (
@@ -986,7 +1041,7 @@ class MultiPay extends React.Component {
     };
 
     //支付方式checkBox 选中
-    onPayTypeChecked = (index) => {
+    onPayTypeChecked = (index, callBack) => {
         let payType = this.state.payTypes[index];
         if (payType.paidAmt == null || payType.paidAmt == undefined) {
             this.onPayTypeSelected(index);
@@ -1026,6 +1081,8 @@ class MultiPay extends React.Component {
                 this.setState({
                     ...preState,
                     paymentInfo: {...this.state.paymentInfo, ...paymentInfo},
+                }, ()=>{
+                    callBack && callBack()
                 });
             } catch (e) {
                 showMessage(e.msg, true);

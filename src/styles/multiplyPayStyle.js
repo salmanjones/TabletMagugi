@@ -693,6 +693,7 @@ export const multiplyPayStyle = StyleSheet.create({
         alignItems: 'center'
     },
     anotherPortraitBox:{
+        width: '100%',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -701,10 +702,75 @@ export const multiplyPayStyle = StyleSheet.create({
     anotherPortraitTitleBox:{
         width: '100%',
         height: PixelUtil.size(114),
-        backgroundColor: '#f1f4f5',
+        backgroundColor: '#f1f4f4',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(40)
+    },
+    anotherPortraitTitleLeft:{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    anotherInfoAvatar: {
+        width: PixelUtil.size(64),
+        height: PixelUtil.size(64),
+        overflow: 'hidden',
+        borderRadius: PixelUtil.size(43)
+    },
+    anotherInfoBase: {
+        marginLeft: PixelUtil.size(18),
+        height: PixelUtil.size(64),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    anotherInfoBaseName: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    anotherInfoBaseNameTxt: {
+        color: '#555',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(28),
+        maxWidth: PixelUtil.size(160),
+    },
+    anotherSexIcon: {
+        marginLeft: PixelUtil.size(10),
+        width: PixelUtil.size(37),
+        height: PixelUtil.size(37),
+    },
+    anotherInfoBasePhone: {
+        color: '#555',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: PixelUtil.size(22),
+    },
+    anotherPortraitBodyBox:{
+        flex: 1,
+        width: '100%'
+    },
+    anotherPortraitTitleRight:{
+        width: PixelUtil.size(156),
+        height: PixelUtil.size(62),
+        borderRadius: PixelUtil.size(34),
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#111c3c',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    anotherPortraitTitleRightTxt:{
+        fontSize: PixelUtil.size(30),
+        color: '#111c3c'
     }
 });
