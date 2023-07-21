@@ -540,7 +540,8 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     payKeyBoardWrap: {
         width: '100%',
-        display: 'flex',
+
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -593,7 +594,7 @@ export const multiplyPayStyle = StyleSheet.create({
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     footer: {
         width: '100%',

@@ -153,7 +153,8 @@ class MultiPay extends React.Component {
             isPaySuccess: false,
             errorStockList: [],
             paySequence: [],
-            payWayType: 'self', // self:自己支付 other:他人代付
+            payWayType: 'self', // self:自己支付 other:他人代付 判定支付使用
+            payWayChannel: 'self', // self:自己支付 other:他人代付 判定展示使用
             multiProfiles: [], // 他人多档案
             anotherPortrait: null
         };
@@ -299,6 +300,7 @@ class MultiPay extends React.Component {
         // 初始化数据
         this.setState({
             payWayType: type,
+            payWayChannel: type,
             payTypes: type == 'other'? anotherPayTypes : defaultPayTypes
         }, ()=>{
             // 展示他人档案信息
@@ -498,6 +500,7 @@ class MultiPay extends React.Component {
             errorStockList,
             usedOtherPay,
             payWayType,
+            payWayChannel,
             anotherPortrait
         } = this.state;
         let selectedPayType = payTypes[selectedPayTypeIndex];
@@ -560,7 +563,7 @@ class MultiPay extends React.Component {
                                 {/*右侧Tab栏*/}
                                 <View style={multiplyPayStyle.payWayWrap}>
                                     <TouchableOpacity
-                                        style={payWayType == 'self' ? multiplyPayStyle.payWaySelfWrapActive:multiplyPayStyle.payWaySelfWrap}
+                                        style={payWayChannel == 'self' ? multiplyPayStyle.payWaySelfWrapActive:multiplyPayStyle.payWaySelfWrap}
                                         onPress={()=>{
                                             this.switchPayWay('self')
                                         }}>
@@ -572,7 +575,7 @@ class MultiPay extends React.Component {
                                                        : require("@imgPath/pay-multiply-card.png")}/>
                                             <Text style={multiplyPayStyle.rightTitleTxt}>
                                                 {
-                                                    payWayType == 'self'
+                                                    payWayChannel == 'self'
                                                         ?  (selectedPayType ? selectedPayType.name : '选择支付方式')
                                                         : (!selectedPayType || selectedPayType.name == '他人代付' ? '选择支付方式': selectedPayType.name)
                                                 }
@@ -584,7 +587,7 @@ class MultiPay extends React.Component {
                                         */}
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        style={payWayType == 'other' ? multiplyPayStyle.payWayOtherWrapActive:multiplyPayStyle.payWayOtherWrap}
+                                        style={payWayChannel == 'other' ? multiplyPayStyle.payWayOtherWrapActive:multiplyPayStyle.payWayOtherWrap}
                                         onPress={()=>{
                                             this.switchPayWay('other')
                                         }}>
@@ -599,13 +602,13 @@ class MultiPay extends React.Component {
                                 {/*右侧内容栏*/}
                                 <View style={multiplyPayStyle.payContentWrap}>
                                     {/* 默认｜为空 */}
-                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
+                                    <View style={selectedPayType || payWayChannel == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
                                         <Image source={require('@imgPath/no-content.png')} resizeMode={'contain'}
                                                style={multiplyPayStyle.noContentImg}/>
                                         <Text style={multiplyPayStyle.noContentTxt}>请选择支付方式</Text>
                                     </View>
                                     {/* 已选择支付方式 */}
-                                    <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
+                                    <View style={selectedPayType || payWayChannel == 'other' ? multiplyPayStyle.rightWrapper : multiplyPayStyle.hide}>
                                         <View style={multiplyPayStyle.rightWrapperContent}>
                                             {
                                                 /*优惠券*/
@@ -615,19 +618,19 @@ class MultiPay extends React.Component {
                                             }
                                             {
                                                 /*自己付：卡列表*/
-                                                payWayType == 'self' && selectedPayType && selectedPayType.payType == 2 && !editCard && (
+                                                payWayChannel == 'self' && selectedPayType && selectedPayType.payType == 2 && !editCard && (
                                                     <MemberCardList
                                                         onSeleted={this.onCardSelected}
                                                         selectedCardsId={selectedCardsId}
                                                         data={cards}
                                                         onEdit={this.onEditCard}
-                                                        payWayType={payWayType}
+                                                        payWayChannel={payWayChannel}
                                                     />
                                                 )
                                             }
                                             {
                                                 /*自己付：卡编辑*/
-                                                payWayType == 'self' && selectedPayType && selectedPayType.payType == 2 && editCard && (
+                                                payWayChannel == 'self' && selectedPayType && selectedPayType.payType == 2 && editCard && (
                                                     <EditCardPay card={editCard}
                                                                  waitPayMoney={paymentInfo.wait4PayAmt}
                                                                  usedOtherPay={usedOtherPay}
@@ -636,7 +639,7 @@ class MultiPay extends React.Component {
                                                 )
                                             }
                                             {/*他人代付*/}
-                                            <View style={payWayType == 'other' ? multiplyPayStyle.anotherPayBox:multiplyPayStyle.hide}>
+                                            <View style={payWayChannel == 'other' ? multiplyPayStyle.anotherPayBox:multiplyPayStyle.hide}>
                                                 {/*他人档案*/}
                                                 <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
                                                 {/*他人卡信息*/}
@@ -684,7 +687,7 @@ class MultiPay extends React.Component {
                                                                             selectedCardsId={selectedCardsId}
                                                                             data={cards}
                                                                             onEdit={this.onEditCard}
-                                                                            payWayType={payWayType}
+                                                                            payWayChannel={payWayChannel}
                                                                         />
                                                                     )
                                                                 }
@@ -764,7 +767,7 @@ class MultiPay extends React.Component {
                                 ></Image>
                                 <Text style={multiplyPayStyle.pwdTitleValue}>
                                     {
-                                        payWayType == 'self' ? '会员卡支付，请输入密码':'他人代付，请输入密码'
+                                        payWayChannel == 'self' ? '会员卡支付，请输入密码':'他人代付，请输入密码'
                                     }
                                 </Text>
                             </View>
@@ -831,7 +834,6 @@ class MultiPay extends React.Component {
     //根据支付项目构造参数
     buildPayTypeParams(paySequence, opt, type, obj, orgObj) {
         const payWayType = this.state.payWayType
-        console.log("payWayType", payWayType)
         if (type == 'coupon') {
             let sequenceKey = '5_' + obj.id;
             if (opt == 'add') {
@@ -1047,6 +1049,18 @@ class MultiPay extends React.Component {
             selectedPayTypeIndex: index,
             editCard: null,
         });
+
+        if(this.state.payWayType != 'self'){
+            if(index == 1){ // 点击他人代付（卡）
+                this.setState({
+                    payWayChannel: 'other'
+                })
+            }else{ // 点击的是其它支付方式（自己支付）
+                this.setState({
+                    payWayChannel: 'self'
+                })
+            }
+        }
     };
 
     //支付方式checkBox 选中
