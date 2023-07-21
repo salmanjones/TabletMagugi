@@ -73,7 +73,9 @@ export class PayTypeList extends PureComponent {
                             <View style={multiplyPayStyle.itemLeftImgTitle}>
                                 {icon && <Image style={multiplyPayStyle.itemLeftImg} resizeMethod="resize"
                                                 source={icon}></Image>}
-                                <Text style={multiplyPayStyle.itemLeftTitle}>{name + amtInfo}</Text>
+                                <Text style={multiplyPayStyle.itemLeftTitle}>
+                                    {name + amtInfo}
+                                </Text>
                             </View>
                         </View>
                         <View style={multiplyPayStyle.bodyLeftItemRight}>
