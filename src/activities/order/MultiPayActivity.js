@@ -762,7 +762,11 @@ class MultiPay extends React.Component {
                                     resizeMethod="resize"
                                     source={require('@imgPath/pay-multiply-card.png')}
                                 ></Image>
-                                <Text style={multiplyPayStyle.pwdTitleValue}>会员卡支付，请输入密码</Text>
+                                <Text style={multiplyPayStyle.pwdTitleValue}>
+                                    {
+                                        payWayType == 'self' ? '会员卡支付，请输入密码':'他人代付，请输入密码'
+                                    }
+                                </Text>
                             </View>
                             <SimulateKeyboardPay
                                 showCanel={true}
@@ -826,6 +830,8 @@ class MultiPay extends React.Component {
 
     //根据支付项目构造参数
     buildPayTypeParams(paySequence, opt, type, obj, orgObj) {
+        const payWayType = this.state.payWayType
+        console.log("payWayType", payWayType)
         if (type == 'coupon') {
             let sequenceKey = '5_' + obj.id;
             if (opt == 'add') {
@@ -868,6 +874,7 @@ class MultiPay extends React.Component {
                         payTypePwd: '',
                         hasPassword: obj.hasPassword,
                         payMode: obj.consumeMode,
+                        isOtherPay: payWayType == 'other' ? true:false
                     },
                 });
                 return paySequence;
@@ -892,6 +899,7 @@ class MultiPay extends React.Component {
                             payTypePwd: '',
                             hasPassword: obj.hasPassword,
                             payMode: obj.consumeMode,
+                            isOtherPay: payWayType == 'other' ? true:false
                         },
                     });
                 } else if (obj.paidAmt == null && orgObj.paidAmt !== null && orgObj.paidAmt != undefined) {
@@ -924,6 +932,7 @@ class MultiPay extends React.Component {
                                 payMode: -1,
                                 payModeId: attach.id,
                                 payModeName: attach.cardName,
+                                isOtherPay: payWayType == 'other' ? true:false
                             },
                         });
                     } else if (attach.paidAmt == null && orgAttach.paidAmt !== null && orgAttach.paidAmt != undefined) {

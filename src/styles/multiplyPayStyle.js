@@ -49,8 +49,6 @@ export const multiplyPayStyle = StyleSheet.create({
         backgroundColor: '#00000060',
         width: '100%',
         height: '100%',
-        position: 'absolute',
-        zIndex: 110
     },
     pwdTitle: {
         width: '100%',
