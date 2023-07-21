@@ -162,7 +162,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    propertyInfoItemBtn:{
+    propertyInfoItemBtn: {
         width: PixelUtil.size(146),
         height: PixelUtil.size(56),
     },
@@ -286,12 +286,12 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
-    operatorBtnTxt:{
+    operatorBtnTxt: {
         fontSize: PixelUtil.size(38),
         color: '#ffffff',
         fontWeight: "900"
     },
-    memberReserveBox:{
+    memberReserveBox: {
         width: '100%',
         height: '100%',
         backgroundColor: '#ffffff',
@@ -302,28 +302,28 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingTop: PixelUtil.size(40),
         position: 'relative'
     },
-    startWorkStyle:{
+    startWorkStyle: {
         position: 'absolute',
         width: PixelUtil.size(146),
         height: PixelUtil.size(146),
         right: PixelUtil.size(32),
         top: PixelUtil.size(32),
     },
-    memberReserveProperty:{
+    memberReserveProperty: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
-    memberReservePropertyOperator:{
+    memberReservePropertyOperator: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
-    memberEditPropertyOperator:{
+    memberEditPropertyOperator: {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -332,39 +332,39 @@ export const PanelCustomerStyles = StyleSheet.create({
         marginBottom: PixelUtil.size(48),
         marginTop: PixelUtil.size(48),
     },
-    memberReservePropertyBtnWrap:{
+    memberReservePropertyBtnWrap: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
-    memberReserveDescProperty:{
+    memberReserveDescProperty: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
-    memberReservePropertyTitle:{
+    memberReservePropertyTitle: {
         color: '#898888',
         fontSize: PixelUtil.size(26),
         fontWeight: '500',
         width: PixelUtil.size(158)
     },
-    memberReservePropertyValue:{
+    memberReservePropertyValue: {
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
     },
-    memberReservePropertyRemark:{
+    memberReservePropertyRemark: {
         color: '#2d2d2d',
         fontSize: PixelUtil.size(26),
         padding: 0,
         fontWeight: '700',
         marginTop: PixelUtil.size(-8)
     },
-    memberReservePropertyDesc:{
+    memberReservePropertyDesc: {
         color: '#2d2d2d',
         fontSize: PixelUtil.size(26),
         padding: PixelUtil.size(24),
@@ -377,7 +377,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         backgroundColor: '#f9fafb',
         borderRadius: PixelUtil.size(10)
     },
-    reservePropertyBtnValue:{
+    reservePropertyBtnValue: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -385,11 +385,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexWrap: 'wrap',
         marginTop: PixelUtil.size(-20)
     },
-    reservePropertyValueButton:{
+    reservePropertyValueButton: {
         width: PixelUtil.size(146),
         height: PixelUtil.size(50),
         borderRadius: PixelUtil.size(26),
-        backgroundColor : '#fff7ea',
+        backgroundColor: '#fff7ea',
         overflow: 'hidden',
         marginRight: PixelUtil.size(32),
         marginBottom: PixelUtil.size(20),
@@ -399,11 +399,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: "center",
 
     },
-    reservePropertyValueButtonActive:{
+    reservePropertyValueButtonActive: {
         width: PixelUtil.size(146),
         height: PixelUtil.size(50),
         borderRadius: PixelUtil.size(26),
-        backgroundColor : '#FFA200',
+        backgroundColor: '#FFA200',
         overflow: 'hidden',
         marginRight: PixelUtil.size(32),
         marginBottom: PixelUtil.size(20),
@@ -412,31 +412,31 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
     },
-    reservePropertyValueButtonTxt:{
+    reservePropertyValueButtonTxt: {
         fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#ffa200'
     },
-    reservePropertyValueButtonTxtActive:{
+    reservePropertyValueButtonTxtActive: {
         fontWeight: '500',
         fontSize: PixelUtil.size(24),
         color: '#FFFFFF'
     },
-    memberReserveCancel:{
+    memberReserveCancel: {
         width: PixelUtil.size(142),
         height: PixelUtil.size(36),
     },
-    memberReserveCancelImage:{
+    memberReserveCancelImage: {
         width: PixelUtil.size(142),
         height: PixelUtil.size(36),
         marginLeft: PixelUtil.size(20)
     },
-    memberReserveCancelText:{
+    memberReserveCancelText: {
         fontSize: PixelUtil.size(32),
         color: '#111c3c',
         fontWeight: '500'
     },
-    memberReserveModify:{
+    memberReserveModify: {
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
         marginLeft: PixelUtil.size(32),
@@ -449,7 +449,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    memberInfoModify:{
+    memberInfoModify: {
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
         marginLeft: PixelUtil.size(180),
@@ -462,7 +462,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    memberReserveModifyText:{
+    memberReserveModifyText: {
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         fontWeight: '500'
@@ -491,24 +491,24 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: 'center',
     },
-    memberCouponPriceWrap:{
+    memberCouponPriceWrap: {
         display: 'flex',
-        flexDirection:'row',
-        justifyContent:'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'baseline'
     },
-    memberCouponPrice:{
+    memberCouponPrice: {
         fontSize: PixelUtil.size(36),
         fontWeight: '700',
         color: '#ffffff'
     },
-    memberCouponPriceUnit:{
+    memberCouponPriceUnit: {
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
         color: '#ffffff',
         letterSpacing: PixelUtil.size(4)
     },
-    memberCouponDetailBox:{
+    memberCouponDetailBox: {
         width: PixelUtil.size(566),
         height: '100%',
         display: 'flex',
@@ -517,7 +517,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         padding: PixelUtil.size(18)
     },
-    memberCouponDetailNameBox:{
+    memberCouponDetailNameBox: {
         width: '100%',
         height: PixelUtil.size(64),
         display: 'flex',
@@ -526,11 +526,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'flex-start',
         position: 'relative',
     },
-    memberCouponDetailNameTypeXJ:{
+    memberCouponDetailNameTypeXJ: {
         width: PixelUtil.size(92),
         height: PixelUtil.size(30),
         borderRadius: PixelUtil.size(15),
-        backgroundColor:'#ff6726',
+        backgroundColor: '#ff6726',
         color: '#ffffff',
         fontSize: PixelUtil.size(20),
         overflow: 'hidden',
@@ -539,11 +539,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingTop: PixelUtil.size(4),
         position: 'absolute'
     },
-    memberCouponDetailNameTypeZK:{
+    memberCouponDetailNameTypeZK: {
         width: PixelUtil.size(92),
         height: PixelUtil.size(30),
         borderRadius: PixelUtil.size(15),
-        backgroundColor:'#A09AFD',
+        backgroundColor: '#A09AFD',
         color: '#ffffff',
         fontSize: PixelUtil.size(20),
         overflow: 'hidden',
@@ -552,11 +552,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingTop: PixelUtil.size(4),
         position: 'absolute'
     },
-    memberCouponDetailNameTypeDK:{
+    memberCouponDetailNameTypeDK: {
         width: PixelUtil.size(92),
         height: PixelUtil.size(30),
         borderRadius: PixelUtil.size(15),
-        backgroundColor:'#63D477',
+        backgroundColor: '#63D477',
         color: '#ffffff',
         fontSize: PixelUtil.size(20),
         overflow: 'hidden',
@@ -565,13 +565,13 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingTop: PixelUtil.size(4),
         position: 'absolute'
     },
-    memberCouponDetailNameText:{
+    memberCouponDetailNameText: {
         width: '100%',
         lineHeight: PixelUtil.size(32),
         color: '#1a1a1a',
         fontSize: PixelUtil.size(24)
     },
-    memberCouponDetailValidDateTxt:{
+    memberCouponDetailValidDateTxt: {
         width: '100%',
         textAlign: 'left',
         fontSize: PixelUtil.size(18),
@@ -579,7 +579,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         color: '#b2b2b2',
         marginTop: PixelUtil.size(30)
     },
-    memberCouponDetailDescBox:{
+    memberCouponDetailDescBox: {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -588,18 +588,18 @@ export const PanelCustomerStyles = StyleSheet.create({
         position: 'relative',
         marginTop: PixelUtil.size(30)
     },
-    memberCouponDetailDescLeftBox:{
+    memberCouponDetailDescLeftBox: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         position: 'relative',
     },
-    memberCouponDetailDescLeftIcon:{
+    memberCouponDetailDescLeftIcon: {
         width: PixelUtil.size(24),
         height: PixelUtil.size(24),
     },
-    memberCouponDetailDescLeftText:{
+    memberCouponDetailDescLeftText: {
         textAlign: 'left',
         fontSize: PixelUtil.size(18),
         fontWeight: '500',
@@ -610,27 +610,27 @@ export const PanelCustomerStyles = StyleSheet.create({
         maxWidth: PixelUtil.size(360),
         overflow: 'hidden'
     },
-    memberCouponDetailDescRightBox:{
+    memberCouponDetailDescRightBox: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         position: 'relative',
     },
-    memberCouponDetailDescRightText:{
+    memberCouponDetailDescRightText: {
         textAlign: 'right',
         fontSize: PixelUtil.size(18),
         fontWeight: '500',
         color: '#C49544',
         lineHeight: PixelUtil.size(36)
     },
-    memberCouponDetailDescRightIcon:{
+    memberCouponDetailDescRightIcon: {
         marginLeft: PixelUtil.size(8),
         width: PixelUtil.size(24),
         height: PixelUtil.size(24),
         marginTop: PixelUtil.size(2)
     },
-    memberCouponRuleBox:{
+    memberCouponRuleBox: {
         width: PixelUtil.size(764),
         padding: PixelUtil.size(32),
         backgroundColor: '#fff',
@@ -639,28 +639,28 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start'
     },
-    memberCouponSourceBox:{
+    memberCouponSourceBox: {
         display: "flex",
         flexDirection: "row",
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    memberCouponSourceTitle:{
+    memberCouponSourceTitle: {
         textAlign: 'left',
         fontSize: PixelUtil.size(22),
         color: '#363636',
         fontWeight: '500'
     },
-    memberCouponSourceValue:{
+    memberCouponSourceValue: {
         textAlign: 'left',
         fontSize: PixelUtil.size(22),
         color: '#9a9a9a',
         fontWeight: '500'
     },
-    memberCouponRuleMargin:{
+    memberCouponRuleMargin: {
         marginTop: PixelUtil.size(16)
     },
-    memberCouponRuleDetailWrap:{
+    memberCouponRuleDetailWrap: {
         width: '100%',
         marginTop: PixelUtil.size(16),
         display: "flex",
@@ -668,11 +668,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start'
     },
-    memberCouponRuleDetailValue:{
+    memberCouponRuleDetailValue: {
         marginTop: PixelUtil.size(6),
         width: '100%',
     },
-    memberProfileBox:{
+    memberProfileBox: {
         width: '100%',
         backgroundColor: '#ffffff',
         borderRadius: PixelUtil.size(26),
@@ -682,7 +682,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingBottom: 0,
         position: 'relative'
     },
-    memberModifyBox:{
+    memberModifyBox: {
         width: '100%',
         height: '100%',
         backgroundColor: '#ffffff',
@@ -693,7 +693,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingBottom: 0,
         position: 'relative'
     },
-    memberProfileTitle:{
+    memberProfileTitle: {
         width: '100%',
         display: "flex",
         justifyContent: "flex-start",
@@ -701,7 +701,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: PixelUtil.size(40)
     },
-    memberPortraitBox:{
+    memberPortraitBox: {
         width: '100%',
         backgroundColor: '#ffffff',
         borderRadius: PixelUtil.size(26),
@@ -711,7 +711,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingBottom: 0,
         position: 'relative'
     },
-    memberPortraitTitle:{
+    memberPortraitTitle: {
         width: '100%',
         display: "flex",
         justifyContent: "flex-start",
@@ -719,36 +719,36 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: PixelUtil.size(40)
     },
-    contentBodyTitleIcon:{
+    contentBodyTitleIcon: {
         width: PixelUtil.size(20),
         height: PixelUtil.size(20),
         marginLeft: PixelUtil.size(-30)
     },
-    contentBodyTitleValue:{
+    contentBodyTitleValue: {
         fontSize: PixelUtil.size(34),
         color: '#2d2d2d',
         fontWeight: '900',
         marginLeft: PixelUtil.size(10)
     },
-    memberPropertyBox:{
+    memberPropertyBox: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: PixelUtil.size(48)
     },
-    memberPropertyTitle:{
+    memberPropertyTitle: {
         width: PixelUtil.size(184),
         fontSize: PixelUtil.size(26),
         color: '#898888',
         fontWeight: '500',
     },
-    memberPropertyValue:{
+    memberPropertyValue: {
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
     },
-    memberPropertyValueBox:{
+    memberPropertyValueBox: {
         height: PixelUtil.size(50),
         display: 'flex',
         justifyContent: 'flex-start',
@@ -756,7 +756,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         position: "relative"
     },
-    memberPropertyValueInput:{
+    memberPropertyValueInput: {
         color: '#2D2D2D',
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
@@ -766,18 +766,18 @@ export const PanelCustomerStyles = StyleSheet.create({
         height: PixelUtil.size(50),
         paddingLeft: PixelUtil.size(14)
     },
-    contentBodyCalendarIcon:{
+    contentBodyCalendarIcon: {
         width: PixelUtil.size(30),
         height: PixelUtil.size(26),
         marginLeft: PixelUtil.size(-56)
     },
-    memberPropertyButtons:{
+    memberPropertyButtons: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
     },
-    memberSexButton:{
+    memberSexButton: {
         width: PixelUtil.size(146),
         height: PixelUtil.size(50),
         backgroundColor: '#FFF7EA',
@@ -788,7 +788,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         marginRight: PixelUtil.size(32)
     },
-    memberSexActiveButton:{
+    memberSexActiveButton: {
         width: PixelUtil.size(146),
         height: PixelUtil.size(50),
         backgroundColor: '#FFA200',
@@ -799,23 +799,23 @@ export const PanelCustomerStyles = StyleSheet.create({
         flexDirection: 'row',
         marginRight: PixelUtil.size(32)
     },
-    memberSexButtonTxt:{
+    memberSexButtonTxt: {
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
         color: '#FFA200'
     },
-    memberSexActiveButtonTxt:{
+    memberSexActiveButtonTxt: {
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
         color: '#ffffff'
     },
-    memberPortraitPTitle:{
+    memberPortraitPTitle: {
         width: PixelUtil.size(132),
         fontSize: PixelUtil.size(26),
         color: '#898888',
         fontWeight: '500',
     },
-    memberPortraitPValue:{
+    memberPortraitPValue: {
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
@@ -825,7 +825,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         height: '100%',
         position: 'relative'
     },
-    memberCardsTabBox:{
+    memberCardsTabBox: {
         width: '100%',
         height: PixelUtil.size(80),
         display: 'flex',
@@ -833,7 +833,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'flex-start',
         flexDirection: 'row'
     },
-    memberCardsTabItem:{
+    memberCardsTabItem: {
         width: PixelUtil.size(168),
         height: PixelUtil.size(56),
         marginRight: PixelUtil.size(26),
@@ -844,12 +844,12 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
-    memberCardsTabItemText:{
+    memberCardsTabItemText: {
         fontSize: PixelUtil.size(24),
         color: '#2d2d2d',
         fontWeight: '500',
     },
-    memberCardsTabItemActive:{
+    memberCardsTabItemActive: {
         width: PixelUtil.size(168),
         height: PixelUtil.size(56),
         marginRight: PixelUtil.size(26),
@@ -860,16 +860,16 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
-    memberCardsTabItemTextActive:{
+    memberCardsTabItemTextActive: {
         fontSize: PixelUtil.size(24),
         color: '#FFA200',
         fontWeight: '500',
     },
-    memberCardsWrap:{
+    memberCardsWrap: {
         flex: 1,
         width: '100%',
     },
-    cardItemSeparator:{
+    cardItemSeparator: {
         width: PixelUtil.size(1),
         height: PixelUtil.size(14)
     },
@@ -884,7 +884,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'flex-start',
         position: "relative"
     },
-    cardItemBackground2N:{
+    cardItemBackground2N: {
         width: PixelUtil.size(472),
         height: PixelUtil.size(307),
         borderRadius: PixelUtil.size(20),
@@ -895,19 +895,19 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'flex-start',
         position: "relative"
     },
-    cardItemModeName:{
+    cardItemModeName: {
         color: "#ffefd5",
         fontSize: PixelUtil.size(20),
         marginLeft: PixelUtil.size(50),
         marginTop: PixelUtil.size(10)
     },
-    cardItemModeNameWuXiao:{
+    cardItemModeNameWuXiao: {
         color: "#ffffff",
         fontSize: PixelUtil.size(20),
         marginLeft: PixelUtil.size(50),
         marginTop: PixelUtil.size(10)
     },
-    cardItemContentBox:{
+    cardItemContentBox: {
         marginTop: PixelUtil.size(12),
         width: PixelUtil.size(472),
         height: PixelUtil.size(172),
@@ -917,7 +917,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         position: "relative",
     },
-    cardItemOtherBox:{
+    cardItemOtherBox: {
         marginTop: PixelUtil.size(0),
         width: PixelUtil.size(472),
         height: PixelUtil.size(72),
@@ -926,7 +926,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    cardItemOtherWrap:{
+    cardItemOtherWrap: {
         width: PixelUtil.size(412),
         height: PixelUtil.size(72),
         display: 'flex',
@@ -934,7 +934,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    cardItemChuZhiName:{
+    cardItemChuZhiName: {
         width: PixelUtil.size(412),
         height: PixelUtil.size(96),
         color: '#5E3F20',
@@ -942,7 +942,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
     },
-    cardItemTaoCanName:{
+    cardItemTaoCanName: {
         width: PixelUtil.size(412),
         height: PixelUtil.size(96),
         color: '#3C4C72',
@@ -950,7 +950,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
     },
-    cardItemWuXiaoName:{
+    cardItemWuXiaoName: {
         width: PixelUtil.size(412),
         height: PixelUtil.size(96),
         color: '#1A1A1A',
@@ -958,7 +958,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(24),
         fontWeight: '700',
     },
-    cardItemOperatorBox:{
+    cardItemOperatorBox: {
         width: PixelUtil.size(412),
         height: PixelUtil.size(76),
         display: 'flex',
@@ -966,27 +966,27 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    cardItemChuZhiBalance:{
+    cardItemChuZhiBalance: {
         fontSize: PixelUtil.size(45),
         fontWeight: '700',
         color: '#5E3F20'
     },
-    cardItemTaoCanBalance:{
+    cardItemTaoCanBalance: {
         fontSize: PixelUtil.size(45),
         fontWeight: '700',
         color: '#081539'
     },
-    cardItemWuXiaoBalance:{
+    cardItemWuXiaoBalance: {
         fontSize: PixelUtil.size(45),
         fontWeight: '700',
         color: '#5A5A5A'
     },
-    cardItemYinCangBalance:{
+    cardItemYinCangBalance: {
         fontSize: PixelUtil.size(45),
         fontWeight: '700',
         color: '#5A5A5A00',
     },
-    cardItemChuZhiOperator:{
+    cardItemChuZhiOperator: {
         width: PixelUtil.size(130),
         height: PixelUtil.size(52),
         borderRadius: PixelUtil.size(26),
@@ -996,7 +996,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    cardItemTaoCanOperator:{
+    cardItemTaoCanOperator: {
         width: PixelUtil.size(130),
         height: PixelUtil.size(52),
         borderRadius: PixelUtil.size(26),
@@ -1006,7 +1006,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    cardItemYanQiOperator:{
+    cardItemYanQiOperator: {
         width: PixelUtil.size(130),
         height: PixelUtil.size(52),
         borderRadius: PixelUtil.size(26),
@@ -1016,33 +1016,33 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    cardItemOperatorText:{
+    cardItemOperatorText: {
         fontSize: PixelUtil.size(30),
         fontWeight: '700',
         color: '#FFF2DC'
     },
-    cardItemOperatorYanQiText:{
+    cardItemOperatorYanQiText: {
         fontSize: PixelUtil.size(30),
         fontWeight: '700',
         color: '#ffffff'
     },
-    cardItemStore:{
+    cardItemStore: {
         width: PixelUtil.size(186),
         fontSize: PixelUtil.size(20),
         fontWeight: '500',
         color: '#858585'
     },
-    cardItemDate:{
+    cardItemDate: {
         fontSize: PixelUtil.size(20),
         fontWeight: '500',
         color: '#858585'
     },
-    cardItemWuXiaoDate:{
+    cardItemWuXiaoDate: {
         fontSize: PixelUtil.size(20),
         fontWeight: '500',
         color: '#FF3636'
     },
-    guestProfileBox:{
+    guestProfileBox: {
         width: '100%',
         height: '100%',
         backgroundColor: '#ffffff',
@@ -1053,7 +1053,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingVertical: PixelUtil.size(50),
         position: 'relative'
     },
-    guestContentBox:{
+    guestContentBox: {
         width: '100%',
         height: '100%',
         display: "flex",
@@ -1061,7 +1061,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    guestContentWaitBox:{
+    guestContentWaitBox: {
         width: '100%',
         height: '100%',
         display: "flex",
@@ -1069,35 +1069,35 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    guestScanResultBox:{
+    guestScanResultBox: {
         width: PixelUtil.size(440),
         height: PixelUtil.size(440),
         marginTop: PixelUtil.size(110)
     },
-    guestScanResultTxt:{
+    guestScanResultTxt: {
         fontSize: PixelUtil.size(44),
         color: '#1f1f1f',
         fontWeight: '700',
     },
-    guestScanResultSubTxt:{
+    guestScanResultSubTxt: {
         fontSize: PixelUtil.size(32),
         color: '#5d5d5d',
         fontWeight: '500',
         marginTop: PixelUtil.size(20)
     },
-    guestProfileTitle:{
+    guestProfileTitle: {
         width: PixelUtil.size(608),
         fontWeight: '700',
         fontSize: PixelUtil.size(34),
         textAlign: 'center',
         lineHeight: PixelUtil.size(56)
     },
-    guestProfileQRCode:{
+    guestProfileQRCode: {
         width: PixelUtil.size(390),
         height: PixelUtil.size(390),
         marginTop: PixelUtil.size(40)
     },
-    guestProfileSearchBox:{
+    guestProfileSearchBox: {
         marginTop: PixelUtil.size(60),
         width: '100%',
         height: PixelUtil.size(236),
@@ -1108,7 +1108,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    guestProfileCashierBox:{
+    guestProfileCashierBox: {
         marginTop: PixelUtil.size(80),
         width: '100%',
         height: PixelUtil.size(236),
@@ -1119,13 +1119,13 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    guestProfileSearchTitle:{
+    guestProfileSearchTitle: {
         fontSize: PixelUtil.size(34),
         textAlign: 'center',
         fontWeight: '700',
         marginTop: PixelUtil.size(32),
     },
-    headSearchBox:{
+    headSearchBox: {
         width: '100%',
         height: PixelUtil.size(68),
         marginTop: PixelUtil.size(44),
@@ -1136,14 +1136,14 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    headSearchIcon:{
+    headSearchIcon: {
         position: "absolute",
         left: PixelUtil.size(20),
         width: PixelUtil.size(42),
         height: PixelUtil.size(42),
         zIndex: 2002
     },
-    headSearchInputEmpty:{
+    headSearchInputEmpty: {
         width: PixelUtil.size(560),
         height: PixelUtil.size(68),
         backgroundColor: '#fff',
@@ -1153,20 +1153,20 @@ export const PanelCustomerStyles = StyleSheet.create({
         color: '#292929',
         fontSize: PixelUtil.size(30)
     },
-    headSearchButton:{
+    headSearchButton: {
         marginLeft: PixelUtil.size(36),
         width: PixelUtil.size(172),
         height: PixelUtil.size(68),
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-    headSearchButtonImg:{
+    headSearchButtonImg: {
         width: '100%',
         height: '100%',
         overflow: "hidden",
         borderRadius: PixelUtil.size(34)
     },
-    guestProfileOrderBox:{
+    guestProfileOrderBox: {
         width: '100%',
         height: PixelUtil.size(144),
         marginTop: PixelUtil.size(32),
@@ -1177,18 +1177,18 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    guestProfileOrderWrap:{
+    guestProfileOrderWrap: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         borderRadius: PixelUtil.size(40),
     },
-    guestProfileRescanWrap:{
+    guestProfileRescanWrap: {
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
         borderRadius: PixelUtil.size(40),
         marginTop: PixelUtil.size(98)
     },
-    guestProfileOrderImg:{
+    guestProfileOrderImg: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
         display: "flex",
@@ -1196,7 +1196,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    guestProfileTimeout:{
+    guestProfileTimeout: {
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
         backgroundColor: '#111c3c',
@@ -1206,7 +1206,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    guestProfileOrderTxt:{
+    guestProfileOrderTxt: {
         fontSize: PixelUtil.size(32),
         color: '#ffffff',
         fontWeight: '400',
