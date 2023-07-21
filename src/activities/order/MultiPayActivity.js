@@ -235,6 +235,8 @@ class MultiPay extends React.Component {
                     attachMoneyList: x.attachMoneyList,
                     consumeMode: x.consumeMode,
                     cardType: x.cardType,
+                    cardStatus: x.status,
+                    validityShow: x.validityShow
                 }));
 
                 let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
@@ -448,6 +450,8 @@ class MultiPay extends React.Component {
                                 attachMoneyList: x.attachMoneyList,
                                 consumeMode: x.consumeMode,
                                 cardType: x.cardType,
+                                cardStatus: x.status,
+                                validityShow: x.validityShow
                             }));
                         }
 
