@@ -21,7 +21,7 @@ export const MultiProfileItem = React.memo(({
 
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
-            <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastWrap : PanelMultiProfiles.profileItemWrap}>
+            <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastOtherWrap : PanelMultiProfiles.profileItemOtherWrap}>
                 <View style={PanelMultiProfiles.leftWrap}>
                     <View style={PanelMultiProfiles.nameBox}>
                         <View style={PanelMultiProfiles.nameWrap}>

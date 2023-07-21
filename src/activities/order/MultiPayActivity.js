@@ -9,7 +9,7 @@ import {
     getAvailablePaymentInfo,
     payBillingV4,
 } from '../../services';
-import {clone, PaymentResultStatus, showMessage, showMessageExt, throttle} from '../../utils';
+import {clone, getImage, ImageQutity, PaymentResultStatus, showMessage, showMessageExt, throttle} from '../../utils';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
@@ -26,7 +26,7 @@ import {multiplyPayStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
 import MultiPayProfilePanel from "../../components/panelMultiProfile/MultiPayProfilePanel";
-import {getMemberInfo} from "../../services/reserve";
+import {getMemberBillCards, getMemberCards, getMemberInfo, getMemberPortrait} from "../../services/reserve";
 
 // 自己支付支付方式
 const defaultPayTypes = [
@@ -154,7 +154,8 @@ class MultiPay extends React.Component {
             errorStockList: [],
             paySequence: [],
             payWayType: 'self', // self:自己支付 other:他人代付
-            multiProfiles: [] // 他人档案
+            multiProfiles: [], // 他人多档案
+            anotherPortrait: null
         };
         this.savedBilling = null;
         this.panelMultiProfilePanelRef = null
@@ -300,6 +301,7 @@ class MultiPay extends React.Component {
             payWayType: type,
             payTypes: type == 'other'? anotherPayTypes : defaultPayTypes
         }, ()=>{
+            console.log("this.panelMultiProfilePanelRef", this.panelMultiProfilePanelRef)
             // 展示他人档案信息
             if(type == 'other'){
                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
@@ -317,6 +319,8 @@ class MultiPay extends React.Component {
                     editCard: null, //正在编辑卡
                     errorStockList: [],
                     paySequence: [],
+                    multiProfiles: [], // 他人多档案
+                    anotherPortrait: null // 他人档案信息
                 })
             })
         })
@@ -324,6 +328,7 @@ class MultiPay extends React.Component {
 
     // 档案确定
     async customerPressEvent(type, extra, callBack) {
+        const self = this
         switch (type) {
             case 'toCreateOrder':
                 const queryType = extra['queryType']
@@ -361,6 +366,107 @@ class MultiPay extends React.Component {
                     this.setState({isLoading: false})
                 })
                 break
+            case 'forwardToCashier':
+                this.customerPressEvent('naviToCashier', {
+                    memberId: extra['memberId']
+                })
+                break;
+            case 'naviToCashier':
+                // 开始准备开单的数据-获取BMS会员档案
+                this.setState({isLoading: true})
+                try {
+                    // 开始准备开单的数据-获取BMS会员档案
+                    const portraitBackData = await getMemberPortrait({
+                        p: 1,
+                        ps: 1000,
+                        cardInfoFlag: false,
+                        solrSearchType: 0,
+                        kw: extra.memberId
+                    })
+                    // 登录的员工信息
+                    const loginUser = this.props.auth.userInfo;
+                    // 开始准备开单的数据-获取BMS会员卡
+                    const cardsBackData = await getMemberCards({memberId: extra.memberId})
+                    // 获取开单用的会员卡数据
+                    const billCardsBackData = await getMemberBillCards({
+                        companyId: loginUser.companyId,
+                        storeId: loginUser.storeId,
+                        customerId: extra.memberId
+                    })
+                    // 会员档案
+                    if (portraitBackData.code != '6000'
+                        || cardsBackData.code != '6000'
+                        || billCardsBackData.code != '6000') {
+                        // 错误
+                        showMessageExt("获取他人档案失败")
+                        this.setState({isLoading: false})
+                    } else {
+                        this.setState({isLoading: false})
+                        // BMS会员档案
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        memberPortrait['isGuest'] = false
+                        // BMS会员卡
+                        const memberCardInfo = cardsBackData['data']
+                        // 开单用的会员卡
+                        const billCards = billCardsBackData['data']
+
+                        // 开单参数
+                        const memberInfo = Object.assign({}, memberPortrait, {
+                            userImgUrl: getImage(
+                                extra.imgUrl,
+                                ImageQutity.member_small,
+                                'https://pic.magugi.com/magugi_default_01.png'
+                            ),
+                            vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
+                            cardBalanceCount: memberCardInfo.cardBalanceCount,
+                            cardCount: memberCardInfo.cardCount
+                        })
+
+                        // 会员有效卡
+                        const availableCards =
+                            (memberInfo &&
+                                memberInfo.vipStorageCardList &&
+                                memberInfo.vipStorageCardList.length &&
+                                memberInfo.vipStorageCardList.filter((x) => {
+                                    let balance = Number(x.balance || 0) + (x.attachMoneyList || []).reduce((rs, x) => (rs += Number(x.balance || 0)), 0);
+                                    return x.cardType == 1 && (x.consumeMode != 0 || balance > 0);
+                                })) ||
+                            [];
+
+                        // 组装有效卡展示
+                        let finalCards = []
+                        if (availableCards.length) {
+                            finalCards = availableCards.map((x) => ({
+                                id: x.id,
+                                balance: x.balance,
+                                vipCardNo: x.vipCardNo,
+                                vipCardName: x.vipCardName,
+                                storeName: x.storeName,
+                                hasPassword: x.hasPassword,
+                                password: x.password,
+                                attachMoney: x.attachMoney,
+                                attachMoneyList: x.attachMoneyList,
+                                consumeMode: x.consumeMode,
+                                cardType: x.cardType,
+                            }));
+                        }
+
+                        this.setState({
+                            anotherPortrait: memberInfo,
+                            cards: finalCards
+                        }, ()=>{
+                            // self.panelMultiProfilePanelRef.hideRightPanel()
+                        })
+
+                        console.log("this.panelMultiProfilePanelRef", this.panelMultiProfilePanelRef)
+                    }
+                } catch (e) {
+                    // 错误
+                    showMessageExt("获取他人档案失败")
+                    this.setState({isLoading: false})
+                    console.error("获取他人档案失败", e)
+                }
+                break
         }
     }
 
@@ -381,7 +487,8 @@ class MultiPay extends React.Component {
             isPaySuccess,
             errorStockList,
             usedOtherPay,
-            payWayType
+            payWayType,
+            anotherPortrait
         } = this.state;
         let selectedPayType = payTypes[selectedPayTypeIndex];
         let selectedItemAmtInfo =
@@ -471,6 +578,7 @@ class MultiPay extends React.Component {
                                         </View>
                                     </TouchableOpacity>
                                 </View>
+                                {/*右侧内容栏*/}
                                 <View style={multiplyPayStyle.payContentWrap}>
                                     {/* 默认｜为空 */}
                                     <View style={selectedPayType || payWayType == 'other' ? multiplyPayStyle.hide : multiplyPayStyle.rightDefault}>
@@ -519,7 +627,21 @@ class MultiPay extends React.Component {
                                                     }else{ // 他人代付
                                                         return (
                                                             <View style={multiplyPayStyle.anotherPayBox}>
-                                                                <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                                                                {
+                                                                    (()=>{
+                                                                        if(!anotherPortrait){ // 查询他人档案
+                                                                            return (<MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>)
+                                                                        }else{ // 他人档案信息
+                                                                            return (
+                                                                                <View style={multiplyPayStyle.anotherPortraitBox}>
+                                                                                    <View style={multiplyPayStyle.anotherPortraitTitleBox}>
+
+                                                                                    </View>
+                                                                                </View>
+                                                                            )
+                                                                        }
+                                                                    })()
+                                                                }
                                                             </View>
                                                         )
                                                     }
@@ -1595,7 +1717,9 @@ class MultiPay extends React.Component {
 
 //mapping props
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        auth: state.auth,
+    };
 };
 const mapDispatchToProps = (dispatch, props) => {
     return {

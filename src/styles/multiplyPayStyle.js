@@ -688,6 +688,23 @@ export const multiplyPayStyle = StyleSheet.create({
     },
     anotherPayBox:{
         flex: 1,
-        backgroundColor: '#3300ff'
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    anotherPortraitBox:{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    anotherPortraitTitleBox:{
+        width: '100%',
+        height: PixelUtil.size(114),
+        backgroundColor: '#f1f4f5',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 });

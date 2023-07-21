@@ -51,10 +51,11 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         position: 'relative',
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#ffffff',
     },
     contentWrapOtherBox: {
         flex:1,
+        width: '100%',
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
@@ -219,7 +220,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: PixelUtil.size(80)
+        marginTop: PixelUtil.size(80),
     },
     memberBodyEmptyImage:{
         width: PixelUtil.size(440),
@@ -252,6 +253,27 @@ export const PanelMultiProfiles = StyleSheet.create({
         borderStyle: 'solid'
     },
     profileItemLastWrap:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    profileItemOtherWrap:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'relative',
+        borderBottomWidth: PixelUtil.size(2),
+        borderColor: '#e3e3e3',
+        borderStyle: 'solid'
+    },
+    profileItemLastOtherWrap:{
         width: '100%',
         height: '100%',
         display: 'flex',

@@ -4413,7 +4413,7 @@ const buildSubmitData = (self) => {
         let orderInfo = {
             id: self.state.id,
             memberType: self.state.memberType,
-            memberId: self.state.memberId,
+            memberId: self.state.memberId || '',
             companyId: self.state.companyId,
             storeId: self.state.storeId,
             isOldCustomer: parseInt(self.state.isOldCustomer),
