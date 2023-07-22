@@ -49,6 +49,8 @@ export const multiplyPayStyle = StyleSheet.create({
         backgroundColor: '#00000060',
         width: '100%',
         height: '100%',
+        position: 'absolute',
+        zIndex: 110
     },
     pwdTitle: {
         width: '100%',
@@ -245,8 +247,20 @@ export const multiplyPayStyle = StyleSheet.create({
         height: PixelUtil.size(114),
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center'
+    },
+    payWayOnlyWrap: {
+        width: '100%',
+        height: PixelUtil.size(114),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        borderBottomColor: '#cbcbcb',
+        borderBottomWidth: PixelUtil.size(2),
+        borderStyle: 'solid',
+        paddingHorizontal: PixelUtil.size(40)
     },
     payWaySelfWrap: {
         width: '50%',

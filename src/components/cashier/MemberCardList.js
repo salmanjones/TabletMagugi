@@ -18,8 +18,6 @@ export class MemberCardList extends PureComponent {
                 extraData={selectedCardsId}
                 keyExtractor={(item) => item.id}
                 renderItem={({item, index}) => {
-
-                    console.log(item, 'item')
                     let isSelected = selectedCardsId.findIndex((x) => x == item.id) != -1;
                     let attachBalance = (item.attachMoneyList && item.attachMoneyList.length) ? item.attachMoneyList.reduce((rs, x) => (rs += x.balance), 0) : null;
                     let totalPaidAmt = Number(item.paidAmt || 0) + (item.attachMoneyList || []).reduce((rs, x) => (rs += Number(x.paidAmt || 0)), 0);
