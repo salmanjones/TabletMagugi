@@ -1519,7 +1519,7 @@ class CashierBillingView extends React.Component {
                         return {...prevState, "memberProfile": memberProfile}
                     }, () => {
                         if (reload) {
-                            callBack && callBack()
+                            callBack && callBack(memberProfile)
                         } else {
                             if (memberProfile.isBmsNew == '1') { // 是否是bms的新用户，0否，1是
                                 self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
@@ -1773,9 +1773,14 @@ class CashierBillingView extends React.Component {
                         if (showType == 'searchPhone' || data.length > 1) { // 多档案
                             if (showType == 'scanCode') { // 扫码成功:多档案
                                 this.guestPanelRef.hideRightPanel()
+                                // 打开多档案面板
                                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', waiterId, 'createOrder', 'CashierBillingActivity')
                             }
                         } else if (data.length == 1) { // 单档案直接变更为会员单
+                            if (showType == 'scanCode') { // 扫码成功:单档案
+                                // 关闭扫码面板
+                                this.guestPanelRef.hideRightPanel()
+                            }
                             this.customerPressEvent('naviToCashier', {
                                 memberId: data[0]['memberId']
                             })
@@ -1854,8 +1859,12 @@ class CashierBillingView extends React.Component {
                             this.onMemberConfirm(member, true)
                             // 处理左上信息展示
                             setTimeout(() => {
-                                this.getCustomerProfile(this, true)
-                            }, 50)
+                                this.getCustomerProfile(this, true, (memberProfile)=>{
+                                    if (memberProfile.isBmsNew == '1') { // 是否是bms的新用户，0否，1是
+                                        self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
+                                    }
+                                })
+                            }, 200)
                         })
                     }
                 } catch (e) {
