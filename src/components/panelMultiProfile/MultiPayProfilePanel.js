@@ -7,7 +7,7 @@ import {MultiProfileItem} from "./widgets/MultiProfileItem";
  * 多档案会员右侧浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
-const MultiPayProfilePanelForwardRef = forwardRef(({multiProfileData, customerClickEvent}, refArgs) => {
+const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, customerClickEvent}, refArgs) => {
     /// 展示面板
     const showRightPanel = (showMode = 'withReserve', showType = 'member', phone, waiterId, actionType, pagerName) => {
         setShowMode(showMode)
@@ -67,6 +67,11 @@ const MultiPayProfilePanelForwardRef = forwardRef(({multiProfileData, customerCl
 
     // 不展示控件
     if(!showState){
+        return (<View></View>)
+    }
+
+    // 有卡时，不展示多档
+    if(cards.length > 0){
         return (<View></View>)
     }
 

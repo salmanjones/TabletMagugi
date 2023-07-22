@@ -469,7 +469,8 @@ class MultiPay extends React.Component {
 
                         this.setState({
                             anotherPortrait: memberInfo,
-                            cards: finalCards
+                            cards: finalCards,
+                            multiProfiles: []
                         }, ()=>{
                             this.panelMultiProfilePanelRef.hideRightPanel()
                         })
@@ -750,7 +751,11 @@ class MultiPay extends React.Component {
                                             {/*他人代付*/}
                                             <View style={payWayType == 'other' && selectedPayType && selectedPayType.payType == 2 ? multiplyPayStyle.anotherPayBox:multiplyPayStyle.hide}>
                                                 {/*他人档案*/}
-                                                <MultiPayProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                                                <MultiPayProfilePanel
+                                                    ref={ref => {this.panelMultiProfilePanelRef = ref}}
+                                                    multiProfileData={this.state.multiProfiles}
+                                                    customerClickEvent={this.customerPressEvent.bind(this)}
+                                                    cards={cards} />
                                                 {/*他人卡信息*/}
                                                 {
                                                     anotherPortrait && (
