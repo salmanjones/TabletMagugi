@@ -13,7 +13,7 @@ export const addCardItemStyles = StyleSheet.create({
     addCardItemStylesTitle: {
         //   加次卡-标题
         width: '100%',
-        height: '10%',
+        height: PixelUtil.size(72),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',

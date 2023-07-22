@@ -2741,8 +2741,7 @@ class CashierBillingView extends React.Component {
                                                         )
                                                 }
 
-                                                <View
-                                                    style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
+                                                <View style={this.state.timesProjectDatas.length < 1 ? cashierBillingStyle.hidden : addCardItemStyles.addCardItemStylesContent}>
                                                     <View style={addCardItemStyles.addCardItemStylesTitle}>
                                                         <TouchableOpacity
                                                             style={addCardItemStyles.addCardItemStylesTitleLi}>
