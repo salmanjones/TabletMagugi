@@ -25,10 +25,16 @@ const MultiPayProfilePanelForwardRef = forwardRef(({multiProfileData, customerCl
         setShowState(false)
     }
 
+    /// 获取状态
+    const getShowState = ()=>{
+        return showState
+    }
+
     /// 向父组件开放方法
     useImperativeHandle(refArgs, () => ({
         showRightPanel,
-        hideRightPanel
+        hideRightPanel,
+        getShowState
     }))
 
     /**

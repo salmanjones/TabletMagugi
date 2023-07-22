@@ -82,8 +82,6 @@ const defaultPayTypes = [
         icon: require('@imgPath/pay-multiply-unipay.png'),
     },
 ]
-// 缓存初始支付方式
-let initPayTypes = []
 // 缓存用户的会员卡
 let memberCards = []
 class MultiPay extends React.Component {
@@ -205,9 +203,10 @@ class MultiPay extends React.Component {
                 stateData.hasCards = true
 
                 let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
-                if (cardPayType && stateData.payWayType == 'self') {
+                if (cardPayType) {
                     cardPayType.itemAmt = availableCards.length
                 }
+                stateData.payWayType = 'self'
             } else{
                 // 无会员卡,换为他人代付
                 stateData.hasCards = false
@@ -215,8 +214,11 @@ class MultiPay extends React.Component {
                     if(item.payType == '2' && item.payTypeId == '2'){ // 他人代付
                         item.name = '他人代付' // 储值卡支付
                         item.icon = require('@imgPath/cashier_billing_pay_other.png')
+                        item.itemAmt = null
+                        item.paidAmt = null
                     }
                 })
+                stateData.payWayType = 'other'
             }
 
             this.setState({
@@ -579,6 +581,7 @@ class MultiPay extends React.Component {
             selectedPayType && selectedPayType.payType == 5
                 ? (selectedCoupons.length ? '已选优惠券' + selectedCoupons.length + '张' : '')
                 : (selectedPayType && selectedPayType.payType == 2 ? (selectedCardsId.length ? '已选会员卡' + selectedCardsId.length + '张' : '') : '')
+
         // 开始渲染
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -1203,7 +1206,14 @@ class MultiPay extends React.Component {
         this.setState({
             selectedPayTypeIndex: index,
             editCard: null,
-        });
+        }, ()=>{
+            const {payTypes, selectedPayTypeIndex, payWayType} = this.state
+            const selectedPayType = payTypes[selectedPayTypeIndex]
+            const showState = this.panelMultiProfilePanelRef.getShowState()
+            if(!showState && payWayType == 'other' && selectedPayType && selectedPayType.payType == 2){
+                this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
+            }
+        })
     };
 
     //支付方式checkBox 选中
