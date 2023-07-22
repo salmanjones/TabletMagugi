@@ -2076,7 +2076,7 @@ class CashierBillingView extends React.Component {
                                                     <View style={cashierBillingStyle.guestCardsInfoFW}>
                                                         <Text style={cashierBillingStyle.guestCardsRName}
                                                               ellipsizeMode={'tail'} numberOfLines={1}>
-                                                            预约：
+                                                            服务人：
                                                         </Text>
                                                         <Text style={cashierBillingStyle.guestCardsRNum}
                                                               ellipsizeMode={'tail'} numberOfLines={1}>
@@ -2217,7 +2217,7 @@ class CashierBillingView extends React.Component {
                                                     <View style={cashierBillingStyle.customerCardsInfoFW}>
                                                         <Text style={cashierBillingStyle.customerCardsRName}
                                                               ellipsizeMode={'tail'} numberOfLines={1}>
-                                                            预约
+                                                            服务人
                                                         </Text>
                                                         <Text style={cashierBillingStyle.customerCardsRNum}
                                                               ellipsizeMode={'tail'} numberOfLines={1}>

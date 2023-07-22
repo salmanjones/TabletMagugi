@@ -154,9 +154,13 @@ export class EditCardPay extends React.PureComponent {
                             <View style={multiplyPayStyle.rightWrappercenter}>
                                 <Text style={multiplyPayStyle.rightcenterleftName}>{storeName}</Text>
                                 <View style={multiplyPayStyle.rightcenterInfo}>
-                                    <Text style={multiplyPayStyle.rightcenterrightName}>
-                                        赠金:{attachBalance}
-                                    </Text>
+                                    {
+                                        attachBalance && (
+                                            <Text style={multiplyPayStyle.rightcenterrightName}>
+                                                赠金:{attachBalance}
+                                            </Text>
+                                        )
+                                    }
                                 </View>
                             </View>
                         </View>

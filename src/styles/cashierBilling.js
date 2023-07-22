@@ -270,7 +270,7 @@ export const cashierBillingStyle = StyleSheet.create({
         fontSize: PixelUtil.size(22),
     },
     customerCardsRNum: {
-        width: PixelUtil.size(100),
+        width: PixelUtil.size(110),
         color: '#ffa608',
         fontWeight: '900',
         textAlign: 'center',
