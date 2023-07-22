@@ -620,11 +620,7 @@ export const getServiceStaffsAction = () => {
         });
 
         let state = getState();
-
-        let cfk =
-            state.component.staffSevice.cfk ||
-            'cfk_' + state.auth.userInfo.storeId + '_staffs';
-
+        let cfk = state.component.staffSevice.cfk || 'cfk_' + state.auth.userInfo.storeId + '_staffs';
         return getServiceStaffs({type: 'staff', cfk: cfk})
             .then(backData => {
                 dispatch({

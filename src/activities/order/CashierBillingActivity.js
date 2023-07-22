@@ -40,7 +40,7 @@ import {
     VipPayFor
 } from '../../components';
 import MemberPanel from "../../components/panelCustomer/MemberPanel";
-import {changeBillingOwner, getLimitItems, selectStaffAclInfoResult} from '../../services';
+import {changeBillingOwner, getLimitItems, getServiceStaffs, selectStaffAclInfoResult} from '../../services';
 import {
     CASHIERBILLING_CUSTOMER,
     cashierBillingFlowNumberInitAction,
@@ -51,9 +51,10 @@ import {
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
     deleteBillingAction,
-    getPendingListAction
+    getPendingListAction, getServiceStaffsAction, SERVICE_STAFFS_GET
 } from '../../actions';
 import {
+    displayError,
     getImage,
     ImageQutity,
     PaymentResultStatus,
@@ -101,17 +102,13 @@ class CashierBillingView extends React.Component {
             sliderDisplayStatus = false;
         }
 
-        // 默认服务人ID
-        let waiterId = props.route.params.waiterId || ''
-
         // 构建默认state
         const defaultState = defaultInfos(sex, isOldCustomer);
-
         this.state = {
             ...defaultState,
             sliderLeft: new Animated.Value(animateLeft),
             sliderDisplay: sliderDisplayStatus,
-            waiterId: waiterId,
+            waiterId: props.route.params.waiterId || '',
             multiProfiles: [],
             memberProfile: {
                 isGuest: true, // 是否为散客
@@ -137,27 +134,6 @@ class CashierBillingView extends React.Component {
         this.memberPanelRef = null
         this.guestPanelRef = null
         this.panelMultiProfilePanelRef = null
-
-        // 获取预约的服务人
-        setTimeout(() => {
-            let reserveWaiter = {}
-            const allWaiter = this.props.servicers
-            for (let key in allWaiter) {
-                const positionWaiters = allWaiter[key] || []
-                const waiterList = positionWaiters.filter(waiter => {
-                    return waiter.id == waiterId
-                })
-
-                if (waiterList.length > 0) {
-                    reserveWaiter = waiterList[0]
-                    break
-                }
-            }
-
-            this.setState({
-                reserveWaiter
-            })
-        }, 80)
     }
 
     UNSAFE_componentWillMount() {
@@ -220,6 +196,31 @@ class CashierBillingView extends React.Component {
 
         // 请求数据
         InteractionManager.runAfterInteractions(() => {
+            // 获取服务人列表
+            const cfk = 'cfk_' + this.props.auth.userInfo.storeId + '_staffs';
+            getServiceStaffs({type: 'staff', cfk: cfk}).then(backData => {
+                const allWaiter = backData.data
+                const waiterId = this.state.waiterId
+                // 获取预约的服务人
+                let reserveWaiter = {}
+                for (let key in allWaiter) {
+                    const positionWaiters = allWaiter[key] || []
+                    const waiterList = positionWaiters.filter(waiter => {
+                        return waiter.id == waiterId
+                    })
+
+                    if (waiterList.length > 0) {
+                        reserveWaiter = waiterList[0]
+                        break
+                    }
+                }
+                this.setState({
+                    reserveWaiter
+                })
+            }).catch(err => {
+                console.error("获取服务人信息失败")
+            })
+
             // 获取员工操作权限、四舍五入模式
             selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
                 const resultMap = data.data;

@@ -72,10 +72,10 @@ export const staffReducer = handleActions(
         },
         [SERVICE_STAFFS_GET.SUCCESS]: (state, {body}) => {
             if (state.cfk && state.cfk === body.cfk) {
-
                 return {
                     ...state,
-                    loading: false
+                    loading: false,
+                    propChangeType: 'finish'
                 };
             }
 
@@ -84,6 +84,7 @@ export const staffReducer = handleActions(
                 loading: false,
                 data: body.data,
                 cfk: body.cfk,
+                propChangeType: 'finish'
             };
         },
         [SERVICE_STAFFS_GET.ERROR]: (state, {body}) => {
