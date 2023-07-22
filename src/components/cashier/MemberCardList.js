@@ -82,7 +82,6 @@ export class MemberCardList extends PureComponent {
 
                                             </View>
                                         </View>
-
                                     </View>
                                     <View style={multiplyPayStyle.rightWrapperBottom}>
                                         {isNotDiscountCard && <Text

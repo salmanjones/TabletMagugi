@@ -139,31 +139,31 @@ export class EditCardPay extends React.PureComponent {
             <View style={multiplyPayStyle.editCardWrap}>
                 {/*卡信息展示*/}
                 <ImageBackground
-                    style={currentEditItem ? multiplyPayStyle.hide : multiplyPayStyle.rightWrapperCardEditImg}
-                    source={require('@imgPath/pay-multiply-card-edit.png')}
+                    style={multiplyPayStyle.rightWrapperCardImg}
+                    source={require('@imgPath/member_storecard.png')}
                     resizeMethod="resize"
-                    resizeMode={'stretch'}
-                >
-                    <View style={multiplyPayStyle.rightWrapperCardEditDesc}>
-                        <Image style={multiplyPayStyle.rightWrapperCardLeft} resizeMethod="resize" source={require('@imgPath/logo_gray.png')}></Image>
-                        <View style={multiplyPayStyle.rightWrapperCardRight}>
-                            <Text style={multiplyPayStyle.rightCardName} numberOfLines={1} ellipsizeMode={'tail'}>
-                                {vipCardName}
-                            </Text>
-                            <View style={multiplyPayStyle.rightCardMiddleInfo}>
-                                <Text style={multiplyPayStyle.rightCardStoreName} numberOfLines={1} ellipsizeMode={'tail'}>
-                                    {storeName}
-                                </Text>
-                                <View style={multiplyPayStyle.rightCardConsume}>
-                                    <Text style={multiplyPayStyle.rightCardConsumeMoney}>已付:{totalPaidAmt}</Text>
+                    resizeMode={'stretch'}>
+                    <View style={multiplyPayStyle.rightWrapperCardDesc}>
+                        <View style={multiplyPayStyle.rightall}>
+                            <View style={multiplyPayStyle.rightWrapperCardTop}>
+                                <View style={multiplyPayStyle.rightCardName}>
+                                    <Text style={multiplyPayStyle.storeCard}>储值卡</Text>
+                                    <Text ellipsizeMode={'tail'} numberOfLines={2} style={multiplyPayStyle.storeCardname}>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{vipCardName}</Text>
                                 </View>
                             </View>
-                            <View style={multiplyPayStyle.rightCardMiddleInfo}>
-                                <Text style={multiplyPayStyle.rightCardStoreName}>本金:{balance}</Text>
-                                <View style={multiplyPayStyle.rightCardConsume}>
-                                    {attachBalance != null && <Text style={multiplyPayStyle.rightCardConsumeMoney}>赠金:{attachBalance}</Text>}
-                                    <View style={multiplyPayStyle.rightCardConsumeSpace}></View>
+                            <View style={multiplyPayStyle.rightWrappercenter}>
+                                <Text style={multiplyPayStyle.rightcenterleftName}>{storeName}</Text>
+                                <View style={multiplyPayStyle.rightcenterInfo}>
+                                    <Text style={multiplyPayStyle.rightcenterrightName}>
+                                        赠金:{attachBalance}
+                                    </Text>
                                 </View>
+                            </View>
+                        </View>
+                        <View style={multiplyPayStyle.rightWrapperBottom}>
+                            <Text style={multiplyPayStyle.rightBalance}>余额:¥ {balance}</Text>
+                            <View style={multiplyPayStyle.rightpaid}>
+                                <Text style={multiplyPayStyle.rightpaidName}>已付:{totalPaidAmt}</Text>
                             </View>
                         </View>
                     </View>
