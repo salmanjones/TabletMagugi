@@ -200,16 +200,21 @@ class MultiPay extends React.Component {
                     cardStatus: x.status,
                     validityShow: x.validityShow
                 }));
-                stateData.hasCards = true
 
-                let cardPayType = stateData.payTypes.find((x) => x.payType == 2);
-                if (cardPayType) {
-                    cardPayType.itemAmt = availableCards.length
-                }
+                // 有会员卡, 会员卡支付
+                stateData.hasCards = true
                 stateData.payWayType = 'self'
+                const cardPayType = stateData.payTypes.find((x) => x.payType == 2);
+                if (cardPayType) {
+                    cardPayType.paidAmt = null // 储值卡支付
+                    cardPayType.itemAmt = availableCards.length
+                    cardPayType.name = '会员卡支付' // 储值卡支付
+                    cardPayType.icon = require('@imgPath/pay-multiply-card.png')
+                }
             } else{
                 // 无会员卡,换为他人代付
                 stateData.hasCards = false
+                stateData.payWayType = 'other'
                 stateData.payTypes.forEach(item=>{
                     if(item.payType == '2' && item.payTypeId == '2'){ // 他人代付
                         item.name = '他人代付' // 储值卡支付
@@ -218,7 +223,6 @@ class MultiPay extends React.Component {
                         item.paidAmt = null
                     }
                 })
-                stateData.payWayType = 'other'
             }
 
             this.setState({
