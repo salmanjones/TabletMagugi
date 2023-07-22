@@ -247,12 +247,16 @@ export class StaffQueueView extends React.Component {
                     kw: memberId
                 })
                 // 开始准备开单的数据-获取BMS会员卡
-                const cardsBackData = await getMemberCards({memberId: memberId})
+                const cardsBackData = await getMemberCards({
+                    memberId: memberId,
+                    isExpireCard: 1
+                })
                 // 获取开单用的会员卡数据
                 const billCardsBackData = await getMemberBillCards({
                     companyId: loginUser.companyId,
                     storeId: loginUser.storeId,
-                    customerId: memberId
+                    customerId: memberId,
+                    isExpireCard: 1
                 })
                 // 会员档案
                 if(portraitBackData.code != '6000'

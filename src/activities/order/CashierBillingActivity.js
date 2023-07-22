@@ -1805,12 +1805,16 @@ class CashierBillingView extends React.Component {
                     // 登录的员工信息
                     const loginUser = this.props.auth.userInfo;
                     // 开始准备开单的数据-获取BMS会员卡
-                    const cardsBackData = await getMemberCards({memberId: extra.memberId})
+                    const cardsBackData = await getMemberCards({
+                        memberId: extra.memberId,
+                        isExpireCard: 1
+                    })
                     // 获取开单用的会员卡数据
                     const billCardsBackData = await getMemberBillCards({
                         companyId: loginUser.companyId,
                         storeId: loginUser.storeId,
-                        customerId: extra.memberId
+                        customerId: extra.memberId,
+                        isExpireCard: 1
                     })
                     // 会员档案
                     if (portraitBackData.code != '6000'

@@ -10,7 +10,7 @@ import {
     payBillingV4,
 } from '../../services';
 import {clone, getImage, ImageQutity, PaymentResultStatus, showMessage, showMessageExt, throttle} from '../../utils';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
     EditCardPay,
@@ -26,7 +26,14 @@ import {multiplyPayStyle} from '../../styles';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
 import MultiPayProfilePanel from "../../components/panelMultiProfile/MultiPayProfilePanel";
-import {getMemberBillCards, getMemberCards, getMemberInfo, getMemberPortrait} from "../../services/reserve";
+import {
+    getCustomerDetail,
+    getMemberBillCards,
+    getMemberCards,
+    getMemberInfo,
+    getMemberPortrait,
+    updateCardValidity
+} from "../../services/reserve";
 
 // 自己支付支付方式
 const defaultPayTypes = [
@@ -378,17 +385,21 @@ class MultiPay extends React.Component {
                         ps: 1000,
                         cardInfoFlag: false,
                         solrSearchType: 0,
-                        kw: extra.memberId
+                        kw: extra.memberId,
                     })
                     // 登录的员工信息
                     const loginUser = this.props.auth.userInfo;
                     // 开始准备开单的数据-获取BMS会员卡
-                    const cardsBackData = await getMemberCards({memberId: extra.memberId})
+                    const cardsBackData = await getMemberCards({
+                        memberId: extra.memberId,
+                        isExpireCard: 1
+                    })
                     // 获取开单用的会员卡数据
                     const billCardsBackData = await getMemberBillCards({
                         companyId: loginUser.companyId,
                         storeId: loginUser.storeId,
-                        customerId: extra.memberId
+                        customerId: extra.memberId,
+                        isExpireCard: 1
                     })
                     // 会员档案
                     if (portraitBackData.code != '6000'
@@ -488,6 +499,60 @@ class MultiPay extends React.Component {
         })
     }
 
+    // 卡延期
+    updateCardValidity(cardId){
+        Alert.alert('系统提示', "该卡确定要延期吗", [
+            {
+                text: '是',
+                onPress: () => {
+                    this.setState({
+                        isLoading: true
+                    })
+                    updateCardValidity({
+                        cardId: cardId
+                    }).then(backData=>{
+                        const {code, data} = backData
+                        if(code != '6000') { // 取消异常
+                            Alert.alert(
+                                '系统提示',
+                                data || '卡延期失败',
+                                [
+                                    {
+                                        text: '知道了',
+                                    }
+                                ]
+                            )
+                        }else{
+                            const cards = this.state.cards
+                            cards.forEach(card=>{
+                                if(card.id == cardId){
+                                    card.cardStatus = '0'
+                                    card.validityShow = ''
+                                }
+                            })
+
+                            this.setState({
+                                isLoading: false,
+                                cards
+                            })
+                            showMessageExt("卡延期成功")
+                        }
+                    }).catch(e=>{
+                        console.log(e)
+                        showMessageExt("卡延期失败")
+                    }).finally(_=>{
+                        this.setState({
+                            isLoading: false
+                        })
+                    })
+                }
+            },
+            {
+                text: '否',
+            },
+        ])
+    }
+
     render() {
         const {
             isLoading,
@@ -538,7 +603,7 @@ class MultiPay extends React.Component {
                         {/*顶部信息*/}
                         <View style={multiplyPayStyle.header}>
                             <View style={multiplyPayStyle.headerLeft}>
-                                <Text style={multiplyPayStyle.leftTitle}>组合支付:{payWayType}</Text>
+                                <Text style={multiplyPayStyle.leftTitle}>组合支付:</Text>
                                 <Text style={multiplyPayStyle.leftValue}>{billingInfo.flowNumber}</Text>
                                 {/* <Text style={multiplyPayStyle.leftValue}>230197,230198,230199,230120 (从单)</Text> */}
                             </View>
@@ -660,6 +725,7 @@ class MultiPay extends React.Component {
                                                         selectedCardsId={selectedCardsId}
                                                         data={cards}
                                                         onEdit={this.onEditCard}
+                                                        onValiDity={this.updateCardValidity.bind(this)}
                                                         payWayType={payWayType}
                                                     />
                                                 )
@@ -724,6 +790,7 @@ class MultiPay extends React.Component {
                                                                             data={cards}
                                                                             onEdit={this.onEditCard}
                                                                             payWayType={payWayType}
+                                                                            onValiDity={this.updateCardValidity.bind(this)}
                                                                         />
                                                                     )
                                                                 }
@@ -901,31 +968,7 @@ class MultiPay extends React.Component {
             } else if (opt == 'add') {
                 let sequenceKey = '2_' + obj.id + '_' + obj.consumeMode;
                 paySequence = paySequence.filter((x) => x.key != sequenceKey);
-                paySequence.push({
-                    key: sequenceKey,
-                    value: {
-                        payType: 2,
-                        payTypeId: obj.id,
-                        payTypeNo: obj.vipCardNo,
-                        payAmount: obj.paidAmt,
-                        paymentName: obj.vipCardName,
-                        payTypePwd: '',
-                        hasPassword: obj.hasPassword,
-                        payMode: obj.consumeMode,
-                        isOtherPay: payWayType == 'other' ? true : false
-                    },
-                });
-                return paySequence;
-            } else if (opt == 'del_all') {
-                paySequence = paySequence.filter((x) => !x.key.startsWith('2_'));
-                return paySequence;
-            } else if (opt == 'compare') {
-                //通过比较卡对象修改参数
-                let sequenceKey = '2_' + obj.id + '_' + obj.consumeMode;
-                //本金
-                if (obj.paidAmt != null && obj.paidAmt != undefined && (orgObj.paidAmt == null || orgObj.paidAmt == undefined)) {
-                    //添加
-                    paySequence = paySequence.filter((x) => x.key != sequenceKey);
+                if(payWayType == 'other'){
                     paySequence.push({
                         key: sequenceKey,
                         value: {
@@ -937,9 +980,67 @@ class MultiPay extends React.Component {
                             payTypePwd: '',
                             hasPassword: obj.hasPassword,
                             payMode: obj.consumeMode,
-                            isOtherPay: payWayType == 'other' ? true:false
-                        },
+                            isOtherPay: true
+                        }
                     });
+                }else{
+                    paySequence.push({
+                        key: sequenceKey,
+                        value: {
+                            payType: 2,
+                            payTypeId: obj.id,
+                            payTypeNo: obj.vipCardNo,
+                            payAmount: obj.paidAmt,
+                            paymentName: obj.vipCardName,
+                            payTypePwd: '',
+                            hasPassword: obj.hasPassword,
+                            payMode: obj.consumeMode,
+                        }
+                    });
+                }
+                return paySequence;
+            } else if (opt == 'del_all') {
+                paySequence = paySequence.filter((x) => !x.key.startsWith('2_'));
+                return paySequence;
+            } else if (opt == 'compare') {
+                //通过比较卡对象修改参数
+                let sequenceKey = '2_' + obj.id + '_' + obj.consumeMode;
+                //本金
+                if (obj.paidAmt != null && obj.paidAmt != undefined && (orgObj.paidAmt == null || orgObj.paidAmt == undefined)) {
+                    //添加
+                    paySequence = paySequence.filter((x) => x.key != sequenceKey);
+
+                    if(payWayType == 'other'){
+                        paySequence.push({
+                            key: sequenceKey,
+                            value: {
+                                payType: 2,
+                                payTypeId: obj.id,
+                                payTypeNo: obj.vipCardNo,
+                                payAmount: obj.paidAmt,
+                                paymentName: obj.vipCardName,
+                                payTypePwd: '',
+                                hasPassword: obj.hasPassword,
+                                payMode: obj.consumeMode,
+                                isOtherPay: true
+                            },
+                        });
+                    }else{
+                        paySequence.push({
+                            key: sequenceKey,
+                            value: {
+                                payType: 2,
+                                payTypeId: obj.id,
+                                payTypeNo: obj.vipCardNo,
+                                payAmount: obj.paidAmt,
+                                paymentName: obj.vipCardName,
+                                payTypePwd: '',
+                                hasPassword: obj.hasPassword,
+                                payMode: obj.consumeMode,
+                            },
+                        });
+                    }
+
                 } else if (obj.paidAmt == null && orgObj.paidAmt !== null && orgObj.paidAmt != undefined) {
                     //删除
                     paySequence = paySequence.filter((x) => x.key != sequenceKey);
@@ -957,22 +1058,41 @@ class MultiPay extends React.Component {
                     if (attach.paidAmt != null && attach.paidAmt != undefined && (orgAttach.paidAmt == null || orgAttach.paidAmt == undefined)) {
                         //添加
                         paySequence = paySequence.filter((x) => x.key != sequenceKey);
-                        paySequence.push({
-                            key: sequenceKey,
-                            value: {
-                                payType: 2,
-                                payTypeId: obj.id,
-                                payTypeNo: obj.vipCardNo,
-                                payAmount: attach.paidAmt,
-                                paymentName: obj.vipCardName,
-                                payTypePwd: '',
-                                hasPassword: obj.hasPassword,
-                                payMode: -1,
-                                payModeId: attach.id,
-                                payModeName: attach.cardName,
-                                isOtherPay: payWayType == 'other' ? true:false
-                            },
-                        });
+                        if(payWayType == 'other'){
+                            paySequence.push({
+                                key: sequenceKey,
+                                value: {
+                                    payType: 2,
+                                    payTypeId: obj.id,
+                                    payTypeNo: obj.vipCardNo,
+                                    payAmount: attach.paidAmt,
+                                    paymentName: obj.vipCardName,
+                                    payTypePwd: '',
+                                    hasPassword: obj.hasPassword,
+                                    payMode: -1,
+                                    payModeId: attach.id,
+                                    payModeName: attach.cardName,
+                                    isOtherPay: true
+                                },
+                            });
+                        }else{
+                            paySequence.push({
+                                key: sequenceKey,
+                                value: {
+                                    payType: 2,
+                                    payTypeId: obj.id,
+                                    payTypeNo: obj.vipCardNo,
+                                    payAmount: attach.paidAmt,
+                                    paymentName: obj.vipCardName,
+                                    payTypePwd: '',
+                                    hasPassword: obj.hasPassword,
+                                    payMode: -1,
+                                    payModeId: attach.id,
+                                    payModeName: attach.cardName,
+                                },
+                            });
+                        }
+
                     } else if (attach.paidAmt == null && orgAttach.paidAmt !== null && orgAttach.paidAmt != undefined) {
                         //删除
                         paySequence = paySequence.filter((x) => x.key != sequenceKey);

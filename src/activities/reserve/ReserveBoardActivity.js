@@ -556,7 +556,10 @@ export const ReserveBoardActivity = props => {
                         // 登录的员工信息
                         const loginUser = reduxState.auth.userInfo
                         // 开始准备开单的数据-获取BMS会员卡
-                        const cardsBackData = await  getMemberCards({memberId: extra.memberId})
+                        const cardsBackData = await  getMemberCards({
+                            memberId: extra.memberId,
+                            isExpireCard: 1
+                        })
                         // 获取员工可用的权限
                         const permissionBackData = await getStaffPermission({
                             staffId: loginUser.staffId,
@@ -566,7 +569,8 @@ export const ReserveBoardActivity = props => {
                         const billCardsBackData = await getMemberBillCards({
                             companyId: loginUser.companyId,
                             storeId: loginUser.storeId,
-                            customerId: extra.memberId
+                            customerId: extra.memberId,
+                            isExpireCard: 1
                         })
                         // 获取水单号
                         const flowNumberBackData = await getBillFlowNO()
