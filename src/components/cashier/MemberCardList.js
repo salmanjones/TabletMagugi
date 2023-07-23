@@ -89,7 +89,9 @@ export class MemberCardList extends PureComponent {
                                             }
                                         </View>
                                         <View style={multiplyPayStyle.rightWrappercenter}>
-                                            <Text style={multiplyPayStyle.rightcenterleftName}>{item.storeName}</Text>
+                                            <Text style={multiplyPayStyle.rightcenterleftName} ellipsizeMode={"tail"} numberOfLines={1}>
+                                                {item.storeName}
+                                            </Text>
                                             <View style={multiplyPayStyle.rightcenterInfo}>
                                                 {item.cardStatus != '-2' && (
                                                     <Text style={multiplyPayStyle.rightcenterrightName}>{item.validityShow}</Text>

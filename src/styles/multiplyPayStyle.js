@@ -528,6 +528,7 @@ export const multiplyPayStyle = StyleSheet.create({
         color: '#985500',
         fontWeight: '500',
         fontSize: PixelUtil.size(22),
+        width: PixelUtil.size(270)
     },
     rightcenterrightName: {
         color: '#985500',
