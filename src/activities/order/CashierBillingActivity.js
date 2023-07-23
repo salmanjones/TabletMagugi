@@ -1862,7 +1862,7 @@ class CashierBillingView extends React.Component {
                             setTimeout(() => {
                                 this.getCustomerProfile(this, true, (memberProfile)=>{
                                     if (memberProfile.isBmsNew == '1') { // 是否是bms的新用户，0否，1是
-                                        self.memberPanelRef && self.memberPanelRef.showRightPanel('CashierBillingActivity')
+                                        this.memberPanelRef && this.memberPanelRef.showRightPanel('CashierBillingActivity')
                                     }
                                 })
                             }, 200)
