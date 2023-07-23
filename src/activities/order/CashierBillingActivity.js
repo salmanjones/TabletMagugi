@@ -8,7 +8,6 @@ import {
     Image,
     ImageBackground,
     InteractionManager,
-    Modal,
     PanResponder,
     ScrollView,
     Text,
@@ -51,11 +50,10 @@ import {
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
     deleteBillingAction,
-    getPendingListAction, getServiceStaffsAction, SERVICE_STAFFS_GET
+    getPendingListAction
 } from '../../actions';
 import {
     decodeContent,
-    displayError,
     getImage,
     ImageQutity,
     PaymentResultStatus,
@@ -564,11 +562,7 @@ class CashierBillingView extends React.Component {
                 prevState.showPaySuccess = true
                 return prevState;
             })
-
             console.log("支付成功")
-            //showMessage('支付成功');
-            // this.props.resetToCashier();
-
         } else if (nextProps.orderInfo.propChangeType == 'payEndException') {
             showMessage('支付失败,' + nextProps.orderInfo.message);
             reloadOrderInfo(this);
@@ -1890,7 +1884,10 @@ class CashierBillingView extends React.Component {
     }
 
     render() {
-        let consumeItemLength = this.state.consumeItems.length;
+        const showPaySuccess = this.state.showPaySuccess
+        const accessRights = this.state.accessRights;
+        const consumeItemLength = this.state.consumeItems.length;
+
         let editConsumeItemData = {};
         if (this.state.showEditConsumeItemModal) {
             editConsumeItemData = this.state.consumeItems[this.state.currentEditConsumeItemIndex];
@@ -1914,8 +1911,6 @@ class CashierBillingView extends React.Component {
             currentServicerInfo = this.state.consumeItems[this.state.currentEditConsumeItemIndex].assistStaffDetail[this.state.currentEditConsumeServicerIndex];
         }
 
-        let showPaySuccess = this.state.showPaySuccess
-        const accessRights = this.state.accessRights;
         let billingInfo = {
             flowNumber: this.state.flowNumber,
             categoryId: this.state.categoryId,
@@ -2041,19 +2036,17 @@ class CashierBillingView extends React.Component {
                 }
 
                 {/*支付成功弹层*/}
-                <Modal
-                    transparent={true}
-                    visible={showPaySuccess}
-                    onRequestClose={() => null}>
-                    <QRCodePaymentNew
-                        paymentStatus={PaymentResultStatus.success}
-                        navigation={this.props.navigation}
-                        title={'订单支付'}
-                        flowNum={this.state.flowNumber}
-                        onClose={this.confirmPaySuccess.bind(this)}
-                    />
-                </Modal>
-
+                {
+                    showPaySuccess && (
+                        <QRCodePaymentNew
+                            paymentStatus={PaymentResultStatus.success}
+                            navigation={this.props.navigation}
+                            title={'订单支付'}
+                            flowNum={this.state.flowNumber}
+                            onClose={this.confirmPaySuccess.bind(this)}
+                        />
+                    )
+                }
                 {/* 会员识别 */}
                 <ModalMemberIndentify
                     navigation={this.props.navigation}

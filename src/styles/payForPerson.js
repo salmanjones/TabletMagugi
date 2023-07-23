@@ -9,16 +9,15 @@ export const payForPersonStyle = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         backgroundColor: '#00000060',
-        // opacity:0.6,
         width: '100%',
         height: '100%',
         position: 'absolute',
-        zIndex: 200
+        zIndex: 500
     },
     //外部弹框里面内容
     wrapper: {
         backgroundColor: '#fff',
-        height: '100%',
+        height: '95%',
         width: '95%',
         display: 'flex',
         alignItems: 'center',
@@ -29,20 +28,6 @@ export const payForPersonStyle = StyleSheet.create({
         zIndex: 300
 
     },
-    // cashierBillInfoWrapper: {
-    //   backgroundColor: '#FFF',
-    //   height: '95%',
-    //   width: '95%',
-    //   display: 'flex',
-    //   alignItems: 'center',
-    //   justifyContent: 'center',
-    //   marginTop: PixelUtil.size(120),
-    //   position: 'relative',
-    //   overflow:'hidden',
-    //   position: 'relative',
-    //   marginTop:PixelUtil.size(-60),
-    // },
-
     //上面支付方式和水单号
     headText: {
         width: PixelUtil.rect(1968, 116).width,
