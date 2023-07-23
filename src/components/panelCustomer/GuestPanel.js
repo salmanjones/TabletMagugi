@@ -14,6 +14,8 @@ let glUniqueId = null // 唯一ID
  * 散客开单浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
+const maxWaitTime = 1000 * 60 * 2.5 // 最大等待时间为3分钟，比后台多等待30秒
+let loopTimeSum = 0 // 累计等待时间
 const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPressEvent}, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
@@ -177,6 +179,12 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
 
         // 每隔1.5秒获取扫码状态
         loopTimerId = setInterval(() => {
+            loopTimeSum += 1000
+            if(loopTimeSum > maxWaitTime){
+                clearTimer()
+                return
+            }
+
             const args = {uniqueId: glUniqueId}
             getScanQRState(args).then(result => {
                 const resCode = result.code
@@ -207,6 +215,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         if (loopTimerId != null) {
             clearInterval(loopTimerId)
             loopTimerId = null
+            loopTimeSum = 0
         }
     }
 
