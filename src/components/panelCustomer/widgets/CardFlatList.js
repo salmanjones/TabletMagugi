@@ -68,7 +68,9 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
                     <View style={PanelCustomerStyles.cardItemOperatorBox}>
                         <Text style={hideCardBalance ? PanelCustomerStyles.cardItemYinCangBalance: cardBalanceStyle}>
                             {
-                                cardTypeId == '1' ? `¥${cardItem.cardBalance}`:`余${cardItem.cardBalance}次`
+                                cardTypeId == '1'
+                                    ? `¥${cardItem.cardBalance.toString().indexOf(".") != -1 ? cardItem.cardBalance.toFixed(1):cardItem.cardBalance}`
+                                    :`余${cardItem.cardBalance}次`
                             }
                         </Text>
                         {
