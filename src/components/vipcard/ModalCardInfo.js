@@ -183,9 +183,9 @@ const TimeCardInfo = ({data}) => {
                                         <Text style={cardInfoStyles.cardDetailStoragePValue}>{data.storeName}</Text>
                                     </View>
                                 </View>
-                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                <View style={cardInfoStyles.cardDetailTimesRowMemo}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>备注信息：</Text>
-                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={3} ellipsizeMode={'tail'}>
                                         {data.remark || '暂无'}
                                     </Text>
                                 </View>
@@ -311,9 +311,9 @@ const StoreageCardInfo = ({data}) => {
                                         {cardDetails.discountName}
                                     </Text>
                                 </View>
-                                <View style={cardInfoStyles.cardDetailStorageRowRight}>
+                                <View style={cardInfoStyles.cardDetailStorageRowRightMemo}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>备注信息：</Text>
-                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={1} ellipsizeMode={'tail'}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue} numberOfLines={3} ellipsizeMode={'tail'}>
                                         {data.remark || '暂无'}
                                     </Text>
                                 </View>

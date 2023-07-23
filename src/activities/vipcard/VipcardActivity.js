@@ -144,10 +144,7 @@ class VipCard extends React.Component {
                                 <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
                             )
                         }
-
                     </View>
-
-
                     {/*Tbs*/}
                     <View style={RechargeStoredCardStyles.openCardTitleR}>
                         {/*<View style={RechargeStoredCardStyles.openCardTitleRTitle}>*/}
