@@ -110,7 +110,7 @@ export class CardItem extends React.PureComponent {
                                     </View>
                                     <View style={commonStyles.cardSite}>
                                         <Text style={commonStyles.cardSiteText}
-                                              numberOfLines={2}
+                                              numberOfLines={1}
                                               ellipsizeMode={'tail'}>
                                             {data.storeName}
                                         </Text>

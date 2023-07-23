@@ -37,8 +37,7 @@ export class CardDetails extends PureComponent {
                     <Text style={RechargeStoredCardStyles.cardDate}>
                         有效期至：
                         {
-                            data.validity ? (data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限')
-                                          : '无期限'
+                            data.validity ? (data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限') : '无期限'
                         }
                     </Text>
                 </View>

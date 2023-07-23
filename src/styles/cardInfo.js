@@ -181,6 +181,14 @@ export const cardInfoStyles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: PixelUtil.size(66),
     },
+    cardDetailTimesRowMemo:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginBottom: PixelUtil.size(66),
+    },
     cardDetailTimesRight:{
         width: '50%',
         display: 'flex',
@@ -199,7 +207,7 @@ export const cardInfoStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginBottom: PixelUtil.size(86)
     },
     cardDetailStorageRowLeft:{
@@ -216,6 +224,15 @@ export const cardInfoStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingLeft: PixelUtil.size(100)
+    },
+    cardDetailStorageRowRightMemo:{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingLeft: PixelUtil.size(100),
+        paddingRight: PixelUtil.size(100)
     },
     cardDetailTimesRowRight:{
         width: '50%',
