@@ -32,7 +32,7 @@ export const fetchVipCardSales = (storeId, cardType) => {
                 times: x.times,
                 validTime: x.validTime,
                 endDate: x.endDate,
-                consumeMode: x.consumeMode,
+                consumeMode: x.cardMode || x.consumeMode,
             };
         });
         backData.data = cardList;
