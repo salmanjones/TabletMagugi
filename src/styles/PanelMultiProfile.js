@@ -207,7 +207,7 @@ export const PanelMultiProfiles = StyleSheet.create({
     memberBodyEmptyWrap: {
         width: '100%',
         height: PixelUtil.size(200),
-        marginTop: PixelUtil.size(254),
+        marginTop: PixelUtil.size(180),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',

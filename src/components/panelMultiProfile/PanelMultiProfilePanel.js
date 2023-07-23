@@ -1,9 +1,21 @@
-import {Animated, FlatList, Image, LogBox, PanResponder, Text, TextInput, TouchableOpacity, View,} from "react-native";
+import {
+    Animated,
+    FlatList,
+    Image,
+    ImageBackground,
+    LogBox,
+    PanResponder,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import {PixelUtil} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 import {BackgroundImage} from "react-native-elements/dist/config";
 import {MultiProfileItem} from "./widgets/MultiProfileItem";
+import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 
 /**
  * 多档案会员右侧浮动面板
@@ -226,6 +238,26 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                             source={require('@imgPath/reserve_customer_body_empty.png')}
                                             style={PanelMultiProfiles.memberBodyEmptyImage}/>
                                         <Text style={PanelMultiProfiles.memberBodyEmptyTxt}>无符合条件的顾客档案！</Text>
+                                        {
+                                            pagerName == 'ReserveBoardActivity' && (
+                                                <View style={PanelCustomerStyles.guestProfileOrderBoxNoBg}>
+                                                    <TouchableOpacity
+                                                        style={PanelCustomerStyles.guestProfileOrderWrap}
+                                                        onPress={()=>{
+                                                            customerClickEvent("forwardToCashier", {showMode, waiterId, actionType})
+                                                        }}>
+                                                        <ImageBackground
+                                                            resizeMode={"contain"}
+                                                            style={PanelCustomerStyles.guestProfileOrderImg}
+                                                            source={require('@imgPath/reserve_panel_customer_create_order.png')}>
+                                                            <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
+                                                                散客直接开单
+                                                            </Text>
+                                                        </ImageBackground>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )
+                                        }
                                     </View>
                                 )
                             }}/>

@@ -1177,6 +1177,16 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    guestProfileOrderBoxNoBg: {
+        width: '100%',
+        height: PixelUtil.size(144),
+        marginTop: PixelUtil.size(32),
+        borderRadius: PixelUtil.size(28),
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     guestProfileOrderWrap: {
         width: PixelUtil.size(290),
         height: PixelUtil.size(80),
