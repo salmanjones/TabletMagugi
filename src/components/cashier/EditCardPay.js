@@ -129,6 +129,35 @@ export class EditCardPay extends React.PureComponent {
         this.props.onCancel(this.state.card);
     }
 
+    // 获取次卡标题
+    getCardTitle(card){
+        let cardTitle = '次卡'
+        const cardType = card.cardType
+        const consumeMode = card.consumeMode
+
+        if(cardType == '1'){
+            cardTitle = '储值卡'
+            if(consumeMode == '2'){
+                cardTitle = '定向卡'
+            }else if(consumeMode == '1'){
+                cardTitle = '折扣卡'
+            }
+        }else if(cardType == '2'){
+            cardTitle = '次卡'
+
+            if(consumeMode == '0'){
+                cardTitle = '疗程卡'
+            }else if(consumeMode == '1'){
+                cardTitle = '套餐卡'
+            }else if(consumeMode == '2'){
+                cardTitle = '时间卡'
+            }else if(consumeMode == '3'){
+                cardTitle = '护理卡'
+            }
+        }
+        return cardTitle
+    }
+
     render() {
         const { currentEditItem } = this.state;
         const { balance, vipCardName, storeName, attachMoneyList, paidAmt } = this.state.card;
@@ -147,7 +176,9 @@ export class EditCardPay extends React.PureComponent {
                         <View style={multiplyPayStyle.rightall}>
                             <View style={multiplyPayStyle.rightWrapperCardTop}>
                                 <View style={multiplyPayStyle.rightCardName}>
-                                    <Text style={multiplyPayStyle.storeCard}>储值卡</Text>
+                                    <Text style={multiplyPayStyle.storeCard}>
+                                        {this.getCardTitle(this.state.card)}
+                                    </Text>
                                     <Text ellipsizeMode={'tail'} numberOfLines={2} style={multiplyPayStyle.storeCardname}>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{vipCardName}</Text>
                                 </View>
                             </View>

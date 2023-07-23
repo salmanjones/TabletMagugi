@@ -30,6 +30,11 @@ const getCardTitle = (card) =>{
 
     if(cardType == '1'){
         cardTitle = '储值卡'
+        if(consumeMode == '2'){
+            cardTitle = '定向卡'
+        }else if(consumeMode == '1'){
+            cardTitle = '折扣卡'
+        }
     }else if(cardType == '2'){
         cardTitle = '次卡'
 

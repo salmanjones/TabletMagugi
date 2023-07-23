@@ -8,9 +8,40 @@ export class MemberCardList extends PureComponent {
         this.state = {};
     }
 
+    // 获取次卡标题
+    getCardTitle(card){
+        let cardTitle = '次卡'
+        const cardType = card.cardType
+        const consumeMode = card.consumeMode
+
+        if(cardType == '1'){
+            cardTitle = '储值卡'
+            if(consumeMode == '2'){
+                cardTitle = '定向卡'
+            }else if(consumeMode == '1'){
+                cardTitle = '折扣卡'
+            }
+        }else if(cardType == '2'){
+            cardTitle = '次卡'
+
+            if(consumeMode == '0'){
+                cardTitle = '疗程卡'
+            }else if(consumeMode == '1'){
+                cardTitle = '套餐卡'
+            }else if(consumeMode == '2'){
+                cardTitle = '时间卡'
+            }else if(consumeMode == '3'){
+                cardTitle = '护理卡'
+            }
+        }
+        return cardTitle
+    }
+
     render() {
         const {data, selectedCardsId} = this.props;
         const {onSeleted, onEdit, onValiDity} = this.props;
+
+
         return (
             <FlatList
                 style={multiplyPayStyle.rightWrapperCard}
@@ -18,7 +49,6 @@ export class MemberCardList extends PureComponent {
                 extraData={selectedCardsId}
                 keyExtractor={(item) => item.id}
                 renderItem={({item, index}) => {
-
                     let isSelected = selectedCardsId.findIndex((x) => x == item.id) != -1;
                     let attachBalance = (item.attachMoneyList && item.attachMoneyList.length) ? item.attachMoneyList.reduce((rs, x) => (rs += x.balance), 0) : null;
                     let totalPaidAmt = Number(item.paidAmt || 0) + (item.attachMoneyList || []).reduce((rs, x) => (rs += Number(x.paidAmt || 0)), 0);
@@ -40,7 +70,9 @@ export class MemberCardList extends PureComponent {
                                     <View style={multiplyPayStyle.rightall}>
                                         <View style={multiplyPayStyle.rightWrapperCardTop}>
                                             <View style={multiplyPayStyle.rightCardName}>
-                                                <Text style={multiplyPayStyle.storeCard}>储值卡</Text>
+                                                <Text style={multiplyPayStyle.storeCard}>
+                                                    {this.getCardTitle(item)}
+                                                </Text>
                                                 <Text ellipsizeMode={'tail'} numberOfLines={2}
                                                       style={multiplyPayStyle.storeCardname}>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{item.vipCardName}</Text>
                                             </View>
