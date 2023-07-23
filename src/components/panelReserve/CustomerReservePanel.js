@@ -353,7 +353,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                     defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                                 <View style={PanelReserveStyles.customerEasyInfo}>
                                                     <View style={PanelReserveStyles.customerEasyNameSex}>
-                                                        <Text style={PanelReserveStyles.nameShowText}>
+                                                        <Text style={PanelReserveStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>
                                                             {decodeURIComponent(customerInfo.nickName)}
                                                         </Text>
                                                         <Image
