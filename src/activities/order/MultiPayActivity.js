@@ -558,7 +558,7 @@ class MultiPay extends React.Component {
                             cards.forEach(card=>{
                                 if(card.id == cardId){
                                     card.cardStatus = '0'
-                                    card.validityShow = ''
+                                    card.validityShow = data
                                 }
                             })
 
