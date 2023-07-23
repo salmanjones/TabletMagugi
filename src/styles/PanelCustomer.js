@@ -64,7 +64,7 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberInfoBaseBox: {
         width: '100%',
         height: PixelUtil.size(164),
-        paddingHorizontal: PixelUtil.size(46),
+        paddingHorizontal: PixelUtil.size(50),
         paddingVertical: PixelUtil.size(36),
         display: 'flex',
         flexDirection: 'row',
