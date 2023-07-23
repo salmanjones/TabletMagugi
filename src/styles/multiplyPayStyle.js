@@ -577,10 +577,12 @@ export const multiplyPayStyle = StyleSheet.create({
         fontSize: PixelUtil.size(30),
         fontWeight: '500',
     },
+    rightCardConsumeEditBtn: {
+        padding: PixelUtil.size(12),
+    },
     rightCardConsumeEditImg: {
         width: PixelUtil.size(32),
         height: PixelUtil.size(32),
-        marginLeft: PixelUtil.size(12)
     },
     // rightWrapperCardRight: {
     //     marginLeft: PixelUtil.size(25),
