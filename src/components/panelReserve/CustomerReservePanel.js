@@ -359,7 +359,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                         <Image
                                                             style={PanelReserveStyles.customerSexIcon}
                                                             resizeMode={'contain'}
-                                                            source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                                            source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
                                                         <Text style={PanelReserveStyles.sexShowText}>{customerInfo.sex == '1'? '男':'女'}</Text>
                                                     </View>
                                                     <Text style={PanelReserveStyles.phoneShowText}>

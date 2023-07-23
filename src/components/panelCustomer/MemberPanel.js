@@ -175,7 +175,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}
                                             resizeMode={'contain'}
-                                            source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                            source={customerInfo.sex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
                                         <Image
                                             style={ReserveBoardStyles.reserveCustomeriswechatIcon}
                                             resizeMode={'contain'}

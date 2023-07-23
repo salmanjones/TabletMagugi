@@ -260,7 +260,7 @@ export default React.memo(({
                                                         <Image
                                                             style={ReserveBoardStyles.reserveCustomerSexIcon}
                                                             resizeMode={'contain'}
-                                                            source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_detail_fmale.png') : require('@imgPath/reserve_customer_detail_male.png')}/>
+                                                            source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
                                                     )
                                                 }
 
