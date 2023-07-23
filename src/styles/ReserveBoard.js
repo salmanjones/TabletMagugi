@@ -55,9 +55,54 @@ export const ReserveBoardStyles = StyleSheet.create({
         backgroundColor: '#ffffff',
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(36)
+    },
+    reserveFlagBoxLeft: {
+        width: '50%',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft: PixelUtil.size(36)
+    },
+    reserveFlagDateBox:{
+        width: PixelUtil.size(490),
+        height: PixelUtil.size(80),
+        borderRadius: PixelUtil.size(40),
+        backgroundColor: '#EAF0FF',
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#111C3C',
+        paddingHorizontal: PixelUtil.size(30),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    reserveDateTitle:{
+        color: '#111C3C',
+        fontSize: PixelUtil.size(32)
+    },
+    reserveDateValue:{
+        color: '#111C3C',
+        fontSize: PixelUtil.size(32),
+        marginLeft: PixelUtil.size(40)
+    },
+    reserveDateIcon:{
+        width: PixelUtil.size(46),
+        height: PixelUtil.size(46),
+        marginLeft: PixelUtil.size(40)
+    },
+    reserveFlagBoxRight: {
+        width: '50%',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     reserveValidStyle: {
         width: PixelUtil.size(290),

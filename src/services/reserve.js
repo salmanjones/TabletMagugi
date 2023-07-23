@@ -2,6 +2,15 @@ import {callService} from '../utils';
 import * as api from './api';
 
 /**
+ * 新收银：预约日期
+ * @param {*} storeId
+ */
+export const getReserveDate = params => {
+    return callService(api.getReserveDate, params).then(backData => {
+        return backData;
+    });
+};
+/**
  * 新收银：预约信息
  * @param {*} storeId
  */

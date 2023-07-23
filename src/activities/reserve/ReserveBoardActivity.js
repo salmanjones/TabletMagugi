@@ -10,7 +10,7 @@ import {
     getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData,
     getCustomerDetail, updateCustomerReserve, updateCardValidity, getMemberInfo,
     getMemberPortrait, getBillFlowNO, getMemberCards, getStaffPermission,
-    getMemberBillCards
+    getMemberBillCards, getReserveDate
 } from "../../services/reserve";
 import MemberPanel from "../../components/panelCustomer/MemberPanel";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
@@ -38,6 +38,8 @@ export const ReserveBoardActivity = props => {
     const reduxState = ReduxStore.getState()
     // 加载提示信息
     const [isLoading, setLoading] = useState(false)
+    // 预约日期
+    const [showDate, setShowDate] = useState(dayjs().format('YYYY-MM-DD'))
     // 预约状态切换
     const [reserveFlag, setReserveFlag] = useState('valid')
     // 预约信息
@@ -94,8 +96,21 @@ export const ReserveBoardActivity = props => {
         }
 
         setLoading(true)
-        getReserveInfo(params).then(backData => {
-            const {code, data} = backData
+        const promiseInfo = getReserveInfo(params)
+        const promiseDate = getReserveDate()
+        Promise.all([promiseDate, promiseInfo]).then(backData => {
+            // 处理预约日期
+            let showDate = dayjs().format("YYYY-MM-DD")
+            const dateInfo = backData[0]
+            if(dateInfo.code == '6000'){ // 数据获取成功
+                const dateEntity = dateInfo.data
+                showDate = dateEntity['dateOnly']
+                setShowDate(showDate)
+            }
+
+            // 处理预约信息
+            const reserveInfo = backData[1]
+            const {code, data} = reserveInfo
             if ("6000" == code) {
                 setReserveInfoArray(data)
             } else {
@@ -912,26 +927,41 @@ export const ReserveBoardActivity = props => {
             <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             {/*预约状态切换*/}
             <View style={ReserveBoardStyles.reserveFlagBox}>
-                <TouchableOpacity
-                    onPress={() => {
-                        setReserveFlag('valid')
-                    }}
-                    style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
-                    <Text
-                        style={reserveFlag == 'valid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
-                        当前预约
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        setReserveFlag('invalid')
-                    }}
-                    style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
-                    <Text
-                        style={reserveFlag == 'invalid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
-                        过期预约
-                    </Text>
-                </TouchableOpacity>
+                <View style={ReserveBoardStyles.reserveFlagBoxLeft}>
+                    <TouchableOpacity style={ReserveBoardStyles.reserveFlagDateBox}>
+                        <Text style={ReserveBoardStyles.reserveDateTitle}>
+                            预约日期
+                        </Text>
+                        <Text style={ReserveBoardStyles.reserveDateValue}>
+                            {showDate}
+                        </Text>
+                        <Image
+                            style={ReserveBoardStyles.reserveDateIcon}
+                            source={require('@imgPath/reserve_customer_date_icon.png')}></Image>
+                    </TouchableOpacity>
+                </View>
+                <View style={ReserveBoardStyles.reserveFlagBoxRight}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setReserveFlag('valid')
+                        }}
+                        style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
+                        <Text
+                            style={reserveFlag == 'valid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
+                            当前预约
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setReserveFlag('invalid')
+                        }}
+                        style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
+                        <Text
+                            style={reserveFlag == 'invalid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
+                            过期预约
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             {/*预约信息展示*/}
             <View style={ReserveBoardStyles.reserveInfoBox}>
