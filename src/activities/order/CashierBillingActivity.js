@@ -126,7 +126,8 @@ class CashierBillingView extends React.Component {
             },
             reserveWaiter: {
                 value: ''
-            }
+            },
+            showPaySuccess: false
         }
 
         this.addCosumableT = throttle(this.addCosumable, 600);
@@ -551,6 +552,7 @@ class CashierBillingView extends React.Component {
                 prevState.showToWXAppPayModal = false;
                 return prevState;
             })
+            console.log("支付完成")
         } else if (nextProps.orderInfo.propChangeType == 'payEndSuccess') {
             this.setState((prevState, props) => {
                 prevState.showCashierPayModal = false;
@@ -559,8 +561,11 @@ class CashierBillingView extends React.Component {
                 prevState.showToAppPayModal = false;
                 prevState.showToMultiplyPayModal = false;
                 prevState.showToWXAppPayModal = false;
+                prevState.showPaySuccess = true
                 return prevState;
             })
+
+            console.log("支付成功")
             //showMessage('支付成功');
             // this.props.resetToCashier();
 
@@ -1392,6 +1397,9 @@ class CashierBillingView extends React.Component {
     confirmPaySuccess() {
         //this.props.navigation.navigate('CashierActivity');
         //this.props.navigation.setParams({back: null});
+        this.setState({
+            showPaySuccess: false
+        })
         this.props.resetToCashier();
     }
 
@@ -1906,7 +1914,7 @@ class CashierBillingView extends React.Component {
             currentServicerInfo = this.state.consumeItems[this.state.currentEditConsumeItemIndex].assistStaffDetail[this.state.currentEditConsumeServicerIndex];
         }
 
-        let showPaySuccess = this.props.orderInfo.propChangeType == 'payEndSuccess';
+        let showPaySuccess = this.state.showPaySuccess
         const accessRights = this.state.accessRights;
         let billingInfo = {
             flowNumber: this.state.flowNumber,
@@ -2032,6 +2040,7 @@ class CashierBillingView extends React.Component {
                     )
                 }
 
+                {/*支付成功弹层*/}
                 <Modal
                     transparent={true}
                     visible={showPaySuccess}
