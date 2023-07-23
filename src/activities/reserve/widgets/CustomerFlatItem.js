@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native";
 import {ReserveBoardStyles} from "../../../styles/ReserveBoard";
-import {getImage, ImageQutity, PixelUtil} from "../../../utils";
+import {decodeContent, getImage, ImageQutity, PixelUtil} from "../../../utils";
 
 /**
  * isReseve 0 占用与预约按钮都可用
@@ -252,7 +252,7 @@ export default React.memo(({
                                                           ? ReserveBoardStyles.reserveCustomerNameTxt // 有档案
                                                           : [ReserveBoardStyles.reserveCustomerNameTxt, ReserveBoardStyles.reserveCustomerBlackTxt]  // 无档案
                                                       }>
-                                                    {decodeURIComponent(decodeURIComponent(customer.appUserName))}
+                                                    {decodeContent(customer.appUserName)}
                                                 </Text>
                                                 {/*男女*/}
                                                 {

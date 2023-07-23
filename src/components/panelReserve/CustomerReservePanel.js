@@ -426,7 +426,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                     placeholderTextColor={'#8e8e8e'}
                                                     onChange={({nativeEvent})=>{
                                                         const name = nativeEvent.text.trim()
-                                                        setUserName(name)
+                                                        setUserName(encodeURIComponent(name))
                                                     }}
                                                     value={decodeURIComponent(userName)}
                                                     maxLength={10}/>
@@ -544,7 +544,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         placeholder={'请输入预约备注，30个文字以内'}
                                         onChange={({nativeEvent})=>{
                                             const remark = nativeEvent.text
-                                            setReserveRemark(remark)
+                                            setReserveRemark(encodeURIComponent(remark))
                                         }}
                                         maxLength={30}>
                                     </TextInput>

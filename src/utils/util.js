@@ -153,3 +153,20 @@ export const getPhoneSecurity = (phone)=>{
 
     return phone.substring(0, 3) + "****" + phone.substring(7, 11)
 }
+
+
+export const decodeContent = (content, maxNum = 2)=>{
+    let backTxt = content
+    let decodeNum = 1
+    while (true && decodeNum <= maxNum){
+        try{
+            backTxt = decodeURIComponent(backTxt)
+        }catch (e){
+            backTxt = backTxt
+        }finally {
+            decodeNum++
+        }
+    }
+
+    return backTxt
+}

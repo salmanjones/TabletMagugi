@@ -1,6 +1,7 @@
 import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
+import {decodeContent} from "../../../utils";
 
 export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerName, customerPressEvent})=>{
     // 顾客是否已到店 0:否 1:是
@@ -26,16 +27,8 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
         setSourceValue(reserveInfo.source)
         setServiceValue(reserveInfo.reserveProjectId)
         setServiceNameValue(serviceType)
-
         // 处理备注加密的问题
-        let memo = ''
-        try{
-            memo = decodeURIComponent(decodeURIComponent(reserveInfo.remark))
-        }catch (e){
-            console.log("解码备注失败", e)
-            memo = reserveInfo.remark
-        }
-        setRemark(memo)
+        setRemark(decodeContent(reserveInfo.remark))
     }, [reserveInfo])
 
     return (
@@ -72,7 +65,7 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
                     顾客姓名：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
-                    {decodeURIComponent(decodeURIComponent(reserveInfo.memberName))}
+                    {decodeContent(reserveInfo.memberName)}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberReserveProperty}>
