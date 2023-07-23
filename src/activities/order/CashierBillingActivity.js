@@ -4129,6 +4129,14 @@ const buildExistDatas = (self, orderData) => {
             prevState.isSynthesis = orderData.isSynthesis;
             prevState.totalConsumePrice = orderData.totalPrice;
             prevState.isKeyNumber = orderData.isKeyNumber;
+
+            // 处理服务人
+            if(prevState.consumeItems
+                && prevState.consumeItems.length > 0
+                && prevState.consumeItems[0].assistStaffDetail
+                && prevState.consumeItems[0].assistStaffDetail.length > 0){
+                prevState.reserveWaiter = prevState.consumeItems[0].assistStaffDetail[0]
+            }
             return prevState;
         });
     })
