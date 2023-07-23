@@ -1228,13 +1228,24 @@ class MultiPay extends React.Component {
     //支付方式checkBox 选中
     onPayTypeChecked = (index, callBack) => {
         let payType = this.state.payTypes[index];
+        let payWayType = this.state.payWayType
         if (payType.paidAmt == null || payType.paidAmt == undefined) {
-            this.setState({
-                selectedPayTypeIndex: index,
-                editCard: null,
-            }, ()=>{
-                callBack && callBack()
-            });
+            if(payWayType == 'other'&& payType && payType.payType == 2){
+                this.setState({
+                    selectedPayTypeIndex: index,
+                    editCard: null,
+                }, ()=>{
+                    this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
+                    callBack && callBack()
+                });
+            }else{
+                this.setState({
+                    selectedPayTypeIndex: index,
+                    editCard: null,
+                }, ()=>{
+                    callBack && callBack()
+                });
+            }
             return;
         }
 
