@@ -132,6 +132,11 @@ export const ReserveBoardActivity = props => {
         }
     }, []) // 如果指定的是[],回调函数只会在第一次render()后执行
 
+    // 切换Tab，刷新列表
+    useEffect(()=>{
+        getReserveList()
+    }, [reserveFlag])
+
 
     //展示提示信息
     const showToast = (message) => {
