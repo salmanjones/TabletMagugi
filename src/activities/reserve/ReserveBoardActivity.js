@@ -26,7 +26,8 @@ import {ModalCreateMember} from "../../components";
 // 开单预约看板
 const pageCache = {
     checkReserveId: '', // 选中的预约id
-    checkAppUserId: '' // 选中的app表用户Id
+    checkAppUserId: '', // 选中的app表用户Id
+    reloadDate: '' // 加载日期
 }
 export const ReserveBoardActivity = props => {
     // 路由
@@ -115,6 +116,20 @@ export const ReserveBoardActivity = props => {
     useEffect(() => {
         // 首次获取数据
         getReserveList()
+
+        // 每天早上9点刷新列表
+        const timerId = setInterval(()=>{
+            const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
+            const showDate = timestamp.substring(0, 10)
+            const showHour = timestamp.substring(11, 13)
+            if(pageCache.reloadDate != showDate && showHour == '00'){
+                pageCache.reloadDate = showDate
+                getReserveList()
+            }
+        }, 1000*60*10)
+        return ()=>{
+            timerId && clearInterval(timerId)
+        }
     }, []) // 如果指定的是[],回调函数只会在第一次render()后执行
 
 
