@@ -1,4 +1,4 @@
-import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
+import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 

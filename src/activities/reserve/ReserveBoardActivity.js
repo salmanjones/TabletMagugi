@@ -355,6 +355,8 @@ export const ReserveBoardActivity = props => {
                             ]
                         )
                     }else{
+                        // 重新加载数据
+                        getReserveList()
                         showMessageExt("更新预约成功")
                         if(hideRight === true){ // 关闭右侧面板
                             memberPanelRef.current.hideRightPanel()
