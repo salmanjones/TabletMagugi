@@ -649,8 +649,11 @@ class CashierBillingView extends React.Component {
 
         // 处理消费项
         this.setState((prevState, props) => {
+            // 传入的服务人ID
+            const waiterId = this.state.waiterId
+
             //服务人信息
-            if (prevState.consumeItems.length > 0) {
+            if (prevState.consumeItems.length > 0) { // 后续添加
                 let prevServicer = prevState.consumeItems[prevState.consumeItems.length - 1].assistStaffDetail;
                 if (itemInfo.itemType == 'item') {
                     itemInfo.assistStaffDetail = [
@@ -660,13 +663,12 @@ class CashierBillingView extends React.Component {
                     ];
                 } else {
                     itemInfo.assistStaffDetail = [
-                        this.copyServicer(prevServicer[0]),
-                        this.copyServicer(prevServicer[1]),
-                        this.copyServicer(prevServicer[2])
+                        this.copyServicer(prevServicer[0], {appoint: waiterId && waiterId.length> 0 && prevServicer[0].id == waiterId ? "true":"false"}),
+                        this.copyServicer(prevServicer[1], {appoint: waiterId && waiterId.length> 0 && prevServicer[1].id == waiterId ? "true":"false"}),
+                        this.copyServicer(prevServicer[2], {appoint: waiterId && waiterId.length> 0 && prevServicer[2].id == waiterId ? "true":"false"})
                     ];
                 }
-            } else {
-                const waiterId = this.state.waiterId
+            } else { // 首次添加
                 if (waiterId && waiterId.length > 0) { // 已由外部传入服务人
                     // 第一位服务人
                     let firstWaiter = defaultServicer()
@@ -723,7 +725,7 @@ class CashierBillingView extends React.Component {
     }
 
     copyServicer(preServicer, overrideFields) {
-        let servicer = Object.assign({}, preServicer, {
+        const servicer = Object.assign({}, preServicer, {
             //appoint: "false"
             ...overrideFields
             , performance: ""
