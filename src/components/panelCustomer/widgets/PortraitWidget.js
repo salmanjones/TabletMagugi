@@ -1,6 +1,7 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
 import React, {useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
+import {decodeContent} from "../../../utils";
 
 export const PortraitWidget = React.memo(({portraitInfo})=>{
     return (
@@ -25,7 +26,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                     顾客姓名：
                 </Text>
                 <Text style={PanelCustomerStyles.memberPortraitPValue}>
-                    { portraitInfo.nickName ? decodeURIComponent(portraitInfo.nickName) : '未填写姓名'}
+                    { portraitInfo.nickName ? decodeContent(portraitInfo.nickName) : '未填写姓名'}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberPropertyBox}>

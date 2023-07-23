@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {staffQueueStyles} from '../../styles';
 import {connect} from 'react-redux';
-import {AppConfig, getImage, ImageQutity, showMessageExt} from "../../utils";
+import {AppConfig, decodeContent, getImage, ImageQutity, showMessageExt} from "../../utils";
 import {fetchStaffList, fetchWorksList} from '../../services';
 import {StarRating} from "../../components";
 import Toast from "react-native-root-toast";
@@ -53,7 +53,7 @@ export class StaffQueueView extends React.Component {
 
                 // 处理员工信息
                 staffList.forEach((staff, idx)=>{
-                    staff.nickName = decodeURIComponent(staff.nickName)
+                    staff.nickName = decodeContent(staff.nickName)
                     staff.staffPhoto = staff.staffPhoto && staff.staffPhoto.length > 0 ? AppConfig.imageServer + staff.staffPhoto + '?imageView2/3/w/650/q/85' : AppConfig.defaultAvatar
                     staff.selected = idx == 0 ? 'selected': ''
                 })

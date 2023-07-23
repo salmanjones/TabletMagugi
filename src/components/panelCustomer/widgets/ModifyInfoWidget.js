@@ -3,9 +3,10 @@ import React, {useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import DatePicker from "react-native-date-picker";
 import dayjs from "dayjs";
+import {decodeContent} from "../../../utils";
 
 export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=>{
-    const [memberName, setMemberName] = useState(decodeURIComponent(portraitInfo.nickName))
+    const [memberName, setMemberName] = useState(decodeContent(portraitInfo.nickName))
     const [memberSex, setMemberSex] = useState(portraitInfo.sex)
     const [memberBirthday, setMemberBirthday] = useState(
         portraitInfo.birthday && portraitInfo.birthday.length > 0

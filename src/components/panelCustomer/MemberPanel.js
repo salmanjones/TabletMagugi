@@ -1,5 +1,5 @@
 import {Animated, Image, ImageBackground, LogBox, PanResponder, Text, TouchableOpacity, View} from "react-native";
-import {getImage, ImageQutity, PixelUtil} from "../../utils";
+import {decodeContent, getImage, ImageQutity, PixelUtil} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 import {CouponWidget} from "./widgets/CouponWidget"
@@ -170,7 +170,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 <View style={PanelCustomerStyles.namePhoneBox}>
                                     <View style={PanelCustomerStyles.nameWrap}>
                                         <Text style={PanelCustomerStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>
-                                            {customerInfo.nickName ? decodeURIComponent(customerInfo.nickName) : '未填写姓名'}
+                                            {customerInfo.nickName ? decodeContent(customerInfo.nickName) : '未填写姓名'}
                                         </Text>
                                         <Image
                                             style={PanelCustomerStyles.customerSexIcon}

@@ -73,7 +73,7 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
                     预约员工：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
-                    {decodeURIComponent(reserveInfo.staffName)}
+                    {decodeContent(reserveInfo.staffName)}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberReserveProperty}>

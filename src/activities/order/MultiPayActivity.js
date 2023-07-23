@@ -9,7 +9,16 @@ import {
     getAvailablePaymentInfo,
     payBillingV4,
 } from '../../services';
-import {clone, getImage, ImageQutity, PaymentResultStatus, showMessage, showMessageExt, throttle} from '../../utils';
+import {
+    clone,
+    decodeContent,
+    getImage,
+    ImageQutity,
+    PaymentResultStatus,
+    showMessage,
+    showMessageExt,
+    throttle
+} from '../../utils';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {
     CouponList,
@@ -785,7 +794,7 @@ class MultiPay extends React.Component {
                                                                     <View style={multiplyPayStyle.anotherInfoBase}>
                                                                         <View style={multiplyPayStyle.anotherInfoBaseName}>
                                                                             <Text style={multiplyPayStyle.anotherInfoBaseNameTxt} ellipsizeMode={'tail'} numberOfLines={1}>
-                                                                                {anotherPortrait.name ? decodeURIComponent(anotherPortrait.name) : '未填写姓名'}
+                                                                                {anotherPortrait.name ? decodeContent(anotherPortrait.name) : '未填写姓名'}
                                                                             </Text>
                                                                             <Image
                                                                                 style={multiplyPayStyle.anotherSexIcon}

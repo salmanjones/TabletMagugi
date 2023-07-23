@@ -3,7 +3,7 @@ import {RechargeStoredCardStyles} from '../../styles';
 import {Image, ImageBackground, Text, TouchableOpacity, View} from "react-native";
 import {AppNavigate} from "../../navigators";
 import {getMemberDetail} from '../../services/reserve'
-import {getImage, ImageQutity} from "../../utils";
+import {decodeContent, getImage, ImageQutity} from "../../utils";
 
 export class VipUserInfoComponent extends React.PureComponent {
 
@@ -79,7 +79,7 @@ export class VipUserInfoComponent extends React.PureComponent {
                             <View style={RechargeStoredCardStyles.avaterInfo}>
                                 <View style={RechargeStoredCardStyles.avaterInfotop}>
                                     <Text style={RechargeStoredCardStyles.usertitleText} numberOfLines={1} ß
-                                          ellipsizeMode={'tail'}>{decodeURIComponent(name == '' ? '未填写姓名' : name)}</Text>
+                                          ellipsizeMode={'tail'}>{decodeContent(name == '' ? '未填写姓名' : name)}</Text>
                                     <Image resizeMethod="resize" style={RechargeStoredCardStyles.avaterlogo}
                                            source={sex == 0 ? require('@imgPath/female.png') : require('@imgPath/vipavater.png')}></Image>
                                     {/*<Text style={RechargeStoredCardStyles.sexText}>{sex == 0 ? '女' : '男'}</Text>*/}

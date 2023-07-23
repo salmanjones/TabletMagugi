@@ -54,6 +54,7 @@ import {
     getPendingListAction, getServiceStaffsAction, SERVICE_STAFFS_GET
 } from '../../actions';
 import {
+    decodeContent,
     displayError,
     getImage,
     ImageQutity,
@@ -2162,7 +2163,7 @@ class CashierBillingView extends React.Component {
                                                         <View style={cashierBillingStyle.customerInfoBaseName}>
                                                             <Text style={cashierBillingStyle.customerInfoBaseNameTxt}
                                                                   ellipsizeMode={'tail'} numberOfLines={1}>
-                                                                {memberProfile.nickName ? decodeURIComponent(memberProfile.nickName) : '未填写姓名'}
+                                                                {memberProfile.nickName ? decodeContent(memberProfile.nickName) : '未填写姓名'}
                                                             </Text>
                                                             <Image
                                                                 style={cashierBillingStyle.customerSexIcon}

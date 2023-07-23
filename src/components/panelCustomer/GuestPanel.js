@@ -1,5 +1,5 @@
 import {Animated, Image, ImageBackground, LogBox, PanResponder, Text, TouchableOpacity, View,} from "react-native";
-import {getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
+import {decodeContent, getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelCustomerStyles} from "../../styles/PanelCustomer";
 import {ReserveWidget} from "./widgets/ReserveWidget";
@@ -315,7 +315,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                 defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                             <Text
-                                style={PanelCustomerStyles.nameShowTextCustomer}>{customerInfo['reserveInfo'] ? decodeURIComponent(customerInfo['reserveInfo'].memberName):''}</Text>
+                                style={PanelCustomerStyles.nameShowTextCustomer}>{customerInfo['reserveInfo'] ? decodeContent(customerInfo['reserveInfo'].memberName):''}</Text>
                         </View>
                         <View style={PanelCustomerStyles.memberInfoSplit}></View>
                     </ImageBackground>

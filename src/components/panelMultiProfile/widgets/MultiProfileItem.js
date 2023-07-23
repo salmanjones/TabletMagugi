@@ -1,7 +1,7 @@
 import React from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
 import {PanelMultiProfiles} from "../../../styles/PanelMultiProfile";
-import {getPhoneSecurity} from "../../../utils";
+import {decodeContent, getPhoneSecurity} from "../../../utils";
 import {BackgroundImage} from "react-native-elements/dist/config";
 
 /**
@@ -27,7 +27,7 @@ export const MultiProfileItem = React.memo(({
                         <View style={PanelMultiProfiles.nameWrap}>
                             <Text style={PanelMultiProfiles.nameText} ellipsizeMode={"tail"} numberOfLines={1}>
                                 {profileItem.bmsName && profileItem.bmsName.length > 0
-                                    ? decodeURIComponent(profileItem.bmsName) : '未填写姓名'}
+                                    ? decodeContent(profileItem.bmsName) : '未填写姓名'}
                             </Text>
                             <Image
                                 source={profileItem.bmsSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}
