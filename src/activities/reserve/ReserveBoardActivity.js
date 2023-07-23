@@ -114,15 +114,12 @@ export const ReserveBoardActivity = props => {
 
     // 初次加载处理
     useEffect(() => {
-        // 首次获取数据
-        getReserveList()
-
         // 每天早上9点刷新列表
         const timerId = setInterval(()=>{
             const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
             const showDate = timestamp.substring(0, 10)
             const showHour = timestamp.substring(11, 13)
-            if(pageCache.reloadDate != showDate && showHour == '00'){
+            if(pageCache.reloadDate != showDate && showHour == '18'){
                 pageCache.reloadDate = showDate
                 getReserveList()
             }
@@ -137,6 +134,14 @@ export const ReserveBoardActivity = props => {
         getReserveList()
     }, [reserveFlag])
 
+    // 进入页面获取新数据
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            getReserveList()
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     //展示提示信息
     const showToast = (message) => {
