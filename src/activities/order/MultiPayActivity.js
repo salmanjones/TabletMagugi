@@ -118,7 +118,8 @@ class MultiPay extends React.Component {
             paySequence: [],
             payWayType: 'self', // self:自己支付 other:他人代付
             multiProfiles: [], // 他人多档案
-            anotherPortrait: null
+            anotherPortrait: null,
+            canUseOtherPay: true
         };
         this.savedBilling = null;
         this.panelMultiProfilePanelRef = null
@@ -230,6 +231,7 @@ class MultiPay extends React.Component {
                 items: items,
                 billingInfo: billingInfo, //订单信息
                 memberInfo: memberInfo, // 会员信息
+                canUseOtherPay: !paymentTimesCard || paymentTimesCard.length < 1 // 是否可以使用他人代付
             }, ()=>{
                 memberCards = JSON.parse(JSON.stringify(stateData.cards))
             });
@@ -280,6 +282,19 @@ class MultiPay extends React.Component {
 
         // 左侧支付列表
         const payTypes = JSON.parse(JSON.stringify(this.state.payTypes))
+        // 有次卡项目，不可使用他人代付
+        if(!this.state.canUseOtherPay && type == 'other'){
+            Alert.alert(
+                '系统提示',
+                '已添加次卡消费项，不能使用他人代付',
+                [
+                    {
+                        text: '知道了',
+                    }
+                ]
+            )
+            return
+        }
 
         // 需要取消选择的项目索引
         let clearIndex = -1
