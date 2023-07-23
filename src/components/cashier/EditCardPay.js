@@ -139,7 +139,7 @@ export class EditCardPay extends React.PureComponent {
             <View style={multiplyPayStyle.editCardWrap}>
                 {/*卡信息展示*/}
                 <ImageBackground
-                    style={multiplyPayStyle.rightWrapperCardImg}
+                    style={!currentEditItem ? multiplyPayStyle.rightWrapperCardImg:multiplyPayStyle.hide}
                     source={require('@imgPath/member_storecard.png')}
                     resizeMethod="resize"
                     resizeMode={'stretch'}>
