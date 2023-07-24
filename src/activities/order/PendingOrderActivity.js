@@ -12,6 +12,7 @@ import {PixelUtil, showMessage} from '../../utils';
 import {CheckBox} from 'react-native-elements';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
+import moment from "moment/moment";
 
 const CURRENT_TAB_INDEX = 1;
 
@@ -55,11 +56,18 @@ class PendingOrder extends React.Component {
         });
     };
 
-    UNSAFE_componentWillMount() {
-        this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
+    componentDidMount() {
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.loadData(true);
         });
     }
+
+    componentWillUnmount() {
+        this._unsubscribe();
+        this.props.reset && this.props.reset();
+    }
+
+
 
     getSwiperDataSource(list) {
         let groupedList = [];

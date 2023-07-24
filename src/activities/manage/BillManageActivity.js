@@ -44,7 +44,6 @@ class BillManageOtherView extends React.Component {
         if (this.state && new Date() - this.state.lastRefreshTime <= 15000) {
             return;
         }
-        var self = this;
         const {getBillingList} = this.props;
         InteractionManager.runAfterInteractions(() => {
             getBillingList({
@@ -57,8 +56,8 @@ class BillManageOtherView extends React.Component {
         });
     };
 
-    UNSAFE_componentWillMount() {
-        this.subscribeDidFocus = this.props.navigation.addListener('focus', () => {
+    componentDidMount() {
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.props.navigation.setParams({loadData: this.loadData});
             const formatNowTime = moment().format('YYYY-MM-DD');
             this.setState({selectTime: formatNowTime});
@@ -66,14 +65,8 @@ class BillManageOtherView extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.props.navigation.setParams({loadData: this.loadData});
-        const formatNowTime = moment().format('YYYY-MM-DD');
-        this.setState({selectTime: formatNowTime});
-        this.loadData();
-    }
-
     componentWillUnmount() {
+        this._unsubscribe();
         this.props.reset && this.props.reset();
     }
 

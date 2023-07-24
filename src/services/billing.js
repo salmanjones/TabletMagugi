@@ -121,6 +121,7 @@ export const fetchBillingList = params => {
     let end = params.selectTime;
     let size = '1000';
     let p = '1';
+
     return callService(api.getBillingList, {
         flowNumber: flowNumber || '',
         st: st || '',
