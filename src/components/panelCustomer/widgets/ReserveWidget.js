@@ -73,7 +73,7 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
                     顾客性别：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
-                    {reserveInfo.sex == '0' ? '女':'男'}
+                    {reserveInfo.memberSex == '0' ? '女':'男'}
                 </Text>
             </View>
             <View style={PanelCustomerStyles.memberReserveProperty}>
