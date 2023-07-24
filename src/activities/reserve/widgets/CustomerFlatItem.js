@@ -243,7 +243,7 @@ export default React.memo(({
                                             defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
                                         <View style={ReserveBoardStyles.reserveCustomerInfo}>
                                             <View style={
-                                                customer.isMember == '1' && customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0
+                                                customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0
                                                     ? ReserveBoardStyles.reserveCustomerNameBox
                                                     : ReserveBoardStyles.reserveCustomerNameNoPhoneBox}>
                                                 {/*姓名*/}
@@ -272,7 +272,7 @@ export default React.memo(({
                                             </View>
                                             {/*手机号码*/}
                                             {
-                                                customer.isMember == '1' && customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0 && (
+                                                customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0 && (
                                                     <View style={ReserveBoardStyles.reserveCustomerPhoneBox}>
                                                         <Text style={customer.isMember == '1'
                                                             ? ReserveBoardStyles.reserveCustomerPhoneText // 有档案
@@ -285,7 +285,7 @@ export default React.memo(({
                                             }
                                             {/*预约类型*/}
                                             <View
-                                                style={customer.isMember == '1' && customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0
+                                                style={customer.appUserPhoneShow && customer.appUserPhoneShow.length > 0
                                                     ? ReserveBoardStyles.reserveCustomerTypeBox
                                                     : ReserveBoardStyles.reserveCustomerTypeNoPhoneBox
                                                 }>
