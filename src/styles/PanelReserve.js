@@ -313,7 +313,7 @@ export const PanelReserveStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        marginTop: PixelUtil.size(32),
+        marginTop: PixelUtil.size(26),
     },
     reservePropertyBox:{
         width: '100%',
@@ -359,10 +359,10 @@ export const PanelReserveStyles = StyleSheet.create({
         paddingHorizontal: PixelUtil.size(24)
     },
     reservePropertyMarginTop:{
-        marginTop: PixelUtil.size(36)
+        marginTop: PixelUtil.size(32)
     },
     reservePropertyLowMarginTop:{
-        marginTop: PixelUtil.size(32)
+        marginTop: PixelUtil.size(22)
     },
     reservePropertyRemarkTop:{
         marginTop: PixelUtil.size(20)

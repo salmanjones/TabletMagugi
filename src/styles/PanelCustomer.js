@@ -314,7 +314,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(48)
+        marginBottom: PixelUtil.size(36)
     },
     memberReservePropertyOperator: {
         display: 'flex',
@@ -370,7 +370,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         padding: PixelUtil.size(24),
         fontWeight: '500',
         width: PixelUtil.size(694),
-        height: PixelUtil.size(130),
+        height: PixelUtil.size(100),
         borderStyle: 'dashed',
         borderWidth: PixelUtil.size(2),
         borderColor: '#cdcdcd',

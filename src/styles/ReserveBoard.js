@@ -435,7 +435,8 @@ export const ReserveBoardStyles = StyleSheet.create({
         width: PixelUtil.size(62),
         height: PixelUtil.size(62),
         overflow: 'hidden',
-        borderRadius: PixelUtil.size(32)
+        borderRadius: PixelUtil.size(32),
+        marginTop: PixelUtil.size(2)
     },
     reserveCustomerInfo: {
         width: PixelUtil.size(382),
