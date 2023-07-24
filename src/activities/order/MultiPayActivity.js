@@ -1235,12 +1235,27 @@ class MultiPay extends React.Component {
 
     //支付方式选中
     onPayTypeSelected = (index) => {
+        const {payTypes, payWayType} = this.state
+        const selectedPayType = payTypes[index]
+
+        // 有次卡项目，不可使用他人代付
+        if(!this.state.canUseOtherPay && selectedPayType.payType == '2' && selectedPayType.name == '他人代付'){
+            Alert.alert(
+                '系统提示',
+                '已添加次卡消费项，不能使用他人代付',
+                [
+                    {
+                        text: '知道了',
+                    }
+                ]
+            )
+            return
+        }
+
         this.setState({
             selectedPayTypeIndex: index,
             editCard: null,
         }, ()=>{
-            const {payTypes, selectedPayTypeIndex, payWayType} = this.state
-            const selectedPayType = payTypes[selectedPayTypeIndex]
             const showState = this.panelMultiProfilePanelRef.getShowState()
             if(!showState && payWayType == 'other' && selectedPayType && selectedPayType.payType == 2){
                 this.panelMultiProfilePanelRef.showRightPanel('noReserve', 'query', '', '', 'createOrder', 'MultiPayActivity')
@@ -1251,6 +1266,20 @@ class MultiPay extends React.Component {
     //支付方式checkBox 选中
     onPayTypeChecked = (index, callBack) => {
         let payType = this.state.payTypes[index];
+        // 有次卡项目，不可使用他人代付
+        if(!this.state.canUseOtherPay && payType.payType == '2' && payType.name == '他人代付'){
+            Alert.alert(
+                '系统提示',
+                '已添加次卡消费项，不能使用他人代付',
+                [
+                    {
+                        text: '知道了',
+                    }
+                ]
+            )
+            return
+        }
+
         let payWayType = this.state.payWayType
         if (payType.paidAmt == null || payType.paidAmt == undefined) {
             if(payWayType == 'other'&& payType && payType.payType == "2" && payType.payTypeId == "2"){
