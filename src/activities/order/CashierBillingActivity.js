@@ -3516,6 +3516,14 @@ const buildDatas = (self, orderData, cb) => {
             prevState.keyNumber = orderData.handNumber;
             prevState.deptId = orderData.deptId;
             prevState.isOldCustomer = self.state.isOldCustomer;
+
+            //
+            //
+            // console.log("prevState.showProjCategoryChoose", JSON.stringify(prevState.showProjCategoryChoose))
+            // console.log("prevState.showItemCategoryChoose", JSON.stringify(prevState.showItemCategoryChoose))
+            //
+            //
+
             return prevState;
         }, cb);
     })

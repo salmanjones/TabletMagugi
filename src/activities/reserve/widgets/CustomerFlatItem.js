@@ -255,14 +255,10 @@ export default React.memo(({
                                                     {decodeContent(customer.appUserName)}
                                                 </Text>
                                                 {/*男女*/}
-                                                {
-                                                    customer.isMember == '1' && (
-                                                        <Image
-                                                            style={ReserveBoardStyles.reserveCustomerSexIcon}
-                                                            resizeMode={'contain'}
-                                                            source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
-                                                    )
-                                                }
+                                                <Image
+                                                    style={ReserveBoardStyles.reserveCustomerSexIcon}
+                                                    resizeMode={'contain'}
+                                                    source={customer.appUserSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}/>
 
                                                 {/*企微*/}
                                                 <Image
