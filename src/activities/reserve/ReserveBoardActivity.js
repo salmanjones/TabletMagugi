@@ -89,41 +89,43 @@ export const ReserveBoardActivity = props => {
     // 获取预约数据
     const uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
     const getReserveList = (callBack) => {
-        const params = {
-            companyId: reduxState.auth.userInfo.companyId,
-            storeId: reduxState.auth.userInfo.storeId,
-            uniqueId: uniqueId,
-        }
-
-        setLoading(true)
-        const promiseInfo = getReserveInfo(params)
-        const promiseDate = getReserveDate()
-        Promise.all([promiseDate, promiseInfo]).then(backData => {
-            // 处理预约日期
-            let showDate = dayjs().format("YYYY-MM-DD")
-            const dateInfo = backData[0]
-            if(dateInfo.code == '6000'){ // 数据获取成功
-                const dateEntity = dateInfo.data
-                showDate = dateEntity['dateOnly']
-                setShowDate(showDate)
+        InteractionManager.runAfterInteractions(() => {
+            const params = {
+                companyId: reduxState.auth.userInfo.companyId,
+                storeId: reduxState.auth.userInfo.storeId,
+                uniqueId: uniqueId,
             }
 
-            // 处理预约信息
-            const reserveInfo = backData[1]
-            const {code, data} = reserveInfo
-            if ("6000" == code) {
-                setReserveInfoArray(data)
-            } else {
+            setLoading(true)
+            const promiseInfo = getReserveInfo(params)
+            const promiseDate = getReserveDate()
+            Promise.all([promiseDate, promiseInfo]).then(backData => {
+                // 处理预约日期
+                let showDate = dayjs().format("YYYY-MM-DD")
+                const dateInfo = backData[0]
+                if(dateInfo.code == '6000'){ // 数据获取成功
+                    const dateEntity = dateInfo.data
+                    showDate = dateEntity['dateOnly']
+                    setShowDate(showDate)
+                }
+
+                // 处理预约信息
+                const reserveInfo = backData[1]
+                const {code, data} = reserveInfo
+                if ("6000" == code) {
+                    setReserveInfoArray(data)
+                } else {
+                    showToast("信息加载失败")
+                }
+            }).catch(e => {
+                console.log("预约开单数据加载失败", e)
                 showToast("信息加载失败")
-            }
-        }).catch(e => {
-            console.log("预约开单数据加载失败", e)
-            showToast("信息加载失败")
-        }).finally(() => {
-            setLoading(false)
-            callBack && callBack()
-            // 初次加载完毕，不再展示加载信息
-            console.log('数据请求完成')
+            }).finally(() => {
+                setLoading(false)
+                callBack && callBack()
+                // 初次加载完毕，不再展示加载信息
+                console.log('数据请求完成')
+            })
         })
     }
 
@@ -144,10 +146,14 @@ export const ReserveBoardActivity = props => {
         }
     }, []) // 如果指定的是[],回调函数只会在第一次render()后执行
 
-    // 切换Tab，刷新列表
-    useEffect(()=>{
+    // 切换Tab
+    const switchTab = (tab)=>{
+        if(tab == reserveFlag){
+            return
+        }
+        setReserveFlag(tab)
         getReserveList()
-    }, [reserveFlag])
+    }
 
     // 进入页面获取新数据
     React.useEffect(() => {
@@ -943,7 +949,7 @@ export const ReserveBoardActivity = props => {
                 <View style={ReserveBoardStyles.reserveFlagBoxRight}>
                     <TouchableOpacity
                         onPress={() => {
-                            setReserveFlag('valid')
+                            switchTab('valid')
                         }}
                         style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
                         <Text
@@ -953,7 +959,7 @@ export const ReserveBoardActivity = props => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
-                            setReserveFlag('invalid')
+                            switchTab('invalid')
                         }}
                         style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
                         <Text

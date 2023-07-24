@@ -8,7 +8,7 @@ import {
     View,
     Text, Alert, TextInput,
 } from "react-native";
-import {getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
+import {decodeContent, getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelReserveStyles} from "../../styles/PanelReserve";
 import {getAppUserInfo, saveCustomerReserve} from "../../services/reserve";
@@ -103,8 +103,12 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
     const [isLoading, setLoading] = useState(false)
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
+    /// 预约手机号
+    const [reservePhone, setReservePhone] = useState('')
     /// 顾客姓名
     const [userName, setUserName] = useState('')
+    /// 顾客性别
+    const [userSex, setUserSex] = useState('0')
     /// 是否展示清除按钮
     const [showClear, setShowClear] = useState(false)
     /// 顾客信息
@@ -141,7 +145,9 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                 appUserName: customerInfo != null && customerInfo.result == 'empty' ? userName : customerInfo.nickName,
                 appUserPhone: customerInfo.phone,
                 appUserSex: customerInfo.sex,
-                remark: reserveRemark
+                remark: reserveRemark,
+                reservePhone: reservePhone,
+                reserveSex: userSex,
             }
 
             setLoading(true)
@@ -200,6 +206,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                 if(code == '6000'){
                     if(data.appUserId && data.appUserId.length > 0){
                         data['result'] = 'success'
+
+                        // 回写数据
+                        setUserSex(data.sex)
+                        setUserName(decodeContent(data.nickName))
+                        setReservePhone(data.phone)
                     }else{
                         data['result'] = 'empty'
                     }
@@ -220,23 +231,23 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
 
     useEffect(()=>{
         if(animateState.sliderShow == true){
+            let requiredPhone = true
+            if(reservePhone.trim().length < 1){
+                requiredPhone = false
+            }
+
             let requiredName = true
-            if(customerInfo != null && customerInfo.result == 'empty' && userName.trim().length < 1){
+            if(userName.trim().length < 1){
                 requiredName = false
             }
 
-            let requiredAppUser = true
-            if(customerInfo == null){
-                requiredAppUser = false
-            }
-
-            if(requiredName === true && requiredAppUser === true){
+            if(requiredName === true && requiredPhone === true){
                 setCanSava(true)
             }else{
                 setCanSava(false)
             }
         }
-    }, [userName, customerInfo])
+    }, [userName, reservePhone])
 
     // 预约基础数据
     const {reserveBaseData} = props
@@ -306,6 +317,9 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                             style={PanelReserveStyles.headClearButton}
                                             onPress={()=>{
                                                 setUserPhone('')
+                                                setReservePhone('')
+                                                setUserSex('0')
+                                                setUserName('')
                                                 setCustomerInfo(null)
                                             }}>
                                             <Image
@@ -412,31 +426,111 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                             </View>
                             {/*预约详情*/}
                             <View style={PanelReserveStyles.customerReserveDetailBox}>
-                                {
-                                    customerInfo != null && customerInfo.result == 'empty' &&(
-                                        <View style={PanelReserveStyles.reservePropertyMiddleBox}>
-                                            <Text style={PanelReserveStyles.reservePropertyRequired}>*</Text>
-                                            <Text style={PanelReserveStyles.reservePropertyTitle}>
-                                                顾客姓名：
-                                            </Text>
-                                            <View style={PanelReserveStyles.reservePropertyValue}>
-                                                <TextInput
-                                                    style={PanelReserveStyles.reservePropertyCustomerName}
-                                                    placeholder={'请输入顾客姓名'}
-                                                    placeholderTextColor={'#8e8e8e'}
-                                                    onChange={({nativeEvent})=>{
-                                                        const name = nativeEvent.text.trim()
-                                                        setUserName(encodeURIComponent(name))
-                                                    }}
-                                                    value={decodeURIComponent(userName)}
-                                                    maxLength={10}/>
-                                            </View>
-                                        </View>
-                                    )
-                                }
-                                <View style={ customerInfo != null && customerInfo.result == 'empty'
-                                    ? [PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]
-                                    : PanelReserveStyles.reservePropertyBox}>
+                                <View style={[PanelReserveStyles.reservePropertyMiddleBox]}>
+                                    <Text style={PanelReserveStyles.reservePropertyRequired}>*</Text>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
+                                        顾客手机：
+                                    </Text>
+                                    <View style={PanelReserveStyles.reservePropertyValue}>
+                                        {
+                                            (()=>{
+                                              if(customerInfo != null && customerInfo.result == 'success'){
+                                                  return (
+                                                      <Text style={PanelReserveStyles.reservePropertyText}>
+                                                          {reservePhone.substring(0, 3) + "****" + reservePhone.substring(7, 12)}
+                                                      </Text>
+                                                  )
+                                              }else{
+                                                  return (
+                                                      <TextInput
+                                                          style={PanelReserveStyles.reservePropertyCustomerName}
+                                                          placeholder={'请输入手机号'}
+                                                          placeholderTextColor={'#8e8e8e'}
+                                                          onChange={({nativeEvent})=>{
+                                                              const phone = nativeEvent.text.trim()
+                                                              setReservePhone(phone)
+                                                          }}
+                                                          value={reservePhone}
+                                                          maxLength={10}/>
+                                                  )
+                                              }
+                                            })()
+                                        }
+                                    </View>
+                                </View>
+                                <View style={[PanelReserveStyles.reservePropertyMiddleBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyRequired}>*</Text>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
+                                        顾客姓名：
+                                    </Text>
+                                    <View style={PanelReserveStyles.reservePropertyValue}>
+                                        {
+                                            (()=>{
+                                                if(customerInfo != null && customerInfo.result == 'success') {
+                                                    return (
+                                                        <Text style={PanelReserveStyles.reservePropertyText}>
+                                                            {decodeContent(userName)}
+                                                        </Text>
+                                                    )
+                                                }else {
+                                                    return (
+                                                        <TextInput
+                                                            style={PanelReserveStyles.reservePropertyCustomerName}
+                                                            placeholder={'请输入顾客姓名'}
+                                                            placeholderTextColor={'#8e8e8e'}
+                                                            onChange={({nativeEvent})=>{
+                                                                const name = nativeEvent.text.trim()
+                                                                setUserName(encodeURIComponent(name))
+                                                            }}
+                                                            value={decodeContent(userName)}
+                                                            maxLength={10}/>
+                                                    )
+                                                }
+                                            })()
+                                        }
+                                    </View>
+                                </View>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                    <Text style={PanelReserveStyles.reservePropertyTitle}>
+                                        顾客性别：
+                                    </Text>
+                                    {
+                                        (()=>{
+                                            if(customerInfo != null && customerInfo.result == 'success') {
+                                                return (
+                                                    <Text style={PanelReserveStyles.reservePropertyText}>
+                                                        {userSex == '1'? '男':'女'}
+                                                    </Text>
+                                                )
+                                            }else{
+                                                return (
+                                                    <View style={PanelReserveStyles.reservePropertyBtnValue}>
+                                                        <TouchableOpacity
+                                                            style={userSex == '0' ? PanelReserveStyles.reservePropertyValueButtonActive : PanelReserveStyles.reservePropertyValueButton}
+                                                            onPress={()=>{
+                                                                setUserSex('0')
+                                                            }}>
+                                                            <Text style={userSex == '0' ?  PanelReserveStyles.reservePropertyValueButtonTxtActive: PanelReserveStyles.reservePropertyValueButtonTxt}>
+                                                                女
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity
+                                                            style={userSex == '1' ? PanelReserveStyles.reservePropertyValueButtonActive : PanelReserveStyles.reservePropertyValueButton}
+                                                            onPress={()=>{
+                                                                setUserSex('1')
+                                                            }}>
+                                                            <Text style={userSex == '1' ?  PanelReserveStyles.reservePropertyValueButtonTxtActive: PanelReserveStyles.reservePropertyValueButtonTxt}>
+                                                                男
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                )
+                                            }
+                                        })()
+                                    }
+
+                                </View>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
                                     <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约员工：
                                     </Text>

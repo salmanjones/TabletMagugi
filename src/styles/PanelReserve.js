@@ -341,7 +341,7 @@ export const PanelReserveStyles = StyleSheet.create({
         fontWeight: '500',
         fontSize: PixelUtil.size(26),
         color: '#898888',
-        width: PixelUtil.size(134)
+        width: PixelUtil.size(160),
     },
     reservePropertyValue:{
         flex: 1,
@@ -351,7 +351,7 @@ export const PanelReserveStyles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     reservePropertyCustomerName:{
-        width: PixelUtil.size(738),
+        width: PixelUtil.size(708),
         height: PixelUtil.size(56),
         borderRadius: PixelUtil.size(28),
         backgroundColor: '#F9FAFB',
@@ -359,10 +359,10 @@ export const PanelReserveStyles = StyleSheet.create({
         paddingHorizontal: PixelUtil.size(24)
     },
     reservePropertyMarginTop:{
-        marginTop: PixelUtil.size(50)
+        marginTop: PixelUtil.size(42)
     },
     reservePropertyRemarkTop:{
-        marginTop: PixelUtil.size(24)
+        marginTop: PixelUtil.size(20)
     },
     reservePropertyText:{
         fontWeight: '700',
@@ -416,7 +416,7 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     reservePropertyRemark:{
         width: '100%',
-        height: PixelUtil.size(130),
+        height: PixelUtil.size(100),
         justifyContent:'flex-start',
         color: '#292929',
         fontSize: PixelUtil.size(24),
