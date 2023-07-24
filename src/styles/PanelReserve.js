@@ -359,7 +359,10 @@ export const PanelReserveStyles = StyleSheet.create({
         paddingHorizontal: PixelUtil.size(24)
     },
     reservePropertyMarginTop:{
-        marginTop: PixelUtil.size(42)
+        marginTop: PixelUtil.size(36)
+    },
+    reservePropertyLowMarginTop:{
+        marginTop: PixelUtil.size(32)
     },
     reservePropertyRemarkTop:{
         marginTop: PixelUtil.size(20)
@@ -416,7 +419,7 @@ export const PanelReserveStyles = StyleSheet.create({
     },
     reservePropertyRemark:{
         width: '100%',
-        height: PixelUtil.size(100),
+        height: PixelUtil.size(80),
         justifyContent:'flex-start',
         color: '#292929',
         fontSize: PixelUtil.size(24),

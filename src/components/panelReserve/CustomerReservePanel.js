@@ -87,8 +87,9 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
     /// 处理页面数据
     useEffect(()=>{
         if(animateState.sliderShow){
-
             setUserPhone('')
+            setReservePhone('')
+            setUserSex('0')
             setShowClear(false)
             setCustomerInfo(null)
             setUserName('')
@@ -141,13 +142,11 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                 reserveType,
                 reserveTypeId,
                 reservedTypeId,
-                appUserId: customerInfo.appUserId,
-                appUserName: customerInfo != null && customerInfo.result == 'empty' ? userName : customerInfo.nickName,
-                appUserPhone: customerInfo.phone,
-                appUserSex: customerInfo.sex,
+                appUserId: customerInfo == null || customerInfo.result == 'empty' ? '' : customerInfo.appUserId,
+                appUserPhone: customerInfo == null || customerInfo.result == 'empty' ? reservePhone : customerInfo.phone,
+                appUserName: customerInfo == null || customerInfo.result == 'empty' ? userName : customerInfo.nickName,
+                appUserSex: customerInfo == null || customerInfo.result == 'empty' ? userSex : customerInfo.sex,
                 remark: reserveRemark,
-                reservePhone: reservePhone,
-                reserveSex: userSex,
             }
 
             setLoading(true)
@@ -451,7 +450,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                               setReservePhone(phone)
                                                           }}
                                                           value={reservePhone}
-                                                          maxLength={10}/>
+                                                          maxLength={11}/>
                                                   )
                                               }
                                             })()
@@ -622,7 +621,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         }
                                     </View>
                                 </View>
-                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyMarginTop]}>
+                                <View style={[PanelReserveStyles.reservePropertyBox, PanelReserveStyles.reservePropertyLowMarginTop]}>
                                     <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         预约备注：
                                     </Text>
