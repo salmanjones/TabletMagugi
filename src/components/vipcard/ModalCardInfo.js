@@ -152,31 +152,14 @@ const TimeCardInfo = ({data}) => {
                                 </View>
                                 <View style={cardInfoStyles.cardDetailTimesRow}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>最低续充：</Text>
-                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{data.rechargePrice}</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{data.initialPrice}</Text>
                                 </View>
-                                {
-                                    (()=>{
-                                        if(data.consumeMode === '2'){
-                                            return (
-                                                <View style={cardInfoStyles.cardDetailTimesRow}>
-                                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>有效期至：</Text>
-                                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
-                                                        {getValidity(data.validity, data.status, false)}
-                                                    </Text>
-                                                </View>
-                                            )
-                                        }else{
-                                            return (
-                                                <View style={cardInfoStyles.cardDetailTimesRow}>
-                                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>余次：</Text>
-                                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
-                                                        {data.balance}次
-                                                    </Text>
-                                                </View>
-                                            )
-                                        }
-                                    })()
-                                }
+                                <View style={cardInfoStyles.cardDetailTimesRow}>
+                                    <Text style={cardInfoStyles.cardDetailStoragePTitle}>有效期至：</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        {data.validity ? data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限' : '无期限'}
+                                    </Text>
+                                </View>
                                 <View style={cardInfoStyles.cardDetailTimesRow}>
                                     <View style={cardInfoStyles.cardDetailStorageRowLeft}>
                                         <Text style={cardInfoStyles.cardDetailStoragePTitle}>开卡门店：</Text>

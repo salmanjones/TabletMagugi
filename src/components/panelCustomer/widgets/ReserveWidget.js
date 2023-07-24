@@ -70,6 +70,14 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
             </View>
             <View style={PanelCustomerStyles.memberReserveProperty}>
                 <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
+                    顾客性别：
+                </Text>
+                <Text style={PanelCustomerStyles.memberReservePropertyValue}>
+                    {reserveInfo.sex == '0' ? '女':'男'}
+                </Text>
+            </View>
+            <View style={PanelCustomerStyles.memberReserveProperty}>
+                <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
                     预约员工：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>

@@ -230,23 +230,18 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
 
     useEffect(()=>{
         if(animateState.sliderShow == true){
-            let requiredPhone = true
-            if(reservePhone.trim().length < 1){
-                requiredPhone = false
-            }
-
             let requiredName = true
             if(userName.trim().length < 1){
                 requiredName = false
             }
 
-            if(requiredName === true && requiredPhone === true){
+            if(requiredName === true){
                 setCanSava(true)
             }else{
                 setCanSava(false)
             }
         }
-    }, [userName, reservePhone])
+    }, [userName])
 
     // 预约基础数据
     const {reserveBaseData} = props
@@ -426,7 +421,6 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                             {/*预约详情*/}
                             <View style={PanelReserveStyles.customerReserveDetailBox}>
                                 <View style={[PanelReserveStyles.reservePropertyMiddleBox]}>
-                                    <Text style={PanelReserveStyles.reservePropertyRequired}>*</Text>
                                     <Text style={PanelReserveStyles.reservePropertyTitle}>
                                         顾客手机：
                                     </Text>
@@ -450,7 +444,8 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                               setReservePhone(phone)
                                                           }}
                                                           value={reservePhone}
-                                                          maxLength={11}/>
+                                                          maxLength={11}
+                                                          keyboardType={'phone-pad'}/>
                                                   )
                                               }
                                             })()
