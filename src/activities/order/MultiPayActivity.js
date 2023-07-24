@@ -36,7 +36,6 @@ import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
 import MultiPayProfilePanel from "../../components/panelMultiProfile/MultiPayProfilePanel";
 import {
-    getCustomerDetail,
     getMemberBillCards,
     getMemberCards,
     getMemberInfo,
@@ -308,7 +307,7 @@ class MultiPay extends React.Component {
         // 需要取消选择的项目索引
         let clearIndex = -1
         payTypes.forEach((item, index)=>{
-            if(item.payTypeId == '2'){
+            if(item.payTypeId == '2' && item.payType == '2'){
                 clearIndex = index
             }
         })
@@ -317,7 +316,7 @@ class MultiPay extends React.Component {
             // 切换支付方式：会员卡支付、他人代付
             if(type == 'other'){
                 payTypes.forEach(item=>{
-                    if(item.payTypeId == '2'){
+                    if(item.payTypeId == '2' && item.payType == '2'){
                         item.name = '他人代付' // 储值卡支付
                         item.icon = require('@imgPath/cashier_billing_pay_other.png')
                         item.paidAmt = null
@@ -338,7 +337,7 @@ class MultiPay extends React.Component {
                 })
             }else{
                 payTypes.forEach(item=>{
-                    if(item.payTypeId == '2'){
+                    if(item.payTypeId == '2' && item.payType == '2'){
                         item.name = '会员卡支付' // 储值卡支付
                         item.icon = require('@imgPath/pay-multiply-card.png')
                         item.paidAmt = null
@@ -666,7 +665,7 @@ class MultiPay extends React.Component {
                                 {/*右侧栏*/}
                                 {
                                     (()=>{
-                                        if(selectedPayType && selectedPayType.payTypeId == '2'){ // 会员卡支付或他人代付
+                                        if(selectedPayType && selectedPayType.payTypeId == '2' && selectedPayType.payType == '2'){ // 会员卡支付或他人代付
                                             if(hasCards) { // 拥有会员卡，展示Tab栏:会员卡支付、他人代付
                                                 return (
                                                     <View style={multiplyPayStyle.payWayWrap}>
@@ -1254,7 +1253,7 @@ class MultiPay extends React.Component {
         let payType = this.state.payTypes[index];
         let payWayType = this.state.payWayType
         if (payType.paidAmt == null || payType.paidAmt == undefined) {
-            if(payWayType == 'other'&& payType && payType.payType == 2){
+            if(payWayType == 'other'&& payType && payType.payType == "2" && payType.payTypeId == "2"){
                 this.setState({
                     selectedPayTypeIndex: index,
                     editCard: null,
