@@ -64,32 +64,52 @@ function _fetch(url, params, platform, resolve, reject) {
                 Accept: 'application/json,text/plain, */*',
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 client: AppConfig.client,
-                appId: desEncrypt(AppConfig.appId)
+                appId: desEncrypt(AppConfig.appId),
+                des: 'false'
             },
             body: qs.stringify(bodyData),
         };
 
         fetch(url, header).then(response => {
-            return response.json();
-        }).then(textData => {
+            // 是否需要des解密
+            const toDes = response.headers.map ? response.headers.map.des : ''
+            return new Promise((resolve)=>{
+                response.json().then(backData=>{
+                    resolve({
+                        toDes,
+                        content: backData
+                    })
+                })
+            });
+        }).then(jsonData => {
+            // 是否需要des解密
+            const toDes = jsonData.toDes
+            // 数据内容
+            const textData = jsonData.content
+
+            // 解析数据
             if(platform ==  AppConfig.platform.bms){ // bms服务请求
-                try {
-                    const reqData = JSON.parse(desDecrypt(textData));
-                    resolve(reqData.backData);
-                } catch (e) {
-                    const backData = textData.backData;
-                    reject({
-                        code: backData.code,
-                        exceptions: Msg[backData.code] || Msg.default,
-                    });
+                if(toDes == 'false'){ // 无需des解密
+                    const reqData = JSON.parse(textData)
+                    resolve(reqData['backData']);
+                }else{ // 开始des解密
+                    try {
+                        const reqData = JSON.parse(desDecrypt(textData));
+                        resolve(reqData['backData']);
+                    } catch (e) {
+                        const code = '5008'
+                        reject({
+                            code,
+                            exceptions: Msg[code],
+                        });
+                    }
                 }
             }else if(platform ==  AppConfig.platform.app){ // app服务请求
                 const {code} = textData
                 if(code == StateCode.reqSuccess){
                     resolve(textData);
                 }else{
-                    console.error(Msg[code], JSON.stringify(textData))
-                    console.error(Msg[code], url, JSON.stringify(desDecrypt(textData)))
+                    console.error(Msg[code], url, JSON.stringify(textData))
                     reject({
                         code,
                         exceptions: Msg[code] || Msg.default,
