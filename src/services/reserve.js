@@ -208,3 +208,14 @@ export const updateMemberProfile = params => {
         return backData;
     });
 }
+
+/**
+ * 获取平板是否开启新预约模式
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getConfigNewReserve = params => {
+    return callService(api.getConfigNewReserve, params).then(backData => {
+        return backData;
+    });
+}
