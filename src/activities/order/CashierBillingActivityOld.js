@@ -1523,20 +1523,17 @@ class CashierBillingView extends React.Component {
                     )
                 }
 
-                <Modal
-                    transparent={true}
-                    visible={showPaySuccess}
-                    onRequestClose={() => null}
-                >
-                    <QRCodePaymentNew
-                        paymentStatus={PaymentResultStatus.success}
-                        navigation={this.props.navigation}
-                        title={'订单支付'}
-                        flowNum={this.state.flowNumber}
-                        onClose={this.confirmPaySuccess.bind(this)}
-                    />
-                </Modal>
-
+                {
+                    showPaySuccess && (
+                        <QRCodePaymentNew
+                            paymentStatus={PaymentResultStatus.success}
+                            navigation={this.props.navigation}
+                            title={'订单支付'}
+                            flowNum={this.state.flowNumber}
+                            onClose={this.confirmPaySuccess.bind(this)}
+                        />
+                    )
+                }
 
                 {/* 会员识别 */}
                 <ModalMemberIndentify navigation={this.props.navigation}
