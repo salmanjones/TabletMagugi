@@ -212,21 +212,23 @@ class Recharge extends React.Component {
                          currentCard,
                      }) => {
         let currentServicer = servicers[currentServicerIndex];
-        return (
-            <View style={RechargeStoredCardStyles.activeAreaR}>
-                {currentServicer &&
-                    currentTabIndex == 2 &&
-                    Object.keys(currentServicer).length > 0 && (
-                        <StaffServiceEdit
-                            data={currentServicer}
-                            onAssign={this.onAssign}
-                            onCancel={this.onCancelAssign}
-                            onDelete={this.onDeleteServicer}
-                            showAssign={false}
-                        />
-                    )}
-            </View>
-        );
+        if(currentTabIndex === 2 && currentServicer && currentTabIndex == 2 && Object.keys(currentServicer).length > 0
+            && currentServicer.value && currentServicer.value.length > 0){
+            return (
+                <View style={RechargeStoredCardStyles.activeAreaR}>
+                    <StaffServiceEdit
+                        data={currentServicer}
+                        onAssign={this.onAssign}
+                        onCancel={this.onCancelAssign}
+                        onDelete={this.onDeleteServicer}
+                        showAssign={false}
+                    />
+                </View>
+            );
+        }else{
+            return <View></View>
+        }
+
     };
     renderBottom = ({
                         cardModelVisible,

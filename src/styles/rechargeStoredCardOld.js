@@ -83,6 +83,9 @@ export const RechargeStoredCardOldStyles = StyleSheet.create({
         // 主体-顶部
         width: '100%',
         height: '60%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     cardOperateNoneBox: {
         // 无内容

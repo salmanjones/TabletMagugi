@@ -18,6 +18,7 @@ import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMult
 import CustomerReservePanel from "../../components/panelReserve/CustomerReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
 import CustomerWidget from "./widgets/CustomerFlatList"
+import NoSettingReserve from "./widgets/NoSettingReserve"
 import {displayError, getImage, ImageQutity, showMessageExt} from "../../utils";
 import {AppNavigate} from "../../navigators";
 import {fetchMemberNO} from "../../services/member";
@@ -275,7 +276,83 @@ export const ReserveBoardActivity = props => {
                     }
                 }
                 setCustomerState(customerData)
-                guestPanelRef.current.showRightPanel('noReserve', 'createOrder', 'ReserveBoardActivity')
+                console.log("reserveInfoArray", reserveInfoArray)
+                // 跳转开单或扫码
+                if(reserveInfoArray && reserveInfoArray.length > 0){
+                    guestPanelRef.current.showRightPanel('noReserve', 'createOrder', 'ReserveBoardActivity')
+                }else{// 未设置预约发型师，选牌为空，直接开单
+                    setLoading(true)
+                    const loginUser = reduxState.auth.userInfo
+                    const permissionBackData = await getStaffPermission({
+                        staffId: loginUser.staffId,
+                        companyId: loginUser.companyId
+                    })
+                    // 获取水单号
+                    const flowNumberBackData = await getBillFlowNO()
+                    // 会员档案
+                    if(permissionBackData.code != '6000'
+                        || flowNumberBackData.code != '6000'){
+                        // 错误
+                        showMessageExt("开单失败")
+                        // 加载中
+                        setLoading(false)
+                    }else{
+                        // 加载中
+                        setLoading(false)
+                        // 员工权限
+                        const staffPermission = permissionBackData['data']
+                        // 水单号
+                        const flowNumber = flowNumberBackData['data']
+                        //0专业店 1综合店
+                        const isSynthesis = loginUser.isSynthesis;
+                        // 可用主营分类
+                        const operatorCategory = loginUser.operateCategory[0];
+                        // 是否允许调整价格
+                        let moduleCode = "1"
+                        let moduleCodeIndex = 0;
+                        const roundMode = staffPermission.roundMode
+                        const staffAclMap = staffPermission['staffAclMap'];
+                        if (staffAclMap
+                            && staffAclMap.moduleCode
+                            && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') { // 是否能允许调整价格
+                            moduleCodeIndex++;
+                        }
+                        if (moduleCodeIndex > 0) {
+                            moduleCode = '1'
+                        } else {
+                            moduleCode = 0
+                        }
+
+                        const params = {
+                            orderInfoLeftData:{
+                                customerNumber:"1",
+                                isOldCustomer:"0",
+                                handNumber:""
+                            },
+                            companyId: loginUser.companyId,
+                            storeId: loginUser.storeId,
+                            deptId: operatorCategory.deptId,
+                            operatorId: operatorCategory.value,
+                            operatorText: operatorCategory.text,
+                            waiterId: "",
+                            staffId: loginUser.staffId,
+                            staffDBId: loginUser.staffDBId,
+                            isSynthesis: isSynthesis,
+                            numType: "flownum",
+                            numValue: flowNumber,
+                            page: 'ReserveBoardActivity',
+                            member:null,
+                            type: "vip",
+                            roundMode: roundMode,
+                            moduleCode: moduleCode,
+                            isOldCustomer: "0", // 散客
+                            staffAppoint: "false" // 非指定
+                        }
+
+                        // 开单
+                        AppNavigate.navigate('CashierBillingActivity', params)
+                    }
+                }
                 break;
             case 'addOccupy':  // 时间占用
                 Alert.alert('系统提示', "确定要占用该时段吗", [
@@ -889,7 +966,7 @@ export const ReserveBoardActivity = props => {
                 }
                 break
         }
-    }, [])
+    }, [reserveInfoArray])
 
     /// 关闭所有侧边栏
     const hideAllPanel = ()=>{
@@ -971,26 +1048,36 @@ export const ReserveBoardActivity = props => {
             </View>
             {/*预约信息展示*/}
             <View style={ReserveBoardStyles.reserveInfoBox}>
-                <View style={ReserveBoardStyles.reserveDetailWrap}>
-                    {/*发型师列表*/}
-                    <View style={ReserveBoardStyles.reserveStylistBox}>
-                        {reserveInfoArray.length > 0 && (
-                            <StylistWidget checkStylistEvent={checkStylistEvent}
-                                           reserveInfoArray={reserveInfoArray}
-                                           reserveFlag={reserveFlag}/>
-                        )}
-                    </View>
-                    {/*顾客预约列表*/}
-                    <View style={ReserveBoardStyles.reserveCustomerBox}>
-                        {reserveInfoArray.length > 0 && (
-                            <CustomerWidget
-                                stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
-                                reserveFlag={reserveFlag}
-                                customerCardEvent={customerPressEvent}
-                                uniqueId={uniqueId}/>
-                        )}
-                    </View>
-                </View>
+                {
+                    (()=>{
+                        if(reserveInfoArray.length > 0){ // 发型师已设置预约
+                            return (
+                                <View style={ReserveBoardStyles.reserveDetailWrap}>
+                                    {/*发型师列表*/}
+                                    <View style={ReserveBoardStyles.reserveStylistBox}>
+                                        <StylistWidget checkStylistEvent={checkStylistEvent}
+                                                       reserveInfoArray={reserveInfoArray}
+                                                       reserveFlag={reserveFlag}/>
+                                    </View>
+                                    {/*顾客预约列表*/}
+                                    <View style={ReserveBoardStyles.reserveCustomerBox}>
+                                        <CustomerWidget
+                                            stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
+                                            reserveFlag={reserveFlag}
+                                            customerCardEvent={customerPressEvent}
+                                            uniqueId={uniqueId}/>
+                                    </View>
+                                </View>
+                            )
+                        }else{ // 发型师未设置预约
+                            return (
+                                <NoSettingReserve customerCardEvent={customerPressEvent}/>
+                            )
+                        }
+                    })()
+                }
+
+
             </View>
             {/*会员信息面板*/}
             <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>

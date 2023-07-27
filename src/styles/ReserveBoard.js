@@ -566,5 +566,10 @@ export const ReserveBoardStyles = StyleSheet.create({
         width: PixelUtil.size(440),
         height: PixelUtil.size(440),
         marginTop: PixelUtil.size(-160)
+    },
+    noReserveSet: {
+        width: PixelUtil.size(688),
+        height: PixelUtil.size(456),
+        marginTop: PixelUtil.size(-160)
     }
 })
