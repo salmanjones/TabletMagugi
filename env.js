@@ -1,5 +1,5 @@
 export default {
-    ver: '3.1.8',
+    ver: '3.1.9',
     api: {
         // online
         // bms: 'https://bms.magi2002.com',

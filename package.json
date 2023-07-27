@@ -1,6 +1,6 @@
 {
     "name": "TabletMagugi",
-    "version": "0.0.1",
+    "version": "3.1.9",
     "private": true,
     "scripts": {
         "start": "npx react-native start",
