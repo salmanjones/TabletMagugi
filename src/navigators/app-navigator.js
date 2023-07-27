@@ -35,7 +35,8 @@ import {
     CashierBillingActivityOld,
     MultiPayActivityOld,
     SelectCustomerTypeOld,
-    RechargeActivityOld
+    RechargeActivityOld,
+    VipcardActivityOld
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
