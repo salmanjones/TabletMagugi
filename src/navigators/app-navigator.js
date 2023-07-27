@@ -180,12 +180,21 @@ function RootNavigation(props) {
                 let forceUpdate = '0';
                 let showUpdate = false;
 
+                // 版本号处理
+                let oldVersion = currentVersion.replaceAll(".", "")
+                let newVersion = nextVersion.replaceAll(".", "")
+                try{
+                    oldVersion = parseInt(oldVersion)
+                    newVersion = parseInt(newVersion)
+                }catch (e){
+                    oldVersion = 317
+                    newVersion = 317
+                    console.log("版本号处理失败", e)
+                }
+
                 // 是否强制更新
                 if (operType == '1') {
-                    if (
-                        nextVersion != currentVersion &&
-                        nextType == 'unique'
-                    ) {
+                    if (newVersion > oldVersion &&nextType == 'unique') {
                         if (nextType == 'unique') {
                             clearFetchCache();
                             AsyncStorage.removeItem(AppConfig.staffRStore);
@@ -199,7 +208,7 @@ function RootNavigation(props) {
                         }
                     }
                 } else if (operType == '0') {
-                    if (nextVersion != currentVersion) {
+                    if (newVersion > oldVersion) {
                         showUpdate = true;
 
                         if (nextType == 'unique') {
