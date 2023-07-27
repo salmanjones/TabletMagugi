@@ -8,6 +8,10 @@ export const memberFilingStyle = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         backgroundColor: '#00000060',
+        position: 'absolute',
+        zIndex: 200,
+        width: "100%",
+        height: '100%'
     },
     cashierBillInfoWrapper: {
         backgroundColor: '#FFF',

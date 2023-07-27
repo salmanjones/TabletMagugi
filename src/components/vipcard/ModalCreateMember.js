@@ -298,223 +298,218 @@ export class ModalCreateMember extends React.Component {
         const {visible, oper} = this.props;
         const loading = isCreateMemberPending;
 
-        return (
-            <Modal
-                transparent={true}
-                visible={visible}
-                oper={oper}
-                animationType={'fade'}
-                onRequestClose={() => null}
-            >
-                <Spinner
-                    visible={loading}
-                    textContent={'请求中'}
-                    textStyle={{
-                        color: '#FFF'
-                    }}
-                />
-                {visible && (
-                    <View style={memberFilingStyle.modalBackground}>
-                        <View style={memberFilingStyle.cashierBillInfoWrapper}>
-                            <View style={memberFilingStyle.MemberQueryTitle}>
-                                <Text style={memberFilingStyle.MemberQueryTitleText}>
-                                    会员建档
-                                </Text>
-                            </View>
-                            <View style={memberFilingStyle.billInfoBox}>
-                                <View style={memberFilingStyle.memberFiling}>
-                                    <View style={memberFilingStyle.memberFilingImg}>
-                                        <View style={memberFilingStyle.memberPortraitBox}>
-                                            <Image resizeMethod="resize"
-                                                   source={require('@imgPath/rotate-portrait.png')}
-                                                   style={[memberFilingStyle.memberPortrait, {resizeMode: 'contain'}]}
-                                            />
-                                        </View>
-                                        {/* <TouchableOpacity
-                      onPress={this.onTakePhoto}
-                      style={memberFilingStyle.memberPortraitOperate}
-                    >
-                      <Text style={memberFilingStyle.memberPortraitOperateText}>
-                        拍照
-                      </Text>
-                    </TouchableOpacity> */}
+        if(visible){
+            return (
+                <View style={memberFilingStyle.modalBackground}>
+                    <Spinner
+                        visible={loading}
+                        textContent={'请求中'}
+                        textStyle={{
+                            color: '#FFF'
+                        }}
+                    />
+                    <View style={memberFilingStyle.cashierBillInfoWrapper}>
+                        <View style={memberFilingStyle.MemberQueryTitle}>
+                            <Text style={memberFilingStyle.MemberQueryTitleText}>
+                                会员建档
+                            </Text>
+                        </View>
+                        <View style={memberFilingStyle.billInfoBox}>
+                            <View style={memberFilingStyle.memberFiling}>
+                                <View style={memberFilingStyle.memberFilingImg}>
+                                    <View style={memberFilingStyle.memberPortraitBox}>
+                                        <Image resizeMethod="resize"
+                                               source={require('@imgPath/rotate-portrait.png')}
+                                               style={[memberFilingStyle.memberPortrait, {resizeMode: 'contain'}]}
+                                        />
                                     </View>
-                                    <View style={memberFilingStyle.memberFilingInfo}>
+                                    {/*
+                                            <TouchableOpacity
+                                                onPress={this.onTakePhoto}
+                                                style={memberFilingStyle.memberPortraitOperate}>
+                                                <Text style={memberFilingStyle.memberPortraitOperateText}>
+                                                    拍照
+                                                </Text>
+                                            </TouchableOpacity>
+                                        */}
+                                </View>
+                                <View style={memberFilingStyle.memberFilingInfo}>
 
 
-                                        {this.renderInput({
-                                            label: '会员号',
-                                            onChangeText: text => {
-                                                const errorMsg = text ? '' : '会员号不能为空';
-                                                this.setState({
-                                                    memberNo: text,
-                                                    memberError: errorMsg,
-                                                });
-                                            },
-                                            value: memberNo,
-                                            error: memberError,
-                                            editable: canEditMemberNo,
-                                        })}
-                                        <TouchableOpacity
-                                            style={memberFilingStyle.memberFilingInfoChange}
-                                            onPress={this.onEditMemberNoPress}
+                                    {this.renderInput({
+                                        label: '会员号',
+                                        onChangeText: text => {
+                                            const errorMsg = text ? '' : '会员号不能为空';
+                                            this.setState({
+                                                memberNo: text,
+                                                memberError: errorMsg,
+                                            });
+                                        },
+                                        value: memberNo,
+                                        error: memberError,
+                                        editable: canEditMemberNo,
+                                    })}
+                                    <TouchableOpacity
+                                        style={memberFilingStyle.memberFilingInfoChange}
+                                        onPress={this.onEditMemberNoPress}
+                                    >
+                                        <ImageBackground
+                                            source={require('@imgPath/btn-border.png')}
+                                            resizeMode="contain"
+                                            style={memberFilingStyle.memberFilingInfoChangeImg}
                                         >
-                                            <ImageBackground
-                                                source={require('@imgPath/btn-border.png')}
-                                                resizeMode="contain"
-                                                style={memberFilingStyle.memberFilingInfoChangeImg}
+                                            <Text
+                                                style={memberFilingStyle.memberFilingInfoChangeText}
                                             >
-                                                <Text
-                                                    style={memberFilingStyle.memberFilingInfoChangeText}
-                                                >
-                                                    {!canEditMemberNo ? '修改' : '取消'}
-                                                </Text>
-                                            </ImageBackground>
-                                        </TouchableOpacity>
+                                                {!canEditMemberNo ? '修改' : '取消'}
+                                            </Text>
+                                        </ImageBackground>
+                                    </TouchableOpacity>
 
 
-                                        {this.renderInput({
-                                            label: '持卡人',
-                                            onChangeText: text => {
-                                                const errorMsg = text ? '' : '会员名称不能为空';
-                                                this.setState({
-                                                    memberName: text,
-                                                    memberNameError: errorMsg,
-                                                });
-                                            },
-                                            value: memberName,
-                                            error: memberNameError,
-                                        })}
+                                    {this.renderInput({
+                                        label: '持卡人',
+                                        onChangeText: text => {
+                                            const errorMsg = text ? '' : '会员名称不能为空';
+                                            this.setState({
+                                                memberName: text,
+                                                memberNameError: errorMsg,
+                                            });
+                                        },
+                                        value: memberName,
+                                        error: memberNameError,
+                                    })}
 
 
-                                        {this.renderInput({
-                                            label: '手机号',
-                                            keyboardType: 'numeric',
-                                            maxLength: 11,
-                                            onChangeText: text => {
-                                                const errorMsg = isPhone(text)
-                                                    ? ''
-                                                    : '手机号格式不正确';
-                                                this.setState({
-                                                    phone: text,
-                                                    phoneError: errorMsg,
-                                                });
-                                            },
-                                            value: phone,
-                                            error: phoneError,
-                                        })}
+                                    {this.renderInput({
+                                        label: '手机号',
+                                        keyboardType: 'numeric',
+                                        maxLength: 11,
+                                        onChangeText: text => {
+                                            const errorMsg = isPhone(text)
+                                                ? ''
+                                                : '手机号格式不正确';
+                                            this.setState({
+                                                phone: text,
+                                                phoneError: errorMsg,
+                                            });
+                                        },
+                                        value: phone,
+                                        error: phoneError,
+                                    })}
 
 
-                                        {isShowPwd && this.renderInput({
-                                            label: '支付密码',
-                                            secureTextEntry: true,
-                                            maxLength: 6,
-                                            onChangeText: text => {
-                                                let errorMsg, confirmPwdError;
-                                                if (text && !isValidCardPwd(text)) {
-                                                    errorMsg = '密码为6位数字';
-                                                } else if (confirmPwd && text != confirmPwd) {
-                                                    confirmPwdError = '两次密码输入不一致';
-                                                }
-                                                this.setState({
-                                                    pwd: text,
-                                                    pwdError: errorMsg,
-                                                    confirmPwdError: confirmPwdError,
-                                                });
-                                            },
-                                            value: pwd,
-                                            error: pwdError,
-                                        })}
+                                    {isShowPwd && this.renderInput({
+                                        label: '支付密码',
+                                        secureTextEntry: true,
+                                        maxLength: 6,
+                                        onChangeText: text => {
+                                            let errorMsg, confirmPwdError;
+                                            if (text && !isValidCardPwd(text)) {
+                                                errorMsg = '密码为6位数字';
+                                            } else if (confirmPwd && text != confirmPwd) {
+                                                confirmPwdError = '两次密码输入不一致';
+                                            }
+                                            this.setState({
+                                                pwd: text,
+                                                pwdError: errorMsg,
+                                                confirmPwdError: confirmPwdError,
+                                            });
+                                        },
+                                        value: pwd,
+                                        error: pwdError,
+                                    })}
 
 
-                                        {isShowPwd && this.renderInput({
-                                            label: '确认密码',
-                                            maxLength: 6,
-                                            secureTextEntry: true,
-                                            onChangeText: text => {
-                                                let errorMsg;
-                                                if (text && !isValidCardPwd(text)) {
-                                                    errorMsg = '密码为6位数字';
-                                                } else if (text != pwd) {
-                                                    errorMsg = '两次密码输入不一致';
-                                                }
-                                                this.setState({
-                                                    confirmPwd: text,
-                                                    confirmPwdError: errorMsg,
-                                                });
-                                            },
-                                            value: confirmPwd,
-                                            error: confirmPwdError,
-                                        })}
+                                    {isShowPwd && this.renderInput({
+                                        label: '确认密码',
+                                        maxLength: 6,
+                                        secureTextEntry: true,
+                                        onChangeText: text => {
+                                            let errorMsg;
+                                            if (text && !isValidCardPwd(text)) {
+                                                errorMsg = '密码为6位数字';
+                                            } else if (text != pwd) {
+                                                errorMsg = '两次密码输入不一致';
+                                            }
+                                            this.setState({
+                                                confirmPwd: text,
+                                                confirmPwdError: errorMsg,
+                                            });
+                                        },
+                                        value: confirmPwd,
+                                        error: confirmPwdError,
+                                    })}
 
 
-                                        {this.renderDate({
-                                            label: '生日',
-                                            value: birthday,
-                                            error: birthdayError,
-                                        })}
+                                    {this.renderDate({
+                                        label: '生日',
+                                        value: birthday,
+                                        error: birthdayError,
+                                    })}
 
-                                        <View style={memberFilingStyle.memberFilingInfoSexTr}>
-                                            <View style={memberFilingStyle.memberFilingInfoTdL}>
-                                                <Text style={memberFilingStyle.memberFilingInfoText}>
-                                                    性别：
-                                                </Text>
-                                            </View>
-                                            <View style={memberFilingStyle.memberFilingInfoSexTdR}>
-                                                <CheckBox
-                                                    center
-                                                    iconType='materialdesignicons'
-                                                    checkedIcon="radio-button-checked"
-                                                    uncheckedIcon="radio-button-unchecked"
-                                                    checked={sex === 0}
-                                                    onPress={() => this.setState({sex: 0})}
-                                                    size={PixelUtil.size(52)}
-                                                    containerStyle={memberFilingStyle.checkBoxContainer}
-                                                    textStyle={memberFilingStyle.checkBoxText}
-                                                    checkedColor={'#111c3c'}
-                                                    title="女"
-                                                />
-                                                <CheckBox
-                                                    center
-                                                    iconType='materialdesignicons'
-                                                    checkedIcon="radio-button-checked"
-                                                    uncheckedIcon="radio-button-unchecked"
-                                                    checked={sex === 1}
-                                                    onPress={() => this.setState({sex: 1})}
-                                                    size={PixelUtil.size(52)}
-                                                    containerStyle={memberFilingStyle.checkBoxContainer}
-                                                    textStyle={memberFilingStyle.checkBoxText}
-                                                    checkedColor={'#111c3c'}
-                                                    title="男"
-                                                />
-                                            </View>
+                                    <View style={memberFilingStyle.memberFilingInfoSexTr}>
+                                        <View style={memberFilingStyle.memberFilingInfoTdL}>
+                                            <Text style={memberFilingStyle.memberFilingInfoText}>
+                                                性别：
+                                            </Text>
+                                        </View>
+                                        <View style={memberFilingStyle.memberFilingInfoSexTdR}>
+                                            <CheckBox
+                                                center
+                                                iconType='materialdesignicons'
+                                                checkedIcon="radio-button-checked"
+                                                uncheckedIcon="radio-button-unchecked"
+                                                checked={sex === 0}
+                                                onPress={() => this.setState({sex: 0})}
+                                                size={PixelUtil.size(52)}
+                                                containerStyle={memberFilingStyle.checkBoxContainer}
+                                                textStyle={memberFilingStyle.checkBoxText}
+                                                checkedColor={'#111c3c'}
+                                                title="女"
+                                            />
+                                            <CheckBox
+                                                center
+                                                iconType='materialdesignicons'
+                                                checkedIcon="radio-button-checked"
+                                                uncheckedIcon="radio-button-unchecked"
+                                                checked={sex === 1}
+                                                onPress={() => this.setState({sex: 1})}
+                                                size={PixelUtil.size(52)}
+                                                containerStyle={memberFilingStyle.checkBoxContainer}
+                                                textStyle={memberFilingStyle.checkBoxText}
+                                                checkedColor={'#111c3c'}
+                                                title="男"
+                                            />
                                         </View>
                                     </View>
                                 </View>
                             </View>
+                        </View>
 
-                            <View style={memberFilingStyle.MemberQueryBtnBox}>
-                                <TouchableOpacity
-                                    style={memberFilingStyle.MemberQueryCancelBtn}
-                                    onPress={this.onCancel}
-                                >
-                                    <Text style={memberFilingStyle.MemberQueryCancelText}>
-                                        取消
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={memberFilingStyle.MemberQueryConfirmBtn}
-                                    onPress={this.onConfirm.bind(this, {oper})}
-                                >
-                                    <Text style={memberFilingStyle.MemberQueryConfirmText}>
-                                        确定
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
+                        <View style={memberFilingStyle.MemberQueryBtnBox}>
+                            <TouchableOpacity
+                                style={memberFilingStyle.MemberQueryCancelBtn}
+                                onPress={this.onCancel}
+                            >
+                                <Text style={memberFilingStyle.MemberQueryCancelText}>
+                                    取消
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={memberFilingStyle.MemberQueryConfirmBtn}
+                                onPress={this.onConfirm.bind(this, {oper})}
+                            >
+                                <Text style={memberFilingStyle.MemberQueryConfirmText}>
+                                    确定
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                )}
-            </Modal>
-        );
+                </View>
+            )
+        }else{
+            return <View></View>
+        }
     }
 }

@@ -48,12 +48,7 @@ export class ModalMemberIndentify extends React.Component {
         const {visible} = this.state;
 
         return (
-            <Modal
-                animationType={'fade'}
-                transparent={false}
-                onRequestClose={() => null}
-                visible={visible}
-            >
+            <Modal transparent={true} onRequestClose={() => null} visible={visible}>
                 <View style={MemberQueryStyle.modalBackground}>
                     <View style={MemberQueryStyle.cashierBillInfoWrapper}>
                         <View style={MemberQueryStyle.title}>

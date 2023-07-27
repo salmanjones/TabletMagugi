@@ -282,6 +282,6 @@ const mapDispatchToProps = dispatch => {
     );
 }
 
-export const VipcardActivityOld = connect(mapStateToProps, mapDispatchToProps)(
+export const VipcardActivity = connect(mapStateToProps, mapDispatchToProps)(
     VipCard
 );
