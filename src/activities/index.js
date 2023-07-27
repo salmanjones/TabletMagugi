@@ -3,9 +3,11 @@ export * from './auth/HomeActivity';
 export * from './auth/ResetPwdActivity';
 export * from './order/CashierActivity'; //收银
 export * from './order/CashierBillingActivity';
+export * from './order/CashierBillingActivityOld';
 export * from './order/PendingOrderActivity';
 export * from './order/MergeOrderPayActivity'; //并单支付
 export * from './order/MultiPayActivity'; //组合支付
+export * from './order/MultiPayActivityOld'; //组合支付
 export * from './vipcard/RechargeActivity'; //会员卡
 export * from './vipcard/VipcardActivity';
 export * from './vipcard/IdentifyActivity';

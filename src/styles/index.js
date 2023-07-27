@@ -7,8 +7,10 @@ export * from './loader';
 export * from './resetpwd';
 export * from './pending';
 export * from './cashierBilling';
+export * from './cashierBillingOld';
 export * from './MemberQuery';
 export * from './addCardItem';
+export * from './addCardItemOld';
 export * from './rechargeStoredCard';
 export * from './tabGroup';
 export * from './memberIdentify';
@@ -41,6 +43,7 @@ export * from './UpgradeAlert'; //升级提示-登录页面
 export * from './remind'; //温馨提醒
 export * from './aboutBeauty'; //关于超级美星
 export * from './multiplyPayStyle';
+export * from './multiplyPayStyleOld';
 export * from './StaffQueue'
 export * from './StaffWorks'
 

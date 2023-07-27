@@ -31,7 +31,9 @@ import {
     SelectCustomerType,
     StaffQueueActivity,
     StaffWorksActivity,
-    VipcardActivity
+    VipcardActivity,
+    CashierBillingActivityOld,
+    MultiPayActivityOld
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
@@ -140,21 +142,21 @@ function RootNavigation(props) {
     /**
      * 是否需要展示新UI
      */
-    const checkUIMode = ()=>{
+    const checkUIMode = () => {
         // 检查是否需要开启新UI
         AsyncStorage.getItem(AppConfig.staffRStore).then(userRStore => {
             if (userRStore && userRStore.length > 0) {
                 const userInfo = JSON.parse(desDecrypt(userRStore));
                 const storeId = userInfo.storeId
                 // 检查是否开启新预约流程
-                getConfigNewReserve({storeId}).then(backData=>{
+                getConfigNewReserve({storeId}).then(backData => {
                     const {code, data} = backData
-                    if("6000" == code){
+                    if ("6000" == code) {
                         setUseNewReserveUI(data)
-                    }else{
+                    } else {
                         console.log("获取新预约流程失败")
                     }
-                }).catch(e=>{
+                }).catch(e => {
                     console.log("获取新预约流程失败")
                 })
 
@@ -305,26 +307,57 @@ function RootNavigation(props) {
                             title: route.params.title.toString(),
                         })}
                     />
-                    <RootStack.Screen
-                        name="CashierBillingActivity"
-                        component={CashierBillingActivity}
-                        options={{
-                            title: '收银',
-                            headerTitleAlign: 'center',
-                            headerShown: true,
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            },
-                        }}
-                    />
+                    {
+                        (() => {
+                            if (useNewReserveUI) {
+                                return (
+                                    <RootStack.Screen
+                                        name="CashierBillingActivity"
+                                        component={CashierBillingActivity}
+                                        options={{
+                                            title: '收银',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            } else {
+                                return (
+                                    <RootStack.Screen
+                                        name="CashierBillingActivity"
+                                        component={CashierBillingActivityOld}
+                                        options={{
+                                            title: '收银',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }
+                        })()
+                    }
                     <RootStack.Screen
                         name="RechargeActivity"
                         component={RechargeActivity}
@@ -505,27 +538,60 @@ function RootNavigation(props) {
                             },
                         }}
                     />
-                    <RootStack.Screen
-                        name="MultiPayActivity"
-                        component={MultiPayActivity}
-                        options={{
-                            title: '组合支付',
-                            headerTitleAlign: 'center',
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            },
-                            headerShown: false,
-                        }}
-                        screenOptions={{presentation: 'modal'}}
-                    />
+                    {
+                        (()=>{
+                            if(useNewReserveUI){ // 新版UI
+                                return (
+                                    <RootStack.Screen
+                                        name="MultiPayActivity"
+                                        component={MultiPayActivity}
+                                        options={{
+                                            title: '组合支付',
+                                            headerTitleAlign: 'center',
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                            headerShown: false,
+                                        }}
+                                        screenOptions={{presentation: 'modal'}}
+                                    />
+                                )
+                            }else{
+                                return (
+                                    <RootStack.Screen
+                                        name="MultiPayActivity"
+                                        component={MultiPayActivityOld}
+                                        options={{
+                                            title: '组合支付',
+                                            headerTitleAlign: 'center',
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                            headerShown: false,
+                                        }}
+                                        screenOptions={{presentation: 'modal'}}
+                                    />
+                                )
+                            }
+                        })()
+                    }
+
                     <RootStack.Screen
                         name="PriceListActivity"
                         component={PriceListActivity}
@@ -567,8 +633,8 @@ function RootNavigation(props) {
                         }}
                     />
                     {
-                        (()=>{
-                            if(useNewReserveUI){
+                        (() => {
+                            if (useNewReserveUI) {
                                 return (
                                     <RootStack.Screen
                                         name="CashierActivity"
@@ -591,7 +657,7 @@ function RootNavigation(props) {
                                         }}
                                     />
                                 )
-                            }else{
+                            } else {
                                 return (
                                     <RootStack.Screen
                                         name="CashierActivity"
