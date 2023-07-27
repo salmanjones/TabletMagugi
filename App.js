@@ -6,14 +6,14 @@ import store from './src/store/store';
 import {AppNavigation} from './src/navigators';
 
 export default function App() {
-  React.useEffect(() => {
+    React.useEffect(() => {
         SplashScreen && SplashScreen.hide();
         LayoutAnimation.spring();
     }, []);
 
     return (
         <Provider store={store}>
-            <AppNavigation />
+            <AppNavigation/>
         </Provider>
     );
 }

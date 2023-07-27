@@ -1,19 +1,10 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {AppState, BackHandler, Dimensions, Platform, StatusBar, View} from 'react-native';
-import {
-    createNavigationContainerRef,
-    NavigationContainer,
-} from '@react-navigation/native';
+import {createNavigationContainerRef, NavigationContainer,} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-    AppConfig,
-    clearFetchCache,
-    PixelUtil,
-    resetNavigationTo,
-    systemConfig,
-} from '../utils';
+import {AppConfig, clearFetchCache, desDecrypt, PixelUtil, resetNavigationTo, systemConfig,} from '../utils';
 
 import {
     AnalysisHome,
@@ -31,16 +22,16 @@ import {
     PendingOrderActivity,
     PriceListActivity,
     RechargeActivity,
+    ReserveBoardActivity,
     ResetPwdActivity,
     RotatePlacardActivity,
     RotateSettingActivity,
     RotateSettingIndexActivity,
     RotateSettingStaffActivity,
     SelectCustomerType,
-    VipcardActivity,
     StaffQueueActivity,
     StaffWorksActivity,
-    ReserveBoardActivity
+    VipcardActivity
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
@@ -48,6 +39,7 @@ import {fetchFindVersionResult} from '../services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UpgradeBoxer} from '../components';
 import Toast from 'react-native-root-toast';
+import {getConfigNewReserve} from "../services/reserve";
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
@@ -58,9 +50,11 @@ const navigationRef = createNavigationContainerRef();
  * @returns {JSX.Element}
  * @constructor
  */
-function RootNavigation() {
+function RootNavigation(props) {
     // 版本号
     const currentVersion = systemConfig.version;
+    // 是否开启新预约流程
+    const [useNewReserveUI, setUseNewReserveUI] = useState(false)
     // 是否需要更新
     const [needUpdate, setNeedUpdate] = useState(false);
     const [versionInfo, setVersionInfo] = useState({
@@ -76,70 +70,13 @@ function RootNavigation() {
     // 按下物理返回键的时间
     let lastBackTime;
 
-    // 检查版本
-    const checkAppVersion = operType => {
-        const systemType = Platform.OS === 'ios' ? 'ios' : 'android';
-        fetchFindVersionResult(systemType)
-            .then(data => {
-                let versionMap = data.data;
-                if (versionMap) {
-                    let nextVersion = versionMap.versionName;
-                    let nextType = versionMap.type;
-                    let versionDesc = versionMap.versionDesc;
-                    let downloadUrl = versionMap.downloadUrl;
-                    let forceUpdate = '0';
-                    let showUpdate = false;
-
-                    // 是否强制更新
-                    if (operType == '1') {
-                        if (
-                            nextVersion != currentVersion &&
-                            nextType == 'unique'
-                        ) {
-                            if (nextType == 'unique') {
-                                clearFetchCache();
-                                AsyncStorage.removeItem(AppConfig.staffRStore);
-                                AsyncStorage.removeItem(
-                                    AppConfig.sessionStaffId,
-                                );
-
-                                resetNavigationTo('LoginActivity');
-                            } else if (nextType == 'recommend') {
-                                showUpdate = true;
-                            }
-                        }
-                    } else if (operType == '0') {
-                        if (nextVersion != currentVersion) {
-                            showUpdate = true;
-
-                            if (nextType == 'unique') {
-                                forceUpdate = '1';
-                            }
-                        }
-                    }
-
-                    // 更新信息
-                    setVersionInfo({
-                        ...versionInfo,
-                        checkVersion: nextVersion,
-                        updateContents: versionDesc,
-                        updateUrl: downloadUrl,
-                        forceUpdateValue: forceUpdate,
-                    });
-
-                    // 是否展示更新弹窗
-                    setNeedUpdate(showUpdate);
-                }
-            })
-            .catch(err => {
-                console.error('-----------------', err);
-            });
-    };
-
     // 处理事件监听
     React.useEffect(() => {
         // 锁定横屏
         Orientation.lockToLandscape();
+
+        // 检查是否呈现新UI
+        checkUIMode()
 
         // 检查版本
         checkAppVersion('0');
@@ -200,6 +137,90 @@ function RootNavigation() {
         };
     }, []);
 
+    /**
+     * 是否需要展示新UI
+     */
+    const checkUIMode = ()=>{
+        // 检查是否需要开启新UI
+        AsyncStorage.getItem(AppConfig.staffRStore).then(userRStore => {
+            if (userRStore && userRStore.length > 0) {
+                const userInfo = JSON.parse(desDecrypt(userRStore));
+                const storeId = userInfo.storeId
+                // 检查是否开启新预约流程
+                getConfigNewReserve({storeId}).then(backData=>{
+                    const {code, data} = backData
+                    if("6000" == code){
+                        setUseNewReserveUI(data)
+                    }else{
+                        console.log("获取新预约流程失败")
+                    }
+                }).catch(e=>{
+                    console.log("获取新预约流程失败")
+                })
+
+            }
+        })
+    }
+
+    // 检查版本
+    const checkAppVersion = operType => {
+        const systemType = Platform.OS === 'ios' ? 'ios' : 'android';
+        fetchFindVersionResult(systemType).then(data => {
+            let versionMap = data.data;
+            if (versionMap) {
+                let nextVersion = versionMap.versionName;
+                let nextType = versionMap.type;
+                let versionDesc = versionMap.versionDesc;
+                let downloadUrl = versionMap.downloadUrl;
+                let forceUpdate = '0';
+                let showUpdate = false;
+
+                // 是否强制更新
+                if (operType == '1') {
+                    if (
+                        nextVersion != currentVersion &&
+                        nextType == 'unique'
+                    ) {
+                        if (nextType == 'unique') {
+                            clearFetchCache();
+                            AsyncStorage.removeItem(AppConfig.staffRStore);
+                            AsyncStorage.removeItem(
+                                AppConfig.sessionStaffId,
+                            );
+
+                            resetNavigationTo('LoginActivity');
+                        } else if (nextType == 'recommend') {
+                            showUpdate = true;
+                        }
+                    }
+                } else if (operType == '0') {
+                    if (nextVersion != currentVersion) {
+                        showUpdate = true;
+
+                        if (nextType == 'unique') {
+                            forceUpdate = '1';
+                        }
+                    }
+                }
+
+                // 更新信息
+                setVersionInfo({
+                    ...versionInfo,
+                    checkVersion: nextVersion,
+                    updateContents: versionDesc,
+                    updateUrl: downloadUrl,
+                    forceUpdateValue: forceUpdate,
+                });
+
+                // 是否展示更新弹窗
+                setNeedUpdate(showUpdate);
+            }
+        }).catch(err => {
+            console.error('-----------------', err);
+        })
+    };
+
+    // 返回UI
     return (
         <SafeAreaProvider>
             {/*状态栏*/}
@@ -464,26 +485,6 @@ function RootNavigation() {
                             },
                         }}
                     />
-                    {/*<RootStack.Screen*/}
-                    {/*    name="BillManageActivity"*/}
-                    {/*    component={BillManageActivity}*/}
-                    {/*    options={{*/}
-                    {/*        title: '结单列表',*/}
-                    {/*        headerTitleAlign: 'center',*/}
-                    {/*        headerShown: true,*/}
-                    {/*        headerStyle: {*/}
-                    {/*            backgroundColor: '#111C3C',*/}
-                    {/*            height: PixelUtil.size(132),*/}
-                    {/*        },*/}
-                    {/*        headerTintColor: '#fff',*/}
-                    {/*        headerTitleStyle: {*/}
-                    {/*            color: 'white',*/}
-                    {/*            textAlign: 'center',*/}
-                    {/*            alignSelf: 'center',*/}
-                    {/*            fontSize: PixelUtil.size(32),*/}
-                    {/*        }*/}
-                    {/*    }}*/}
-                    {/*/>*/}
                     <RootStack.Screen
                         name="MergeOrderPayActivity"
                         component={MergeOrderPayActivity}
@@ -565,26 +566,57 @@ function RootNavigation() {
                             },
                         }}
                     />
-                    <RootStack.Screen
-                        name="CashierActivity"
-                        component={TabNavigation}
-                        options={{
-                            title: '收银',
-                            headerTitleAlign: 'center',
-                            headerShown: true,
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            },
-                        }}
-                    />
+                    {
+                        (()=>{
+                            if(useNewReserveUI){
+                                return (
+                                    <RootStack.Screen
+                                        name="CashierActivity"
+                                        component={TabNavigationNew}
+                                        options={{
+                                            title: '收银',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }else{
+                                return (
+                                    <RootStack.Screen
+                                        name="CashierActivity"
+                                        component={TabNavigationOld}
+                                        options={{
+                                            title: '收银',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }
+                        })()
+                    }
                     <RootStack.Screen
                         name="StaffQueueActivity"
                         component={StaffQueueActivity}
@@ -636,7 +668,72 @@ function RootNavigation() {
  * @returns {JSX.Element}
  * @constructor
  */
-function TabNavigation() {
+function TabNavigationOld() {
+    // tab栏位数量
+    const tabStackSize = 5
+    return (
+        <TabStack.Navigator
+            initialLayout={{width: Dimensions.get('window').width}}
+            initialRouteName="ReserveBoardActivity"
+            screenOptions={{
+                tabBarActiveTintColor: '#2D2D2D',
+                tabBarInactiveTintColor: '#6B6B6B',
+                tabBarLabelStyle: {
+                    fontSize: PixelUtil.size(32),
+                    fontWeight: 'bold',
+                },
+                tabBarItemStyle: {},
+                tabBarStyle: {
+                    backgroundColor: '#FFFFFF',
+                },
+                tabBarIndicatorContainerStyle: {
+                    width: '100%',
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: PixelUtil.size(2)
+                },
+                tabBarIndicatorStyle: {
+                    width: PixelUtil.size(100),
+                    height: PixelUtil.size(4),
+                    backgroundColor: '#081539',
+                    marginLeft: ((Dimensions.get('window').width) / tabStackSize - PixelUtil.size(100)) / 2
+                }
+            }}>
+            {/*老开单入口*/}
+            <TabStack.Screen
+                name="CashierActivity"
+                component={CashierActivity}
+                options={{tabBarLabel: '开单'}}
+            />
+            <TabStack.Screen
+                name="PendingOrderActivity"
+                component={PendingOrderActivity}
+                options={{tabBarLabel: '取单'}}
+            />
+            <TabStack.Screen
+                name="IdentifyActivity"
+                component={IdentifyActivity}
+                options={{tabBarLabel: '充值'}}
+            />
+            <TabStack.Screen
+                name="SelectCustomerType"
+                component={SelectCustomerType}
+                options={{tabBarLabel: '开卡'}}
+            />
+            <TabStack.Screen
+                name="BillManageActivity"
+                component={BillManageActivity}
+                options={{tabBarLabel: '已结单据'}}
+            />
+        </TabStack.Navigator>
+    );
+}
+
+/**
+ * Tab结构
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function TabNavigationNew() {
     // tab栏位数量
     const tabStackSize = 3
     return (
@@ -666,12 +763,6 @@ function TabNavigation() {
                     marginLeft: ((Dimensions.get('window').width) / tabStackSize - PixelUtil.size(100)) / 2
                 }
             }}>
-            {/*老开单入口*/}
-            {/*<TabStack.Screen*/}
-            {/*    name="CashierActivity"*/}
-            {/*    component={CashierActivity}*/}
-            {/*    options={{tabBarLabel: '开单(老)'}}*/}
-            {/*/>*/}
             <TabStack.Screen
                 name="ReserveBoardActivity"
                 component={ReserveBoardActivity}
@@ -682,16 +773,6 @@ function TabNavigation() {
                 component={PendingOrderActivity}
                 options={{tabBarLabel: '取单'}}
             />
-            {/*<TabStack.Screen*/}
-            {/*    name="IdentifyActivity"*/}
-            {/*    component={IdentifyActivity}*/}
-            {/*    options={{tabBarLabel: '充值'}}*/}
-            {/*/>*/}
-            {/*<TabStack.Screen*/}
-            {/*    name="SelectCustomerType"*/}
-            {/*    component={SelectCustomerType}*/}
-            {/*    options={{tabBarLabel: '开卡'}}*/}
-            {/*/>*/}
             <TabStack.Screen
                 name="BillManageActivity"
                 component={BillManageActivity}
