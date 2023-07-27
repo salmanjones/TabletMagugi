@@ -33,7 +33,8 @@ import {
     StaffWorksActivity,
     VipcardActivity,
     CashierBillingActivityOld,
-    MultiPayActivityOld
+    MultiPayActivityOld,
+    SelectCustomerTypeOld
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
@@ -782,7 +783,7 @@ function TabNavigationOld() {
             />
             <TabStack.Screen
                 name="SelectCustomerType"
-                component={SelectCustomerType}
+                component={SelectCustomerTypeOld}
                 options={{tabBarLabel: '开卡'}}
             />
             <TabStack.Screen
