@@ -34,7 +34,8 @@ import {
     VipcardActivity,
     CashierBillingActivityOld,
     MultiPayActivityOld,
-    SelectCustomerTypeOld
+    SelectCustomerTypeOld,
+    RechargeActivityOld
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import Orientation from 'react-native-orientation';
@@ -359,46 +360,110 @@ function RootNavigation(props) {
                             }
                         })()
                     }
-                    <RootStack.Screen
-                        name="RechargeActivity"
-                        component={RechargeActivity}
-                        options={{
-                            title: '充值',
-                            headerTitleAlign: 'center',
-                            headerShown: true,
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            },
-                        }}
-                    />
-                    <RootStack.Screen
-                        name="VipcardActivity"
-                        component={VipcardActivity}
-                        options={{
-                            title: '售卡',
-                            headerTitleAlign: 'center',
-                            headerShown: true,
-                            headerStyle: {
-                                backgroundColor: '#111C3C',
-                                height: PixelUtil.size(132),
-                            },
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'center',
-                                fontSize: PixelUtil.size(32),
-                            },
-                        }}
-                    />
+
+                    {
+                        (()=>{
+                            if (useNewReserveUI) {
+                                return (
+                                    <RootStack.Screen
+                                        name="VipcardActivity"
+                                        component={VipcardActivity}
+                                        options={{
+                                            title: '售卡',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }else{
+                                return (
+                                    <RootStack.Screen
+                                        name="VipcardActivity"
+                                        component={VipcardActivityOld}
+                                        options={{
+                                            title: '售卡',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }
+                        })()
+                    }
+
+                    {
+                        (()=>{
+                            if (useNewReserveUI) {
+                                return (
+                                    <RootStack.Screen
+                                        name="RechargeActivity"
+                                        component={RechargeActivity}
+                                        options={{
+                                            title: '充值',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }else{
+                                return (
+                                    <RootStack.Screen
+                                        name="RechargeActivity"
+                                        component={RechargeActivityOld}
+                                        options={{
+                                            title: '充值',
+                                            headerTitleAlign: 'center',
+                                            headerShown: true,
+                                            headerStyle: {
+                                                backgroundColor: '#111C3C',
+                                                height: PixelUtil.size(132),
+                                            },
+                                            headerTintColor: '#fff',
+                                            headerTitleStyle: {
+                                                color: 'white',
+                                                textAlign: 'center',
+                                                alignSelf: 'center',
+                                                fontSize: PixelUtil.size(32),
+                                            },
+                                        }}
+                                    />
+                                )
+                            }
+                        })()
+                    }
                     <RootStack.Screen
                         name="RotatePlacardActivity"
                         component={RotatePlacardActivity}

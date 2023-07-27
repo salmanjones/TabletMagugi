@@ -10,6 +10,8 @@ export * from './order/MultiPayActivity'; //组合支付
 export * from './order/MultiPayActivityOld'; //组合支付
 export * from './vipcard/RechargeActivity'; //会员卡
 export * from './vipcard/VipcardActivity';
+export * from './vipcard/RechargeActivityOld'; //会员卡
+export * from './vipcard/VipcardActivityOld';
 export * from './vipcard/IdentifyActivity';
 export * from './vipcard/SelectCustomerType';
 export * from './vipcard/SelectCustomerTypeOld';
