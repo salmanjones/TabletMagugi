@@ -12,6 +12,7 @@ export * from './vipcard/RechargeActivity'; //会员卡
 export * from './vipcard/VipcardActivity';
 export * from './vipcard/IdentifyActivity';
 export * from './vipcard/SelectCustomerType';
+export * from './vipcard/SelectCustomerTypeOld';
 export * from './rotate/RotatePlacardActivity';//轮牌new
 export * from './rotate/RotateSettingActivity';  //设置
 export * from './rotate/RotateSettingIndexActivity';  //轮牌设置
