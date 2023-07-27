@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
-import {RechargeStoredCardStyles} from '../../styles';
+import {RechargeStoredCardOldStyles as RechargeStoredCardStyles} from '../../styles';
 import {showMessage} from '../../utils';
 import {
     StaffSelectBox,

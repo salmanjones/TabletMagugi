@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {groupBy, showMessage} from '../../utils';
-import {RechargeStoredCardStyles,} from '../../styles';
+import {RechargeStoredCardOldStyles as RechargeStoredCardStyles} from '../../styles';
 
 import {
     CardDetails,

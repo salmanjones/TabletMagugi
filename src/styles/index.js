@@ -12,6 +12,7 @@ export * from './MemberQuery';
 export * from './addCardItem';
 export * from './addCardItemOld';
 export * from './rechargeStoredCard';
+export * from './rechargeStoredCardOld';
 export * from './tabGroup';
 export * from './memberIdentify';
 export * from './selectCustomerType';
