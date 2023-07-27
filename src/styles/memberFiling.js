@@ -9,13 +9,13 @@ export const memberFilingStyle = StyleSheet.create({
         justifyContent: 'space-around',
         backgroundColor: '#00000060',
         position: 'absolute',
-        zIndex: 200,
-        width: "100%",
-        height: '100%'
+        width: '100%',
+        height: '100%',
+        zIndex: 200
     },
     cashierBillInfoWrapper: {
         backgroundColor: '#FFF',
-        height: '85%',
+        height: '95%',
         width: '95%',
         display: 'flex',
         alignItems: 'center',

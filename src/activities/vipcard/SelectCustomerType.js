@@ -129,6 +129,6 @@ export class SelectCustomerType extends React.Component {
                 </View>
                 <BottomCopyModule/>
             </View>
-        );
+        )
     }
 }

@@ -227,7 +227,6 @@ export class VipcardPayment extends React.PureComponent {
         return (
             <Modal
                 transparent={true}
-                animationType={'fade'}
                 visible={visible}
                 onRequestClose={() => null}
             >

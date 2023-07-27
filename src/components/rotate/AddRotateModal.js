@@ -107,7 +107,7 @@ export class AddRotateModal extends React.Component {
 		let typeStatus = this.state.type == "1"?true:false;
     return (
 
-			<Modal transparent={true} animationType={'fade'} onRequestClose={() => null} >
+			<Modal transparent={true} onRequestClose={() => null} >
 					<View style={rotateBigModalStyle.modalBackground}>
 									<View style={rotateBigModalStyle.rotateWrapper}>
 							<View style={rotateBigModalStyle.rotateModalTitle}>

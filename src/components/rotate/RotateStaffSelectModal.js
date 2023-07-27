@@ -239,7 +239,7 @@ class RotateStaffSelect extends React.PureComponent {
         let rows = this.sliceRows(staffs4Select);
         console.log('staff select model render');
         return (
-            <Modal transparent={true} animationType={'fade'} onRequestClose={() => null} visible={visible}>
+            <Modal transparent={true} onRequestClose={() => null} visible={visible}>
                 <View style={rotateBigModalStyle.modalBackground}>
                     <View style={rotateBigModalStyle.rotateWrapper}>
                         <View style={rotateBigModalStyle.rotateModalTitle}>

@@ -237,9 +237,9 @@ export class ModalCreateMember extends React.Component {
                             style={memberFilingStyle.memberFilingInfoInpBox}
                         >
                             <TouchableOpacity style={manageConsumablesStyle.DatepickerInpBoxJD}
-                                onPress={() => {
-                                    this.setState({showDatePicker: true});
-                                }}
+                                              onPress={() => {
+                                                  this.setState({showDatePicker: true});
+                                              }}
                             >
                                 <Text>
                                     {this.state.birthday}
@@ -297,7 +297,6 @@ export class ModalCreateMember extends React.Component {
 
         const {visible, oper} = this.props;
         const loading = isCreateMemberPending;
-
         if(visible){
             return (
                 <View style={memberFilingStyle.modalBackground}>
@@ -509,7 +508,9 @@ export class ModalCreateMember extends React.Component {
                 </View>
             )
         }else{
-            return <View></View>
+            return (
+                <View></View>
+            )
         }
     }
 }

@@ -30,7 +30,7 @@ export class RotateSmallTipModal extends React.Component {
 		let type = this.props.type; // 0
 		let showTxt = this.props.showTxt;
 		return (
-			<Modal transparent={true} animationType={'none'} onRequestClose={() => null} visible={this.state.visible}>
+			<Modal transparent={true} onRequestClose={() => null} visible={this.state.visible}>
 				<View style={rotateSmallModalStyle.modalBackground}>
 					<View style={rotateSmallModalStyle.rotateWrapper}>
 						<View style={rotateSmallModalStyle.rotateBox}>

@@ -345,7 +345,7 @@ export class RotateOperateModal extends React.PureComponent {
         const { staff, setting, group, visible, onChangeStatus, isAdmin } = this.props;
 
         return (
-            <Modal transparent={true} animationType={'fade'} onRequestClose={() => null} visible={visible}>
+            <Modal transparent={true} onRequestClose={() => null} visible={visible}>
                 <View style={rotateModalStyle.modalBackground}>
                     <View style={rotateModalStyle.rotateWrapper}>
                         <View style={rotateModalStyle.rotateTitle}>
