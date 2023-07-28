@@ -77,6 +77,7 @@ import {
 import dayjs from "dayjs";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
 import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
+import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 let company_roundMode = null;
 const animateLeft = PixelUtil.screenSize.width - PixelUtil.size(120);
@@ -165,6 +166,13 @@ class CashierBillingView extends React.Component {
 
         // 移除缓存的会员识别数据
         AsyncStorage.removeItem("queryMemberInfo")
+
+        // 右侧时间
+        navigation.setOptions({
+            headerRight: () => (
+                <TimerRightWidget/>
+            )
+        })
 
         //会员识别框
         this.props.navigation.setParams({
