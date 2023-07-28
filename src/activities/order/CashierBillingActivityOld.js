@@ -1285,11 +1285,11 @@ class CashierBillingView extends React.Component {
     }
 
     showRightPanel() {
+        this.setState({sliderDisplay: true});
         Animated.timing(this.state.sliderLeft, {
             toValue: 0,
             duration: 500,
         }).start();
-        this.setState({sliderDisplay: true});
     }
 
     hideRightPanel() {

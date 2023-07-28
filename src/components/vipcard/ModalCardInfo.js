@@ -210,8 +210,8 @@ const StoreageCardInfo = ({data}) => {
             0
         )
     }
-    const cardDetails = data.detailsMap;
 
+    const cardDetails = data.detailsMap || JSON.parse(data.details || '{}');
     return (
         <View style={cardInfoStyles.cardInfoBox}>
             <View style={cardInfoStyles.cardDetailBgBox}>
