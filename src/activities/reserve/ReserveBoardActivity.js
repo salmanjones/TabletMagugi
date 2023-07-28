@@ -165,6 +165,15 @@ export const ReserveBoardActivity = props => {
         return unsubscribe;
     }, [navigation]);
 
+    // 加载时间
+    React.useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Text style={{color: '#ccffcc'}}>11111</Text>
+            )
+        })
+    }, []);
+
     //展示提示信息
     const showToast = (message) => {
         Toast.show(message, {

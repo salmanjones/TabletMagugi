@@ -45,6 +45,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UpgradeBoxer} from '../components';
 import Toast from 'react-native-root-toast';
 import {getConfigNewReserve} from "../services/reserve";
+import {TimerRightWidget} from "../components/header/TimerRightWidget";
 
 const RootStack = createNativeStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
@@ -730,6 +731,9 @@ function RootNavigation(props) {
                                                 alignSelf: 'center',
                                                 fontSize: PixelUtil.size(32),
                                             },
+                                            headerRight: () => (
+                                                <TimerRightWidget/>
+                                            )
                                         }}
                                     />
                                 )
