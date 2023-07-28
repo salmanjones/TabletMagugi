@@ -281,7 +281,7 @@ class Home extends React.Component {
                     <Text
                         style={homeStyles.footerAbout}
                         onPress={this.toggleAbout.bind(this)}>
-                        关于超级美星
+                        关于超级美星&emsp;V{systemConfig.version}
                     </Text>
                 </View>
             </SafeAreaView>
