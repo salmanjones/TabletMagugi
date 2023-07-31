@@ -575,19 +575,19 @@ export class CashierPay extends React.Component {
                                             <View style={cashierPayStyle.payWayBox}>
                                                 <Text style={cashierPayStyle.payWayTitle}>请选择支付方式：</Text>
                                                 <View style={cashierPayStyle.payWaylist}>
-                                                    <TouchableOpacity
-                                                        style={
-                                                            selectedPayType == 'wx' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList
-                                                        }
-                                                        onPress={this.choosePayWay.bind(this, 'wx')}
-                                                    >
-                                                        <Image
-                                                            resizeMethod="resize"
-                                                            source={require('@imgPath/WeChat.png')}
-                                                            style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
-                                                        />
-                                                        <Text style={cashierPayStyle.titleText}>微信支付</Text>
-                                                    </TouchableOpacity>
+                                                    {/*<TouchableOpacity*/}
+                                                    {/*    style={*/}
+                                                    {/*        selectedPayType == 'wx' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList*/}
+                                                    {/*    }*/}
+                                                    {/*    onPress={this.choosePayWay.bind(this, 'wx')}*/}
+                                                    {/*>*/}
+                                                    {/*    <Image*/}
+                                                    {/*        resizeMethod="resize"*/}
+                                                    {/*        source={require('@imgPath/WeChat.png')}*/}
+                                                    {/*        style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}*/}
+                                                    {/*    />*/}
+                                                    {/*    <Text style={cashierPayStyle.titleText}>微信支付</Text>*/}
+                                                    {/*</TouchableOpacity>*/}
                                                     {/*<TouchableOpacity*/}
                                                     {/*    style={*/}
                                                     {/*        selectedPayType == 'ali' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList*/}
