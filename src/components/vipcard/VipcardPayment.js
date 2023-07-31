@@ -262,7 +262,7 @@ export class VipcardPayment extends React.PureComponent {
                                             </View>
                                             <View style={openCardAccountStyle.cardGenreBox}>
                                                 <DeptList
-                                                    categoryId={card.cardCategory}
+                                                    cardInfo={card}
                                                     onChecked={this.onDeptSelected}
                                                 />
                                                 <MemberInfo data={member}/>

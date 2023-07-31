@@ -10,9 +10,9 @@ class DeptListComponent extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        const {deptList = [], categoryId} = this.props;
-        const depts = deptList.filter(x => x.categoryId == categoryId);
-
+        const {deptList = [], cardInfo} = this.props;
+        const categoryId = cardInfo['projectCategroyId']
+        const depts = deptList.filter(x => x.categoryId.split(",").indexOf(categoryId) != -1)
         this.state = {
             deptId: depts.length ? depts[0].id : 0,
         };
