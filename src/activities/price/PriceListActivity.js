@@ -57,7 +57,6 @@ class PriceList extends React.Component {
              * 需要注意，当水平位移大于30时，才进行后面的操作，不然可能是点击事件
              */
             onMoveShouldSetPanResponder(evt, gestureState){
-                console.log(gestureState.dx)
                 if (gestureState.dx > 30 && gestureState.dy == 0)
                     return true;
                 else
@@ -88,7 +87,6 @@ class PriceList extends React.Component {
         priceListInfo()
             .then(res => {
                 if (!res.data) return;
-                console.log(res.data);
                 var categories = res.data.priceCategoryList.map(x => {
                     return { id: x.id, name: x.name };
                 });
@@ -133,7 +131,6 @@ class PriceList extends React.Component {
     }
     //轮播变换
     onChangePriceItem = index => {
-        console.log(index);
         var price = this.state.priceData[index];
         setTimeout(
             () =>

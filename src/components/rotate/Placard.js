@@ -8,7 +8,6 @@ import { rotateItemStyles } from '../../styles';
 class Arrows extends PureComponent {
     render() {
         const { onBack, onForward, staff, isFirst, isLast } = this.props;
-        console.log('BackArrow arrow rend');
         return (
             <View style={rotateItemStyles.maskbg}>
                 <TouchableOpacity style={rotateItemStyles.maskbgLeftBtn} onPress={() => onBack(staff)}>
@@ -67,7 +66,6 @@ export class Placard extends PureComponent {
         const { staff, serviceStatus, setting, sortting, onForward, onBack, isFirst, isLast } = this.props;
         const { rotate, fade } = this.state;
 		const vm = this.getViewModel(staff, setting);
-		console.log('staff '+staff.staffName+' is render');
         return (
             <Animated.View
                 style={[

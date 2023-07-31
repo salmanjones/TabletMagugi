@@ -91,7 +91,6 @@ export class PlacardGroup extends PureComponent {
         const { sortting, staffs } = this.state;
         let isStanding = setting.type === '1';
         let hasData = staffs && staffs.length > 0;
-        console.log('Placard group render');
         return (
             <View style={index % 2 == 1 ? rotateItemStyles.rotateBodyOdd : rotateItemStyles.rotateBody}>
                 <View style={rotateItemStyles.rotateTitleBox}>

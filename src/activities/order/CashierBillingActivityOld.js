@@ -105,7 +105,6 @@ class CashierBillingView extends React.Component {
              * 需要注意，当水平位移大于30时，才进行后面的操作，不然可能是点击事件
              */
             onMoveShouldSetPanResponder(evt, gestureState) {
-                console.log(gestureState.dx)
                 if (gestureState.dx > 30 && gestureState.dy == 0)
                     return true;
                 else

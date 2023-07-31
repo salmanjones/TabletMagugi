@@ -393,7 +393,6 @@ class RotatePlacard extends React.Component {
     render() {
         const { datas, hasData, operate_selectedStaff, operate_selectedGroup, isLoading, isSaving, staffsSetting, isAdmin } = this.state;
         let { showOperateModal, showStaffSelectModal, staffSelectType, includeStaffs } = this.state;
-        console.log("Rotate main page render")
         return (
             <View>
                 <Spinner
@@ -513,7 +512,6 @@ class RotatePlacard extends React.Component {
     }
 
     query() {
-        console.log('query');
         let that = this;
         that.setState({ isLoading: true });
         getStoreDutys(null)

@@ -59,7 +59,6 @@ export class PlacardTimer extends PureComponent {
 	}
 	componentWillUnmount() {
 		this.interval && clearInterval(this.interval);
-		console.log("timer is dispose");
 	}
 
 	calculate(startTimeL) {

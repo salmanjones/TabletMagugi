@@ -108,8 +108,6 @@ class Home extends React.Component {
                         updateResult: updateResult,
                     };
                 });
-
-                console.log('-----------------');
             });
     }
 

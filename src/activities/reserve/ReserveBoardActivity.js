@@ -285,7 +285,6 @@ export const ReserveBoardActivity = props => {
                     }
                 }
                 setCustomerState(customerData)
-                console.log("reserveInfoArray", reserveInfoArray)
                 // 跳转开单或扫码
                 if(reserveInfoArray && reserveInfoArray.length > 0){
                     guestPanelRef.current.showRightPanel('noReserve', 'createOrder', 'ReserveBoardActivity')

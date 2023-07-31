@@ -237,7 +237,6 @@ class RotateStaffSelect extends React.PureComponent {
         const { staffs4Select, staffsGroups, currentCate, cates, selectedStaffs, selectAll, clearAll } = this.state;
         //let cates = Object.keys(staffsGroups);
         let rows = this.sliceRows(staffs4Select);
-        console.log('staff select model render');
         return (
             <Modal transparent={true} onRequestClose={() => null} visible={visible}>
                 <View style={rotateBigModalStyle.modalBackground}>
