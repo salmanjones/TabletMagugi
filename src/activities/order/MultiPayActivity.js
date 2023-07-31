@@ -57,14 +57,14 @@ const defaultPayTypes = [
         name: '会员卡支付', // 储值卡支付
         icon: require('@imgPath/pay-multiply-card.png'),
     },
-    {
-        payType: 6,
-        payTypeId: 19,
-        payTypeNo: 19,
-        name: '微信支付',
-        payMode: 0,
-        icon: require('@imgPath/pay-multiply-wechat.png'),
-    },
+    // {
+    //     payType: 6,
+    //     payTypeId: 19,
+    //     payTypeNo: 19,
+    //     name: '微信支付',
+    //     payMode: 0,
+    //     icon: require('@imgPath/pay-multiply-wechat.png'),
+    // },
     // {
     //     payType: 6,
     //     payTypeId: 18,
