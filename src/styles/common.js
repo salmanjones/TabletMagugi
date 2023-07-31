@@ -671,7 +671,7 @@ export const commonStyles = StyleSheet.create({
     },
     timeCardPriceText: {
         //次卡-余次-金额
-        fontSize: PixelUtil.size(32),
+        fontSize: PixelUtil.size(30),
         color: '#101B3C',
         fontWeight: '700'
     },
