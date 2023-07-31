@@ -121,6 +121,7 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
                                         style={PanelCustomerStyles.memberReservePropertyRemark}
                                         editable={false}
                                         multiline={true}
+                                        numberOfLines={2}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
                                         value={remark && remark.length > 0 ? remark: '暂无'}>
