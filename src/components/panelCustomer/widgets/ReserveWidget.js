@@ -40,7 +40,7 @@ export const ReserveWidget = React.memo(({reserveInfo = {}, reserveFlag, pagerNa
             }
             <View style={PanelCustomerStyles.memberReserveProperty}>
                 <Text  style={PanelCustomerStyles.memberReservePropertyTitle}>
-                    预约手机号：
+                    预约手机：
                 </Text>
                 <Text style={PanelCustomerStyles.memberReservePropertyValue}>
                     {reserveInfo.memberPhoneShow && reserveInfo.memberPhoneShow.length > 0 ? reserveInfo.memberPhoneShow : '暂无'}
