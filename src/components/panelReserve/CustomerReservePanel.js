@@ -6,7 +6,7 @@ import {
     PanResponder,
     TouchableOpacity,
     View,
-    Text, Alert, TextInput,
+    Text, Alert, TextInput, Keyboard,
 } from "react-native";
 import {decodeContent, getImage, ImageQutity, PixelUtil, showMessageExt} from "../../utils";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
@@ -214,6 +214,8 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                         data['result'] = 'empty'
                     }
                     setCustomerInfo(data)
+                    //隐藏键盘
+                    Keyboard.dismiss();
                 }else{
                     setCustomerInfo({result: 'empty'})
                     showMessageExt("获取顾客信息失败")

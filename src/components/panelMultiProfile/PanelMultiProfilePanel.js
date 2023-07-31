@@ -2,7 +2,7 @@ import {
     Animated,
     FlatList,
     Image,
-    ImageBackground,
+    ImageBackground, Keyboard,
     LogBox,
     PanResponder,
     Text,
@@ -173,6 +173,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                 {/*查询*/}
                                                 <TouchableOpacity
                                                     onPress={()=>{
+                                                        //隐藏键盘
+                                                        Keyboard.dismiss();
                                                         customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone', showMode, waiterId, actionType: actionType})
                                                     }}
                                                     style={PanelMultiProfiles.headSearchButton}>
@@ -189,6 +191,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                                             onPress={()=>{
                                                                 setUserPhone('')
                                                                 setMultiProfileArray([])
+                                                                //隐藏键盘
+                                                                Keyboard.dismiss();
                                                             }}>
                                                             <Image
                                                                 resizeMode={"contain"}

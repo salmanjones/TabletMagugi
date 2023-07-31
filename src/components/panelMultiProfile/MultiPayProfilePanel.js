@@ -1,4 +1,4 @@
-import {FlatList, Image, Text, TextInput, TouchableOpacity, View,} from "react-native";
+import {FlatList, Image, Keyboard, Text, TextInput, TouchableOpacity, View,} from "react-native";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 import {MultiProfileItem} from "./widgets/MultiProfileItem";
@@ -106,6 +106,8 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
                                         {/*查询*/}
                                         <TouchableOpacity
                                             onPress={()=>{
+                                                //隐藏键盘
+                                                Keyboard.dismiss();
                                                 customerClickEvent('toCreateOrder', {phone: userPhone, showType:'searchPhone', queryType:'phone', showMode, waiterId, actionType: actionType})
                                             }}
                                             style={PanelMultiProfiles.headSearchButton}>
@@ -122,6 +124,8 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
                                                     onPress={()=>{
                                                         setUserPhone('')
                                                         setMultiProfileArray([])
+                                                        //隐藏键盘
+                                                        Keyboard.dismiss();
                                                     }}>
                                                     <Image
                                                         resizeMode={"contain"}
