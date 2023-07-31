@@ -21,19 +21,18 @@ export const openCardAccountStyle = StyleSheet.create({
     },
     billInfoBox: {
         // 顾客识别-主体
-        width: PixelUtil.size(1968),
-        height: '80%',
+        width: '100%',
+        flex: 1,
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
-        flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     MemberQueryTitle: {
         // 顾客识别-标题
-        width: PixelUtil.rect(1968, 116).width,
-        height: '10%',
+        width: '100%',
+        height: PixelUtil.size(114),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -56,16 +55,15 @@ export const openCardAccountStyle = StyleSheet.create({
     },
     leftBox: {
         width: '100%',
-        height: '100%',
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#ffffff',
     },
     rightBodyBox: {
         width: '50%',
         height: '100%',
         borderRightColor: '#cbcbcb',
         borderRightWidth: PixelUtil.size(2),
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -74,7 +72,7 @@ export const openCardAccountStyle = StyleSheet.create({
     MemberQueryBtnBox: {
         // 顾客识别-关闭按钮框
         width: '100%',
-        height: '10%',
+        height: PixelUtil.size(114),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -115,13 +113,15 @@ export const openCardAccountStyle = StyleSheet.create({
     cardInfo: {
         //卡样式
         width: '100%',
-        height: PixelUtil.size(300),
+        height: '50%',
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingLeft: PixelUtil.size(160),
         paddingRight: PixelUtil.size(160),
+        borderBottomWidth: PixelUtil.size(2),
+        borderColor: '#ececec'
     },
     cardPrice: {
         //金额
@@ -132,7 +132,6 @@ export const openCardAccountStyle = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: PixelUtil.size(196),
         paddingRight: PixelUtil.size(160),
-        paddingBottom: PixelUtil.size(20),
     },
     cardPriceText: {
         fontSize: PixelUtil.size(38),
@@ -149,30 +148,33 @@ export const openCardAccountStyle = StyleSheet.create({
     cardGenreBox: {
         //服务类
         width: '100%',
-        height: '100%',
-        flex: 1,
+        height: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
     },
     chooseCardGenreBox: {
         width: '100%',
-        flex: 1,
-        paddingLeft: PixelUtil.size(180),
-        paddingRight: PixelUtil.size(140),
-        marginTop: PixelUtil.size(40)
+        height: PixelUtil.size(114),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: PixelUtil.size(2),
+        borderColor: '#ececec',
     },
 
     cardGenreCheckbox: {
         //服务类-单选框
-        width: '100%',
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
         flexWrap: 'wrap',
-        marginTop: PixelUtil.size(40),
-        marginBottom: PixelUtil.size(10),
     },
     checkBoxContainer: {
         backgroundColor: '#fff',
         borderWidth: 0,
-        width: '30%',
         flexShrink: 0,
         marginLeft: PixelUtil.size(10),
         marginRight: PixelUtil.size(10),
@@ -187,8 +189,6 @@ export const openCardAccountStyle = StyleSheet.create({
         //服务类-标题-文本
         fontSize: PixelUtil.size(34),
         color: '#333',
-        marginBottom: PixelUtil.size(-30),
-        marginLeft: PixelUtil.size(20),
     },
     accountBox: {
         //支付方式
@@ -242,13 +242,12 @@ export const openCardAccountStyle = StyleSheet.create({
     },
     rightBox: {
         //右边内容
-        paddingLeft: PixelUtil.size(256),
-        paddingRight: PixelUtil.size(256),
-        paddingTop: PixelUtil.size(20),
+        width: '100%',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: PixelUtil.size(60)
+        alignItems: 'center',
+        marginTop: PixelUtil.size(40),
     },
     rightBoxNew: {
         //右边内容
@@ -256,10 +255,8 @@ export const openCardAccountStyle = StyleSheet.create({
         paddingRight: PixelUtil.size(256),
     },
     cardInfoAvatarBox: {
-        width: PixelUtil.rect(240, 240).width,
-        height: PixelUtil.rect(240, 240).height,
-        marginBottom: PixelUtil.size(46),
-        marginTop: PixelUtil.size(40),
+        width: PixelUtil.size(240),
+        height: PixelUtil.size(240),
         borderRadius: PixelUtil.size(120),
         overflow: 'hidden',
         backgroundColor: '#cbcbcb',
@@ -281,6 +278,6 @@ export const openCardAccountStyle = StyleSheet.create({
     cardPersonInfoText: {
         fontSize: PixelUtil.size(38),
         color: '#333',
-        marginBottom: PixelUtil.size(60),
+        lineHeight: PixelUtil.size(80)
     },
 });

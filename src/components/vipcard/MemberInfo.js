@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, Image} from 'react-native';
 
 import {openCardAccountStyle} from '../../styles';
-import {ImageQutity, getImage} from '../../utils';
+import {ImageQutity, getImage, PixelUtil} from '../../utils';
 
 export class MemberInfo extends React.PureComponent {
     render() {
@@ -19,7 +19,7 @@ export class MemberInfo extends React.PureComponent {
                            style={openCardAccountStyle.cardInfoAvatar}
                     />
                 </View>
-                <View>
+                <View style={{ height: PixelUtil.size(240), display: 'flex', justifyContent: 'center'}}>
                     <Text style={openCardAccountStyle.cardPersonInfoText}>
                         持卡人：{data.name}
                     </Text>

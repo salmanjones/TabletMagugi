@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Image, ImageBackground, Text, TouchableOpacity, View} from 'react-native';
-import {groupBy, showMessage} from '../../utils';
+import {groupBy, showMessage, showMessageExt} from '../../utils';
 import {RechargeStoredCardStyles} from '../../styles';
 
 import {
@@ -384,7 +384,7 @@ class Recharge extends React.Component {
                 : currentCard.initialPrice;
 
         if (parseInt(rechargeAmt) < parseInt(minimalRechargeAmt)) {
-            showMessage('充值金额不能低于' + minimalRechargeAmt);
+            showMessageExt('充值金额不能低于' + minimalRechargeAmt);
             return;
         }
 

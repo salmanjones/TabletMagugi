@@ -248,17 +248,17 @@ export class VipcardPayment extends React.PureComponent {
                             {step === 1 && !showOtherPaymentResult && (
                                 <View style={openCardAccountStyle.billInfoBox}>
                                     <View style={openCardAccountStyle.leftBodyBox}>
-                                        <ScrollView style={openCardAccountStyle.leftBox}>
+                                        <View style={openCardAccountStyle.leftBox}>
                                             <View style={openCardAccountStyle.cardInfo}>
                                                 <SaleCardItem data={card} mode={'cardPay'}/>
-                                            </View>
-                                            <View style={openCardAccountStyle.cardPrice}>
-                                                <Text style={openCardAccountStyle.cardPriceText}>
-                                                    {cardNumber}张
-                                                </Text>
-                                                <Text style={openCardAccountStyle.cardInfoText}>
-                                                    应付:{totalPrice}元
-                                                </Text>
+                                                <View style={openCardAccountStyle.cardPrice}>
+                                                    <Text style={openCardAccountStyle.cardPriceText}>
+                                                        {cardNumber}张
+                                                    </Text>
+                                                    <Text style={openCardAccountStyle.cardInfoText}>
+                                                        应付:{totalPrice}元
+                                                    </Text>
+                                                </View>
                                             </View>
                                             <View style={openCardAccountStyle.cardGenreBox}>
                                                 <DeptList
@@ -268,7 +268,7 @@ export class VipcardPayment extends React.PureComponent {
                                                 <MemberInfo data={member}/>
                                                 {/* <PaymentTypeList onSelected={this.onPayTypeSelected} /> */}
                                             </View>
-                                        </ScrollView>
+                                        </View>
                                     </View>
                                     <View style={openCardAccountStyle.rightBodyBox}>
                                         {/* 平板支付-支付选择*/}
