@@ -23,6 +23,7 @@ import {
 } from '../../actions';
 import {fetchStaffAcl} from '../../services';
 import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
+import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
@@ -58,7 +59,13 @@ class VipCard extends React.Component {
             init(params);
         });
 
-        // console.log(this.props.route,'路由参数')
+        // 右侧时间
+        const {navigation} = this.props;
+        navigation.setOptions({
+            headerRight: () => (
+                <TimerRightWidget/>
+            )
+        })
     }
 
     onTabPress = index => {

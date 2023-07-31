@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
 import {reloadProfileAction} from "../../actions";
+import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 const tabs = [
     {id: 1, name: '储值卡'},
@@ -60,6 +61,14 @@ class Recharge extends React.Component {
         });
         route.params.showMemberIcon = true
         route.params.memberInfo = route.params.member
+
+        // 右侧时间
+        const {navigation} = this.props;
+        navigation.setOptions({
+            headerRight: () => (
+                <TimerRightWidget/>
+            )
+        })
     }
 
     render() {

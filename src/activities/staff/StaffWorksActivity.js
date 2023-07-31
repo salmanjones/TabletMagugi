@@ -15,6 +15,7 @@ import {
 } from "../../services/reserve";
 import {getImage, ImageQutity, showMessageExt} from "../../utils";
 import Spinner from "react-native-loading-spinner-overlay";
+import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 
 const styles = StyleSheet.create({
@@ -55,6 +56,14 @@ export class StaffWorksView extends React.Component {
     componentDidMount() {
         this.setState({
             showVideo: true
+        })
+
+        // 右侧时间
+        const {navigation} = this.props;
+        navigation.setOptions({
+            headerRight: () => (
+                <TimerRightWidget/>
+            )
         })
     }
 

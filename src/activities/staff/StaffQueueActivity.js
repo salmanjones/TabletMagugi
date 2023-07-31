@@ -15,6 +15,7 @@ import {
     getMemberPortrait,
     getStaffPermission
 } from "../../services/reserve";
+import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 export class StaffQueueView extends React.Component {
     constructor(props) {
@@ -32,6 +33,14 @@ export class StaffQueueView extends React.Component {
     }
 
     componentDidMount() {
+        // 右侧时间
+        const {navigation} = this.props;
+        navigation.setOptions({
+            headerRight: () => (
+                <TimerRightWidget/>
+            )
+        })
+
         // 获取员工信息
         this.loadStaffs()
     }
