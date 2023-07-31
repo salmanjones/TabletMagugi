@@ -217,7 +217,7 @@ export const PanelReserveStyles = StyleSheet.create({
         fontSize: PixelUtil.size(32),
         fontWeight: '700',
         color: '#ffffff',
-        width: PixelUtil.size(130)
+        width: PixelUtil.size(150)
     },
     sexShowText:{
         fontSize: PixelUtil.size(26),

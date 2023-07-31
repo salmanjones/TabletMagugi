@@ -362,7 +362,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                                 <View style={PanelReserveStyles.customerEasyInfo}>
                                                     <View style={PanelReserveStyles.customerEasyNameSex}>
                                                         <Text style={PanelReserveStyles.nameShowText} numberOfLines={1} ellipsizeMode={'tail'}>
-                                                            {decodeURIComponent(customerInfo.nickName)}
+                                                            {decodeContent(customerInfo.nickName)}
                                                         </Text>
                                                         <Image
                                                             style={PanelReserveStyles.customerSexIcon}
@@ -628,7 +628,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         multiline={true}
                                         textAlignVertical={'top'}
                                         textAlign={'left'}
-                                        value={decodeURIComponent(reserveRemark)}
+                                        value={decodeContent(reserveRemark)}
                                         placeholder={'请输入预约备注，30个文字以内'}
                                         onChange={({nativeEvent})=>{
                                             const remark = nativeEvent.text
