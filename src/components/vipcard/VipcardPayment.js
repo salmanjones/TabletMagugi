@@ -277,16 +277,16 @@ export class VipcardPayment extends React.PureComponent {
                                             <View style={cashierPayStyle.payWayBox}>
                                                 <Text style={cashierPayStyle.payWayTitle}>请选择支付方式：</Text>
                                                 <View style={cashierPayStyle.payWaylist}>
-                                                    <TouchableOpacity
-                                                        style={payTypeId == '19' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList}
-                                                        onPress={this.onPayTypeSelect.bind(this, 'wx', '19', '微信')}
-                                                    >
-                                                        <Image resizeMethod="resize"
-                                                               source={require('@imgPath/WeChat.png')}
-                                                               style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}
-                                                        />
-                                                        <Text style={cashierPayStyle.titleText}>微信支付</Text>
-                                                    </TouchableOpacity>
+                                                    {/*<TouchableOpacity*/}
+                                                    {/*    style={payTypeId == '19' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList}*/}
+                                                    {/*    onPress={this.onPayTypeSelect.bind(this, 'wx', '19', '微信')}*/}
+                                                    {/*>*/}
+                                                    {/*    <Image resizeMethod="resize"*/}
+                                                    {/*           source={require('@imgPath/WeChat.png')}*/}
+                                                    {/*           style={[cashierPayStyle.timePayRImg, {resizeMode: 'contain'}]}*/}
+                                                    {/*    />*/}
+                                                    {/*    <Text style={cashierPayStyle.titleText}>微信支付</Text>*/}
+                                                    {/*</TouchableOpacity>*/}
                                                     {/*<TouchableOpacity*/}
                                                     {/*    style={payTypeId == '18' ? cashierPayStyle.timePayRListActive : cashierPayStyle.timePayRList}*/}
                                                     {/*    onPress={this.onPayTypeSelect.bind(this, 'ali', '18', '支付宝')}*/}

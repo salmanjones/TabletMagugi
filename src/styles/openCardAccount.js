@@ -11,12 +11,11 @@ export const openCardAccountStyle = StyleSheet.create({
     },
     cashierBillInfoWrapper: {
         backgroundColor: '#FFF',
-        height: '85%',
+        height: '90%',
         width: '95%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: PixelUtil.size(120),
         position: 'relative',
         overflow: 'hidden',
     },
