@@ -58,14 +58,10 @@ export class VipUserInfoComponent extends React.PureComponent {
         const {ckCount, czkCount, czkPriceSum, name, sex, phone, memberCardNo, imgUrl, isWechatMember} = this.state
         return (
             <View style={{width: '100%'}}>
-                <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')}
-                                 style={RechargeStoredCardStyles.userbg}>
+                <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')} style={RechargeStoredCardStyles.userbg}>
                     <ImageBackground resizeMethod="resize" source={require('@imgPath/cardNo_bg.png')}
                                      style={RechargeStoredCardStyles.cardNoImg}>
-                        <Text style={RechargeStoredCardStyles.cardNo}>
-
-
-                            ·{memberCardNo}</Text>
+                        <Text style={RechargeStoredCardStyles.cardNo}>·{memberCardNo}</Text>
                     </ImageBackground>
                     {/*nav中间个人信息*/}
                     <View style={RechargeStoredCardStyles.carduserInfo}>

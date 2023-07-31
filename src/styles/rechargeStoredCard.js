@@ -820,7 +820,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(30),
         color: '#fff',
         fontWeight: '700',
-        maxWidth: PixelUtil.size(185),
+        maxWidth: PixelUtil.size(150),
         overflow: 'hidden',
     },
     sexText: {
