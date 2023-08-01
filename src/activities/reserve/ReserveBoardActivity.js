@@ -117,11 +117,6 @@ export const ReserveBoardActivity = props => {
             reserverTime: showDate
         }
 
-        console.log("\n\n\n\n\n\n\n")
-        console.log("params", params)
-        console.log("\n\n\n\n\n\n\n")
-
-
         setLoading(true)
         const promiseInfo = getReserveInfo(params)
         Promise.all([ promiseInfo]).then(backData => {
@@ -267,7 +262,7 @@ export const ReserveBoardActivity = props => {
                 }).then(backData=>{
                     const {code, data} = backData
                     if(code == '6000'){
-                        const timeReserve = dayjs().format("YYYY-MM-DD ") + reserveTime
+                        const timeReserve = dayjs(showDate).format("YYYY-MM-DD ") + reserveTime
                         data['reserveTime'] = timeReserve
                         setReserveBaseData(data)
                         customerReservePanelRef.current.showRightPanel()
