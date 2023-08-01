@@ -23,6 +23,7 @@ import {displayError, getImage, ImageQutity, showMessageExt} from "../../utils";
 import {AppNavigate} from "../../navigators";
 import {fetchMemberNO} from "../../services/member";
 import {ModalCreateMember} from "../../components";
+import DatePicker from "react-native-date-picker";
 
 // 开单预约看板
 const pageCache = {
@@ -41,6 +42,8 @@ export const ReserveBoardActivity = props => {
     const [isLoading, setLoading] = useState(false)
     // 预约日期
     const [showDate, setShowDate] = useState(dayjs().format('YYYY-MM-DD'))
+    // 展示日历
+    const [showCalendar, setShowCalendar] = useState(false)
     // 预约状态切换
     const [reserveFlag, setReserveFlag] = useState('valid')
     // 预约信息
@@ -86,32 +89,38 @@ export const ReserveBoardActivity = props => {
     })
     // 散客预约子组件
     const guestPanelRef = useRef(null);
-
-    // 获取预约数据
+    // 获取预约数据（当前设备唯一编号，用来确定是否有新预约「多设备」）
     const uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
+
+    // 获取当前日期
+    const getShowDate = ()=>{
+        getReserveDate().then(backData=>{
+            const dateInfo = backData
+            // 处理预约日期
+            let showDate = dayjs().format("YYYY-MM-DD")
+            if(dateInfo.code == '6000'){ // 数据获取成功
+                const dateEntity = dateInfo.data
+                showDate = dateEntity['dateOnly']
+                setShowDate(showDate)
+            }
+        })
+    }
+
+    // 获取预约记录
     const getReserveList = (callBack) => {
         InteractionManager.runAfterInteractions(() => {
             const params = {
                 companyId: reduxState.auth.userInfo.companyId,
                 storeId: reduxState.auth.userInfo.storeId,
                 uniqueId: uniqueId,
+                reserverTime: showDate.length > 0 ? showDate:''
             }
 
             setLoading(true)
             const promiseInfo = getReserveInfo(params)
-            const promiseDate = getReserveDate()
-            Promise.all([promiseDate, promiseInfo]).then(backData => {
-                // 处理预约日期
-                let showDate = dayjs().format("YYYY-MM-DD")
-                const dateInfo = backData[0]
-                if(dateInfo.code == '6000'){ // 数据获取成功
-                    const dateEntity = dateInfo.data
-                    showDate = dateEntity['dateOnly']
-                    setShowDate(showDate)
-                }
-
+            Promise.all([ promiseInfo]).then(backData => {
                 // 处理预约信息
-                const reserveInfo = backData[1]
+                const reserveInfo = backData[0]
                 const {code, data} = reserveInfo
                 if ("6000" == code) {
                     setReserveInfoArray(data)
@@ -159,20 +168,15 @@ export const ReserveBoardActivity = props => {
     // 进入页面获取新数据
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
+            // 获取当前日期
+            getShowDate()
+
+            // 获取预约记录
             getReserveList()
         });
 
         return unsubscribe;
     }, [navigation]);
-
-    // 加载时间
-    React.useEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Text style={{color: '#ccffcc'}}>11111</Text>
-            )
-        })
-    }, []);
 
     //展示提示信息
     const showToast = (message) => {
@@ -1012,14 +1016,50 @@ export const ReserveBoardActivity = props => {
         })
     }
 
+    /// 切换预约日期
+    const switchDate = (date)=>{
+        setShowDate(dayjs(date).format("YYYY-MM-DD"))
+        setShowCalendar(false)
+        const timeOut = setTimeout(()=>{
+            getReserveList()
+            timeOut && clearTimeout(timeOut)
+        }, 20)
+    }
+
+    // 日历控件数据
+    const dateNow = new Date(dayjs(showDate).format("YYYY-MM-DD HH:mm:ss"))
+    const dateMin = dateNow
+    const dateMax = new Date(dayjs(dateNow).add(13, 'day').format('YYYY-MM-DD HH:mm:ss'))
+
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>
+            <DatePicker
+                modal
+                title={'选择预约日期'}
+                confirmText={'确定'}
+                mode={'date'}
+                locale={'zh-Hans'}
+                open={showCalendar}
+                date={dateNow}
+                minimumDate={dateMin}
+                maximumDate={dateMax}
+                onConfirm={(date) => {
+                    switchDate(date)
+                }}
+                onCancel={() => {
+                    setShowCalendar(false)
+                }}
+            />
             {/*加载中*/}
             <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
             {/*预约状态切换*/}
             <View style={ReserveBoardStyles.reserveFlagBox}>
                 <View style={ReserveBoardStyles.reserveFlagBoxLeft}>
-                    <TouchableOpacity style={ReserveBoardStyles.reserveFlagDateBox}>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            setShowCalendar(true)
+                        }}
+                        style={ReserveBoardStyles.reserveFlagDateBox}>
                         <Text style={ReserveBoardStyles.reserveDateTitle}>
                             预约日期
                         </Text>

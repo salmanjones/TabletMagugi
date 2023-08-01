@@ -216,17 +216,17 @@ export class PayArea extends PureComponent {
                     <View style={cashierPayStyle.payWayBox}>
                         <Text style={cashierPayStyle.payWayTitle}>请选择支付方式：</Text>
                         <View style={pendingOrderPayStyle.payWaylist}>
-                            <TouchableOpacity
-                                style={selectedPayType == 'wx' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}
-                                onPress={this.choosePayWay.bind(this, 'wx')}
-                            >
-                                <Image
-                                    resizeMethod="resize"
-                                    source={require('@imgPath/WeChat.png')}
-                                    style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}
-                                />
-                                <Text style={cashierPayStyle.titleText}>微信支付</Text>
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity*/}
+                            {/*    style={selectedPayType == 'wx' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}*/}
+                            {/*    onPress={this.choosePayWay.bind(this, 'wx')}*/}
+                            {/*>*/}
+                            {/*    <Image*/}
+                            {/*        resizeMethod="resize"*/}
+                            {/*        source={require('@imgPath/WeChat.png')}*/}
+                            {/*        style={[cashierPayStyle.timePayRImg, { resizeMode: 'contain' }]}*/}
+                            {/*    />*/}
+                            {/*    <Text style={cashierPayStyle.titleText}>微信支付</Text>*/}
+                            {/*</TouchableOpacity>*/}
                             {/*<TouchableOpacity*/}
                             {/*    style={selectedPayType == 'ali' ? pendingOrderPayStyle.timePayRListActive : pendingOrderPayStyle.timePayRList}*/}
                             {/*    onPress={this.choosePayWay.bind(this, 'ali')}*/}
