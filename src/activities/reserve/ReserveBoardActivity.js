@@ -58,6 +58,7 @@ export const ReserveBoardActivity = props => {
     ])
     // 选中发型师的数据
     const [stylistCheckedIndex, setStylistCheckedIndex] = useState(0)
+    const [stylistCheckedId, setStylistCheckedId] = useState('')
     // 散客-> 会员生成的会员号
     const [newMemberInfo, setNewMemberInfo] = useState({
         show: false,
@@ -194,8 +195,9 @@ export const ReserveBoardActivity = props => {
     }
 
     // 选择发型师
-    const checkStylistEvent = React.useCallback((index) => {
+    const checkStylistEvent = React.useCallback((index, staffId) => {
         setStylistCheckedIndex(index)
+        setStylistCheckedId(staffId)
     }, [])
 
     // 清除页面缓存
@@ -1098,6 +1100,13 @@ export const ReserveBoardActivity = props => {
                 {
                     (()=>{
                         if(reserveInfoArray.length > 0){ // 发型师已设置预约
+                            let checkStaff = {}
+                            if(stylistCheckedId.length > 0){
+                                checkStaff = reserveInfoArray.filter(item=>item.staffId == stylistCheckedId)[0]
+                            }else{
+                                checkStaff = reserveInfoArray[stylistCheckedIndex]
+                            }
+
                             return (
                                 <View style={ReserveBoardStyles.reserveDetailWrap}>
                                     {/*发型师列表*/}
@@ -1109,7 +1118,7 @@ export const ReserveBoardActivity = props => {
                                     {/*顾客预约列表*/}
                                     <View style={ReserveBoardStyles.reserveCustomerBox}>
                                         <CustomerWidget
-                                            stylistReserveInfo = {reserveInfoArray[stylistCheckedIndex]} // 当前发型师预约数据
+                                            stylistReserveInfo = {checkStaff} // 当前发型师预约数据
                                             reserveFlag={reserveFlag}
                                             customerCardEvent={customerPressEvent}
                                             uniqueId={uniqueId}/>

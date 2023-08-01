@@ -11,7 +11,7 @@ export default React.memo(({reserveInfoArray, checkStylistEvent, reserveFlag}) =
         setCheckIndex(index)
         setCheckStaffId(staffId)
         // 展示预约列表
-        checkStylistEvent(index)
+        checkStylistEvent(index, staffId)
     }, [reserveFlag])
 
     const Item = React.memo(({index, title, validCount, invalidCount, staffId}) => {
