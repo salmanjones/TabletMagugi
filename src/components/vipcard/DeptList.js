@@ -5,13 +5,12 @@ import {CheckBox} from 'react-native-elements';
 
 import {openCardAccountStyle} from '../../styles';
 import {PixelUtil} from '../../utils';
-
 class DeptListComponent extends React.PureComponent {
     constructor(props) {
         super(props);
 
         const {deptList = [], cardInfo} = this.props;
-        const categoryId = cardInfo['projectCategroyId']
+        const categoryId = cardInfo['cardCategory'] || cardInfo['projectCategroyId']
         const depts = deptList.filter(x => x.categoryId.split(",").indexOf(categoryId) != -1)
         this.state = {
             deptId: depts.length ? depts[0].id : 0,
