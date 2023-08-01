@@ -199,6 +199,9 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
     /// 获取手机号的顾客信息
     const queryCustomerInfo = ()=>{
         if(userPhone.trim().length > 1){
+            //隐藏键盘
+            Keyboard.dismiss();
+
             setLoading(true)
             getAppUserInfo({phone: userPhone}).then(backdata=>{
                 const {code, data} = backdata
@@ -214,8 +217,6 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                         data['result'] = 'empty'
                     }
                     setCustomerInfo(data)
-                    //隐藏键盘
-                    Keyboard.dismiss();
                 }else{
                     setCustomerInfo({result: 'empty'})
                     showMessageExt("获取顾客信息失败")
@@ -293,6 +294,7 @@ const CustomerReservePanelForwardRef = forwardRef((props, refArgs) => {
                                         setUserPhone(phone)
                                         setShowClear(showClear)
                                     }}
+                                    isFocused={false}
                                     value={userPhone}
                                     maxLength={11}/>
                                 {/*查询*/}

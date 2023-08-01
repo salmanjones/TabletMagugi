@@ -772,8 +772,9 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     userbg: {
         width: '100%',
         height: "100%",
-        // flex: 0,
-        // flexDirection: 'row',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     cardNo: {
         width: '100%',
@@ -786,29 +787,33 @@ export const RechargeStoredCardStyles = StyleSheet.create({
     cardNoImg: {
         width: PixelUtil.size(138),
         height: PixelUtil.size(29),
-        marginTop: PixelUtil.size(5)
+        position: 'absolute',
+        zIndex: 100,
+        top: PixelUtil.size(4),
+        left: 0
     },
     carduserInfo: {
-        flex: 1,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: PixelUtil.size(-20)
+        justifyContent: 'space-between',
     },
     cardUserLeft: {
-        flex: 0,
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start',
+        paddingLeft: PixelUtil.size(40)
     },
     avaterIamge: {
         width: PixelUtil.rect(64, 64).width,
         height: PixelUtil.rect(64, 64).height,
         borderRadius: PixelUtil.size(500),
-        marginLeft: PixelUtil.size(40)
     },
     avaterInfo: {
-        marginLeft: PixelUtil.size(13),
-        // marginTop:PixelUtil.size(10)
+        marginLeft: PixelUtil.size(14),
     },
     avaterInfotop: {
         flex: 0,
@@ -820,7 +825,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(30),
         color: '#fff',
         fontWeight: '700',
-        maxWidth: PixelUtil.size(150),
+        maxWidth: PixelUtil.size(170),
         overflow: 'hidden',
     },
     sexText: {
@@ -842,20 +847,22 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         color: '#fff'
     },
     storeInfo: {
-        marginLeft: PixelUtil.size(28),
-        flex: 0,
-        flexDirection: 'row'
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     secondCard: {
-        marginLeft: PixelUtil.size(50),
+        marginRight: PixelUtil.size(50),
         color: '#FFFFFF',
         fontSize: PixelUtil.size(20),
     },
     storeCard: {
-        marginLeft: PixelUtil.size(50),
+        marginRight: PixelUtil.size(50),
     },
     threeCard: {
-        marginLeft: PixelUtil.size(60),
+        marginRight: PixelUtil.size(60),
         color: '#FFFFFF',
         fontSize: PixelUtil.size(20),
     },
@@ -868,9 +875,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         color: '#FFFFFF'
     },
     application: {
-        marginRight: PixelUtil.size(24),
-        // marginTop: PixelUtil.size(15),
-        marginLeft: PixelUtil.size(50)
+        marginRight: PixelUtil.size(40),
     },
     appliimg: {
         width: PixelUtil.size(168),
