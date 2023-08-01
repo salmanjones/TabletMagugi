@@ -42,6 +42,7 @@ export const ReserveBoardActivity = props => {
     const [isLoading, setLoading] = useState(false)
     // 预约日期
     const [showDate, setShowDate] = useState(dayjs().format('YYYY-MM-DD'))
+    const [serverDate, setServerDate] = useState(dayjs().format('YYYY-MM-DD'))
     // 展示日历
     const [showCalendar, setShowCalendar] = useState(false)
     // 预约状态切换
@@ -102,42 +103,46 @@ export const ReserveBoardActivity = props => {
                 const dateEntity = dateInfo.data
                 showDate = dateEntity['dateOnly']
                 setShowDate(showDate)
+                setServerDate(showDate)
             }
         })
     }
 
     // 获取预约记录
-    const getReserveList = (callBack) => {
-        InteractionManager.runAfterInteractions(() => {
-            const params = {
-                companyId: reduxState.auth.userInfo.companyId,
-                storeId: reduxState.auth.userInfo.storeId,
-                uniqueId: uniqueId,
-                reserverTime: showDate.length > 0 ? showDate:''
-            }
+    const getReserveList =  React.useCallback((callBack) => {
+        const params = {
+            companyId: reduxState.auth.userInfo.companyId,
+            storeId: reduxState.auth.userInfo.storeId,
+            uniqueId: uniqueId,
+            reserverTime: showDate
+        }
 
-            setLoading(true)
-            const promiseInfo = getReserveInfo(params)
-            Promise.all([ promiseInfo]).then(backData => {
-                // 处理预约信息
-                const reserveInfo = backData[0]
-                const {code, data} = reserveInfo
-                if ("6000" == code) {
-                    setReserveInfoArray(data)
-                } else {
-                    showToast("信息加载失败")
-                }
-            }).catch(e => {
-                console.log("预约开单数据加载失败", e)
+        console.log("\n\n\n\n\n\n\n")
+        console.log("params", params)
+        console.log("\n\n\n\n\n\n\n")
+
+
+        setLoading(true)
+        const promiseInfo = getReserveInfo(params)
+        Promise.all([ promiseInfo]).then(backData => {
+            // 处理预约信息
+            const reserveInfo = backData[0]
+            const {code, data} = reserveInfo
+            if ("6000" == code) {
+                setReserveInfoArray(data)
+            } else {
                 showToast("信息加载失败")
-            }).finally(() => {
-                setLoading(false)
-                callBack && callBack()
-                // 初次加载完毕，不再展示加载信息
-                console.log('数据请求完成')
-            })
+            }
+        }).catch(e => {
+            console.log("预约开单数据加载失败", e)
+            showToast("信息加载失败")
+        }).finally(() => {
+            setLoading(false)
+            callBack && callBack()
+            // 初次加载完毕，不再展示加载信息
+            console.log('数据请求完成')
         })
-    }
+    }, [showDate])
 
     // 初次加载处理
     useEffect(() => {
@@ -170,13 +175,16 @@ export const ReserveBoardActivity = props => {
         const unsubscribe = navigation.addListener('focus', () => {
             // 获取当前日期
             getShowDate()
-
-            // 获取预约记录
-            getReserveList()
         });
 
         return unsubscribe;
     }, [navigation]);
+
+
+    /// 监测预约日期更换,重新加载数据
+    useEffect(()=>{
+        getReserveList()
+    }, [showDate])
 
     //展示提示信息
     const showToast = (message) => {
@@ -1020,16 +1028,12 @@ export const ReserveBoardActivity = props => {
     const switchDate = (date)=>{
         setShowDate(dayjs(date).format("YYYY-MM-DD"))
         setShowCalendar(false)
-        const timeOut = setTimeout(()=>{
-            getReserveList()
-            timeOut && clearTimeout(timeOut)
-        }, 20)
     }
 
     // 日历控件数据
     const dateNow = new Date(dayjs(showDate).format("YYYY-MM-DD HH:mm:ss"))
-    const dateMin = dateNow
-    const dateMax = new Date(dayjs(dateNow).add(13, 'day').format('YYYY-MM-DD HH:mm:ss'))
+    const dateMin = new Date(dayjs(serverDate).format("YYYY-MM-DD HH:mm:ss"))
+    const dateMax = new Date(dayjs(serverDate).add(13, 'day').format('YYYY-MM-DD HH:mm:ss'))
 
     return (
         <View style={ReserveBoardStyles.boardWrapBox}>

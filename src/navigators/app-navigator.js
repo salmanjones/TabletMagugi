@@ -152,6 +152,7 @@ function RootNavigation(props) {
             if (userRStore && userRStore.length > 0) {
                 const userInfo = JSON.parse(desDecrypt(userRStore));
                 const storeId = userInfo.storeId
+
                 // 检查是否开启新预约流程
                 getConfigNewReserve({storeId}).then(backData => {
                     const {code, data} = backData

@@ -152,12 +152,16 @@ const TimeCardInfo = ({data}) => {
                                 </View>
                                 <View style={cardInfoStyles.cardDetailTimesRow}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>最低续充：</Text>
-                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>￥{data.initialPrice}</Text>
+                                    <Text style={cardInfoStyles.cardDetailStoragePValue}>
+                                        {
+                                            data.consumeMode == '2' ? '--':`￥${data.initialPrice}`
+                                        }
+                                    </Text>
                                 </View>
                                 <View style={cardInfoStyles.cardDetailTimesRow}>
                                     <Text style={cardInfoStyles.cardDetailStoragePTitle}>有效期至：</Text>
                                     <Text style={cardInfoStyles.cardDetailStoragePValue}>
-                                        {data.validity ? data.validity.length > 9 ? data.validity.substring(0, 10) : '无期限' : '无期限'}
+                                        {getValidity(data.validity, data.status, true)}
                                     </Text>
                                 </View>
                                 <View style={cardInfoStyles.cardDetailTimesRow}>

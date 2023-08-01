@@ -1,10 +1,6 @@
-import React, {useRef, useState} from "react";
-import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
+import React, {useState} from "react";
+import {Image, TouchableOpacity, View} from "react-native";
 import {ReserveBoardStyles} from "../../../styles/ReserveBoard"
-import CustomerFlatItem from "./CustomerFlatItem";
-import Spinner from "react-native-loading-spinner-overlay";
-import {getRefreshState} from "../../../services/reserve";
-import ReduxStore from "../../../store/store"
 
 export default React.memo(({customerCardEvent}) => {
     /// 浮动按钮
