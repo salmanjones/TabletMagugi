@@ -87,7 +87,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                         customerPressEvent('updateProfile', {
                             memberName,
                             memberSex,
-                            birthday: memberBirthday != null ? memberBirthday : '',
+                            birthday: memberBirthday,
                             memberId: portraitInfo.memberId,
                             phone: portraitInfo.phone
                         })
@@ -100,6 +100,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                 modal
                 title={'选择会员生日'}
                 confirmText={'确定'}
+                cancelText={'取消'}
                 mode={'date'}
                 locale={'zh-Hans'}
                 open={open}

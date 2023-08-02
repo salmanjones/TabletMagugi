@@ -1582,7 +1582,7 @@ class CashierBillingView extends React.Component {
                     memberId,
                     memberName,
                     memberSex,
-                    birthday: dayjs(birthday).format("YYYY-MM-DD")
+                    birthday: birthday ? dayjs(birthday).format("YYYY-MM-DD") : ''
                 }).then(backData => {
                     showMessage("保存成功")
                     // 更新个人信息
