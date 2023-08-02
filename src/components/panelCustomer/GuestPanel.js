@@ -314,8 +314,9 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 resizeMethod="resize"
                                 source={getImage(customerInfo.imgUrl, ImageQutity.staff, require('@imgPath/reserve_customer_default_avatar.png'))}
                                 defaultSource={require('@imgPath/reserve_customer_default_avatar.png')}/>
-                            <Text
-                                style={PanelCustomerStyles.nameShowTextCustomer}>{customerInfo['reserveInfo'] ? decodeContent(customerInfo['reserveInfo'].memberName):''}</Text>
+                            <Text style={PanelCustomerStyles.nameShowTextCustomer}>
+                                {customerInfo['reserveInfo'] ? decodeContent(customerInfo['reserveInfo'].memberName):''}
+                            </Text>
                         </View>
                         <View style={PanelCustomerStyles.memberInfoSplit}></View>
                     </ImageBackground>
@@ -332,10 +333,10 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                                 onPress={() => {
                                                     tabPressEvent(index)
                                                 }}>
-                                                <Text
-                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive : PanelCustomerStyles.memberExtraTabItemTitle}>{tab}</Text>
-                                                <View
-                                                    style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
+                                                <Text style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemTitleActive : PanelCustomerStyles.memberExtraTabItemTitle}>
+                                                    {tab}
+                                                </Text>
+                                                <View style={tabIndex == index ? PanelCustomerStyles.memberExtraTabItemLineActive : PanelCustomerStyles.memberExtraTabItemLine}></View>
                                             </TouchableOpacity>
                                         )
                                     })

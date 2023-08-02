@@ -30,7 +30,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
             }
             {
                 (()=>{
-                    if(scanState == null &&  pagerName != 'CashierBillingActivity'){ // 未扫码
+                    if(scanState == null){ // 未扫码
                         return (
                             <View style={PanelCustomerStyles.guestContentBox}>
                                 <Text
