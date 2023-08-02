@@ -15,7 +15,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
     return (
         <View style={PanelCustomerStyles.guestProfileBox}>
             {
-                scanState == null && (
+                scanState == null &&  pagerName != 'CashierBillingActivity' && (
                     <TouchableOpacity
                         style={PanelCustomerStyles.guestProfileCreateOrder}
                         onPress={()=>{
