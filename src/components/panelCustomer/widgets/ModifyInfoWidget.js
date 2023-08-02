@@ -11,7 +11,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
     const [memberBirthday, setMemberBirthday] = useState(
         portraitInfo.birthday && portraitInfo.birthday.length > 0
             ? new Date(portraitInfo.birthday)
-            : new Date())
+            : null)
     const [open, setOpen] = useState(false)
 
     return (
@@ -70,7 +70,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                     <TextInput
                         style={PanelCustomerStyles.memberPropertyValueInput}
                         multiline={false}
-                        value={dayjs(memberBirthday).format("YYYY-MM-DD")}
+                        value={memberBirthday != null ? dayjs(memberBirthday).format("YYYY-MM-DD") : ''}
                         editable={false}
                         onPressIn={()=>{setOpen(true)}}/>
                     <Image
@@ -87,7 +87,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                         customerPressEvent('updateProfile', {
                             memberName,
                             memberSex,
-                            birthday: memberBirthday,
+                            birthday: memberBirthday != null ? memberBirthday : '',
                             memberId: portraitInfo.memberId,
                             phone: portraitInfo.phone
                         })
@@ -103,7 +103,7 @@ export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=
                 mode={'date'}
                 locale={'zh-Hans'}
                 open={open}
-                date={memberBirthday}
+                date={memberBirthday != null ? memberBirthday : new Date()}
                 onConfirm={(date) => {
                     setOpen(false)
                     setMemberBirthday(date)
