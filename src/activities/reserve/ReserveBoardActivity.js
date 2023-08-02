@@ -669,13 +669,11 @@ export const ReserveBoardActivity = props => {
                             hideAllPanel()
                             // BMS会员档案
                             const memberPortrait = portraitBackData['data']['memberList'][0]
-                            InteractionManager.runAfterInteractions(() => {
-                                navigation.navigate('VipcardActivity', {
-                                    type: 'vip',
-                                    member: memberPortrait,
-                                    appUserId: pageCache.checkAppUserId
-                                })
-                            });
+                            navigation.navigate('VipcardActivity', {
+                                type: 'vip',
+                                member: memberPortrait,
+                                appUserId: pageCache.checkAppUserId
+                            })
                         }
                     }catch (e){
                         // 错误
@@ -965,13 +963,11 @@ export const ReserveBoardActivity = props => {
                         })
 
                         if(selectCard && selectCard.length == 1){
-                            InteractionManager.runAfterInteractions(() => {
-                                navigation.navigate('RechargeActivity', {
-                                    card: selectCard[0],
-                                    member: memberPortrait,
-                                    appUserId: pageCache.checkAppUserId
-                                });
-                            })
+                            navigation.navigate('RechargeActivity', {
+                                card: selectCard[0],
+                                member: memberPortrait,
+                                appUserId: pageCache.checkAppUserId
+                            });
                         }else{
                             showMessageExt("充值失败")
                         }
@@ -1006,11 +1002,9 @@ export const ReserveBoardActivity = props => {
         hideAllPanel()
 
         // 跳转开卡
-        InteractionManager.runAfterInteractions(() => {
-            navigation.navigate('VipcardActivity', {
-                type: 'vip',
-                member: member,
-            });
+        navigation.navigate('VipcardActivity', {
+            type: 'vip',
+            member: member,
         });
     };
 

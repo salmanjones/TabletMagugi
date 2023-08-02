@@ -53,9 +53,7 @@ class VipCard extends React.Component {
         });
 
         let params = this.props.route.params.member || {}
-        InteractionManager.runAfterInteractions(() => {
-            init(params);
-        });
+        init(params);
     }
 
     onTabPress = index => {

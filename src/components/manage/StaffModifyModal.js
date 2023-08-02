@@ -32,9 +32,7 @@ class StaffModifyModalClass extends PureComponent {
 
 	componentDidMount() {
         const { getSetting } = this.props;
-        InteractionManager.runAfterInteractions(() => {
-            getSetting();
-        });
+		getSetting();
     }
 
 	UNSAFE_componentWillReceiveProps(nextProps) {

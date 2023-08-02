@@ -155,52 +155,50 @@ class CashierBillingView extends React.Component {
         });
 
         // 请求数据
-        InteractionManager.runAfterInteractions(() => {
-            selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
-                var resultMap = data.data;
-                var staffAclMap = resultMap.staffAclMap;
-                roundMode = resultMap.roundMode;
-                this.setState((prevState, props) => {
-                    prevState.roundMode = roundMode;
-                    prevState.companySetting.isUseCash = resultMap.isUseCash;
-                    prevState.accessRights = resultMap.accessRights;
-                    return prevState
-                });
-                company_roundMode = roundMode;
-                //company_settings.isUseCash=resultMap.isUseCash;//是否使用现金
-
-                if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
-                    this.moduleCode = "1";
-                } else {
-                    this.moduleCode = "0";
-                }
-
-                if (params.page == 'pendingOrder') { // 来自于取单
-                    let queryParams = {
-                        companyId: userInfo.companyId,
-                        storeId: userInfo.storeId,
-                        staffId: userInfo.staffId,
-                        staffDBId: userInfo.staffDBId,
-                        isSynthesis: userInfo.isSynthesis,//是否综合店
-                        flowNumber: params.billing.flowNumber,
-                        billingNo: params.billing.billingNo
-                    }
-
-                    this.props.getOrderInfo(queryParams);
-                } else { //来自于开单
-                    this.props.initOrderInfo(params);
-                }
-
-                let {route} = self.props
-                navigation.setOptions({
-                    headerLeft: () => (
-                        <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
-                    ),
-                    headerRight: () => (
-                        <HeadeOrderInfoRight navigation={navigation} router={route}/>
-                    )
-                })
+        selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
+            var resultMap = data.data;
+            var staffAclMap = resultMap.staffAclMap;
+            roundMode = resultMap.roundMode;
+            this.setState((prevState, props) => {
+                prevState.roundMode = roundMode;
+                prevState.companySetting.isUseCash = resultMap.isUseCash;
+                prevState.accessRights = resultMap.accessRights;
+                return prevState
             });
+            company_roundMode = roundMode;
+            //company_settings.isUseCash=resultMap.isUseCash;//是否使用现金
+
+            if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
+                this.moduleCode = "1";
+            } else {
+                this.moduleCode = "0";
+            }
+
+            if (params.page == 'pendingOrder') { // 来自于取单
+                let queryParams = {
+                    companyId: userInfo.companyId,
+                    storeId: userInfo.storeId,
+                    staffId: userInfo.staffId,
+                    staffDBId: userInfo.staffDBId,
+                    isSynthesis: userInfo.isSynthesis,//是否综合店
+                    flowNumber: params.billing.flowNumber,
+                    billingNo: params.billing.billingNo
+                }
+
+                this.props.getOrderInfo(queryParams);
+            } else { //来自于开单
+                this.props.initOrderInfo(params);
+            }
+
+            let {route} = self.props
+            navigation.setOptions({
+                headerLeft: () => (
+                    <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
+                ),
+                headerRight: () => (
+                    <HeadeOrderInfoRight navigation={navigation} router={route}/>
+                )
+            })
         });
     }
 

@@ -61,25 +61,21 @@ class Consumable extends React.Component {
     componentDidMount() {
         const {loadOrderData, navigation} = this.props;
         const {params} = this.props.route;
-        InteractionManager.runAfterInteractions(() => {
-            const {itemData, orderData} = params;
+        const {itemData, orderData} = params;
 
-            let newConsumables = itemData.consumables ? itemData.consumables.map((consumable) => {
-                return {
-                    ...consumable,
-                    assistList: consumable.assistList.map((assist) => ({...assist}))
-                };
-            }) : [];
+        let newConsumables = itemData.consumables ? itemData.consumables.map((consumable) => {
+            return {
+                ...consumable,
+                assistList: consumable.assistList.map((assist) => ({...assist}))
+            };
+        }) : [];
 
-            loadOrderData({
-                itemData: {...params.itemData, consumables: newConsumables},
-                orderData: params.orderData
-            });
-
-            this.setState({initFinish: true});
+        loadOrderData({
+            itemData: {...params.itemData, consumables: newConsumables},
+            orderData: params.orderData
         });
 
-        //this.setState({initialLoading:false})
+        this.setState({initFinish: true});
     }
 
     componentWillUnmount() {

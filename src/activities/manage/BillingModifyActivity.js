@@ -237,51 +237,11 @@ class BillingModify extends React.Component {
         const {loadData, navigation, dispatch} = this.props;
         const {params} = this.props.route;
         //if(orderData.billingNo) return
-        InteractionManager.runAfterInteractions(() => {
-            loadData({
-                billingNo: params.billingNo,
-            }).then(data => {
-                if (!(data.status == 1 && data.prickStatus != 1)) {
-                    Alert.alert('系统提示', '订单状态异常', [
-                        {
-                            text: '知道了',
-                            onPress: () => {
-                                this.props.resetToBillingList();
-                            },
-                        },
-                    ]);
-                }
-
-                navigation.setParams({
-                    orderInfoLeftData: data,
-                    showMemberIcon: false,
-                    showModifyBill: function () {
-                        this.setState({
-                            showBillEditModal: true,
-                        });
-                    }.bind(this)
-                });
-
-                let {route} = self.props
-                navigation.setOptions({
-                    headerLeft:  () => (
-                        <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
-                    ),
-                    headerRight: () =>  (
-                        <TouchableHighlight
-                            underlayColor="transparent"
-                            onPress={throttle(() => {
-                                route.params.saveBilling &&
-                                route.params.saveBilling();
-                            }, 600)}
-                            style={rotateItemStyles.marginRight}
-                        >
-                            <Text style={rotateItemStyles.rotateText}>保存</Text>
-                        </TouchableHighlight>
-                    )
-                })
-            }).catch(err => {
-                Alert.alert('系统提示', err.exceptions || '请求单据详情失败', [
+        loadData({
+            billingNo: params.billingNo,
+        }).then(data => {
+            if (!(data.status == 1 && data.prickStatus != 1)) {
+                Alert.alert('系统提示', '订单状态异常', [
                     {
                         text: '知道了',
                         onPress: () => {
@@ -289,7 +249,45 @@ class BillingModify extends React.Component {
                         },
                     },
                 ]);
+            }
+
+            navigation.setParams({
+                orderInfoLeftData: data,
+                showMemberIcon: false,
+                showModifyBill: function () {
+                    this.setState({
+                        showBillEditModal: true,
+                    });
+                }.bind(this)
             });
+
+            let {route} = self.props
+            navigation.setOptions({
+                headerLeft:  () => (
+                    <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
+                ),
+                headerRight: () =>  (
+                    <TouchableHighlight
+                        underlayColor="transparent"
+                        onPress={throttle(() => {
+                            route.params.saveBilling &&
+                            route.params.saveBilling();
+                        }, 600)}
+                        style={rotateItemStyles.marginRight}
+                    >
+                        <Text style={rotateItemStyles.rotateText}>保存</Text>
+                    </TouchableHighlight>
+                )
+            })
+        }).catch(err => {
+            Alert.alert('系统提示', err.exceptions || '请求单据详情失败', [
+                {
+                    text: '知道了',
+                    onPress: () => {
+                        this.props.resetToBillingList();
+                    },
+                },
+            ]);
         });
     }
 

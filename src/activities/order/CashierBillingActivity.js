@@ -203,13 +203,14 @@ class CashierBillingView extends React.Component {
         });
 
         // 获取顾客档案
-        self.getCustomerProfile(self, false, null, null)
+        this.getCustomerProfile(this, false, null, null)
 
         // 获取服务人列表
         const cfk = 'cfk_' + this.props.auth.userInfo.storeId + '_staffs';
         getServiceStaffs({type: 'staff', cfk: cfk}).then(backData => {
             const allWaiter = backData.data
             const waiterId = this.state.waiterId
+
             // 获取预约的服务人
             let reserveWaiter = {}
             for (let key in allWaiter) {
@@ -1668,13 +1669,11 @@ class CashierBillingView extends React.Component {
                         // 关闭所有面板
                         // BMS会员档案
                         const memberPortrait = portraitBackData['data']['memberList'][0]
-                        InteractionManager.runAfterInteractions(() => {
-                            AppNavigate.navigate('VipcardActivity', {
-                                type: 'vip',
-                                member: memberPortrait,
-                                pagerName: 'CashierBillingActivity'
-                            })
-                        });
+                        AppNavigate.navigate('VipcardActivity', {
+                            type: 'vip',
+                            member: memberPortrait,
+                            pagerName: 'CashierBillingActivity'
+                        })
                     }
                 } catch (e) {
                     // 错误
@@ -1711,13 +1710,11 @@ class CashierBillingView extends React.Component {
                         })
 
                         if (selectCard && selectCard.length == 1) {
-                            InteractionManager.runAfterInteractions(() => {
-                                AppNavigate.navigate('RechargeActivity', {
-                                    card: selectCard[0],
-                                    member: memberPortrait,
-                                    pagerName: 'CashierBillingActivity'
-                                });
-                            })
+                            AppNavigate.navigate('RechargeActivity', {
+                                card: selectCard[0],
+                                member: memberPortrait,
+                                pagerName: 'CashierBillingActivity'
+                            });
                         } else {
                             showMessageExt("充值失败")
                         }

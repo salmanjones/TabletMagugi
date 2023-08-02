@@ -45,14 +45,12 @@ class BillManageOtherView extends React.Component {
             return;
         }
         const {getBillingList} = this.props;
-        InteractionManager.runAfterInteractions(() => {
-            getBillingList({
-                flowNumber: '',
-                selectTime: this.state.selectTime,
-                billingStatus: '1',
-            }).then(res => {
-                this.setState({lastRefreshTime: new Date()});
-            });
+        getBillingList({
+            flowNumber: '',
+            selectTime: this.state.selectTime,
+            billingStatus: '1',
+        }).then(res => {
+            this.setState({lastRefreshTime: new Date()});
         });
     };
 

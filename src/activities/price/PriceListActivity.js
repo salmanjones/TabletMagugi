@@ -43,9 +43,7 @@ class PriceList extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this.query();
-        });
+        this.query();
         // this.subscribeDidFocus = this.props.navigation.addListener('didFocus', () => {
         //     this.setState({ sliderDisplay: false, shopCartData: [] });
         // });

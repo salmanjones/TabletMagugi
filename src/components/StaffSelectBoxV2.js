@@ -27,9 +27,7 @@ class StaffSelectBoxV2Class extends React.PureComponent {
 
     componentDidMount() {
         const { getServiceStaffs } = this.props;
-        InteractionManager.runAfterInteractions(() => {
-            getServiceStaffs();
-        });
+        getServiceStaffs();
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {

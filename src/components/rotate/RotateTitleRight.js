@@ -40,12 +40,9 @@ export class RotateTitleRight extends React.PureComponent {
 	resetCard = () => {
 		let that=this;
 		this.setState({showTips:false});
-
-		InteractionManager.runAfterInteractions(() => {
-			resetDutyStaffs().then((backData) => {
-				that.props.navigation.navigate('RotatePlacardActivity');
-			}).catch(() => {});
-		});
+		resetDutyStaffs().then((backData) => {
+			that.props.navigation.navigate('RotatePlacardActivity');
+		}).catch(() => {});
 	};
 
 	render() {

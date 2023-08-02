@@ -16,9 +16,7 @@ export class VipcardSaleCardListComponent extends React.Component {
 
     componentDidMount() {
         const {getSalesCard} = this.props;
-        InteractionManager.runAfterInteractions(() => {
-            getSalesCard();
-        });
+        getSalesCard();
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {

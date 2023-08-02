@@ -24,12 +24,9 @@ export class SelectCustomerType extends React.Component {
             this.setState({visible: false, oper: ""});
         } else {
             this.setState({visible: false, oper: ""});
-
-            InteractionManager.runAfterInteractions(() => {
-                navigation.navigate('VipcardActivity', {
-                    type: 'vip',
-                    member: member,
-                });
+            navigation.navigate('VipcardActivity', {
+                type: 'vip',
+                member: member,
             });
         }
     };

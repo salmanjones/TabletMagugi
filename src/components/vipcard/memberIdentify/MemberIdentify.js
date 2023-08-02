@@ -94,11 +94,9 @@ export class MemberIdentifyComponent extends React.PureComponent {
     onRechargePress = card => {
         const {navigation} = this.props;
         const {member} = this.state;
-        InteractionManager.runAfterInteractions(() => {
-            navigation.navigate('RechargeActivity', {
-                card: card,
-                member: member,
-            });
+        navigation.navigate('RechargeActivity', {
+            card: card,
+            member: member,
         });
     };
 

@@ -162,9 +162,7 @@ const getDataPosting = () => {
 //请求成功
 const saveUserInfoAction = (dispatch, data) => {
     //保存用户id
-    AsyncStorage.setItem(AppConfig.sessionStaffId, data.staffId, err => {
-        console.log('保存用户id错误', err);
-    });
+    AsyncStorage.setItem(AppConfig.sessionStaffId, data.staffId);
 
     //保存用户信息到localStoreage
     data._loginTime = new Date().getTime()

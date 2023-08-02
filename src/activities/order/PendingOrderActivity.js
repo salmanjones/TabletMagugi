@@ -48,11 +48,9 @@ class PendingOrder extends React.Component {
         }
         var self = this;
         const { getPendingList } = this.props;
-        InteractionManager.runAfterInteractions(() => {
-            getPendingList('').then(res => {
-                self.lastRefreshTime = new Date();
-                this.setState({ isMergePay: false, selectedBillings: [] });
-            });
+        getPendingList('').then(res => {
+            self.lastRefreshTime = new Date();
+            this.setState({ isMergePay: false, selectedBillings: [] });
         });
     };
 
