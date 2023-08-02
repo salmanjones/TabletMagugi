@@ -202,88 +202,85 @@ class CashierBillingView extends React.Component {
             }.bind(this)
         });
 
-        // 请求数据
-        InteractionManager.runAfterInteractions(() => {
-            // 获取服务人列表
-            const cfk = 'cfk_' + this.props.auth.userInfo.storeId + '_staffs';
-            getServiceStaffs({type: 'staff', cfk: cfk}).then(backData => {
-                const allWaiter = backData.data
-                const waiterId = this.state.waiterId
-                // 获取预约的服务人
-                let reserveWaiter = {}
-                for (let key in allWaiter) {
-                    const positionWaiters = allWaiter[key] || []
-                    const waiterList = positionWaiters.filter(waiter => {
-                        return waiter.id == waiterId
-                    })
+        // 获取顾客档案
+        self.getCustomerProfile(self, false, null, null)
 
-                    if (waiterList.length > 0) {
-                        reserveWaiter = waiterList[0]
-                        break
-                    }
-                }
-                this.setState({
-                    reserveWaiter
+        // 获取服务人列表
+        const cfk = 'cfk_' + this.props.auth.userInfo.storeId + '_staffs';
+        getServiceStaffs({type: 'staff', cfk: cfk}).then(backData => {
+            const allWaiter = backData.data
+            const waiterId = this.state.waiterId
+            // 获取预约的服务人
+            let reserveWaiter = {}
+            for (let key in allWaiter) {
+                const positionWaiters = allWaiter[key] || []
+                const waiterList = positionWaiters.filter(waiter => {
+                    return waiter.id == waiterId
                 })
-            }).catch(err => {
-                console.error("获取服务人信息失败")
+
+                if (waiterList.length > 0) {
+                    reserveWaiter = waiterList[0]
+                    break
+                }
+            }
+            this.setState({
+                reserveWaiter
             })
+        }).catch(err => {
+            console.error("获取服务人信息失败")
+        })
 
-            // 获取员工操作权限、四舍五入模式
-            selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
-                const resultMap = data.data;
-                const staffAclMap = resultMap.staffAclMap;
-                roundMode = resultMap.roundMode;
-                company_roundMode = roundMode;
+        // 获取员工操作权限、四舍五入模式
+        selectStaffAclInfoResult(userInfo.staffId, userInfo.companyId).then(data => {
+            const resultMap = data.data;
+            const staffAclMap = resultMap.staffAclMap;
+            roundMode = resultMap.roundMode;
+            company_roundMode = roundMode;
 
-                // 更新状态
-                this.setState((prevState, props) => {
-                    prevState.roundMode = roundMode;
-                    prevState.companySetting.isUseCash = resultMap.isUseCash;
-                    prevState.accessRights = resultMap.accessRights;
-                    return prevState
-                });
-
-                if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
-                    this.moduleCode = "1";
-                } else {
-                    this.moduleCode = "0";
-                }
-
-                if (params.page == 'pendingOrder') { // 来自于取单
-                    let queryParams = {
-                        companyId: userInfo.companyId,
-                        storeId: userInfo.storeId,
-                        staffId: userInfo.staffId,
-                        staffDBId: userInfo.staffDBId,
-                        isSynthesis: userInfo.isSynthesis,//是否综合店
-                        flowNumber: params.billing.flowNumber,
-                        billingNo: params.billing.billingNo
-                    }
-
-                    if (params.billing.staffName) { // 预约发型师
-                        this.setState({
-                            reserveWaiter: {
-                                value: params.billing.staffName
-                            }
-                        })
-                    }
-
-                    this.props.getOrderInfo(queryParams);
-                } else { //来自于开单
-                    this.props.initOrderInfo(params);
-                }
-
-                let {route} = self.props
-                navigation.setOptions({
-                    headerLeft: () => (
-                        <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
-                    )
-                })
+            // 更新状态
+            this.setState((prevState, props) => {
+                prevState.roundMode = roundMode;
+                prevState.companySetting.isUseCash = resultMap.isUseCash;
+                prevState.accessRights = resultMap.accessRights;
+                return prevState
             });
 
-            // 获取顾客档案
-            self.getCustomerProfile(self, false, null, null)
+            if (staffAclMap && staffAclMap.moduleCode && staffAclMap.moduleCode == 'ncashier_billing_price_adjustment') {
+                this.moduleCode = "1";
+            } else {
+                this.moduleCode = "0";
+            }
+
+            if (params.page == 'pendingOrder') { // 来自于取单
+                let queryParams = {
+                    companyId: userInfo.companyId,
+                    storeId: userInfo.storeId,
+                    staffId: userInfo.staffId,
+                    staffDBId: userInfo.staffDBId,
+                    isSynthesis: userInfo.isSynthesis,//是否综合店
+                    flowNumber: params.billing.flowNumber,
+                    billingNo: params.billing.billingNo
+                }
+
+                if (params.billing.staffName) { // 预约发型师
+                    this.setState({
+                        reserveWaiter: {
+                            value: params.billing.staffName
+                        }
+                    })
+                }
+
+                this.props.getOrderInfo(queryParams);
+            } else { //来自于开单
+                this.props.initOrderInfo(params);
+            }
+
+            let {route} = self.props
+            navigation.setOptions({
+                headerLeft: () => (
+                    <HeadeOrderInfoLeft navigation={navigation} router={route} hiddenPriceOrder={true}/>
+                )
+            })
         });
     }
 

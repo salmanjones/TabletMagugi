@@ -695,6 +695,7 @@ export const ReserveBoardActivity = props => {
                             solrSearchType: 0,
                             kw: extra.memberId
                         })
+
                         // 登录的员工信息
                         const loginUser = reduxState.auth.userInfo
                         // 开始准备开单的数据-获取BMS会员卡
