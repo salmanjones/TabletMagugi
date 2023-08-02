@@ -453,7 +453,6 @@ export const PanelCustomerStyles = StyleSheet.create({
     memberInfoModify: {
         width: PixelUtil.size(200),
         height: PixelUtil.size(68),
-        marginLeft: PixelUtil.size(180),
         borderRadius: PixelUtil.size(34),
         borderStyle: 'solid',
         borderWidth: PixelUtil.size(2),
