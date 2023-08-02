@@ -59,8 +59,6 @@ export default React.memo(({
                             touchWrapStyle.push(ReserveBoardStyles.reserveCustomerDetailWrap)
                         }
 
-                        console.log("customer", customer)
-
                         // 是否选中
                         const isCheck = checkCustomerIndex == globalIndex
                         if (customer.isReseve == '3') { // 占用状态

@@ -40,9 +40,12 @@ export const ReserveBoardActivity = props => {
     const reduxState = ReduxStore.getState()
     // 加载提示信息
     const [isLoading, setLoading] = useState(false)
-    // 预约日期
+    // 选择的预约日期
     const [showDate, setShowDate] = useState(dayjs().format('YYYY-MM-DD'))
+    // 当天日期
     const [serverDate, setServerDate] = useState(dayjs().format('YYYY-MM-DD'))
+    // 读取数据的时间
+    const [loadDataDate, setLoadDataDate] = useState(null)
     // 展示日历
     const [showCalendar, setShowCalendar] = useState(false)
     // 预约状态切换
@@ -105,6 +108,7 @@ export const ReserveBoardActivity = props => {
                 showDate = dateEntity['dateOnly']
                 setShowDate(showDate)
                 setServerDate(showDate)
+                setLoadDataDate(showDate + "@" + dayjs().format("HH:mm:ss"))
             }
         })
     }
@@ -138,7 +142,7 @@ export const ReserveBoardActivity = props => {
             // 初次加载完毕，不再展示加载信息
             console.log('数据请求完成')
         })
-    }, [showDate])
+    }, [showDate, loadDataDate])
 
     // 初次加载处理
     useEffect(() => {
@@ -180,7 +184,7 @@ export const ReserveBoardActivity = props => {
     /// 监测预约日期更换,重新加载数据
     useEffect(()=>{
         getReserveList()
-    }, [showDate])
+    }, [loadDataDate])
 
     //展示提示信息
     const showToast = (message) => {
@@ -382,7 +386,7 @@ export const ReserveBoardActivity = props => {
                                 storeId,
                                 staffId,
                                 reserveTime,
-                                reserveDate: showDate
+                                reserveDate: dayjs(showDate).format("YYYY-MM-DD ")
                             }
                             saveReserveVocation(params).then(backData => {
                                 const {code, data} = backData
@@ -1026,6 +1030,7 @@ export const ReserveBoardActivity = props => {
     const switchDate = (date)=>{
         setShowDate(dayjs(date).format("YYYY-MM-DD"))
         setShowCalendar(false)
+        setLoadDataDate(dayjs(date).format("YYYY-MM-DD") + "@" + dayjs().format("HH:mm:ss"))
     }
 
     // 日历控件数据
