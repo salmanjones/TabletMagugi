@@ -238,31 +238,46 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                             ListEmptyComponent={()=>{
                                 return (
                                     <View style={PanelMultiProfiles.memberBodyEmptyWrap}>
+                                        {
+                                            pagerName == 'ReserveBoardActivity' && (
+                                                <TouchableOpacity
+                                                    style={PanelCustomerStyles.guestDirectCreateOrder}
+                                                    onPress={()=>{
+                                                        customerClickEvent("forwardToCashier", {showMode, waiterId, actionType})
+                                                    }}>
+                                                    <Image
+                                                        resizeMode={"contain"}
+                                                        style={PanelCustomerStyles.guestProfileCreateOrderImg}
+                                                        source={require('@imgPath/reserve_customer_create_order.png')}/>
+                                                </TouchableOpacity>
+                                            )
+                                        }
                                         <Image
                                             resizeMode={"contain"}
                                             source={require('@imgPath/reserve_customer_body_empty.png')}
                                             style={PanelMultiProfiles.memberBodyEmptyImage}/>
                                         <Text style={PanelMultiProfiles.memberBodyEmptyTxt}>无符合条件的顾客档案！</Text>
-                                        {
-                                            pagerName == 'ReserveBoardActivity' && (
-                                                <View style={PanelCustomerStyles.guestProfileOrderBoxNoBg}>
-                                                    <TouchableOpacity
-                                                        style={PanelCustomerStyles.guestProfileOrderWrap}
-                                                        onPress={()=>{
-                                                            customerClickEvent("forwardToCashier", {showMode, waiterId, actionType})
-                                                        }}>
-                                                        <ImageBackground
-                                                            resizeMode={"contain"}
-                                                            style={PanelCustomerStyles.guestProfileOrderImg}
-                                                            source={require('@imgPath/reserve_panel_customer_create_order.png')}>
-                                                            <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
-                                                                散客直接开单
-                                                            </Text>
-                                                        </ImageBackground>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )
-                                        }
+                                        {/*根据最新需求进行屏蔽*/}
+                                        {/*{*/}
+                                        {/*    pagerName == 'ReserveBoardActivity' && (*/}
+                                        {/*        <View style={PanelCustomerStyles.guestProfileOrderBoxNoBg}>*/}
+                                        {/*            <TouchableOpacity*/}
+                                        {/*                style={PanelCustomerStyles.guestProfileOrderWrap}*/}
+                                        {/*                onPress={()=>{*/}
+                                        {/*                    customerClickEvent("forwardToCashier", {showMode, waiterId, actionType})*/}
+                                        {/*                }}>*/}
+                                        {/*                <ImageBackground*/}
+                                        {/*                    resizeMode={"contain"}*/}
+                                        {/*                    style={PanelCustomerStyles.guestProfileOrderImg}*/}
+                                        {/*                    source={require('@imgPath/reserve_panel_customer_create_order.png')}>*/}
+                                        {/*                    <Text style={PanelCustomerStyles.guestProfileOrderTxt}>*/}
+                                        {/*                        散客直接开单*/}
+                                        {/*                    </Text>*/}
+                                        {/*                </ImageBackground>*/}
+                                        {/*            </TouchableOpacity>*/}
+                                        {/*        </View>*/}
+                                        {/*    )*/}
+                                        {/*}*/}
                                     </View>
                                 )
                             }}/>

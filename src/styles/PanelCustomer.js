@@ -1256,5 +1256,13 @@ export const PanelCustomerStyles = StyleSheet.create({
     guestProfileCreateOrderImg:{
         width: '100%',
         height: '100%'
-    }
+    },
+    guestDirectCreateOrder:{
+        position: 'absolute',
+        right: PixelUtil.size(40),
+        top: PixelUtil.size(-140),
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(40),
+        zIndex: 100
+    },
 })
