@@ -58,8 +58,9 @@ class BillManageOtherView extends React.Component {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.props.navigation.setParams({loadData: this.loadData});
             const formatNowTime = moment().format('YYYY-MM-DD');
-            this.setState({selectTime: formatNowTime});
-            this.loadData();
+            this.setState({selectTime: formatNowTime}, ()=>{
+                this.loadData()
+            });
         });
     }
 
