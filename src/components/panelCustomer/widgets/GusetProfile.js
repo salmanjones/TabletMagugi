@@ -21,7 +21,7 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                             <View style={PanelCustomerStyles.guestContentBox}>
                                 <Text
                                     style={PanelCustomerStyles.guestProfileTitle}>
-                                    亲爱的顾客，请使用微信扫一扫，通过顾客小程序完成会员身份确认! {scanState}
+                                    亲爱的顾客，请使用微信扫一扫，完成会员身份确认！
                                 </Text>
                                 {/*小程序二维码*/}
                                 <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>

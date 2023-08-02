@@ -1086,9 +1086,9 @@ export const PanelCustomerStyles = StyleSheet.create({
         marginTop: PixelUtil.size(20)
     },
     guestProfileTitle: {
-        width: PixelUtil.size(608),
+        width: PixelUtil.size(570),
         fontWeight: '700',
-        fontSize: PixelUtil.size(34),
+        fontSize: PixelUtil.size(36),
         textAlign: 'center',
         lineHeight: PixelUtil.size(56)
     },
