@@ -64,7 +64,7 @@ export class StaffQueueView extends React.Component {
                 staffList.forEach((staff, idx)=>{
                     staff.nickName = decodeContent(staff.nickName)
                     staff.staffPhoto = staff.staffPhoto && staff.staffPhoto.length > 0 ? AppConfig.imageServer + staff.staffPhoto + '?imageView2/3/w/650/q/85' : AppConfig.defaultAvatar
-                    staff.selected = idx == 0 ? 'selected': ''
+                    staff.selected = ''
                 })
 
                 let staffSelected = staffList[0]
@@ -448,6 +448,8 @@ export class StaffQueueView extends React.Component {
 
     render() {
         const {isLoading, staffList, worksList} = this.state
+        // 是够已选中发型师
+        const hasSelectedStaff = staffList.filter(item => item.selected && item.selected.length > 0).length > 0
 
         // 单员工渲染
         const renderStaffItem = ({ item, index }) => (
@@ -518,19 +520,23 @@ export class StaffQueueView extends React.Component {
                         color: '#FFF'
                     }}
                 />
-                <View style={staffQueueStyles.floatButtonBox}>
-                    {/*立即开单*/}
-                    <TouchableOpacity
-                        style={staffQueueStyles.reserveButtonKaiDan}
-                        onPress={()=>{
-                            this.toCashier()
-                        }}>
-                        <Image
-                            style={staffQueueStyles.reserveButtonKaiDanIcon}
-                            resizeMode={'contain'}
-                            source={require('@imgPath/reserve_customer_button_kaidan.png')}/>
-                    </TouchableOpacity>
-                </View>
+                {
+                    hasSelectedStaff && (
+                        <View style={staffQueueStyles.floatButtonBox}>
+                            {/*立即开单*/}
+                            <TouchableOpacity
+                                style={staffQueueStyles.reserveButtonKaiDan}
+                                onPress={()=>{
+                                    this.toCashier()
+                                }}>
+                                <Image
+                                    style={staffQueueStyles.reserveButtonKaiDanIcon}
+                                    resizeMode={'contain'}
+                                    source={require('@imgPath/reserve_customer_button_kaidan.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                    )
+                }
                 <View style={staffQueueStyles.containerList}>
                     <View style={staffQueueStyles.ListHeader}>
                         <Text style={staffQueueStyles.HeaderTxt}>发型师</Text>
@@ -539,7 +545,7 @@ export class StaffQueueView extends React.Component {
                         style={staffQueueStyles.ListBox}
                         data={staffList}
                         renderItem={renderStaffItem}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => item.staffId}
                         numColumns={1}
                         ItemSeparatorComponent={()=>{
                             return (
@@ -561,31 +567,40 @@ export class StaffQueueView extends React.Component {
                     </View>
                     <View style={staffQueueStyles.WorksBox}>
                         {
-                            worksList.length < 1 ?
-                            (
-                                // 无作品
-                                <View style={staffQueueStyles.WorksEmptyBox}>
-                                    <Image resizeMethod="resize" source={require('@imgPath/works_empty.png')} style={staffQueueStyles.WorksEmptyImg}/>
-                                </View>
-                            )
-                            :
-                            (
-                                // 有作品
-                                <FlatList
-                                    style={staffQueueStyles.WorksListBox}
-                                    data={worksList}
-                                    renderItem={renderWorkItem}
-                                    keyExtractor={(item, index) => index}
-                                    numColumns={4}
-                                    onEndReached={this.loadMore}
-                                    onEndReachedThreshold={0.1}
-                                    ItemSeparatorComponent={()=>{
-                                        return (
-                                            <View></View>
+                            (()=>{
+                                if(hasSelectedStaff == true){
+                                    if(worksList.length < 1 ){
+                                        return ( // 无作品
+                                            <View style={staffQueueStyles.WorksEmptyBox}>
+                                                <Image resizeMethod="resize" source={require('@imgPath/works_empty.png')} style={staffQueueStyles.WorksEmptyImg}/>
+                                            </View>
                                         )
-                                    }}
-                                />
-                            )
+                                    }else{
+                                        return ( // 有作品
+                                            <FlatList
+                                                style={staffQueueStyles.WorksListBox}
+                                                data={worksList}
+                                                renderItem={renderWorkItem}
+                                                keyExtractor={(item, index) => index}
+                                                numColumns={4}
+                                                onEndReached={this.loadMore}
+                                                onEndReachedThreshold={0.1}
+                                                ItemSeparatorComponent={()=>{
+                                                    return (
+                                                        <View></View>
+                                                    )
+                                                }}
+                                            />
+                                        )
+                                    }
+                                }else{
+                                    return ( // 未选择发型师
+                                        <View style={staffQueueStyles.WorksEmptyBox}>
+                                            <Image resizeMethod="resize" source={require('@imgPath/staff_queue_no_select.png')} style={staffQueueStyles.staffEmptyImg}/>
+                                        </View>
+                                    )
+                                }
+                            })()
                         }
                     </View>
                 </View>

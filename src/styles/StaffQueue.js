@@ -236,6 +236,10 @@ export const staffQueueStyles = StyleSheet.create({
         width: PixelUtil.size(403, 2048),
         height: PixelUtil.size(426, 2048),
     },
+    staffEmptyImg:{
+        width: PixelUtil.size(560),
+        height: PixelUtil.size(433),
+    },
     cashierBtn: {
         paddingLeft: PixelUtil.size(28, 2048),
         paddingRight: PixelUtil.size(28, 2048),
