@@ -96,8 +96,9 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
                                             placeholder={'请输入顾客手机号'}
                                             placeholderTextColor={'#8e8e8e'}
                                             onChange={({nativeEvent})=>{
-                                                const phone = nativeEvent.text
-                                                const showClear = phone.trim().length > 0
+                                                const inputText = nativeEvent.text.trim()
+                                                const phone = inputText.replace(/[^\d.]/g, "")
+                                                const showClear = phone.length > 0
                                                 setUserPhone(phone)
                                                 setShowClear(showClear)
                                             }}

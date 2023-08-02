@@ -45,7 +45,8 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                             placeholder={'请输入顾客手机号'}
                                             placeholderTextColor={'#8e8e8e'}
                                             onChange={({nativeEvent})=>{
-                                                const phone = nativeEvent.text
+                                                const inputText = nativeEvent.text.trim()
+                                                const phone = inputText.replace(/[^\d.]/g, "")
                                                 setUserPhone(phone)
                                             }}
                                             onPressIn={()=>{
