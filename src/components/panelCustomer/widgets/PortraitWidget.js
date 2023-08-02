@@ -42,7 +42,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                     生日：
                 </Text>
                 <Text style={PanelCustomerStyles.memberPortraitPValue}>
-                    {portraitInfo.birthday && portraitInfo.birthday.length > 0 ? portraitInfo.birthday: '暂无'}
+                    {portraitInfo.birthday && portraitInfo.birthday.length > 0 && portraitInfo.birthday != 'Invalid Date' ? portraitInfo.birthday: '暂无'}
                 </Text>
             </View>
         </View>
