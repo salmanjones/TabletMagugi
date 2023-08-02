@@ -1059,7 +1059,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         display: "flex",
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     guestContentWaitBox: {
         width: '100%',
@@ -1090,7 +1090,8 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontWeight: '700',
         fontSize: PixelUtil.size(36),
         textAlign: 'center',
-        lineHeight: PixelUtil.size(56)
+        lineHeight: PixelUtil.size(56),
+        marginTop: PixelUtil.size(74)
     },
     guestProfileQRCode: {
         width: PixelUtil.size(390),
@@ -1101,7 +1102,6 @@ export const PanelCustomerStyles = StyleSheet.create({
         marginTop: PixelUtil.size(60),
         width: '100%',
         height: PixelUtil.size(236),
-        backgroundColor: '#F7F9FF',
         borderRadius: PixelUtil.size(28),
         display: "flex",
         flexDirection: 'column',
@@ -1112,7 +1112,6 @@ export const PanelCustomerStyles = StyleSheet.create({
         marginTop: PixelUtil.size(80),
         width: '100%',
         height: PixelUtil.size(236),
-        backgroundColor: '#F7F9FF',
         borderRadius: PixelUtil.size(28),
         display: "flex",
         flexDirection: 'column',
@@ -1136,6 +1135,17 @@ export const PanelCustomerStyles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
+    headSearchBoxCustomer: {
+        width: '100%',
+        height: PixelUtil.size(68),
+        marginTop: PixelUtil.size(144),
+        marginLeft: PixelUtil.size(82),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: 'relative'
+    },
     headSearchIcon: {
         position: "absolute",
         left: PixelUtil.size(20),
@@ -1151,7 +1161,19 @@ export const PanelCustomerStyles = StyleSheet.create({
         borderRadius: PixelUtil.size(34),
         paddingLeft: PixelUtil.size(72),
         color: '#292929',
-        fontSize: PixelUtil.size(30)
+        fontSize: PixelUtil.size(30),
+    },
+    headSearchInputEmptyWithBorder: {
+        width: PixelUtil.size(560),
+        height: PixelUtil.size(68),
+        backgroundColor: '#fff',
+        overflow: 'hidden',
+        borderRadius: PixelUtil.size(34),
+        paddingLeft: PixelUtil.size(72),
+        color: '#292929',
+        fontSize: PixelUtil.size(30),
+        borderWidth: PixelUtil.size(2),
+        borderColor: '#CBCBCB',
     },
     headSearchButton: {
         marginLeft: PixelUtil.size(36),
@@ -1222,5 +1244,17 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontWeight: '400',
         textAlign: "center",
         textAlignVertical: 'center',
+    },
+    guestProfileCreateOrder:{
+        position: 'absolute',
+        right: PixelUtil.size(40),
+        top: PixelUtil.size(40),
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(40),
+        zIndex: 100
+    },
+    guestProfileCreateOrderImg:{
+        width: '100%',
+        height: '100%'
     }
 })

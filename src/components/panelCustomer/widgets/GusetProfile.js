@@ -15,8 +15,22 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
     return (
         <View style={PanelCustomerStyles.guestProfileBox}>
             {
+                scanState == null && (
+                    <TouchableOpacity
+                        style={PanelCustomerStyles.guestProfileCreateOrder}
+                        onPress={()=>{
+                            customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})
+                        }}>
+                        <Image
+                            resizeMode={"contain"}
+                            style={PanelCustomerStyles.guestProfileCreateOrderImg}
+                            source={require('@imgPath/reserve_customer_create_order.png')}/>
+                    </TouchableOpacity>
+                )
+            }
+            {
                 (()=>{
-                    if(scanState == null){ // 未扫码
+                    if(scanState == null &&  pagerName != 'CashierBillingActivity'){ // 未扫码
                         return (
                             <View style={PanelCustomerStyles.guestContentBox}>
                                 <Text
@@ -27,9 +41,11 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                 <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>
                                 {/*查询顾客*/}
                                 <View style={pagerName != 'CashierBillingActivity' ? PanelCustomerStyles.guestProfileSearchBox:PanelCustomerStyles.guestProfileCashierBox}>
-                                    <Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>
+                                    {/* 根据最新需求，屏蔽此提示
+                                        <Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>
+                                    */}
                                     <TouchableOpacity
-                                        style={PanelCustomerStyles.headSearchBox}
+                                        style={PanelCustomerStyles.headSearchBoxCustomer}
                                         onPress={()=>{
                                             customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
                                         }}>
@@ -41,8 +57,8 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                         <TextInput
                                             keyboardType={'phone-pad'}
                                             editable={false}
-                                            style={PanelCustomerStyles.headSearchInputEmpty}
-                                            placeholder={'请输入顾客手机号'}
+                                            style={PanelCustomerStyles.headSearchInputEmptyWithBorder}
+                                            placeholder={'员工端信息查询入口'}
                                             placeholderTextColor={'#8e8e8e'}
                                             onChange={({nativeEvent})=>{
                                                 const inputText = nativeEvent.text.trim()
@@ -63,27 +79,27 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
                                         </View>
                                     </TouchableOpacity>
                                 </View>
-                                {/*直接开单*/}
-                                {
-                                    pagerName != 'CashierBillingActivity' && (
-                                        <View style={PanelCustomerStyles.guestProfileOrderBox}>
-                                            <TouchableOpacity
-                                                style={PanelCustomerStyles.guestProfileOrderWrap}
-                                                onPress={()=>{
-                                                    customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})
-                                                }}>
-                                                <ImageBackground
-                                                    resizeMode={"contain"}
-                                                    style={PanelCustomerStyles.guestProfileOrderImg}
-                                                    source={require('@imgPath/reserve_panel_customer_create_order.png')}>
-                                                    <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
-                                                        {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}
-                                                    </Text>
-                                                </ImageBackground>
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                }
+                                {/*直接开单: 根据最新需求，屏蔽此按钮*/}
+                                {/*{*/}
+                                {/*    pagerName != 'CashierBillingActivity' && (*/}
+                                {/*        <View style={PanelCustomerStyles.guestProfileOrderBox}>*/}
+                                {/*            <TouchableOpacity*/}
+                                {/*                style={PanelCustomerStyles.guestProfileOrderWrap}*/}
+                                {/*                onPress={()=>{*/}
+                                {/*                    customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})*/}
+                                {/*                }}>*/}
+                                {/*                <ImageBackground*/}
+                                {/*                    resizeMode={"contain"}*/}
+                                {/*                    style={PanelCustomerStyles.guestProfileOrderImg}*/}
+                                {/*                    source={require('@imgPath/reserve_panel_customer_create_order.png')}>*/}
+                                {/*                    <Text style={PanelCustomerStyles.guestProfileOrderTxt}>*/}
+                                {/*                        {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}*/}
+                                {/*                    </Text>*/}
+                                {/*                </ImageBackground>*/}
+                                {/*            </TouchableOpacity>*/}
+                                {/*        </View>*/}
+                                {/*    )*/}
+                                {/*}*/}
                             </View>
                         )
                     }else if(scanState == 0){ // 已扫码
