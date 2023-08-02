@@ -378,7 +378,13 @@ export const ReserveBoardActivity = props => {
                         onPress: () => {
                             setLoading(true)
                             const {reserveTime, staffId} = extra
-                            saveReserveVocation({storeId, staffId, reserveTime}).then(backData => {
+                            const params = {
+                                storeId,
+                                staffId,
+                                reserveTime,
+                                reserveDate: showDate
+                            }
+                            saveReserveVocation(params).then(backData => {
                                 const {code, data} = backData
                                 if(code != '6000'){ // 占用异常
                                     Alert.alert(
