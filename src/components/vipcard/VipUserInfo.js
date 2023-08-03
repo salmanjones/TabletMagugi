@@ -9,42 +9,39 @@ export class VipUserInfoComponent extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        const paramsprop = props.showMember
         this.state = {
             ckCount: 0,
             czkCount: 0,
             czkPriceSum: 0,
-            name: paramsprop.params.member.name,
-            sex: paramsprop.params.member.sex,
-            phone: paramsprop.params.member.phone,
-            memberCardNo: paramsprop.params.member.memberCardNo,
+            name: '',
+            sex: '0',
+            phone: '',
+            memberCardNo: '',
             isWechatMember: '',
             member: '',
         }
     }
 
     componentDidMount() {
-        const memberid = this.props.showMember.params.member.id
-        if (memberid) {
-            getMemberDetail({
-                memberId: memberid,
-            }).then(res => {
-                const {code, data} = res
-                if (code === '6000') {
-                    const datasource = res.data
-                    this.setState({
-                        ckCount: datasource.ckCount,
-                        czkCount: datasource.czkCount,
-                        czkPriceSum: datasource.czkPriceSum,
-                        name: datasource.nickName,
-                        sex: datasource.sex,
-                        phone: datasource.phoneShow,
-                        isWechatMember: data.isWechatMember
-                    })
-                }
+        const memberId = this.props.memberId
+        getMemberDetail({
+            memberId: memberId,
+        }).then(res => {
+            const {code, data} = res
+            if (code == '6000') {
+                const datasource = res.data
+                this.setState({
+                    ckCount: datasource.ckCount,
+                    czkCount: datasource.czkCount,
+                    czkPriceSum: datasource.czkPriceSum,
+                    name: datasource.nickName,
+                    sex: datasource.sex,
+                    phone: datasource.phoneShow,
+                    isWechatMember: data.isWechatMember
+                })
+            }
 
-            })
-        }
+        })
     }
 
     bankcard = (data) => {

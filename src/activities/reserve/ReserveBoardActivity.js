@@ -678,7 +678,10 @@ export const ReserveBoardActivity = props => {
                             // 关闭所有面板
                             hideAllPanel()
                             // BMS会员档案
-                            const memberPortrait = portraitBackData['data']['memberList'][0]
+                            const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                            if(!memberPortrait || memberPortrait.id){
+                                memberPortrait['id'] =  extra.memberId
+                            }
                             navigation.navigate('VipcardActivity', {
                                 type: 'vip',
                                 member: memberPortrait,

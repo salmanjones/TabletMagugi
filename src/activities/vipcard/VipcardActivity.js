@@ -133,6 +133,8 @@ class VipCard extends React.Component {
         const {tabIndex} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
+        console.log("member", member)
+
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
                 {/*标题栏*/}
@@ -140,14 +142,13 @@ class VipCard extends React.Component {
                     {/*标题*/}
                     <View style={RechargeStoredCardStyles.openCardTitleL}>
                         {
-                            member.id != '' && (
-                                <VipUserInfoComponent showMember={this.props.route} showBtn={false}></VipUserInfoComponent>
-                            )
-                        }
-                        {
-                            member.id == '' && (
-                                <Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>
-                            )
+                            (()=>{
+                                if(member && member.id && member.id.length > 0){
+                                    return (<VipUserInfoComponent memberId={member.id} showBtn={false}/>)
+                                }else{
+                                    return (<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>)
+                                }
+                            })()
                         }
                     </View>
                     {/*Tbs*/}
@@ -156,11 +157,6 @@ class VipCard extends React.Component {
                         <ImageBackground resizeMethod="resize" resizeMode={'stretch'}
                                          source={require('@imgPath/store_bg.png')}
                                          style={RechargeStoredCardStyles.openCardTitleRTitle}>
-                            {/*<TabGroup*/}
-                            {/*    selectedIndex={this.state.tabIndex}*/}
-                            {/*    data={['储值卡', '次卡', '服务人']}*/}
-                            {/*    onSelected={this.onTabPress}*/}
-                            {/*/>*/}
                             <View style={RechargeStoredCardStyles.containerStyle}>
                                 <TouchableOpacity onPress={this.onTabPress.bind(this, 0)}>
                                     <Text

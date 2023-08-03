@@ -296,8 +296,10 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         if (tabArray[tabIndex] == '基础档案') {
                                             if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
                                                 return (
-                                                    <ModifyInfoWidget portraitInfo={customerInfo}
-                                                                      customerPressEvent={props.customerPressEvent}/>
+                                                    <ModifyInfoWidget
+                                                        sliderShow={animateState.sliderShow}
+                                                        portraitInfo={customerInfo}
+                                                        customerPressEvent={props.customerPressEvent}/>
                                                 )
                                             } else {
                                                 return (

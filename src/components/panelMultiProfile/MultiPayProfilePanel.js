@@ -148,7 +148,7 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
                     })()
                 }
             </View>
-            <View style={PanelMultiProfiles.memberBodyWrap}>
+            <View style={PanelMultiProfiles.memberBodyPayWrap}>
                 <FlatList
                     data={multiProfileArray}
                     renderItem={

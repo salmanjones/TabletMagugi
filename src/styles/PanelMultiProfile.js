@@ -51,7 +51,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         position: 'relative',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#F7F8FC',
     },
     contentWrapOtherBox: {
         flex:1,
@@ -60,7 +60,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         position: 'relative',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#F7F8FC',
     },
     headerBox:{
         width: '100%',
@@ -69,6 +69,7 @@ export const PanelMultiProfiles = StyleSheet.create({
     headerOtherBox:{
         width: '100%',
         height: PixelUtil.size(130),
+        backgroundColor: '#ffffff'
     },
     contentHeadWrap:{
         width: '100%',
@@ -203,6 +204,13 @@ export const PanelMultiProfiles = StyleSheet.create({
         flex: 1,
         width: '100%',
         position: 'relative',
+        paddingBottom: PixelUtil.size(30)
+    },
+    memberBodyPayWrap:{
+        flex: 1,
+        width: '100%',
+        position: 'relative',
+        paddingVertical: PixelUtil.size(30)
     },
     memberBodyEmptyWrap: {
         width: '100%',
@@ -233,12 +241,14 @@ export const PanelMultiProfiles = StyleSheet.create({
     },
     profileItemSplit:{
         width: '100%',
-        height: PixelUtil.size(0),
+        height: PixelUtil.size(24),
+        backgroundColor: '#F7F8FC'
     },
     profileItemBox: {
         width: '100%',
-        height: PixelUtil.size(146),
-        paddingHorizontal: PixelUtil.size(40)
+        height: PixelUtil.size(284),
+        paddingHorizontal: PixelUtil.size(30),
+        backgroundColor: '#F7F8FC',
     },
     profileItemWrap:{
         width: '100%',
@@ -248,142 +258,109 @@ export const PanelMultiProfiles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
-        borderBottomWidth: PixelUtil.size(2),
-        borderColor: '#e3e3e3',
-        borderStyle: 'solid'
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(18)
     },
-    profileItemLastWrap:{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-    },
-    profileItemOtherWrap:{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-        borderBottomWidth: PixelUtil.size(2),
-        borderColor: '#e3e3e3',
-        borderStyle: 'solid'
-    },
-    profileItemLastOtherWrap:{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-    },
-    leftWrap:{
-        height: PixelUtil.size(98),
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        position: 'relative'
-    },
-    rightWrap:{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative'
-    },
-    nameBox:{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        position: 'relative'
-    },
-    nameWrap:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    numberBox:{
-        marginLeft: PixelUtil.size(70),
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-        width: PixelUtil.size(160)
-    },
-    numberOtherBox:{
-        marginLeft: PixelUtil.size(30),
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-        width: PixelUtil.size(160)
-    },
-    timeBox:{
-        marginLeft: PixelUtil.size(30),
-        width: PixelUtil.size(280),
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'relative',
-    },
-    nameText:{
-        fontSize: PixelUtil.size(34),
-        fontWeight: '700',
-        color: '#000000',
-        width: PixelUtil.size(184),
-    },
-    sexWrap:{
-        width: PixelUtil.size(40),
-        height: PixelUtil.size(40),
-    },
-    titleText:{
-        marginTop: PixelUtil.size(6),
-        fontSize: PixelUtil.size(26),
-        fontWeight: '500',
-        color: '#7C7C7C'
-    },
-    valueText:{
-        fontSize: PixelUtil.size(26),
-        fontWeight: '700',
-        color: '#2E2E2E'
-    },
-    createBtnBox:{
-        width: PixelUtil.size(172),
-        height: PixelUtil.size(68),
-        borderRadius: PixelUtil.size(34)
-    },
-    createBtnOtherBox:{
-        width: PixelUtil.size(156),
-        height: PixelUtil.size(62),
-        borderRadius: PixelUtil.size(34)
+    createBtnBox: {
+        width: PixelUtil.size(160),
+        height: PixelUtil.size(60),
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 100
     },
     createBtnImg:{
         width: '100%',
         height: '100%',
-        display: 'flex',
+        display: "flex",
         justifyContent: 'center',
         alignItems: 'center'
     },
     createBtnTxt:{
         fontSize: PixelUtil.size(32),
-        fontWeight: '700',
         color: '#ffffff',
-        textAlign: 'center'
+        fontWeight: "700"
+    },
+    profileItemInnerBox:{
+        width: '100%',
+        height: '100%',
+        paddingTop: PixelUtil.size(30),
+        paddingHorizontal: PixelUtil.size(30),
+        paddingBottom: PixelUtil.size(24)
+    },
+    profileItemRender:{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
+    },
+    nameBox:{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    nameBoxText:{
+        fontSize: PixelUtil.size(34),
+        color: '#3A3A3A',
+        fontWeight: "700",
+        maxWidth: PixelUtil.size(236),
+    },
+    sexWrap:{
+        width: PixelUtil.size(40),
+        height: PixelUtil.size(40),
+        marginLeft: PixelUtil.size(12)
+    },
+    customerDetailBox:{
+        marginTop: PixelUtil.size(12),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    customerDetailIcon:{
+        width: PixelUtil.size(28),
+        height: PixelUtil.size(28),
+        marginRight: PixelUtil.size(8)
+    },
+    customerDetailText:{
+        marginRight: PixelUtil.size(30),
+        fontSize: PixelUtil.size(24),
+        color: '#636363',
+        fontWeight: "500",
+    },
+    customerDetailCard:{
+        marginTop: PixelUtil.size(24),
+        width: '100%',
+        height: PixelUtil.size(112),
+        borderRadius: PixelUtil.size(20),
+        borderWidth: PixelUtil.size(2),
+        borderStyle: 'dashed',
+        borderColor: '#D6D6D6',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    customerDetailCardItem:{
+        width: '33.3333333%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    customerDetailCardItemTitle:{
+        fontSize:  PixelUtil.size(26),
+        color: '#9d9d9d',
+        fontWeight: "500"
+    },
+    customerDetailCardItemValue:{
+        fontSize:  PixelUtil.size(30),
+        color: '#3A3A3A',
+        fontWeight: "900",
+        marginTop: PixelUtil.size(12)
     }
 })

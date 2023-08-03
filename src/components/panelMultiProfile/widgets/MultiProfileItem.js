@@ -10,75 +10,95 @@ import {BackgroundImage} from "react-native-elements/dist/config";
  */
 export const MultiProfileItem = React.memo(({
     profileItem,
-    index,
-    size,
     customerClickEvent,
     showMode,
     waiterId,
     actionType,
     pagerName
 }) => {
-
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
-            <View style={index == size - 1 ? PanelMultiProfiles.profileItemLastOtherWrap : PanelMultiProfiles.profileItemOtherWrap}>
-                <View style={PanelMultiProfiles.leftWrap}>
-                    <View style={PanelMultiProfiles.nameBox}>
-                        <View style={PanelMultiProfiles.nameWrap}>
-                            <Text style={PanelMultiProfiles.nameText} ellipsizeMode={"tail"} numberOfLines={1}>
-                                {profileItem.bmsName && profileItem.bmsName.length > 0
-                                    ? decodeContent(profileItem.bmsName) : '未填写姓名'}
+            <View style={PanelMultiProfiles.profileItemWrap}>
+                <TouchableOpacity
+                    style={PanelMultiProfiles.createBtnBox}
+                    onPress={() => {
+                        if (showMode == 'noReserve') { // 未预约，跳转选牌
+                            customerClickEvent('forwardToCashier', {
+                                showMode,
+                                memberId: profileItem.memberId,
+                                actionType
+                            })
+                        } else { // 已预约，直接进入开单页面
+                            customerClickEvent('naviToCashier', {
+                                memberId: profileItem.memberId,
+                                imgUrl: profileItem.imgUrl,
+                                showMode,
+                                waiterId: waiterId,
+                                actionType
+                            })
+                        }
+                    }}>
+                    <BackgroundImage
+                        resizeMode={"contain"}
+                        source={require('@imgPath/reserve_customer_multi_operator.png')}
+                        style={PanelMultiProfiles.createBtnImg}>
+                        <Text style={PanelMultiProfiles.createBtnTxt}>
+                            {(pagerName == 'CashierBillingActivity' || pagerName == 'MultiPayActivity') ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
+                        </Text>
+                    </BackgroundImage>
+                </TouchableOpacity>
+                <View style={PanelMultiProfiles.profileItemInnerBox}>
+                    <View style={PanelMultiProfiles.profileItemRender}>
+                        <View style={PanelMultiProfiles.nameBox}>
+                            <Text style={PanelMultiProfiles.nameBoxText} numberOfLines={1} ellipsizeMode={'tail'}>
+                                {profileItem.bmsName && profileItem.bmsName.length > 0 ? decodeContent(profileItem.bmsName) : '未填写姓名'}
                             </Text>
-                            <Image
-                                source={profileItem.bmsSex == '1' ? require('@imgPath/reserve_customer_multi_profile_man.png') : require('@imgPath/reserve_customer_multi_profile_woman.png')}
-                                style={PanelMultiProfiles.sexWrap}></Image>
+                            <Image source={profileItem.bmsSex == '1'
+                                ? require('@imgPath/reserve_customer_multi_profile_man.png')
+                                : require('@imgPath/reserve_customer_multi_profile_woman.png')}
+                                style={PanelMultiProfiles.sexWrap}/>
                         </View>
-                        <Text style={PanelMultiProfiles.valueText}>
-                            {getPhoneSecurity(profileItem.bmsPhone)}
-                        </Text>
-                    </View>
-                    <View style={pagerName == 'MultiPayActivity' ? PanelMultiProfiles.numberOtherBox : PanelMultiProfiles.numberBox}>
-                        <Text style={PanelMultiProfiles.titleText}>会员号</Text>
-                        <Text style={PanelMultiProfiles.valueText} ellipsizeMode={"tail"} numberOfLines={1}>
-                            {profileItem.memberNo}
-                        </Text>
-                    </View>
-                    <View style={PanelMultiProfiles.timeBox}>
-                        <Text style={PanelMultiProfiles.titleText}>最近消费时间</Text>
-                        <Text style={PanelMultiProfiles.valueText}>
-                            {profileItem.lastTime ? profileItem.lastTime.substring(0, 19) : '暂无消费'}
-                        </Text>
-                    </View>
-                </View>
-                <View style={PanelMultiProfiles.rightWrap}>
-                    <TouchableOpacity
-                        style={pagerName == 'MultiPayActivity' ? PanelMultiProfiles.createBtnOtherBox : PanelMultiProfiles.createBtnBox}
-                        onPress={() => {
-                            if (showMode == 'noReserve') { // 未预约，跳转选牌
-                                customerClickEvent('forwardToCashier', {
-                                    showMode,
-                                    memberId: profileItem.memberId,
-                                    actionType
-                                })
-                            } else { // 已预约，直接进入开单页面
-                                customerClickEvent('naviToCashier', {
-                                    memberId: profileItem.memberId,
-                                    imgUrl: profileItem.imgUrl,
-                                    showMode,
-                                    waiterId: waiterId,
-                                    actionType
-                                })
-                            }
-                        }}>
-                        <BackgroundImage
-                            resizeMode={"contain"}
-                            source={require('@imgPath/reserve_customer_multi_profile_btn.png')}
-                            style={PanelMultiProfiles.createBtnImg}>
-                            <Text style={PanelMultiProfiles.createBtnTxt}>
-                                {(pagerName == 'CashierBillingActivity' || pagerName == 'MultiPayActivity') ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
+                        <View style={PanelMultiProfiles.customerDetailBox}>
+                            <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_phone.png')}></Image>
+                            <Text style={PanelMultiProfiles.customerDetailText}>
+                                {getPhoneSecurity(profileItem.bmsPhone)}
                             </Text>
-                        </BackgroundImage>
-                    </TouchableOpacity>
+                            <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_no.png')}></Image>
+                            <Text style={PanelMultiProfiles.customerDetailText}>
+                                {profileItem.memberNo}
+                            </Text>
+                            <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_time.png')}></Image>
+                            <Text style={PanelMultiProfiles.customerDetailText}>
+                                最近消费时间：{profileItem.lastTime ? profileItem.lastTime.substring(0, 10) + '(距今'+profileItem.lastTimeToNowDays+'天)' : '暂无消费'}
+                            </Text>
+                        </View>
+                        <View style={PanelMultiProfiles.customerDetailCard}>
+                            <View style={PanelMultiProfiles.customerDetailCardItem}>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemTitle}>
+                                    储值卡
+                                </Text>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemValue}>
+                                    {profileItem.czkCount}张
+                                </Text>
+                            </View>
+                            <View style={PanelMultiProfiles.customerDetailCardItem}>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemTitle}>
+                                    次卡
+                                </Text>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemValue}>
+                                    {profileItem.ckCount}张
+                                </Text>
+                            </View>
+                            <View style={PanelMultiProfiles.customerDetailCardItem}>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemTitle}>
+                                    储值余额
+                                </Text>
+                                <Text style={PanelMultiProfiles.customerDetailCardItemValue}>
+                                    ¥{profileItem.czkPriceSum}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
