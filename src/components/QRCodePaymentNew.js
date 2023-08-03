@@ -8,12 +8,12 @@ export class QRCodePaymentNew extends React.PureComponent {
     constructor(props, context) {
         super(props);
         this.state = {
-            paymentStatus: '',
+            paymentStatus: props.paymentStatus,
         };
     }
 
-    UNSAFE_componentWillMount() {
-        this.state.paymentStatus = this.props.paymentStatus;
+    componentDidMount() {
+        const {paymentStatus} = this.state
     }
 
     onPaymentClose = () => {
@@ -41,8 +41,7 @@ export class QRCodePaymentNew extends React.PureComponent {
                     <View style={payForPersonStyle.MemberQueryBtnBox}>
                         <TouchableOpacity
                             style={payForPersonStyle.MemberQueryConfirmBtn}
-                            onPress={this.onPaymentClose}
-                        >
+                            onPress={this.onPaymentClose}>
                             <Text style={payForPersonStyle.MemberQueryConfirmText}>
                                 关闭
                             </Text>

@@ -17,8 +17,8 @@ export const payForPersonStyle = StyleSheet.create({
     //外部弹框里面内容
     wrapper: {
         backgroundColor: '#fff',
-        height: '95%',
-        width: '95%',
+        height: '96%',
+        width: '96%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -30,8 +30,8 @@ export const payForPersonStyle = StyleSheet.create({
     },
     //上面支付方式和水单号
     headText: {
-        width: PixelUtil.rect(1968, 116).width,
-        height: '10%',
+        width: '100%',
+        height: PixelUtil.size(116),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -65,10 +65,9 @@ export const payForPersonStyle = StyleSheet.create({
     billInfoOtherBox: {
         // 顾客识别-主体
         width: '100%',
-        height: '80%',
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2),
-        flex: 0,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -93,7 +92,7 @@ export const payForPersonStyle = StyleSheet.create({
     MemberQueryBtnBox: {
         // 顾客识别-关闭按钮框
         width: '100%',
-        height: '10%',
+        height: PixelUtil.size(116),
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'flex-end',

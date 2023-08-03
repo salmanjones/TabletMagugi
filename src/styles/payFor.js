@@ -150,8 +150,7 @@ export const payForStyle = StyleSheet.create({
     payForState: {
         //支付状态
         width: '100%',
-        height: '80%',
-        flex: 0,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
