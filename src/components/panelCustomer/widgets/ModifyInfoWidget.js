@@ -1,18 +1,27 @@
 import {FlatList, ImageBackground, View, Text, Image, TouchableOpacity, TextInput} from "react-native";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import DatePicker from "react-native-date-picker";
 import dayjs from "dayjs";
 import {decodeContent} from "../../../utils";
 
-export const ModifyInfoWidget = React.memo(({portraitInfo, customerPressEvent})=>{
-    const [memberName, setMemberName] = useState(decodeContent(portraitInfo.nickName))
-    const [memberSex, setMemberSex] = useState(portraitInfo.sex)
-    const [memberBirthday, setMemberBirthday] = useState(
-        portraitInfo.birthday && portraitInfo.birthday.length > 0
-            ? new Date(portraitInfo.birthday)
-            : null)
+export const ModifyInfoWidget = React.memo(({sliderShow, portraitInfo, customerPressEvent})=>{
+    const [memberName, setMemberName] = useState('')
+    const [memberSex, setMemberSex] = useState('0')
+    const [memberBirthday, setMemberBirthday] = useState(null)
     const [open, setOpen] = useState(false)
+
+    // 弹起时根据后台值进行处理
+    useEffect(()=>{
+        if(sliderShow == true){
+            const birthday = portraitInfo.birthday && portraitInfo.birthday.length > 0
+                ? new Date(portraitInfo.birthday)
+                : null
+            setMemberBirthday(birthday)
+            setMemberName(decodeContent(portraitInfo.nickName))
+            setMemberSex(portraitInfo.sex)
+        }
+    }, [sliderShow])
 
     return (
         <View style={PanelCustomerStyles.memberModifyBox}>
