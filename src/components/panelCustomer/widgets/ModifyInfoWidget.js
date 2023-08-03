@@ -113,7 +113,8 @@ export const ModifyInfoWidget = React.memo(({sliderShow, portraitInfo, customerP
                 mode={'date'}
                 locale={'zh-Hans'}
                 open={open}
-                date={memberBirthday != null ? memberBirthday : new Date()}
+                date={memberBirthday != null ? memberBirthday : new Date(dayjs().subtract(20, 'year').format('YYYY-MM-DD HH:mm:ss'))}
+                maximumDate={new Date()}
                 onConfirm={(date) => {
                     setOpen(false)
                     setMemberBirthday(date)
