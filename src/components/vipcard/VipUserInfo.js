@@ -37,7 +37,8 @@ export class VipUserInfoComponent extends React.PureComponent {
                     name: datasource.nickName,
                     sex: datasource.sex,
                     phone: datasource.phoneShow,
-                    isWechatMember: data.isWechatMember
+                    isWechatMember: data.isWechatMember,
+                    memberCardNo: datasource.memberNo
                 })
             }
 
