@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, Image, KeyboardAvoidingView, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import Spinner from "react-native-loading-spinner-overlay";
 import Toast from "react-native-root-toast";
 import dayjs from "dayjs";
@@ -7,10 +7,20 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import ReduxStore from "../../store/store"
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
 import {
-    getReserveInfo, saveReserveVocation, cancelStaffReserve, getReserveInitData,
-    getCustomerDetail, updateCustomerReserve, updateCardValidity, getMemberInfo,
-    getMemberPortrait, getBillFlowNO, getMemberCards, getStaffPermission,
-    getMemberBillCards, getReserveDate
+    cancelStaffReserve,
+    getBillFlowNO,
+    getCustomerDetail,
+    getMemberBillCards,
+    getMemberCards,
+    getMemberInfo,
+    getMemberPortrait,
+    getReserveDate,
+    getReserveInfo,
+    getReserveInitData,
+    getStaffPermission,
+    saveReserveVocation,
+    updateCardValidity,
+    updateCustomerReserve
 } from "../../services/reserve";
 import MemberPanel from "../../components/panelCustomer/MemberPanel";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
@@ -1042,125 +1052,123 @@ export const ReserveBoardActivity = props => {
     const dateMax = new Date(dayjs(serverDate).add(13, 'day').format('YYYY-MM-DD HH:mm:ss'))
 
     return (
-        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
-            <View style={ReserveBoardStyles.boardWrapBox}>
-                <DatePicker
-                    modal
-                    title={'选择预约日期'}
-                    confirmText={'确定'}
-                    mode={'date'}
-                    locale={'zh-Hans'}
-                    open={showCalendar}
-                    date={dateNow}
-                    minimumDate={dateMin}
-                    maximumDate={dateMax}
-                    onConfirm={(date) => {
-                        switchDate(date)
-                    }}
-                    onCancel={() => {
-                        setShowCalendar(false)
-                    }}
-                />
-                {/*加载中*/}
-                <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
-                {/*预约状态切换*/}
-                <View style={ReserveBoardStyles.reserveFlagBox}>
-                    <View style={ReserveBoardStyles.reserveFlagBoxLeft}>
-                        <TouchableOpacity
-                            onPress={()=>{
-                                setShowCalendar(true)
-                            }}
-                            style={ReserveBoardStyles.reserveFlagDateBox}>
-                            <Text style={ReserveBoardStyles.reserveDateTitle}>
-                                预约日期
-                            </Text>
-                            <Text style={ReserveBoardStyles.reserveDateValue}>
-                                {showDate}
-                            </Text>
-                            <Image
-                                style={ReserveBoardStyles.reserveDateIcon}
-                                source={require('@imgPath/reserve_customer_date_icon.png')}></Image>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={ReserveBoardStyles.reserveFlagBoxRight}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                switchTab('valid')
-                            }}
-                            style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
-                            <Text
-                                style={reserveFlag == 'valid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
-                                当前预约
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                switchTab('invalid')
-                            }}
-                            style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
-                            <Text
-                                style={reserveFlag == 'invalid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
-                                过期预约
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+        <View style={ReserveBoardStyles.boardWrapBox}>
+            <DatePicker
+                modal
+                title={'选择预约日期'}
+                confirmText={'确定'}
+                mode={'date'}
+                locale={'zh-Hans'}
+                open={showCalendar}
+                date={dateNow}
+                minimumDate={dateMin}
+                maximumDate={dateMax}
+                onConfirm={(date) => {
+                    switchDate(date)
+                }}
+                onCancel={() => {
+                    setShowCalendar(false)
+                }}
+            />
+            {/*加载中*/}
+            <Spinner visible={isLoading} textContent={'加载中'} textStyle={{color: '#FFF'}}/>
+            {/*预约状态切换*/}
+            <View style={ReserveBoardStyles.reserveFlagBox}>
+                <View style={ReserveBoardStyles.reserveFlagBoxLeft}>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            setShowCalendar(true)
+                        }}
+                        style={ReserveBoardStyles.reserveFlagDateBox}>
+                        <Text style={ReserveBoardStyles.reserveDateTitle}>
+                            预约日期
+                        </Text>
+                        <Text style={ReserveBoardStyles.reserveDateValue}>
+                            {showDate}
+                        </Text>
+                        <Image
+                            style={ReserveBoardStyles.reserveDateIcon}
+                            source={require('@imgPath/reserve_customer_date_icon.png')}></Image>
+                    </TouchableOpacity>
                 </View>
-                {/*预约信息展示*/}
-                <View style={ReserveBoardStyles.reserveInfoBox}>
-                    {
-                        (()=>{
-                            if(reserveInfoArray.length > 0){ // 发型师已设置预约
-                                let checkStaff = {}
-                                if(stylistCheckedId.length > 0){
-                                    checkStaff = reserveInfoArray.filter(item=>item.staffId == stylistCheckedId)[0]
-                                }else{
-                                    checkStaff = reserveInfoArray[stylistCheckedIndex]
-                                }
-
-                                return (
-                                    <View style={ReserveBoardStyles.reserveDetailWrap}>
-                                        {/*发型师列表*/}
-                                        <View style={ReserveBoardStyles.reserveStylistBox}>
-                                            <StylistWidget checkStylistEvent={checkStylistEvent}
-                                                           reserveInfoArray={reserveInfoArray}
-                                                           reserveFlag={reserveFlag}/>
-                                        </View>
-                                        {/*顾客预约列表*/}
-                                        <View style={ReserveBoardStyles.reserveCustomerBox}>
-                                            <CustomerWidget
-                                                stylistReserveInfo = {checkStaff} // 当前发型师预约数据
-                                                reserveFlag={reserveFlag}
-                                                customerCardEvent={customerPressEvent}
-                                                uniqueId={uniqueId}/>
-                                        </View>
-                                    </View>
-                                )
-                            }else{ // 发型师未设置预约
-                                return (
-                                    <NoSettingReserve customerCardEvent={customerPressEvent}/>
-                                )
-                            }
-                        })()
-                    }
+                <View style={ReserveBoardStyles.reserveFlagBoxRight}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            switchTab('valid')
+                        }}
+                        style={reserveFlag == 'valid' ? [ReserveBoardStyles.reserveValidActiveStyle] : [ReserveBoardStyles.reserveValidStyle]}>
+                        <Text
+                            style={reserveFlag == 'valid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
+                            当前预约
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            switchTab('invalid')
+                        }}
+                        style={reserveFlag == 'invalid' ? [ReserveBoardStyles.reserveInvalidActiveStyle] : [ReserveBoardStyles.reserveInvalidStyle]}>
+                        <Text
+                            style={reserveFlag == 'invalid' ? ReserveBoardStyles.reserveFlagTxtActive : ReserveBoardStyles.reserveFlagTxt}>
+                            过期预约
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-                {/*会员信息面板*/}
-                <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
-                {/*散客信息面板*/}
-                <GuestPanel ref={guestPanelRef} customerInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
-                {/*顾客预约详情信息面板*/}
-                <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
-                {/*顾客多档案信息面板*/}
-                <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileData={multiProfiles} customerClickEvent={customerPressEvent}/>
-                {/*散客创建档案*/}
-                <ModalCreateMember
-                    navigation={navigation}
-                    visible={newMemberInfo.show}
-                    memberNo={newMemberInfo.memberNo}
-                    oper={newMemberInfo.operator}
-                    onConfirm={confirmNewMember}
-                    onCancel={cancelNewMember}
-                />
             </View>
-        </KeyboardAvoidingView>
+            {/*预约信息展示*/}
+            <View style={ReserveBoardStyles.reserveInfoBox}>
+                {
+                    (()=>{
+                        if(reserveInfoArray.length > 0){ // 发型师已设置预约
+                            let checkStaff = {}
+                            if(stylistCheckedId.length > 0){
+                                checkStaff = reserveInfoArray.filter(item=>item.staffId == stylistCheckedId)[0]
+                            }else{
+                                checkStaff = reserveInfoArray[stylistCheckedIndex]
+                            }
+
+                            return (
+                                <View style={ReserveBoardStyles.reserveDetailWrap}>
+                                    {/*发型师列表*/}
+                                    <View style={ReserveBoardStyles.reserveStylistBox}>
+                                        <StylistWidget checkStylistEvent={checkStylistEvent}
+                                                       reserveInfoArray={reserveInfoArray}
+                                                       reserveFlag={reserveFlag}/>
+                                    </View>
+                                    {/*顾客预约列表*/}
+                                    <View style={ReserveBoardStyles.reserveCustomerBox}>
+                                        <CustomerWidget
+                                            stylistReserveInfo = {checkStaff} // 当前发型师预约数据
+                                            reserveFlag={reserveFlag}
+                                            customerCardEvent={customerPressEvent}
+                                            uniqueId={uniqueId}/>
+                                    </View>
+                                </View>
+                            )
+                        }else{ // 发型师未设置预约
+                            return (
+                                <NoSettingReserve customerCardEvent={customerPressEvent}/>
+                            )
+                        }
+                    })()
+                }
+            </View>
+            {/*会员信息面板*/}
+            <MemberPanel ref={memberPanelRef} memberInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
+            {/*散客信息面板*/}
+            <GuestPanel ref={guestPanelRef} customerInfo={customerState} reserveFlag={reserveFlag} customerPressEvent={customerPressEvent}/>
+            {/*顾客预约详情信息面板*/}
+            <CustomerReservePanel ref={customerReservePanelRef} reserveBaseData={reserveBaseData} reloadReserveData={getReserveList}/>
+            {/*顾客多档案信息面板*/}
+            <PanelMultiProfilePanel ref={panelMultiProfilePanelRef} multiProfileData={multiProfiles} customerClickEvent={customerPressEvent}/>
+            {/*散客创建档案*/}
+            <ModalCreateMember
+                navigation={navigation}
+                visible={newMemberInfo.show}
+                memberNo={newMemberInfo.memberNo}
+                oper={newMemberInfo.operator}
+                onConfirm={confirmNewMember}
+                onCancel={cancelNewMember}
+            />
+        </View>
     )
 }
