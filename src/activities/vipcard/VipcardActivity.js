@@ -133,8 +133,6 @@ class VipCard extends React.Component {
         const {tabIndex} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
-        console.log("member", member)
-
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
                 {/*标题栏*/}

@@ -87,13 +87,9 @@ export class CashierPay extends React.Component {
 
     //选择支付通道
     onChannalChoosed(channel) {
-        //if (channel == 'tablet') {
         this.setState({
             channel: channel,
         });
-        //} else {
-        //    this.props.onCashierOrderPay(channel, null, null);
-        //}
     }
 
     //选择优惠券
@@ -310,7 +306,7 @@ export class CashierPay extends React.Component {
                 this.props.onCashierOrderPay(channel, payType, payTypeParams);
             } else {
                 this.setState({showPayDetails: true});
-                this.choosePayWay('wx');
+                this.choosePayWay('cash');
             }
         } else {//小程序支付 会员卡支付
             this.props.onCashierOrderPay(channel, null, null);

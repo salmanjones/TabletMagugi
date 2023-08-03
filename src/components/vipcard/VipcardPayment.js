@@ -36,8 +36,9 @@ export class VipcardPayment extends React.PureComponent {
                 this.setState({
                     otherPayTypeList: data.otherPayTypeList,
                     isUseCash: data.isUseCash,
-                    payType: 'wx',
-                    payTypeId: '19'
+                    payType: 1,
+                    payTypeId: -1,
+                    payName: '现金支付'
                 });
             } else {
                 this.setState({otherPayTypeList: {}});
