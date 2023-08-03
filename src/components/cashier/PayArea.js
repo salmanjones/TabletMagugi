@@ -35,7 +35,9 @@ export class PayArea extends PureComponent {
             });
         }
         if (nextProps.showPayDetails != this.props.showPayDetails && nextProps.showPayDetails) {
-            if (nextProps.selectedChannel == 'tablet') this.choosePayWay('wx');
+            if (nextProps.selectedChannel == 'tablet'){
+                this.choosePayWay('cash')
+            }
         }
         // if(nextProps.hasCardProject !=this.props.hasCardProject || nextProps.member!=this.props.member){
         //     let channels=this.getAvailableChannels(nextProps.member,nextProps.hasCardProject);
@@ -299,22 +301,10 @@ export class PayArea extends PureComponent {
     }
     //选择支付方式
     choosePayWay(payType, otherPayId) {
-        // this.setState(
-        //     {
-        //         //selectedPayType: payType,
-        //         selectedOtherPayment: this.props.othersPaymentList.find((x) => x.id == otherPayId),
-        //         //othersPaymentList: [...this.props.othersPaymentList],
-        //     },
-        //     () => {
-        //         let otherPayment = this.state.selectedOtherPayment;
         this.props.onPayTypeChoosed(
             payType,
             otherPayId
-            // otherPayment ? otherPayment.id : null,
-            // otherPayment ? otherPayment.name : null
         );
-        //     }
-        // );
     }
 
     toggleCoupons = () => {

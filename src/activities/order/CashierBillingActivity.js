@@ -669,9 +669,9 @@ class CashierBillingView extends React.Component {
                     ];
                 } else {
                     itemInfo.assistStaffDetail = [
-                        this.copyServicer(prevServicer[0], {appoint: waiterId && waiterId.length> 0 && prevServicer[0].id == waiterId ? "true":"false"}),
-                        this.copyServicer(prevServicer[1], {appoint: waiterId && waiterId.length> 0 && prevServicer[1].id == waiterId ? "true":"false"}),
-                        this.copyServicer(prevServicer[2], {appoint: waiterId && waiterId.length> 0 && prevServicer[2].id == waiterId ? "true":"false"})
+                        this.copyServicer(prevServicer[0], {appoint: waiterId && waiterId.length> 0 && prevServicer[0].id == waiterId && this.props.route.params.staffAppoint != 'false'? "true":"false"}),
+                        this.copyServicer(prevServicer[1], {appoint: waiterId && waiterId.length> 0 && prevServicer[1].id == waiterId && this.props.route.params.staffAppoint != 'false'? "true":"false"}),
+                        this.copyServicer(prevServicer[2], {appoint: waiterId && waiterId.length> 0 && prevServicer[2].id == waiterId && this.props.route.params.staffAppoint != 'false'? "true":"false"})
                     ];
                 }
             } else { // 首次添加
