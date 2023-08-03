@@ -18,26 +18,26 @@ export const MultiProfileItem = React.memo(({
 }) => {
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
-            <View style={PanelMultiProfiles.profileItemWrap}>
-                <TouchableOpacity
-                    style={PanelMultiProfiles.createBtnBox}
-                    onPress={() => {
-                        if (showMode == 'noReserve') { // 未预约，跳转选牌
-                            customerClickEvent('forwardToCashier', {
-                                showMode,
-                                memberId: profileItem.memberId,
-                                actionType
-                            })
-                        } else { // 已预约，直接进入开单页面
-                            customerClickEvent('naviToCashier', {
-                                memberId: profileItem.memberId,
-                                imgUrl: profileItem.imgUrl,
-                                showMode,
-                                waiterId: waiterId,
-                                actionType
-                            })
-                        }
-                    }}>
+            <TouchableOpacity
+                style={PanelMultiProfiles.profileItemWrap}
+                onPress={() => {
+                    if (showMode == 'noReserve') { // 未预约，跳转选牌
+                        customerClickEvent('forwardToCashier', {
+                            showMode,
+                            memberId: profileItem.memberId,
+                            actionType
+                        })
+                    } else { // 已预约，直接进入开单页面
+                        customerClickEvent('naviToCashier', {
+                            memberId: profileItem.memberId,
+                            imgUrl: profileItem.imgUrl,
+                            showMode,
+                            waiterId: waiterId,
+                            actionType
+                        })
+                    }
+                }}>
+                <View style={PanelMultiProfiles.createBtnBox}>
                     <BackgroundImage
                         resizeMode={"contain"}
                         source={require('@imgPath/reserve_customer_multi_operator.png')}
@@ -46,7 +46,7 @@ export const MultiProfileItem = React.memo(({
                             {(pagerName == 'CashierBillingActivity' || pagerName == 'MultiPayActivity') ? '确定':actionType == 'createOrder' ? '开单' : '办卡'}
                         </Text>
                     </BackgroundImage>
-                </TouchableOpacity>
+                </View>
                 <View style={PanelMultiProfiles.profileItemInnerBox}>
                     <View style={PanelMultiProfiles.profileItemRender}>
                         <View style={PanelMultiProfiles.nameBox}>
@@ -100,7 +100,7 @@ export const MultiProfileItem = React.memo(({
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 })
