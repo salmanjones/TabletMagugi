@@ -1140,7 +1140,9 @@ export const ReserveBoardActivity = props => {
                                             stylistReserveInfo = {checkStaff} // 当前发型师预约数据
                                             reserveFlag={reserveFlag}
                                             customerCardEvent={customerPressEvent}
-                                            uniqueId={uniqueId}/>
+                                            uniqueId={uniqueId}
+                                            reserveDate={showDate}
+                                        />
                                     </View>
                                 </View>
                             )

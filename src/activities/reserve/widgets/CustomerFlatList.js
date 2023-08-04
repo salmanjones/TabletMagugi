@@ -6,7 +6,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import {getRefreshState} from "../../../services/reserve";
 import ReduxStore from "../../../store/store"
 
-export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, uniqueId}) => {
+export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, uniqueId, reserveDate}) => {
     // 呈现数据
     const [isLoading, setIsLoading] = useState(false)
     const [customerFlatData, setCustomerFlatData] = useState([])
@@ -43,7 +43,8 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
         let timerId = setInterval(()=>{
             getRefreshState({
                 storeId: ReduxStore.getState().auth.userInfo.storeId,
-                uniqueId:uniqueId
+                uniqueId:uniqueId,
+                reserveDate: reserveDate
             }).then(backData=>{
                 const {code, data} = backData
                 if(code == '6000'){
