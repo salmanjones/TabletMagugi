@@ -82,7 +82,7 @@ export const MultiProfileItem = React.memo(({
                             </Text>
                             <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_time.png')}></Image>
                             <Text style={PanelMultiProfiles.customerDetailTextTime}>
-                                最近消费时间：{profileItem.lastTime ? profileItem.lastTime.substring(0, 10) + showDayTips : '暂无消费'}
+                                最近消费:{profileItem.lastTime ? profileItem.lastTime.substring(0, 10) + showDayTips : '暂无消费'}
                             </Text>
                         </View>
                         <View style={PanelMultiProfiles.customerDetailCard}>
