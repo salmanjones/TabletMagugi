@@ -126,7 +126,7 @@ class CashierBillingView extends React.Component {
             reserveWaiter: {
                 value: ''
             },
-            showPaySuccess: false
+            showPaySuccess: false,
         }
 
         this.addCosumableT = throttle(this.addCosumable, 600);
@@ -557,7 +557,7 @@ class CashierBillingView extends React.Component {
                 return prevState;
             })
             console.log("支付完成")
-        } else if (nextProps.orderInfo.propChangeType == 'payEndSuccess') {
+        } else if (nextProps.orderInfo.propChangeType == 'payEndSuccess'){
             this.setState((prevState, props) => {
                 prevState.showCashierPayModal = false;
                 prevState.showStockTipsModal = false;
@@ -2045,6 +2045,7 @@ class CashierBillingView extends React.Component {
                             navigation={this.props.navigation}
                             title={'订单支付'}
                             flowNum={this.state.flowNumber}
+                            billingNo={this.props.orderInfo.billingNo}
                             onClose={this.confirmPaySuccess.bind(this)}
                         />
                     )

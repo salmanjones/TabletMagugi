@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
 import {PanelMultiProfiles} from "../../../styles/PanelMultiProfile";
 import {decodeContent, getPhoneSecurity} from "../../../utils";
@@ -14,8 +14,21 @@ export const MultiProfileItem = React.memo(({
     showMode,
     waiterId,
     actionType,
-    pagerName
+    pagerName,
 }) => {
+    // 距今消费时间
+    let showDayTips = ''
+    try{
+        let lastTimeToNowDays = parseInt(profileItem.lastTimeToNowDays)
+        if(lastTimeToNowDays >= 365){
+            showDayTips = '(距今'+1+'年+)'
+        }else{
+            showDayTips = '(距今'+lastTimeToNowDays+'天)'
+        }
+    }catch (e){
+        console.log("处理距今消费失败")
+    }
+
     return (
         <View style={PanelMultiProfiles.profileItemBox}>
             <TouchableOpacity
@@ -60,16 +73,16 @@ export const MultiProfileItem = React.memo(({
                         </View>
                         <View style={PanelMultiProfiles.customerDetailBox}>
                             <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_phone.png')}></Image>
-                            <Text style={PanelMultiProfiles.customerDetailText}>
+                            <Text style={PanelMultiProfiles.customerDetailTextPhone}>
                                 {getPhoneSecurity(profileItem.bmsPhone)}
                             </Text>
                             <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_no.png')}></Image>
-                            <Text style={PanelMultiProfiles.customerDetailText}>
+                            <Text style={PanelMultiProfiles.customerDetailTextNo} numberOfLines={1}>
                                 {profileItem.memberNo}
                             </Text>
                             <Image style={PanelMultiProfiles.customerDetailIcon} source={require('@imgPath/reserve_customer_multi_time.png')}></Image>
-                            <Text style={PanelMultiProfiles.customerDetailText}>
-                                最近消费时间：{profileItem.lastTime ? profileItem.lastTime.substring(0, 10) + '(距今'+profileItem.lastTimeToNowDays+'天)' : '暂无消费'}
+                            <Text style={PanelMultiProfiles.customerDetailTextTime}>
+                                最近消费时间：{profileItem.lastTime ? profileItem.lastTime.substring(0, 10) + showDayTips : '暂无消费'}
                             </Text>
                         </View>
                         <View style={PanelMultiProfiles.customerDetailCard}>

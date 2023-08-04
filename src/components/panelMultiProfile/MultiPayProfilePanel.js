@@ -1,5 +1,5 @@
 import {FlatList, Image, Keyboard, Text, TextInput, TouchableOpacity, View,} from "react-native";
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 import {MultiProfileItem} from "./widgets/MultiProfileItem";
 
@@ -64,6 +64,14 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
     useEffect(()=>{
         setMultiProfileArray(multiProfileData)
     }, [multiProfileData])
+
+    /// 监听展示状态
+    const flatListRef = useRef(null);
+    useEffect(()=>{
+        if(showState){
+            multiProfileArray.length > 0 && flatListRef.current?.scrollToIndex({animated: true, index: 0})
+        }
+    }, [showState])
 
     // 不展示控件
     if(!showState){
@@ -150,6 +158,7 @@ const MultiPayProfilePanelForwardRef = forwardRef(({cards, multiProfileData, cus
             </View>
             <View style={PanelMultiProfiles.memberBodyPayWrap}>
                 <FlatList
+                    ref={flatListRef}
                     data={multiProfileArray}
                     renderItem={
                         ({item, index}) => {

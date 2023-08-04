@@ -219,3 +219,15 @@ export const getConfigNewReserve = params => {
         return backData;
     });
 }
+
+
+/**
+ * 获取平板是否开启新预约模式
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const getPayByCards = params => {
+    return callService(api.getPayByCards, params).then(backData => {
+        return backData;
+    });
+}

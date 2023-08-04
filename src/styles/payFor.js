@@ -151,9 +151,10 @@ export const payForStyle = StyleSheet.create({
         //支付状态
         width: '100%',
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: PixelUtil.size(60)
     },
     payStateImg: {
         //支付状态-图片
@@ -165,4 +166,63 @@ export const payForStyle = StyleSheet.create({
         width: PixelUtil.rect(442, 464).width,
         height: PixelUtil.rect(442, 464).height,
     },
+    cardUseBox:{
+        width: '100%',
+        marginTop: PixelUtil.size(98),
+        height: PixelUtil.size(434),
+        backgroundColor: '#F7F8FC',
+        paddingHorizontal: PixelUtil.size(36),
+        paddingBottom: PixelUtil.size(32)
+    },
+    cardUseHeader:{
+        width: '100%',
+        height: PixelUtil.size(104),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    cardUseHeaderTitle:{
+        width: '25%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cardUseHeaderTitleTxt:{
+        fontSize: PixelUtil.size(28),
+        fontWeight: '700',
+        color: '#121C35'
+    },
+    cardUseBody:{
+        width: '100%',
+        flex: 1,
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(22),
+        paddingVertical: PixelUtil.size(14)
+    },
+    cardUseBodyItem:{
+        width: '100%',
+        height: PixelUtil.size(70),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        borderBottomColor: '#fefefe',
+        borderBottomWidth: PixelUtil.size(2)
+    },
+    cardUseBodyItemTitle:{
+        width: '25%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cardUseBodyItemText:{
+        fontSize: PixelUtil.size(26),
+        fontWeight: '500',
+        color: '#555555'
+    }
 });

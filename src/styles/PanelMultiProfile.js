@@ -210,7 +210,7 @@ export const PanelMultiProfiles = StyleSheet.create({
         flex: 1,
         width: '100%',
         position: 'relative',
-        paddingVertical: PixelUtil.size(30)
+        paddingVertical: PixelUtil.size(60),
     },
     memberBodyEmptyWrap: {
         width: '100%',
@@ -325,7 +325,21 @@ export const PanelMultiProfiles = StyleSheet.create({
         height: PixelUtil.size(28),
         marginRight: PixelUtil.size(8)
     },
-    customerDetailText:{
+    customerDetailTextPhone:{
+        marginRight: PixelUtil.size(30),
+        fontSize: PixelUtil.size(24),
+        color: '#636363',
+        fontWeight: "500",
+        width: PixelUtil.size(154),
+    },
+    customerDetailTextNo:{
+        marginRight: PixelUtil.size(30),
+        fontSize: PixelUtil.size(24),
+        color: '#636363',
+        fontWeight: "500",
+        width: PixelUtil.size(164),
+    },
+    customerDetailTextTime:{
         marginRight: PixelUtil.size(30),
         fontSize: PixelUtil.size(24),
         color: '#636363',

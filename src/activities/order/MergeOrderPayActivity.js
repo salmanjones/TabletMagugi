@@ -311,11 +311,12 @@ class MergeOrderPay extends React.Component {
 
                 { showPaySuccess &&
                     <QRCodePaymentNew
-                    paymentStatus={PaymentResultStatus.success}
-                    title={'订单支付'}
-                    navigation={this.props.navigation}
-                    flowNum={mainBilling.flowNumber}
-                    onClose={this.confirmPaySuccess.bind(this)}
+                        paymentStatus={PaymentResultStatus.success}
+                        title={'订单支付'}
+                        navigation={this.props.navigation}
+                        flowNum={mainBilling.flowNumber}
+                        billingNo={mainBilling.billingNo}
+                        onClose={this.confirmPaySuccess.bind(this)}
                   />
                 }
             </View>

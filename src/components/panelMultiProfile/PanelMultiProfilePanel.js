@@ -11,7 +11,7 @@ import {
     View,
 } from "react-native";
 import {PixelUtil} from "../../utils";
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 import {BackgroundImage} from "react-native-elements/dist/config";
 import {MultiProfileItem} from "./widgets/MultiProfileItem";
@@ -120,6 +120,14 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
         setMultiProfileArray(multiProfileData)
     }, [multiProfileData])
 
+    /// 监听展示状态
+    const flatListRef = useRef(null);
+    useEffect(()=>{
+        if(animateState.sliderShow){
+            multiProfileArray.length > 0 && flatListRef.current?.scrollToIndex({animated: true, index: 0})
+        }
+    }, [animateState.sliderShow])
+
     // 多档案数据
     return (
         <View style={animateState.sliderShow ? PanelMultiProfiles.rightPanelMask : {display: 'none'}}>
@@ -217,6 +225,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                     </BackgroundImage>
                     <View style={PanelMultiProfiles.memberBodyWrap}>
                         <FlatList
+                            ref={flatListRef}
                             data={multiProfileArray}
                             renderItem={
                                 ({item, index}) => {
@@ -228,7 +237,8 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
                                         showMode={showMode}
                                         waiterId={waiterId}
                                         actionType={actionType}
-                                        pagerName={pagerName}/>
+                                        pagerName={pagerName}
+                                        showState={animateState.sliderShow}/>
                                 }
                             }
                             keyExtractor={(item)=>item.memberNo}

@@ -309,7 +309,8 @@ export const billingOrderReducer = handleActions({
         return {
             ...state,
             loading: false,
-            propChangeType: 'payEndSuccess'
+            propChangeType: 'payEndSuccess',
+            payBillingNo: action.data.billingNo
         };
     },
     [CASHIERBILLING_PAY_REAL_V4.ERROR]: (state, action) => {

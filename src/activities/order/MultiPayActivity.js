@@ -127,7 +127,8 @@ class MultiPay extends React.Component {
             payWayType: 'self', // self:自己支付 other:他人代付
             multiProfiles: [], // 他人多档案
             anotherPortrait: null,
-            canUseOtherPay: true
+            canUseOtherPay: true,
+            billingNo: ''
         };
         this.savedBilling = null;
         this.panelMultiProfilePanelRef = null
@@ -626,6 +627,7 @@ class MultiPay extends React.Component {
                         navigation={this.props.navigation}
                         title={'订单支付'}
                         flowNum={billingInfo.flowNumber}
+                        billingNo={this.state.billingNo}
                         onClose={this.confirmPaySuccess.bind(this)}
                     />
                 )}
@@ -1740,22 +1742,22 @@ class MultiPay extends React.Component {
                         paymentList: JSON.stringify(paymentList),
                         realPay: 'true',
                         sendMsg: '0',
-                    })
-                        .then((backData) => {
-                            try {
-                                this.checkResult(backData);
-                                this.setState({isPaySuccess: true});
-                            } catch (e) {
-                                showMessage(e.msg, true);
-                            }
-                        })
-                        .catch((err) => {
-                            console.error("支付失败", err)
-                            showMessage('支付失败', true);
-                        })
-                        .finally(() => {
-                            this.setState({isLoading: false});
-                        });
+                    }).then((backData) => {
+                        try {
+                            this.checkResult(backData);
+                            this.setState({
+                                isPaySuccess: true,
+                                billingNo: billing.billingNo
+                            });
+                        } catch (e) {
+                            showMessage(e.msg, true);
+                        }
+                    }).catch((err) => {
+                        console.error("支付失败", err)
+                        showMessage('支付失败', true);
+                    }).finally(() => {
+                        this.setState({isLoading: false});
+                    });
                 } else {
                     //第三方支付
                     let payItem = paymentList.find((x) => x.payTypeId == 18 || x.payTypeId == 19);
@@ -1771,28 +1773,29 @@ class MultiPay extends React.Component {
                         billingNo: billing.billingNo,
                         companyId: billing.companyId,
                     })
-                        .then((backData) => {
-                            let data = backData.data;
-                            this.setState({
-                                qrCode: {
-                                    ...this.state.qrCode,
-                                    show: true,
-                                    qrUrl: data.codeUrl,
-                                    tradeNo: data.tradeNo,
-                                    totalPrice: payItem.payAmount,
-                                    payType: payTypeCode,
-                                    flowNumber: billing.flowNumber,
-                                },
-                                isLoading: false,
-                            });
-                        })
-                        .catch((err) => {
-                            console.error("支付失败", err)
-                            showMessage('支付失败', true);
-                        })
-                        .finally(() => {
-                            this.setState({isLoading: false});
+                    .then((backData) => {
+                        let data = backData.data;
+                        this.setState({
+                            qrCode: {
+                                ...this.state.qrCode,
+                                show: true,
+                                qrUrl: data.codeUrl,
+                                tradeNo: data.tradeNo,
+                                totalPrice: payItem.payAmount,
+                                payType: payTypeCode,
+                                flowNumber: billing.flowNumber,
+                            },
+                            isLoading: false,
+                            billingNo: billing.billingNo
                         });
+                    })
+                    .catch((err) => {
+                        console.error("支付失败", err)
+                        showMessage('支付失败', true);
+                    })
+                    .finally(() => {
+                        this.setState({isLoading: false});
+                    });
                 }
             })
             .catch((err) => {

@@ -159,3 +159,5 @@ export const getScanQRState = `${hostBms}/tablet/new/reserve/find/vcord/record`
 export const updateMemberProfile = `${hostBms}/tablet/new/reserve/update/customer/base/info`
 //查询是否开始新预约流程
 export const getConfigNewReserve = `${hostBms}/tablet/new/reserve/get/config/new/reserve`
+//获取支付完用的卡信息
+export const getPayByCards = `${hostBms}/tablet/new/reserve/find/billing/card/pay`

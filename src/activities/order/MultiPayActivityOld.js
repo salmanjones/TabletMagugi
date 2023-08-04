@@ -56,14 +56,14 @@ class MultiPay extends React.Component {
                     name: '会员卡支付', // 储值卡支付
                     icon: require('@imgPath/pay-multiply-card.png'),
                 },
-                {
-                    payType: 6,
-                    payTypeId: 19,
-                    payTypeNo: 19,
-                    name: '微信支付',
-                    payMode: 0,
-                    icon: require('@imgPath/pay-multiply-wechat.png'),
-                },
+                // {
+                //     payType: 6,
+                //     payTypeId: 19,
+                //     payTypeNo: 19,
+                //     name: '微信支付',
+                //     payMode: 0,
+                //     icon: require('@imgPath/pay-multiply-wechat.png'),
+                // },
                 // {
                 //     payType: 6,
                 //     payTypeId: 18,
@@ -103,6 +103,7 @@ class MultiPay extends React.Component {
             isPaySuccess: false,
             errorStockList: [],
             paySequence: [],
+            billingNo: ''
         };
         this.savedBilling = null;
     }
@@ -249,6 +250,7 @@ class MultiPay extends React.Component {
                         navigation={this.props.navigation}
                         title={'订单支付'}
                         flowNum={billingInfo.flowNumber}
+                        billingNo={this.state.billingNo}
                         onClose={this.confirmPaySuccess.bind(this)}
                     />
                 )}
@@ -1116,7 +1118,7 @@ class MultiPay extends React.Component {
                         .then((backData) => {
                             try {
                                 this.checkResult(backData);
-                                this.setState({isPaySuccess: true});
+                                this.setState({isPaySuccess: true, billingNo: billing.billingNo});
                             } catch (e) {
                                 showMessage(e.msg, true);
                             }
@@ -1156,6 +1158,7 @@ class MultiPay extends React.Component {
                                     flowNumber: billing.flowNumber,
                                 },
                                 isLoading: false,
+                                billingNo: billing.billingNo
                             });
                         })
                         .catch((err) => {

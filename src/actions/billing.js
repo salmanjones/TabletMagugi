@@ -292,8 +292,9 @@ const submitBillingSuccess = (orderInfo, consumeDetails, prePayData, payType, ch
                         sendMsg: '0',
                     }).then((backData) => {
                         let resultCode = backData.data.payResultCode;
-                        if (resultCode === '1')
-                            dispatch({type: CASHIERBILLING_PAY_REAL_V4.SUCCESS});
+                        if (resultCode === '1'){
+                            dispatch({type: CASHIERBILLING_PAY_REAL_V4.SUCCESS, data: {billingNo: orderInfo.billingNo}});
+                        }
                         else {
                             dispatch({type: CASHIERBILLING_PAY_REAL_V4.ERROR, data: backData.data});
                         }

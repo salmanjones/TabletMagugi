@@ -1527,6 +1527,7 @@ class CashierBillingView extends React.Component {
                             navigation={this.props.navigation}
                             title={'订单支付'}
                             flowNum={this.state.flowNumber}
+                            billingNo={this.props.orderInfo.billingNo}
                             onClose={this.confirmPaySuccess.bind(this)}
                         />
                     )
