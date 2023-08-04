@@ -124,7 +124,7 @@ const PanelMultiProfilePanelForwardRef = forwardRef(({multiProfileData, customer
     const flatListRef = useRef(null);
     useEffect(()=>{
         if(animateState.sliderShow){
-            multiProfileArray.length > 0 && flatListRef.current?.scrollToIndex({animated: true, index: 0})
+            multiProfileArray && multiProfileArray.length > 0 && flatListRef.current?.scrollToIndex({animated: true, index: 0})
         }
     }, [animateState.sliderShow])
 
