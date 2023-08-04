@@ -5,6 +5,7 @@ import CustomerFlatItem from "./CustomerFlatItem";
 import Spinner from "react-native-loading-spinner-overlay";
 import {getRefreshState} from "../../../services/reserve";
 import ReduxStore from "../../../store/store"
+import dayjs from "dayjs";
 
 export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, uniqueId, reserveDate}) => {
     // 呈现数据
@@ -44,7 +45,7 @@ export default React.memo(({stylistReserveInfo, reserveFlag, customerCardEvent, 
             getRefreshState({
                 storeId: ReduxStore.getState().auth.userInfo.storeId,
                 uniqueId:uniqueId,
-                reserveDate: reserveDate
+                reserveDate: reserveDate && reserveDate.length > 0 ? reserveDate: dayjs().format("YYYY-MM-DD")
             }).then(backData=>{
                 const {code, data} = backData
                 if(code == '6000'){
