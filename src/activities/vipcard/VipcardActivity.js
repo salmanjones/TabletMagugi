@@ -161,28 +161,39 @@ class VipCard extends React.Component {
                 '密码不能为空',
                 [{text: '知道了'}]
             )
-        }else{
-            const {showSimType, password, confirmPassWord} = this.state
-            if(showSimType == 'confirm'){ // 确认密码
-                if(password != value){ // 密码不一致
-                    Alert.alert(
-                        '系统提示',
-                        '两次密码输入不一致',
-                        [{text: '知道了'}]
-                    )
-                }else{
-                    this.setState({
-                        confirmPassWord: value,
-                        showSimKeyboard: false
-                    })
-                }
+
+            return
+        }
+
+        if(value.length < 6){
+            Alert.alert(
+                '系统提示',
+                '密码不能小于6位',
+                [{text: '知道了'}]
+            )
+            return
+        }
+
+        const {showSimType, password} = this.state
+        if(showSimType == 'confirm'){ // 确认密码
+            if(password != value){ // 密码不一致
+                Alert.alert(
+                    '系统提示',
+                    '两次密码输入不一致',
+                    [{text: '知道了'}]
+                )
             }else{
                 this.setState({
-                    password: value,
-                    confirmPassWord: '',
+                    confirmPassWord: value,
                     showSimKeyboard: false
                 })
             }
+        }else{
+            this.setState({
+                password: value,
+                confirmPassWord: '',
+                showSimKeyboard: false
+            })
         }
     }
     // 输入密码
