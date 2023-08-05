@@ -154,7 +154,6 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         //无内容-文字
         fontSize: PixelUtil.size(24),
         color: '#333',
-        marginLeft: PixelUtil.size(40),
         fontWeight: '500'
     },
     cardOperateT: {
@@ -487,6 +486,26 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         width: '100%',
         flex: 1,
     },
+    simKeyBoardBox:{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        zIndex: 500,
+        backgroundColor: '#00000080',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    simKeyBoardBg:{
+        width: PixelUtil.size(760),
+        height: PixelUtil.size(800),
+        paddingTop: PixelUtil.size(50),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        borderRadius: PixelUtil.size(10)
+    },
     LeftOpenCardcontent: {
         // 售卡-左边主体
         width: '50%',
@@ -514,26 +533,78 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         borderBottomColor: '#cbcbcb',
         borderBottomWidth: PixelUtil.size(2)
     },
-    openCardCategory: {
-        width: '60%',
-        paddingLeft: PixelUtil.size(78),
-    },
     openCardInfoBox: {
         // 顶部--卡信息
         width: '100%',
         height: '100%',
-        flex: 0,
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
     },
     openCardInfo: {
         // 顶部--卡信息
+        width: PixelUtil.size(820),
+        height: PixelUtil.size(260),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    openCardExtInfo: {
+        // 顶部--卡信息
+        width: PixelUtil.size(820),
+        paddingLeft: PixelUtil.size(40),
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'flex-start',
+    },
+    openCardPwdInfo: {
+        // 顶部--卡信息
+        width: PixelUtil.size(820),
+        marginTop: PixelUtil.size(90),
+        paddingLeft: PixelUtil.size(42),
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'flex-start',
+    },
+    cardPwdBox:{
         width: '100%',
-        // height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
+    },
+    cardPwdTitle:{
+        fontSize: PixelUtil.size(28),
+        fontWeight: '700',
+        color: '#333333'
+    },
+    cardPwdInputBox:{
+        width: '100%',
+        marginTop: PixelUtil.size(30),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center',
+        alignItems: 'center'
+    },
+    cardPwdRequired:{
+        fontSize: PixelUtil.size(28),
+        fontWeight: '500',
+        color: '#FFA800'
+    },
+    cardPwdName:{
+        fontSize: PixelUtil.size(28),
+        fontWeight: '500',
+        color: '#333333',
+        marginLeft: PixelUtil.size(6)
+    },
+    cardPwdValue:{
+        fontSize: PixelUtil.size(24),
+        borderColor: '#E7E7E7',
+        borderBottomWidth: PixelUtil.size(2),
+        width: PixelUtil.size(594),
+        height: PixelUtil.size(58)
     },
     openCardServicerInfo: {
         // 中部-服务人
@@ -542,9 +613,10 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         overflow: 'hidden',
     },
     openCardOther: {
-        width: '25%',
-        paddingTop: PixelUtil.size(60),
-        paddingBottom: PixelUtil.size(60),
+        flex:1,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     openCardOtheBox: {
         width: '100%',

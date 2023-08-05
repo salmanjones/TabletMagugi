@@ -38,7 +38,7 @@ export const fetchVipCardSales = (storeId, cardType) => {
         backData.data = cardList;
         return backData;
     });
-};
+}
 
 /**
  *
@@ -62,7 +62,9 @@ export const fetchCreateCardOrder = (
     vipCardNo,
     cardCateId,
     cardType,
-    client
+    client,
+    isPassword,
+    password
 ) => {
     const pay = THIRD_PAY[payType];
     let params = {
@@ -87,10 +89,61 @@ export const fetchCreateCardOrder = (
         cardCateId,
         cardType,
         clientType: client
-    };
+    }
+
+    if(isPassword == true){ // 需要修改密码
+        params['isPassword'] = '1'
+        params['password'] = password
+    }else{
+        params['isPassword'] = '0'
+    }
 
     return callService(api.createCardOrder, params);
-};
+}
+
+export const fetchOtherPayment = (
+    deptId,
+    isRecharge,
+    payType,
+    payTypeId,
+    payName,
+    memberId,
+    payAmount,
+    staffIds,
+    vipCardName,
+    vipCardNo,
+    cardCateId,
+    cardType,
+    client,
+    isPassword,
+    password
+) => {
+    let params = {
+        cardCateId,
+        cardType,
+        payType: payType,
+        payTypeId: payTypeId,
+        payTypeNo: payTypeId,
+        payAmount: payAmount,
+        payName: payName,
+        deptId: deptId,
+        isRecharge: isRecharge,
+        memberId: memberId,
+        staffIds: staffIds,
+        vipCardName: vipCardName,
+        vipCardNo: vipCardNo,
+        clientType: client
+    }
+
+    if(isPassword == true){ // 需要修改密码
+        params['isPassword'] = '1'
+        params['password'] = password
+    }else{
+        params['isPassword'] = '0'
+    }
+
+    return callService(api.payOtherPayment, params);
+}
 
 export const fetchCardConsumeHistory = (cardId, pageNo, pageSize) => {
     let params = {
@@ -112,38 +165,4 @@ export const fetchStaffAcl = (acl, staffId) => {
 
 export const fetchOtherPayType = () => {
     return callService(api.getOtherPayType, {});
-}
-
-export const fetchOtherPayment = (
-    deptId,
-    isRecharge,
-    payType,
-    payTypeId,
-    payName,
-    memberId,
-    payAmount,
-    staffIds,
-    vipCardName,
-    vipCardNo,
-    cardCateId,
-    cardType,
-    client
-) => {
-    let params = {
-        cardCateId,
-        cardType,
-        payType: payType,
-        payTypeId: payTypeId,
-        payTypeNo: payTypeId,
-        payAmount: payAmount,
-        payName: payName,
-        deptId: deptId,
-        isRecharge: isRecharge,
-        memberId: memberId,
-        staffIds: staffIds,
-        vipCardName: vipCardName,
-        vipCardNo: vipCardNo,
-        clientType: client
-    };
-    return callService(api.payOtherPayment, params);
 }

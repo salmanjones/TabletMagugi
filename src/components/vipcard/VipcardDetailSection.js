@@ -2,8 +2,9 @@ import React from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 
 import {amendItemInfoStyle, RechargeStoredCardStyles,} from '../../styles';
-import {SaleCardItem} from '../../components';
+import {SaleCardItem, SimulateKeyboardPay} from '../../components';
 import {PixelUtil} from "../../utils";
+import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
 
 export class VipcardDetailSection extends React.PureComponent {
     constructor(props) {
@@ -33,21 +34,21 @@ export class VipcardDetailSection extends React.PureComponent {
     };
 
     render() {
-        const {data, acl} = this.props;
+        const {data, acl, password, confirmPassWord, onShowSimKeyboard, showSimKeyboard} = this.props;
         const {count, openPrice, depositMoney, active} = this.state;
         const showCard = !!data.id;
         const cardType = data.cardType == 1 ? true : false;
         const consumeMode = data.consumeMode == 2 ? true : false;
 
-
-        return (
-            <View style={RechargeStoredCardStyles.openCardBox}>
-                {showCard && (
+        if(showCard){
+            return (
+                <View style={RechargeStoredCardStyles.openCardBox}>
                     <View style={RechargeStoredCardStyles.openCardInfoBox}>
+                        {/*基本信息*/}
                         <View style={RechargeStoredCardStyles.openCardInfo}>
-                            <View style={RechargeStoredCardStyles.openCardCategory}>
-                                <SaleCardItem data={data}/>
-                            </View>
+                            {/*选择的会员卡*/}
+                            <SaleCardItem data={data}/>
+                            {/*会员卡附加信息*/}
                             <View style={RechargeStoredCardStyles.openCardOther}>
                                 {/*总金额*/}
                                 <Text style={RechargeStoredCardStyles.cardOperateT}>开卡金额</Text>
@@ -121,15 +122,58 @@ export class VipcardDetailSection extends React.PureComponent {
 
                             </View>
                         </View>
+                        {/*附加信息*/}
                         {depositMoney != 0 && (
-                            <View style={{width: '85%', display: 'flex', flexDirection:'row', justifyContent: 'flex-start'}}>
+                            <View style={RechargeStoredCardStyles.openCardExtInfo}>
                                 <Text style={RechargeStoredCardStyles.cardOperateNoneText}>* 需支付</Text>
                                 <Text style={RechargeStoredCardStyles.storedCardTipPrice}>工本费 {depositMoney}元</Text>
                             </View>
                         )}
+                        {
+                            showSimKeyboard && (
+                                <View style={RechargeStoredCardStyles.openCardPwdInfo}>
+                                    <View style={RechargeStoredCardStyles.cardPwdBox}>
+                                        <Text style={RechargeStoredCardStyles.cardPwdTitle}>会员密码设置</Text>
+                                        <View style={RechargeStoredCardStyles.cardPwdInputBox}>
+                                            <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
+                                            <Text style={RechargeStoredCardStyles.cardPwdName}>会员密码：</Text>
+                                            <TextInput
+                                                editable={false}
+                                                keyboardType={'phone-pad'}
+                                                style={RechargeStoredCardStyles.cardPwdValue}
+                                                placeholder={'请输入会员密码'}
+                                                placeholderTextColor={'#8e8e8e'}
+                                                value={password && password.length > 0 ? '******':''}
+                                                onPressIn={()=>{
+                                                    onShowSimKeyboard('general')
+                                                }}
+                                                maxLength={6}/>
+                                        </View>
+                                        <View style={RechargeStoredCardStyles.cardPwdInputBox}>
+                                            <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
+                                            <Text style={RechargeStoredCardStyles.cardPwdName}>确认密码：</Text>
+                                            <TextInput
+                                                editable={false}
+                                                keyboardType={'phone-pad'}
+                                                style={RechargeStoredCardStyles.cardPwdValue}
+                                                placeholder={'请再次输入会员密码'}
+                                                placeholderTextColor={'#8e8e8e'}
+                                                value={confirmPassWord && confirmPassWord.length > 0 ? '******':''}
+                                                onPressIn={()=>{
+                                                    onShowSimKeyboard('confirm')
+                                                }}
+                                                maxLength={6}/>
+                                        </View>
+                                    </View>
+                                </View>
+                            )
+                        }
                     </View>
-                )}
-                {!showCard && (
+                </View>
+            )
+        }else{
+            return (
+                <View style={RechargeStoredCardStyles.openCardBox}>
                     <View style={RechargeStoredCardStyles.cardOperateNoneBox}>
                         <View>
                             <Image resizeMethod="resize"
@@ -140,8 +184,8 @@ export class VipcardDetailSection extends React.PureComponent {
                             <Text style={RechargeStoredCardStyles.cardOperateNoneT}>请选择您要购买的会员卡</Text>
                         </View>
                     </View>
-                )}
-            </View>
-        );
+                </View>
+            )
+        }
     }
 }

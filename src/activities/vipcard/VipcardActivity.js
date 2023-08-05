@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
+import {Alert, ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
 
 import {RechargeStoredCardStyles} from '../../styles';
-import {showMessage} from '../../utils';
+import {showMessage, showMessageExt} from '../../utils';
 import {
+    SimulateKeyboardPay,
     StaffSelectBox,
     StaffServiceBar,
     StaffServiceEdit,
@@ -36,6 +37,10 @@ class VipCard extends React.Component {
 
         this.state = {
             tabIndex: 0,
+            password: '',
+            confirmPassWord: '',
+            showSimKeyboard: false,
+            showSimType: '' // general：输入密码 confirm：确认密码
         };
         this.acl = {};
         this.paymentModal = null
@@ -80,7 +85,8 @@ class VipCard extends React.Component {
     };
 
     submitOrder = () => {
-        const {card, staffs} = this.props;
+        const {card, staffs, member} = this.props;
+        const {password} = this.state;
         if (!card.id) {
             showMessage(Msg.noCard);
             return;
@@ -90,6 +96,17 @@ class VipCard extends React.Component {
         if (invalidStaffs.length == 0) {
             showMessage(Msg.noStaffs);
             return;
+        }
+
+        // 需要密码
+        const needPassword = !(member.bmsPassword && member.bmsPassword.length > 0)
+        if(needPassword && ( !password || password.length < 1 )){
+            Alert.alert(
+                '系统提示',
+                '会员密码不能为空',
+                [{text: '知道了'}]
+            )
+            return
         }
 
         this.paymentModal.showModal();
@@ -114,7 +131,54 @@ class VipCard extends React.Component {
                 </View>
             </View>
         );
-    };
+    }
+
+    // 展示密码框
+    onShowSimKeyboard(type){
+        this.setState({
+            showSimKeyboard: true,
+            showSimType: type
+        })
+    }
+
+    // 输入密码
+    onKeyBoardFinish = value => {
+        if(value.length < 1){
+            Alert.alert(
+                '系统提示',
+                '密码不能为空',
+                [{text: '知道了'}]
+            )
+        }else{
+            const {showSimType, password, confirmPassWord} = this.state
+            if(showSimType == 'confirm'){ // 确认密码
+                if(password != value){ // 密码不一致
+                    Alert.alert(
+                        '系统提示',
+                        '两次密码输入不一致',
+                        [{text: '知道了'}]
+                    )
+                }else{
+                    this.setState({
+                        confirmPassWord: value,
+                        showSimKeyboard: false
+                    })
+                }
+            }else{
+                this.setState({
+                    password: value,
+                    confirmPassWord: '',
+                    showSimKeyboard: false
+                })
+            }
+        }
+    }
+    // 输入密码
+    onKeyBoardCancel = value => {
+        this.setState({
+            showSimKeyboard: false
+        })
+    }
 
     render() {
         const {
@@ -130,11 +194,38 @@ class VipCard extends React.Component {
             navigation,
             reloadCashierProfile
         } = this.props;
-        const {tabIndex} = this.state;
+        const {tabIndex, showSimKeyboard, showSimType, password, confirmPassWord} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
+                {
+                    (()=>{
+                        if(showSimKeyboard){
+                            return (
+                                <View style={RechargeStoredCardStyles.simKeyBoardBox}>
+                                    <View style={RechargeStoredCardStyles.simKeyBoardBg}>
+                                        <SimulateKeyboardPay
+                                            placeholder={showSimType == 'confirm' ? '请再次输入密码':'请输入密码'}
+                                            showCanel={true}
+                                            showInput={true}
+                                            clearBtn={false}
+                                            pageType="pwd"
+                                            refType={'setPassword'}
+                                            showSimType={showSimType}
+                                            password={password}
+                                            confirmPassWord={confirmPassWord}
+                                            onConfirm={this.onKeyBoardFinish.bind(this)}
+                                            onCanel={this.onKeyBoardCancel.bind(this)}
+                                        />
+                                    </View>
+                                </View>
+                            )
+                        }else{
+                            return <View></View>
+                        }
+                    })()
+                }
                 {/*标题栏*/}
                 <View style={RechargeStoredCardStyles.openCardTitle}>
                     {/*标题*/}
@@ -185,6 +276,10 @@ class VipCard extends React.Component {
                                 data={card}
                                 setCount={setCount}
                                 count={count}
+                                password={password}
+                                confirmPassWord={confirmPassWord}
+                                showSimKeyboard={!(member.bmsPassword && member.bmsPassword.length > 0)}
+                                onShowSimKeyboard={this.onShowSimKeyboard.bind(this)}
                                 acl={this.acl}
                             />
                             {/*服务人信息*/}
@@ -244,6 +339,7 @@ class VipCard extends React.Component {
                     member={member}
                     totalPrice={totalPrice}
                     card={card}
+                    password={password}
                     model={'vipcard'}
                     reloadCashierProfile={reloadCashierProfile}
                     pagerName={this.props.route.params.pagerName || 'RechargeActivity.js'}

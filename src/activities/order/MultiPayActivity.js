@@ -912,6 +912,7 @@ class MultiPay extends React.Component {
                                 </Text>
                             </View>
                             <SimulateKeyboardPay
+                                placeholder={'请输入密码'}
                                 showCanel={true}
                                 showInput={true}
                                 clearBtn={false}

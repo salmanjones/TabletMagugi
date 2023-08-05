@@ -12,11 +12,22 @@ export class SimulateKeyboardPay extends React.PureComponent {
             showInput: props.showInput ? props.showInput : false,
             showCanel: props.showCanel ? props.showCanel : false,
             pageType: props.pageType ? props.pageType : 'mulPay',
+            placeholder: props.placeholder ? props.placeholder : '请输入支付金额',
         };
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ number: nextProps.number || '' });
+    }
+
+    componentDidMount() {
+        if(this.props.refType == 'setPassword'){ // 设置密码
+            if(this.props.showSimType == 'confirm'){ // 确认密码
+                this.setState({ number: this.props.confirmPassWord || ''});
+            }else{
+                this.setState({ number: this.props.password || ''});
+            }
+        }
     }
 
     onBack = () => {
@@ -79,21 +90,18 @@ export class SimulateKeyboardPay extends React.PureComponent {
     };
 
     render() {
-        const { onConfirm, display, pageType } = this.props;
-        const { number } = this.state;
+        const {pageType} = this.props;
+        const {number, placeholder } = this.state;
         let isPwd = pageType == 'pwd';
         let textContent = isPwd
-            ? number
-                  .split('')
-                  .map((x) => '•')
-                  .join('')
+            ? number.split('').map((x) => '*').join('')
             : number;
         return (
             <View style={multiplyPayStyle.payKeyBoardWrap}>
                 <TextInput
                     maxLength={11}
                     keyboardType={'numeric'}
-                    placeholder={'请输入支付金额'}
+                    placeholder={placeholder}
                     style={this.state.showInput ? commonStyles.simulateKeyboardInput : commonStyles.hidden}
                     underlineColorAndroid="transparent"
                     onChangeText={(number) => this.setState({ number })}

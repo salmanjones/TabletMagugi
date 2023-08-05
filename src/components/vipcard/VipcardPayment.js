@@ -70,12 +70,15 @@ export class VipcardPayment extends React.PureComponent {
     };
 
     onConfirm = () => {
+        let that = this;
+        const {member, totalPrice, staffs, card, password} = this.props;
         const {payType, payTypeId, payName, deptId, model} = this.state;
+
+        // 支付为空
         if (!payType || !payTypeId || !deptId) {
             showMessage('请选择服务部门和支付方式', true);
             return;
         }
-        const {member, totalPrice, staffs, card} = this.props;
 
         // 0元的次卡只有套餐卡能开
         if (card.cardType == 2 && card.consumeMode != 1 && card.initialPrice == 0) {
@@ -83,15 +86,13 @@ export class VipcardPayment extends React.PureComponent {
             return;
         }
 
+        // 服务人
+        const staffids = staffs.filter(x => x.id).map(x => x.id).join(',');
+        // 是否需要设置密码
+        const isPassword = !(member.bmsPassword && member.bmsPassword.length > 0)
 
-        const staffids = staffs
-            .filter(x => x.id)
-            .map(x => x.id)
-            .join(',');
-
-        let that = this;
+        // 正在支付
         this.setState({isPaying: true});
-
         if (payTypeId == '18' || payTypeId == '19') {
             fetchCreateCardOrder(
                 deptId,
@@ -104,7 +105,9 @@ export class VipcardPayment extends React.PureComponent {
                 card.vipCardNo,
                 card.cardCateId,
                 card.cardType,
-                'tablet'
+                'tablet',
+                isPassword,
+                password
             ).then(backData => {
                 const data = backData.data;
                 if (data.tradeNo && data.codeUrl) {
@@ -147,7 +150,9 @@ export class VipcardPayment extends React.PureComponent {
                 card.vipCardNo,
                 card.cardCateId,
                 card.cardType,
-                'tablet'
+                'tablet',
+                isPassword,
+                password
             ).then(backData => {
                 if (backData.code == '6000') {
                     that.setState({
