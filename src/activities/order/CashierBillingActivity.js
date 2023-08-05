@@ -3836,7 +3836,7 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                     showBlock.storeName = cardInfo.storeName;
 
                     // 是否可以跨店
-                    let detailsMap = cardInfo.detailsMap
+                    let detailsMap = cardInfo.detailsMap || {crossConsumeStores: '', isCross:false}
                     showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
                     showBlock.isCross = detailsMap.isCross;
 
@@ -3873,7 +3873,7 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                         showBlock.storeName = cardInfo.storeName;
 
                         // 是否可以跨店
-                        let detailsMap = cardInfo.detailsMap
+                        let detailsMap = cardInfo.detailsMap || {crossConsumeStores: '', isCross:false}
                         showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
                         showBlock.isCross = detailsMap.isCross;
 
@@ -3906,7 +3906,7 @@ const buildCardProjDatas = (prevState, vipcardArray) => {
                         showBlock.storeName = cardInfo.storeName;
 
                         // 是否可以跨店
-                        let detailsMap = cardInfo.detailsMap
+                        let detailsMap = cardInfo.detailsMap || {crossConsumeStores: '', isCross:false}
                         showBlock.crossConsumeStores = detailsMap.crossConsumeStores;
                         showBlock.isCross = detailsMap.isCross;
 
