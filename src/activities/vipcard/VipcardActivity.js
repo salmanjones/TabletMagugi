@@ -86,7 +86,7 @@ class VipCard extends React.Component {
 
     submitOrder = () => {
         const {card, staffs, member} = this.props;
-        const {password} = this.state;
+        const {password, confirmPassWord} = this.state;
         if (!card.id) {
             showMessage(Msg.noCard);
             return;
@@ -100,13 +100,34 @@ class VipCard extends React.Component {
 
         // 需要密码
         const needPassword = !(member.bmsPassword && member.bmsPassword.length > 0)
-        if(needPassword && ( !password || password.length < 1 )){
-            Alert.alert(
-                '系统提示',
-                '会员密码不能为空',
-                [{text: '知道了'}]
-            )
-            return
+        if(needPassword){
+            if(!password || password.length < 1 ){
+                Alert.alert(
+                    '系统提示',
+                    '会员密码不能为空',
+                    [{text: '知道了'}]
+                )
+                return
+            }
+
+            if(!confirmPassWord || confirmPassWord.length < 1 ){
+                Alert.alert(
+                    '系统提示',
+                    '确认密码不能为空',
+                    [{text: '知道了'}]
+                )
+                return
+            }
+
+            if(password != confirmPassWord){
+                Alert.alert(
+                    '系统提示',
+                    '两次密码输入不一致',
+                    [{text: '知道了'}]
+                )
+
+                return
+            }
         }
 
         this.paymentModal.showModal();
