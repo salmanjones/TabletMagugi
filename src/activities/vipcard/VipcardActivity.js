@@ -141,6 +141,18 @@ class VipCard extends React.Component {
         })
     }
 
+    // 清除密码
+    onKeyBoardClear(){
+        const {showSimType} = this.state
+        console.log("showSimType", showSimType)
+        if(showSimType != 'confirm'){ // 第一次输入密码
+            this.setState({
+                password: '',
+                confirmPassWord: '',
+            })
+        }
+    }
+
     // 输入密码
     onKeyBoardFinish = value => {
         if(value.length < 1){
@@ -215,6 +227,7 @@ class VipCard extends React.Component {
                                             showSimType={showSimType}
                                             password={password}
                                             confirmPassWord={confirmPassWord}
+                                            onClear={this.onKeyBoardClear.bind(this)}
                                             onConfirm={this.onKeyBoardFinish.bind(this)}
                                             onCanel={this.onKeyBoardCancel.bind(this)}
                                         />

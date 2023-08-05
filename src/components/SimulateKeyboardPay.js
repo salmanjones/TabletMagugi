@@ -37,6 +37,7 @@ export class SimulateKeyboardPay extends React.PureComponent {
 
     onClear = () => {
         this.setState({ number: '' });
+        this.props.onClear && this.props.onClear();
     };
 
     onCanel() {
