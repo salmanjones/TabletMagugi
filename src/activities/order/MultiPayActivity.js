@@ -1630,7 +1630,9 @@ class MultiPay extends React.Component {
 
         let paymentList = this.state.paySequence.map((x) => {
             let newItem = {...x.value};
-            if (newItem.payType == 2 || newItem.payType == 4) newItem.payTypePwd = pwd;
+            if (newItem.payType == 2 || newItem.payType == 4){
+                newItem.payTypePwd = pwd
+            }
             return newItem;
         });
         this.setState({showCardPwd: false}, () => this.pay(paymentList));
