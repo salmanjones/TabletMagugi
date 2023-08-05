@@ -105,7 +105,7 @@ export const ReserveBoardActivity = props => {
     // 散客预约子组件
     const guestPanelRef = useRef(null);
     // 获取预约数据（当前设备唯一编号，用来确定是否有新预约「多设备」）
-    const uniqueId = parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+'')
+    const [uniqueId, setUniqueId] = useState(parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+''))
 
     // 获取当前日期
     const getShowDate = ()=>{
