@@ -346,7 +346,7 @@ class CashierView extends React.Component {
         return (
             <View style={[cashierStyles.container, cashierStyles.openOrderContainer]}>
                 {/*左侧组件*/}
-                <View style={memberIdentifyStyle.Box}>
+                <View style={memberIdentifyStyle.QueryBox}>
                     <SearchModule
                         placeholder={'手机号、姓名或会员号'}
                         onSearchPress={this.queryData}

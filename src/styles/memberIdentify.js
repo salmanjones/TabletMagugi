@@ -18,7 +18,15 @@ export const memberIdentifyStyle = StyleSheet.create({
     },
     Box: {
         // 左侧内容
-        width:'50%',
+        width: '50%',
+        height: '100%',
+        borderRightColor: '#cbcbcb',
+        borderRightWidth: PixelUtil.size(2),
+        backgroundColor: '#fff',
+    },
+    QueryBox: {
+        // 左侧内容
+        width: PixelUtil.size(982),
         height: '100%',
         borderRightColor: '#cbcbcb',
         borderRightWidth: PixelUtil.size(2),
