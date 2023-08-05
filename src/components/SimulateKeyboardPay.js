@@ -107,7 +107,7 @@ export class SimulateKeyboardPay extends React.PureComponent {
                     underlineColorAndroid="transparent"
                     onChangeText={(number) => this.setState({ number })}
                     value={textContent}
-                    editable={!isPwd}
+                    editable={pageType == 'pwd' ? false:true}
                 />
                 <SimulateKeyboard
                     pageType={this.state.pageType}
