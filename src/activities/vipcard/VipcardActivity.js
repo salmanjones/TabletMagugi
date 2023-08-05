@@ -194,7 +194,7 @@ class VipCard extends React.Component {
             return
         }
 
-        const {showSimType, password} = this.state
+        const {showSimType, password, confirmPassWord} = this.state
         if(showSimType == 'confirm'){ // 确认密码
             if(password != value){ // 密码不一致
                 Alert.alert(
@@ -209,11 +209,18 @@ class VipCard extends React.Component {
                 })
             }
         }else{
-            this.setState({
-                password: value,
-                confirmPassWord: '',
-                showSimKeyboard: false
-            })
+            if(password != confirmPassWord){ // 第二次输入密码与第一次不同，则清空第一次的确认密码
+                this.setState({
+                    password: value,
+                    confirmPassWord: '',
+                    showSimKeyboard: false
+                })
+            }else{
+                this.setState({
+                    password: value,
+                    showSimKeyboard: false
+                })
+            }
         }
     }
     // 输入密码
