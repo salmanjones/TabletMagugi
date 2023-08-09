@@ -50,7 +50,7 @@ import {
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
     deleteBillingAction,
-    getPendingListAction
+    getPendingListAction, reloadProfileAction
 } from '../../actions';
 import {
     decodeContent,
@@ -592,8 +592,85 @@ class CashierBillingView extends React.Component {
             this.props.resetToCashier();
         } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
             showMessage(nextProps.orderInfo.message);
-        } else if (nextProps.orderInfo.propChangeType == 'reloadProfile') {
-            this.getCustomerProfile(this, true, null, null)
+        } else if (nextProps.orderInfo.propChangeType == 'reloadProfileInit') {
+            // init方法已经完成
+            const self = this
+            const {reloadCashierProfile, auth} = self.props
+            reloadCashierProfile('finish')
+
+            // 重新加载档案信息
+            const {member} = self.props.route.params
+            // 会员则刷新已有的会员卡
+            if(member && member.id){
+                const loginUser = auth.userInfo
+                const memberId = member.id
+                const {memberProfile} = self.state
+                // 获取最新会员信息
+                const portraitPromise = getMemberPortrait({
+                    p: 1,
+                    ps: 1000,
+                    cardInfoFlag: false,
+                    solrSearchType: 0,
+                    kw: memberId
+                })
+                // 获取最新会员卡
+                const cardsPromise = getMemberCards({
+                    memberId: memberId,
+                    isExpireCard: 1
+                })
+                // 获取最新会员卡数据
+                const billCardsPromise = getMemberBillCards({
+                    companyId: loginUser.companyId,
+                    storeId: loginUser.storeId,
+                    customerId: memberId,
+                    isExpireCard: 1
+                })
+
+                Promise.all([portraitPromise, cardsPromise, billCardsPromise]).then(backData=>{
+                    // 处理返回的数据
+                    const portraitBackData = backData[0]
+                    const cardsBackData = backData[1]
+                    const billCardsBackData = backData[2]
+                    if (portraitBackData.code != '6000'
+                        || cardsBackData.code != '6000'
+                        || billCardsBackData.code != '6000') {
+                        // 错误
+                        console.error("获取最新会员信息失败", backData)
+                        // 刷新左上角用户信息
+                        self.getCustomerProfile(self, true, null, null)
+                    }else{
+                        // BMS会员档案
+                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        // BMS会员卡
+                        const memberCardInfo = cardsBackData['data']
+                        // 开单用的会员卡
+                        const billCards = billCardsBackData['data']
+                        // 新会员信息
+                        const newestMemberInfo = Object.assign({}, memberPortrait, {
+                            userImgUrl: getImage(
+                                memberProfile.imgUrl,
+                                ImageQutity.member_small,
+                                'https://pic.magugi.com/magugi_default_01.png'
+                            ),
+                            vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
+                            cardBalanceCount: memberCardInfo.cardBalanceCount,
+                            cardCount: memberCardInfo.cardCount
+                        })
+
+                        // 重新处理会员信息
+                        this.bindMemberInfo(newestMemberInfo, ()=>{
+                            // 刷新左上角用户信息
+                            self.getCustomerProfile(self, true, null, null)
+                        })
+                    }
+                }).catch(e=>{
+                    console.warn("获取会员卡最新信息失败", e)
+                    // 刷新左上角用户信息
+                    self.getCustomerProfile(self, true, null, null)
+                })
+            }else{
+                this.getCustomerProfile(this, true, null, null)
+            }
         }
     }
 
@@ -973,17 +1050,17 @@ class CashierBillingView extends React.Component {
         this.bindMemberInfo(member);
     }
 
-    bindMemberInfo(member) {
+    bindMemberInfo(member, callBack) {
         member.userImgUrl = getImage(
             member.imgUrl,
             ImageQutity.member_small,
             defaultMemberImg
         );
 
-        var cardBalanceCount = 0.0;
-        var cardCount = 0;
+        let cardBalanceCount = 0.0;
+        let cardCount = 0;
         if (member.vipStorageCardList) {
-            var vipStorageCardList = member.vipStorageCardList;
+            const vipStorageCardList = member.vipStorageCardList;
             cardCount = vipStorageCardList.length;
 
             for (let k = 0; k < vipStorageCardList.length; k++) {
@@ -1074,7 +1151,11 @@ class CashierBillingView extends React.Component {
                 }
 
                 return prevState;
+            }, ()=>{
+                callBack && callBack()
             });
+        }).catch(e=>{
+            callBack && callBack()
         })
     }
 
@@ -1523,7 +1604,7 @@ class CashierBillingView extends React.Component {
             getMemberDetail(queryArgs).then(backData => {
                 const {code, data} = backData
                 if (code == '6000') {
-                    const memberProfile = data
+                    const memberProfile = data || {}
                     memberProfile['isGuest'] = false
 
                     // 更新会员状态
@@ -3519,14 +3600,6 @@ const buildDatas = (self, orderData, cb) => {
             prevState.keyNumber = orderData.handNumber;
             prevState.deptId = orderData.deptId;
             prevState.isOldCustomer = self.state.isOldCustomer;
-
-            //
-            //
-            // console.log("prevState.showProjCategoryChoose", JSON.stringify(prevState.showProjCategoryChoose))
-            // console.log("prevState.showItemCategoryChoose", JSON.stringify(prevState.showItemCategoryChoose))
-            //
-            //
-
             return prevState;
         }, cb);
     })
@@ -5027,6 +5100,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateCustomerInfo: (orderInfo) => {
             dispatch({type: CASHIERBILLING_CUSTOMER.SUCCESS, orderInfo: orderInfo});
+        },
+        reloadCashierProfile: (status)=>{
+            dispatch(reloadProfileAction(status))
         }
     };
 };
