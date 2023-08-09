@@ -142,16 +142,71 @@ class MultiPay extends React.Component {
         })
     }
 
-    getInitData(callBack){
+    async getInitData(callBack){
+        // 获取会员信息
+        let memberInfo = this.props.route.params.memberInfo
+        if(memberInfo && memberInfo.id){
+            const memberId = memberInfo.id
+            // 开始准备开单的数据-获取BMS会员档案
+            const portraitBackData = await getMemberPortrait({
+                p: 1,
+                ps: 1000,
+                cardInfoFlag: false,
+                solrSearchType: 0,
+                kw: memberId,
+            })
+            // 登录的员工信息
+            const loginUser = this.props.auth.userInfo;
+            // 开始准备开单的数据-获取BMS会员卡
+            const cardsBackData = await getMemberCards({
+                memberId: memberId,
+                isExpireCard: 1
+            })
+            // 获取开单用的会员卡数据
+            const billCardsBackData = await getMemberBillCards({
+                companyId: loginUser.companyId,
+                storeId: loginUser.storeId,
+                customerId: memberId,
+                isExpireCard: 1
+            })
+
+
+            if (portraitBackData.code != '6000'
+                || cardsBackData.code != '6000'
+                || billCardsBackData.code != '6000') {
+                // 错误
+                console.warn("重新获取会员卡信息失败")
+            } else {
+                // BMS会员档案
+                const memberPortrait = portraitBackData['data']['memberList'][0]
+                // BMS会员卡
+                const memberCardInfo = cardsBackData['data']
+                // 开单用的会员卡
+                const billCards = billCardsBackData['data']
+
+                // 开单参数
+                memberInfo = Object.assign({}, memberPortrait, {
+                    userImgUrl: getImage(
+                        memberInfo.userImgUrl && memberInfo.userImgUrl.uri ? memberInfo.userImgUrl.uri : '',
+                        ImageQutity.member_small,
+                        'https://pic.magugi.com/magugi_default_01.png'
+                    ),
+                    vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
+                    cardBalanceCount: memberCardInfo.cardBalanceCount,
+                    cardCount: memberCardInfo.cardCount
+                })
+            }
+        }
+
         // 准备订单基础数据
-        let {saveBillingData, memberInfo, items, paymentTimesCard, companySetting} = this.props.route.params;
+        let {saveBillingData, items, paymentTimesCard, companySetting} = this.props.route.params;
         let billingInfo = JSON.parse(saveBillingData.billing);
 
         // 获取页面基础数据
-        this.getInitialData(billingInfo, memberInfo, items, (data) => {
-            let stateData = {...this.state, paymentTimesCard};
-            if (data) {
-                let {othersPaymentList, coupons} = data;
+        this.getAvailablePayment(billingInfo, memberInfo, items, (backData) => {
+            const stateData = {...this.state, paymentTimesCard};
+            if (backData) {
+                let {othersPaymentList, coupons} = backData;
                 // 处理外联支付
                 let otherPayTypes = othersPaymentList ? othersPaymentList.map((x) => ({
                         payType: 3,
@@ -947,7 +1002,7 @@ class MultiPay extends React.Component {
     }
 
     //请求页面基础数据
-    getInitialData(billingInfo, memberInfo, items, callback) {
+    getAvailablePayment(billingInfo, memberInfo, items, callback) {
         const params = {
             companyId: billingInfo.companyId,
             storeId: billingInfo.storeId,
