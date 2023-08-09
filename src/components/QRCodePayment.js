@@ -77,7 +77,7 @@ export class QRCodePayment extends React.PureComponent {
             onClose && onClose();
 
             if(pagerName == 'CashierBillingActivity'){
-                reloadCashierProfile()
+                reloadCashierProfile('init')
                 navigation.goBack()
             }else{
                 navigation.navigate('CashierActivity');

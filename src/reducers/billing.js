@@ -56,10 +56,15 @@ export const billingOrderReducer = handleActions({
             }
         };
     },
-    [CASHIERBILLING_RELOAD_PROFILE]:()=>{
+    [CASHIERBILLING_RELOAD_PROFILE.PENDING]:()=>{
        return {
-           propChangeType: 'reloadProfile'
+           propChangeType: 'reloadProfileInit'
        }
+    },
+    [CASHIERBILLING_RELOAD_PROFILE.SUCCESS]:()=>{
+        return {
+            propChangeType: 'reloadProfileFinish'
+        }
     },
     //开单
     [CASHIERBILLING_INIT.PENDING]: (state) => {
@@ -359,11 +364,6 @@ export const billingOrderReducer = handleActions({
         return {
             ...state,
             propChangeType: 'reloadOrder',
-        };
-    },
-    [CASHIERBILLING_RELOAD_PROFILE]: () => {
-        return {
-            propChangeType: 'reloadProfile'
         };
     }
 }, defaultOrderState);

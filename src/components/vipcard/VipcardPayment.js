@@ -375,7 +375,7 @@ export class VipcardPayment extends React.PureComponent {
                                     navigation={navigation}
                                     onClose={() => {
                                         if(pagerName == 'CashierBillingActivity'){ // 来自于收银
-                                            reloadCashierProfile()
+                                            reloadCashierProfile('init')
                                             navigation.goBack()
                                         }else{
                                             navigation.navigate('CashierActivity')

@@ -46,11 +46,18 @@ export const clearBillingCacheAction = () => {
 };
 
 //收银-重新加载会员资料
-export const reloadProfileAction = () => {
-    return {
-        type: CASHIERBILLING_RELOAD_PROFILE,
-    };
-};
+export const reloadProfileAction = (status) => {
+    if(status == 'init') {
+        return {
+            type: CASHIERBILLING_RELOAD_PROFILE.PENDING,
+        }
+    }else if(status == 'finish'){
+        return {
+            type: CASHIERBILLING_RELOAD_PROFILE.SUCCESS,
+        }
+    }
+}
+
 
 export const cashierBillingFlowNumberInitAction = refeshTag => {
     return (dispatch, getState) => {

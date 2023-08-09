@@ -105,8 +105,7 @@ class Login extends React.Component {
                             {/*用户名*/}
                             <View style={loginStyles.loginTextBox}>
                                 <TextInput
-                                    type="name-phone-pad"
-                                    keyboardType="email-address"
+                                    keyboardType={"default"}
                                     style={
                                         this.props.formValues.focus ==
                                         'username'

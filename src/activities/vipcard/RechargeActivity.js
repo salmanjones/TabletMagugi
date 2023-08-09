@@ -444,8 +444,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        reloadCashierProfile: ()=>{
-            dispatch(reloadProfileAction())
+        reloadCashierProfile: (status)=>{
+            dispatch(reloadProfileAction(status))
         }
     };
 };
