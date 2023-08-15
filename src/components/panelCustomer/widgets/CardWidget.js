@@ -78,13 +78,17 @@ export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEven
                 }
             </View>
             {/*卡列表*/}
-            <View style={PanelCustomerStyles.memberCardsWrap}>
-                <CardFlatList
-                    cardArray={tabList[activeTabIndex]['data']}
-                    cardType={tabList[activeTabIndex]['title']}
-                    customerPressEvent={customerPressEvent}
-                    extendsInfo={extendsInfo}/>
-            </View>
+            {
+                tabList[activeTabIndex] && (
+                    <View style={PanelCustomerStyles.memberCardsWrap}>
+                        <CardFlatList
+                            cardArray={tabList[activeTabIndex]['data']}
+                            cardType={tabList[activeTabIndex]['title']}
+                            customerPressEvent={customerPressEvent}
+                            extendsInfo={extendsInfo}/>
+                    </View>
+                )
+            }
         </View>
     )
 })

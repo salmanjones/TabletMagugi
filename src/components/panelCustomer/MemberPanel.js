@@ -103,13 +103,27 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     if(customerInfo['reserveInfo'] && customerInfo['reserveInfo']['staffId']){
         waiterId = customerInfo['reserveInfo']['staffId']
     }
+
     // 页签数据
     // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
     let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
     if (customerInfo.couponList.length < 1) {
         tabArray = tabArray.filter(item => item != '优惠券')
     }
-    if ((customerInfo.czkCount + customerInfo.ckCount) < 1) {
+
+    // 会员卡信息
+    const cardsInfo = customerInfo['cardsInfo']
+    const validCardList = cardsInfo.card1List || []       // 可用余额
+    const invalidCardList = cardsInfo.card2List || []     // 过期卡
+    const storageCardList = cardsInfo.card3List || []     // 储值卡
+    const timeCardList = cardsInfo.card4List || []        // 次卡
+    const zeroCardList = cardsInfo.card5List || []        // 0元卡
+    if (validCardList.length < 1
+        && invalidCardList.length < 1
+        && storageCardList.length < 1
+        && timeCardList.length < 1
+        && zeroCardList.length < 1 ) {
+
         tabArray = tabArray.filter(item => item != '顾客资产')
     }
     if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
