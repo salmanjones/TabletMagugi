@@ -41,6 +41,7 @@ class VipCard extends React.Component {
             tabIndex: 0,
             password: '',
             confirmPassWord: '',
+            enableCheckSms: false, // 开启验证码校验
             smsCode: '',
             smsSendCode: '', // 发送的验证码
             hasCheckSms: false,
@@ -109,7 +110,7 @@ class VipCard extends React.Component {
 
     submitOrder = async () => {
         const {card, staffs, member} = this.props;
-        const {portrait, password, confirmPassWord, smsCode, hasCheckSms} = this.state;
+        const {portrait, password, confirmPassWord, smsCode, hasCheckSms, enableCheckSms} = this.state;
         if (!card.id) {
             showMessage(Msg.noCard);
             return;
@@ -147,7 +148,7 @@ class VipCard extends React.Component {
             }
 
             // 如果需要验证码
-            if(portrait && portrait.phone && !hasCheckSms){
+            if(portrait && portrait.phone && !hasCheckSms && enableCheckSms){
                 if(!smsCode || smsCode.trim().length < 1){
                     Alert.alert(
                         '系统提示',
@@ -336,7 +337,7 @@ class VipCard extends React.Component {
             navigation,
             reloadCashierProfile
         } = this.props;
-        const {portrait, tabIndex, showSimKeyboard, showSimType, password, confirmPassWord, smsCode} = this.state;
+        const {portrait, tabIndex, showSimKeyboard, showSimType, password, confirmPassWord, smsCode, enableCheckSms} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
         return (
@@ -422,6 +423,7 @@ class VipCard extends React.Component {
                                 password={password}
                                 confirmPassWord={confirmPassWord}
                                 portrait={portrait}
+                                enableCheckSms={enableCheckSms}
                                 smsCode={smsCode}
                                 changeSmsCode={this.changeSmsCode.bind(this)}
                                 getSmsCode={this.getSmsCode.bind(this)}

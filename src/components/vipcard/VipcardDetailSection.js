@@ -2,9 +2,7 @@ import React from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 
 import {amendItemInfoStyle, RechargeStoredCardStyles,} from '../../styles';
-import {SaleCardItem, SimulateKeyboardPay} from '../../components';
-import {PixelUtil} from "../../utils";
-import {PanelMultiProfiles} from "../../styles/PanelMultiProfile";
+import {SaleCardItem} from '../../components';
 
 export class VipcardDetailSection extends React.PureComponent {
     constructor(props) {
@@ -85,7 +83,7 @@ export class VipcardDetailSection extends React.PureComponent {
     }
 
     render() {
-        const {data, acl, password, confirmPassWord, portrait, smsCode, changeSmsCode, onShowSimKeyboard, showSimKeyboard} = this.props;
+        const {data, acl, password, confirmPassWord, portrait, smsCode, changeSmsCode, enableCheckSms, onShowSimKeyboard, showSimKeyboard} = this.props;
         const {count, openPrice, depositMoney, active, smsType, smsCountDown} = this.state;
         const showCard = !!data.id;
         const cardType = data.cardType == 1 ? true : false;
@@ -223,7 +221,7 @@ export class VipcardDetailSection extends React.PureComponent {
                                                 maxLength={6}/>
                                         </View>
                                         {
-                                            portrait && portrait.phone && (
+                                            enableCheckSms && portrait && portrait.phone && (
                                                 <View style={RechargeStoredCardStyles.cardPwdInputBox}>
                                                     <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
                                                     <Text style={RechargeStoredCardStyles.cardPwdName}>手&ensp;机&ensp;号：</Text>
@@ -235,7 +233,7 @@ export class VipcardDetailSection extends React.PureComponent {
                                             )
                                         }
                                         {
-                                            portrait && portrait.phone && (
+                                            enableCheckSms && portrait && portrait.phone && (
                                                 <View style={RechargeStoredCardStyles.cardPwdInputBox}>
                                                     <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
                                                     <Text style={RechargeStoredCardStyles.cardPwdName}>验&ensp;证&ensp;码：</Text>
