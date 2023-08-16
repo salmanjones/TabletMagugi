@@ -14,7 +14,10 @@ export class VipcardDetailSection extends React.PureComponent {
             openPrice: 0,
             depositMoney: 0,
             active: false,
+            smsType: '0', // 0正常获取，1:正在倒计时
+            smsCountDown: 60, // 倒计时总时长
         }
+        this.smsTimer = null
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -33,12 +36,67 @@ export class VipcardDetailSection extends React.PureComponent {
         this.props.setCount(count);
     };
 
+    // 开始倒计时
+    getSmsCode = ()=>{
+        // 清空缓存的timerId
+        if(this.smsTimer){
+            clearInterval(this.smsTimer)
+            this.smsTimer = null
+        }
+
+        // 开启倒计时
+        this.setState({
+            smsType: '1',
+        })
+
+        // 开始倒计时
+        let smsCountDown = 60
+        this.smsTimer = setInterval(()=>{
+            smsCountDown = smsCountDown - 1
+            if(smsCountDown < 1){ // 为0倒计时结束
+                this.smsTimer && clearInterval(this.smsTimer)
+                this.setState((prevState)=>{
+                    return {
+                        ...prevState,
+                        smsType: '0',
+                        smsCountDown: 60
+                    }
+                })
+            }else{
+                this.setState((prevState)=>{
+                    return {
+                        ...prevState,
+                        smsCountDown
+                    }
+                })
+            }
+        }, 1000)
+
+        // 获取验证码
+        this.props.getSmsCode()
+    }
+
+    componentWillUnmount() {
+        // 清除计时器
+        if(this.smsTimer){
+            clearInterval(this.smsTimer)
+            this.smsTimer = null
+        }
+    }
+
     render() {
-        const {data, acl, password, confirmPassWord, onShowSimKeyboard, showSimKeyboard} = this.props;
-        const {count, openPrice, depositMoney, active} = this.state;
+        const {data, acl, password, confirmPassWord, portrait, smsCode, changeSmsCode, onShowSimKeyboard, showSimKeyboard} = this.props;
+        const {count, openPrice, depositMoney, active, smsType, smsCountDown} = this.state;
         const showCard = !!data.id;
         const cardType = data.cardType == 1 ? true : false;
         const consumeMode = data.consumeMode == 2 ? true : false;
+        // 处理验证码展示
+        let smsTips = '获取验证码'
+        if(smsType == '0'){
+            smsTips = '获取验证码'
+        }else if(smsType == '1'){
+            smsTips = '重新获取('+smsCountDown+')'
+        }
 
         if(showCard){
             return (
@@ -164,6 +222,46 @@ export class VipcardDetailSection extends React.PureComponent {
                                                 }}
                                                 maxLength={6}/>
                                         </View>
+                                        {
+                                            portrait && portrait.phone && (
+                                                <View style={RechargeStoredCardStyles.cardPwdInputBox}>
+                                                    <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
+                                                    <Text style={RechargeStoredCardStyles.cardPwdName}>手&ensp;机&ensp;号：</Text>
+                                                    <TextInput
+                                                        editable={false}
+                                                        style={RechargeStoredCardStyles.cardPhoneValue}
+                                                        value={portrait.phone}/>
+                                                </View>
+                                            )
+                                        }
+                                        {
+                                            portrait && portrait.phone && (
+                                                <View style={RechargeStoredCardStyles.cardPwdInputBox}>
+                                                    <Text style={RechargeStoredCardStyles.cardPwdRequired}>*</Text>
+                                                    <Text style={RechargeStoredCardStyles.cardPwdName}>验&ensp;证&ensp;码：</Text>
+                                                    <TextInput
+                                                        editable={true}
+                                                        keyboardType={'numeric'}
+                                                        style={RechargeStoredCardStyles.cardPwdValue}
+                                                        placeholder={'请请入验证码'}
+                                                        placeholderTextColor={'#8e8e8e'}
+                                                        value={smsCode}
+                                                        onChangeText={value=> {changeSmsCode(value)}}
+                                                        maxLength={6}/>
+                                                    <TouchableOpacity
+                                                        style={RechargeStoredCardStyles.cardSMSBtn}
+                                                        onPress={()=>{
+                                                            if(smsType == '0') {
+                                                                this.getSmsCode()
+                                                            }
+                                                        }}>
+                                                        <Text style={smsType == '0' ? RechargeStoredCardStyles.cardSMSTxt:RechargeStoredCardStyles.cardSMSTxtDisable}>
+                                                            {smsTips}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )
+                                        }
                                     </View>
                                 </View>
                             )

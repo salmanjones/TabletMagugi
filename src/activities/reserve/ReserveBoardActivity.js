@@ -689,9 +689,10 @@ export const ReserveBoardActivity = props => {
                             hideAllPanel()
                             // BMS会员档案
                             const memberPortrait = portraitBackData['data']['memberList'][0] || {}
-                            if(!memberPortrait || memberPortrait.id){
+                            if(!memberPortrait || !memberPortrait.id){
                                 memberPortrait['id'] =  extra.memberId
                             }
+
                             navigation.navigate('VipcardActivity', {
                                 type: 'vip',
                                 member: memberPortrait,
@@ -751,7 +752,10 @@ export const ReserveBoardActivity = props => {
                         }else{
                             setLoading(false)
                             // BMS会员档案
-                            const memberPortrait = portraitBackData['data']['memberList'][0]
+                            const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                            if(!memberPortrait || !memberPortrait.id){
+                                memberPortrait['id'] = extra.memberId
+                            }
                             // BMS会员卡
                             const memberCardInfo =  cardsBackData['data']
                             // 员工权限
@@ -979,7 +983,10 @@ export const ReserveBoardActivity = props => {
                         hideAllPanel()
                         // BMS会员档案
                         const cardId = extra['cardId']
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = extra.memberId
+                        }
                         const cardList = memberPortrait['vipStorageCardList'] || []
                         const selectCard = cardList.filter(card=>{
                             return card.id == cardId

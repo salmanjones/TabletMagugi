@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Alert, ImageBackground, InteractionManager, Text, TouchableOpacity, View,} from 'react-native';
+import {Alert, ImageBackground, Text, TouchableOpacity, View,} from 'react-native';
 
 import {RechargeStoredCardStyles} from '../../styles';
-import {showMessage, showMessageExt} from '../../utils';
+import {pickNumber, showMessage, showMessageExt} from '../../utils';
 import {
     SimulateKeyboardPay,
     StaffSelectBox,
@@ -25,6 +25,8 @@ import {
 import {fetchStaffAcl} from '../../services';
 import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
 import {TimerRightWidget} from "../../components/header/TimerRightWidget";
+import {sendSmsCode, verifySmsCode} from "../../services/sms";
+import {getMemberDetail} from "../../services/reserve";
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
@@ -39,11 +41,16 @@ class VipCard extends React.Component {
             tabIndex: 0,
             password: '',
             confirmPassWord: '',
+            smsCode: '',
+            smsSendCode: '', // 发送的验证码
+            hasCheckSms: false,
             showSimKeyboard: false,
-            showSimType: '' // general：输入密码 confirm：确认密码
+            showSimType: '', // general：输入密码 confirm：确认密码
+            portrait: null // 顾客的档案「来源于DB」
         };
         this.acl = {};
         this.paymentModal = null
+        this.smsTimer = null
     }
 
     componentDidMount() {
@@ -59,8 +66,24 @@ class VipCard extends React.Component {
             console.error(err)
         });
 
-        let params = this.props.route.params.member || {}
-        init(params);
+        const member = this.props.route.params.member || {}
+        // 初始化顾客信息(来源于索引)
+        init(member);
+
+        // 获取顾客档案
+        if(member && member.id){
+            getMemberDetail({
+                memberId: member.id,
+            }).then(res => {
+                const {code, data} = res
+                if (code == '6000') {
+                    const portrait = res.data
+                    this.setState({
+                        portrait
+                    })
+                }
+            })
+        }
 
         // 右侧时间
         const {navigation} = this.props;
@@ -84,17 +107,11 @@ class VipCard extends React.Component {
         this.props.selectStaff(staff);
     };
 
-    submitOrder = () => {
+    submitOrder = async () => {
         const {card, staffs, member} = this.props;
-        const {password, confirmPassWord} = this.state;
+        const {portrait, password, confirmPassWord, smsCode, hasCheckSms} = this.state;
         if (!card.id) {
             showMessage(Msg.noCard);
-            return;
-        }
-
-        let invalidStaffs = staffs.filter(x => x.id);
-        if (invalidStaffs.length == 0) {
-            showMessage(Msg.noStaffs);
             return;
         }
 
@@ -128,10 +145,50 @@ class VipCard extends React.Component {
 
                 return
             }
+
+            // 如果需要验证码
+            if(portrait && portrait.phone && !hasCheckSms){
+                if(!smsCode || smsCode.trim().length < 1){
+                    Alert.alert(
+                        '系统提示',
+                        '验证码不能为空',
+                        [{text: '知道了'}]
+                    )
+                    return
+                }
+
+                const {loginUser} = this.props
+                const checkSmsCode = await verifySmsCode({
+                    phone: portrait.phone,
+                    companyId: loginUser.companyId,
+                    code: smsCode
+                });
+                if(checkSmsCode.code != '6000' || checkSmsCode.data != true){
+                    Alert.alert(
+                        '系统提示',
+                        '验证码错误',
+                        [{text: '知道了'}]
+                    )
+                    this.setState({
+                        hasCheckSms: false
+                    })
+                    return
+                }else{
+                    this.setState({
+                        hasCheckSms: true
+                    })
+                }
+            }
+        }
+
+        let invalidStaffs = staffs.filter(x => x.id);
+        if (invalidStaffs.length == 0) {
+            showMessage(Msg.noStaffs);
+            return;
         }
 
         this.paymentModal.showModal();
-    };
+    }
 
     renderTotal = totalPrice => {
         return (
@@ -151,7 +208,7 @@ class VipCard extends React.Component {
                     </TouchableOpacity>
                 </View>
             </View>
-        );
+        )
     }
 
     // 展示密码框
@@ -223,10 +280,45 @@ class VipCard extends React.Component {
             }
         }
     }
+
     // 输入密码
     onKeyBoardCancel = value => {
         this.setState({
             showSimKeyboard: false
+        })
+    }
+
+    // 获取验证码
+    getSmsCode = ()=>{
+        // 开启倒计时
+        this.setState({
+            hasCheckSms: false
+        })
+
+        // 获取验证码
+        const {portrait} = this.state
+        const {loginUser} = this.props
+        sendSmsCode({
+            phone: portrait.phone,
+            companyId: loginUser.companyId
+        }).then(backData=>{
+            const {code, data} = backData
+            if(code == '6000'){
+                showMessageExt("验证码发送成功")
+            }else{
+                showMessageExt("验证码发送失败")
+            }
+        }).catch(e=>{
+            showMessageExt("验证码发送失败")
+        })
+    }
+
+    // 输入验证码
+    changeSmsCode = value=>{
+        // 更新状态
+        this.setState({
+            smsCode: pickNumber(value),
+            hasCheckSms: false
         })
     }
 
@@ -244,7 +336,7 @@ class VipCard extends React.Component {
             navigation,
             reloadCashierProfile
         } = this.props;
-        const {tabIndex, showSimKeyboard, showSimType, password, confirmPassWord} = this.state;
+        const {portrait, tabIndex, showSimKeyboard, showSimType, password, confirmPassWord, smsCode} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
 
         return (
@@ -329,6 +421,10 @@ class VipCard extends React.Component {
                                 count={count}
                                 password={password}
                                 confirmPassWord={confirmPassWord}
+                                portrait={portrait}
+                                smsCode={smsCode}
+                                changeSmsCode={this.changeSmsCode.bind(this)}
+                                getSmsCode={this.getSmsCode.bind(this)}
                                 showSimKeyboard={!(member.bmsPassword && member.bmsPassword.length > 0)}
                                 onShowSimKeyboard={this.onShowSimKeyboard.bind(this)}
                                 acl={this.acl}
@@ -402,7 +498,6 @@ class VipCard extends React.Component {
 
 const mapStateToProps = state => {
     const {vipcard} = state;
-
     return {
         staffs: vipcard.staffs,
         card: vipcard.card,
@@ -410,7 +505,8 @@ const mapStateToProps = state => {
         count: vipcard.count,
         totalPrice: vipcard.totalPrice,
         staffIndex: vipcard.staffIndex,
-        operateUser: state.auth.userInfo.staffId
+        operateUser: state.auth.userInfo.staffId,
+        loginUser: state.auth.userInfo,
     };
 };
 

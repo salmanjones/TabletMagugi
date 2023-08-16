@@ -161,3 +161,7 @@ export const updateMemberProfile = `${hostBms}/tablet/new/reserve/update/custome
 export const getConfigNewReserve = `${hostBms}/tablet/new/reserve/get/config/new/reserve`
 //获取支付完用的卡信息
 export const getPayByCards = `${hostBms}/tablet/new/reserve/find/billing/card/pay`
+//获取验证码
+export const getSmsCode= `${hostBms}/tablet/sms/code/get`
+//验证输入的验证码
+export const verifySmsCode= `${hostBms}/tablet/sms/code/verify`

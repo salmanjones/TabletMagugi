@@ -640,7 +640,10 @@ class CashierBillingView extends React.Component {
                         self.getCustomerProfile(self, true, null, null)
                     }else{
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = memberId
+                        }
                         // BMS会员卡
                         const memberCardInfo = cardsBackData['data']
                         // 开单用的会员卡
@@ -1749,7 +1752,10 @@ class CashierBillingView extends React.Component {
                         this.setState({isLoading: false})
                         // 关闭所有面板
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait["id"] = this.state.memberProfile.memberId
+                        }
                         AppNavigate.navigate('VipcardActivity', {
                             type: 'vip',
                             member: memberPortrait,
@@ -1784,7 +1790,11 @@ class CashierBillingView extends React.Component {
                         this.setState({isLoading: false})
                         // BMS会员档案
                         const cardId = extra['cardId']
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = extra.memberId
+                        }
+
                         const cardList = memberPortrait['vipStorageCardList'] || []
                         const selectCard = cardList.filter(card => {
                             return card.id == cardId
@@ -1920,8 +1930,11 @@ class CashierBillingView extends React.Component {
                     } else {
                         this.setState({isLoading: false})
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
                         memberPortrait['isGuest'] = false
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = extra.memberId
+                        }
                         // BMS会员卡
                         const memberCardInfo = cardsBackData['data']
                         // 开单用的会员卡

@@ -83,17 +83,18 @@ export const showMessageExt = (msg, config = {}, native, callback) => {
     }
 };
 
-//延时动作
+/**
+ * 延时执行
+ */
 let delayTimer;
 export const dealyAction = (action, delay = 350) => {
     delayTimer && clearTimeout(delayTimer);
-    delayTimer =
-        action &&
-        setTimeout(() => {
-            action();
-            action = undefined;
-            dealyAction();
-        }, delay);
+    delayTimer = action && setTimeout(() => {
+        action();
+        action = undefined;
+        delayTimer && clearTimeout(delayTimer)
+        dealyAction();
+    }, delay);
 };
 
 export const groupBy = (array, getKey) => {
@@ -107,10 +108,21 @@ export const groupBy = (array, getKey) => {
     return groups;
 };
 
+/**
+ * 深克隆
+ * @param obj
+ * @returns {any}
+ */
 export const clone = (obj) => {
     return obj ? JSON.parse(JSON.stringify(obj)) : obj;
 }
 
+/**
+ * 合并数组并去重
+ * @param list1
+ * @param list2
+ * @returns {*}
+ */
 export const concatWithoutDuplicate = (list1, list2) => {
     const set = new Set(list1.map(item => item.id));
     const filterList2 = [];
@@ -123,14 +135,31 @@ export const concatWithoutDuplicate = (list1, list2) => {
     return list1.concat(filterList2);
 };
 
+/**
+ * 手机号验证
+ * @param phone
+ * @returns {boolean}
+ */
 export const isPhone = phone => {
     return /^1[3|4|5|6|7|8|9][0-9]{9}$/.test(phone);
 };
 
+/**
+ * 验证6位卡密
+ * @param value
+ * @returns {boolean}
+ */
 export const isValidCardPwd = value => {
     return /^[0-9]{6}$/.test(value);
 };
 
+/**
+ * 获取展示路径
+ * @param url
+ * @param format
+ * @param defaultImage
+ * @returns {{uri}|{uri: string}|string}
+ */
 export const getImage = (url, format, defaultImage = 'https://pic.magugi.com/magugi_default_01.png') => {
     if (!url) {
         if(defaultImage && defaultImage.indexOf && defaultImage.indexOf('http') != -1) {
@@ -146,6 +175,11 @@ export const getImage = (url, format, defaultImage = 'https://pic.magugi.com/mag
     }
 };
 
+/**
+ * 将普通手机号转换为安全手机号
+ * @param phone
+ * @returns {string}
+ */
 export const getPhoneSecurity = (phone)=>{
     if(!phone || phone.trim().length < 11){
         return ""
@@ -154,7 +188,12 @@ export const getPhoneSecurity = (phone)=>{
     return phone.substring(0, 3) + "****" + phone.substring(7, 11)
 }
 
-
+/**
+ * 适应多层解码
+ * @param content
+ * @param maxNum
+ * @returns {string}
+ */
 export const decodeContent = (content, maxNum = 2)=>{
     let backTxt = content
     let decodeNum = 1
@@ -169,4 +208,13 @@ export const decodeContent = (content, maxNum = 2)=>{
     }
 
     return backTxt
+}
+
+/**
+ * 提取字符串中所有数字
+ * @param value
+ * @returns {string}
+ */
+export const pickNumber = (value = '')=>{
+    return value.trim().replace(/[^\d.]/g, "")
 }

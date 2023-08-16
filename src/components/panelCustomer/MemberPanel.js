@@ -123,7 +123,6 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         && storageCardList.length < 1
         && timeCardList.length < 1
         && zeroCardList.length < 1 ) {
-
         tabArray = tabArray.filter(item => item != '顾客资产')
     }
     if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {

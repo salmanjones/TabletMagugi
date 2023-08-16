@@ -586,7 +586,8 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative'
     },
     cardPwdRequired:{
         fontSize: PixelUtil.size(28),
@@ -597,7 +598,7 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         fontSize: PixelUtil.size(28),
         fontWeight: '500',
         color: '#333333',
-        marginLeft: PixelUtil.size(6)
+        marginLeft: PixelUtil.size(6),
     },
     cardPwdValue:{
         fontSize: PixelUtil.size(24),
@@ -605,6 +606,28 @@ export const RechargeStoredCardStyles = StyleSheet.create({
         borderBottomWidth: PixelUtil.size(2),
         width: PixelUtil.size(594),
         height: PixelUtil.size(58)
+    },
+    cardPhoneValue:{
+        fontSize: PixelUtil.size(24),
+        borderColor: '#E7E7E7',
+        color: '#9d9c9c',
+        borderBottomWidth: PixelUtil.size(2),
+        width: PixelUtil.size(594),
+        height: PixelUtil.size(58)
+    },
+    cardSMSBtn: {
+        position: 'absolute',
+        right: PixelUtil.size(30)
+    },
+    cardSMSTxt:{
+        fontSize: PixelUtil.size(22),
+        color: '#FFA800',
+        fontWeight: 'bold'
+    },
+    cardSMSTxtDisable:{
+        fontSize: PixelUtil.size(22),
+        color: '#9d9c9c',
+        fontWeight: 'bold'
     },
     openCardServicerInfo: {
         // 中部-服务人

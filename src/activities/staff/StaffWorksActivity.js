@@ -136,7 +136,10 @@ export class StaffWorksView extends React.Component {
                             isLoading: false
                         })
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = memberId
+                        }
                         // BMS会员卡
                         const memberCardInfo =  cardsBackData['data']
                         // 员工权限

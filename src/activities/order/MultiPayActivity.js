@@ -178,7 +178,11 @@ class MultiPay extends React.Component {
                 console.warn("重新获取会员卡信息失败")
             } else {
                 // BMS会员档案
-                const memberPortrait = portraitBackData['data']['memberList'][0]
+                const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                if(!memberPortrait || !memberPortrait.id){
+                    memberPortrait['id'] = memberId
+                }
+
                 // BMS会员卡
                 const memberCardInfo = cardsBackData['data']
                 // 开单用的会员卡
@@ -496,8 +500,11 @@ class MultiPay extends React.Component {
                     } else {
                         this.setState({isLoading: false})
                         // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0]
+                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
                         memberPortrait['isGuest'] = false
+                        if(!memberPortrait || !memberPortrait.id){
+                            memberPortrait['id'] = extra.memberId
+                        }
                         // BMS会员卡
                         const memberCardInfo = cardsBackData['data']
                         // 开单用的会员卡
