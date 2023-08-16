@@ -21,7 +21,6 @@ export class QRCodePaymentNew extends React.PureComponent {
         }, ()=>{
             if(paymentStatus == 'success'){
                 const billingNo = this.props.billingNo
-                console.log("billingNo", JSON.stringify(this.props))
                 if(billingNo && billingNo.length > 0){
                     getPayByCards({billingNo: billingNo}).then(backData=>{
                         const {data, code} = backData
