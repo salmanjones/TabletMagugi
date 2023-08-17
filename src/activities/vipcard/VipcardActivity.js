@@ -41,7 +41,7 @@ class VipCard extends React.Component {
             tabIndex: 0,
             password: '',
             confirmPassWord: '',
-            enableCheckSms: false, // 开启验证码校验
+            enableCheckSms: true, // 开启验证码校验
             smsCode: '',
             smsSendCode: '', // 发送的验证码
             hasCheckSms: false,
