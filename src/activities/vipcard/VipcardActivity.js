@@ -47,6 +47,7 @@ class VipCard extends React.Component {
             hasCheckSms: false,
             showSimKeyboard: false,
             showSimType: '', // general：输入密码 confirm：确认密码
+            member: {}, // 用户信息
             portrait: null // 顾客的档案「来源于DB」
         };
         this.acl = {};
@@ -55,7 +56,7 @@ class VipCard extends React.Component {
     }
 
     componentDidMount() {
-        const {init, operateUser} = this.props;
+        const {operateUser} = this.props;
         let aclTxt = 'ncashier_opencard_card_money';
         fetchStaffAcl(aclTxt, operateUser).then(o => {
             if (o.data) {
@@ -68,8 +69,9 @@ class VipCard extends React.Component {
         });
 
         const member = this.props.route.params.member || {}
-        // 初始化顾客信息(来源于索引)
-        init(member);
+        this.setState({
+            member: member
+        })
 
         // 获取顾客档案
         if(member && member.id){
@@ -109,8 +111,8 @@ class VipCard extends React.Component {
     };
 
     submitOrder = async () => {
-        const {card, staffs, member} = this.props;
-        const {portrait, password, confirmPassWord, smsCode, hasCheckSms, enableCheckSms} = this.state;
+        const {card, staffs} = this.props;
+        const {portrait, password, confirmPassWord, smsCode, hasCheckSms, enableCheckSms, member} = this.state;
         if (!card.id) {
             showMessage(Msg.noCard);
             return;
@@ -327,7 +329,6 @@ class VipCard extends React.Component {
         const {
             staffs,
             card,
-            member,
             count,
             totalPrice,
             staffIndex,
@@ -337,9 +338,8 @@ class VipCard extends React.Component {
             navigation,
             reloadCashierProfile
         } = this.props;
-        const {portrait, tabIndex, showSimKeyboard, showSimType, password, confirmPassWord, smsCode, enableCheckSms} = this.state;
+        const {portrait, tabIndex, showSimKeyboard, showSimType, password, confirmPassWord, smsCode, enableCheckSms, member} = this.state;
         const editStaff = staffIndex !== -1 ? staffs[staffIndex] : {};
-
         return (
             <View style={RechargeStoredCardStyles.contentNew}>
                 {
@@ -377,6 +377,7 @@ class VipCard extends React.Component {
                         {
                             (()=>{
                                 if(member && member.id && member.id.length > 0){
+                                    // 会员信息
                                     return (<VipUserInfoComponent memberId={member.id} showBtn={false}/>)
                                 }else{
                                     return (<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>)
@@ -503,7 +504,6 @@ const mapStateToProps = state => {
     return {
         staffs: vipcard.staffs,
         card: vipcard.card,
-        member: vipcard.member,
         count: vipcard.count,
         totalPrice: vipcard.totalPrice,
         staffIndex: vipcard.staffIndex,
@@ -515,7 +515,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
         {
-            init: vipcardInitAction,
             selectCard: vipcardSelectCardAction,
             setCount: vipcardSetCountAction,
             selectStaff: vipcardSelectStaffAction,
