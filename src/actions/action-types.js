@@ -63,6 +63,7 @@ export const MEMBER_INDENTIFY_RESET = createAction(
 //VipCard
 export const VIPCARD_SELECT_CARD = createAction('VIPCARD_SELECT_CARD', true);
 export const VIPCARD_INIT = createAction('VIPCARD_INIT', true);
+export const VIPCARD_CLEAR_CACHE = createAction('VIPCARD_INIT', true);
 export const VIPCARD_GET_SALES_CARD = createAction('VIPCARD_GET_SALES_CARD');
 export const VIPCARD_SET_COUNT = createAction('VIPCARD_SET_COUNT', true);
 export const VIPCARD_SELECT_STAFF = createAction('VIPCARD_SELECT_STAFF', true);

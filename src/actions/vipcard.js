@@ -4,6 +4,15 @@ import {delay, showMessage} from '../utils';
 
 const CACHE_TIME = 3600 * 1000 * 2;
 
+export const vipcardClearCacheAction = member => {
+    return function (dispatch, getState) {
+        dispatch({
+            type: types.VIPCARD_CLEAR_CACHE,
+            body: {},
+        });
+    };
+};
+
 export const vipcardInitAction = member => {
     return function (dispatch, getState) {
         dispatch({

@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {VIPCARD_INIT, VIPCARD_SELECT_CARD, VIPCARD_SELECT_STAFF, VIPCARD_SET_COUNT, VIPCARD_SET_STAFF,} from '../actions';
+import {VIPCARD_INIT, VIPCARD_SELECT_CARD, VIPCARD_SELECT_STAFF, VIPCARD_SET_COUNT, VIPCARD_SET_STAFF, VIPCARD_CLEAR_CACHE} from '../actions';
 
 export const initialState = {
     staffs: [{}, {}, {}, {}],
@@ -12,6 +12,16 @@ export const initialState = {
 
 export const vipcardReducer = handleActions(
     {
+        [VIPCARD_CLEAR_CACHE]: (state, {body}) => {
+            return {
+                staffs: [{}, {}, {}, {}],
+                card: {},
+                count: 1,
+                member: {},
+                totalPrice: 0,
+                staffIndex: -1
+            };
+        },
         [VIPCARD_INIT]: (state, {body}) => {
             return {
                 ...initialState,

@@ -16,7 +16,7 @@ import {
 } from '../../components';
 import {
     reloadProfileAction,
-    vipcardInitAction,
+    vipcardClearCacheAction,
     vipcardSelectCardAction,
     vipcardSelectStaffAction,
     vipcardSetCountAction,
@@ -56,7 +56,11 @@ class VipCard extends React.Component {
     }
 
     componentDidMount() {
-        const {operateUser} = this.props;
+        const {operateUser, clearCache} = this.props;
+        // 清除缓存数据
+        clearCache()
+
+        // 获取员工权限
         let aclTxt = 'ncashier_opencard_card_money';
         fetchStaffAcl(aclTxt, operateUser).then(o => {
             if (o.data) {
@@ -515,6 +519,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
         {
+            clearCache: vipcardClearCacheAction,
             selectCard: vipcardSelectCardAction,
             setCount: vipcardSetCountAction,
             selectStaff: vipcardSelectStaffAction,
