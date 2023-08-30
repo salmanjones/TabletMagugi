@@ -39,6 +39,7 @@ import {
     VipPayFor
 } from '../../components';
 import MemberPanel from "../../components/panelCustomer/MemberPanel";
+import {ModalCardInfo} from "../../components/vipcard/ModalCardInfo"
 import {changeBillingOwner, getLimitItems, getServiceStaffs, selectStaffAclInfoResult} from '../../services';
 import {
     CASHIERBILLING_CUSTOMER,
@@ -72,7 +73,8 @@ import {
     getMemberInfo,
     getMemberPortrait,
     updateCardValidity,
-    updateMemberProfile
+    updateMemberProfile,
+    showCardDetailsInfo
 } from "../../services/reserve";
 import dayjs from "dayjs";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
@@ -127,6 +129,9 @@ class CashierBillingView extends React.Component {
                 value: ''
             },
             showPaySuccess: false,
+            cardModelVisible:false,//是否展示卡详情弹窗
+            cardInfo:{}
+
         }
 
         this.addCosumableT = throttle(this.addCosumable, 600);
@@ -1976,6 +1981,44 @@ class CashierBillingView extends React.Component {
                     console.error("获取会员档案失败", e)
                 }
                 break
+            case 'showCardDetail': //展示卡详情
+                this.setState({isLoading: true})
+                try {
+
+                    const cardBackData = await showCardDetailsInfo({
+                        cardId: extra.cardId
+                    })
+                    if(cardBackData.code != '6000'){
+                        this.setState({isLoading: false})
+                        // 错误
+                        showMessageExt("查询失败")
+                    }else{
+                        this.setState({isLoading: false})
+                        // 卡详情信息
+                        const cardInfo = cardBackData['data'] || {}
+                        //判断卡详情details数据（脏数据情况）
+                        const cardJudgment = cardInfo['details'].substring(0,1)
+                        if(cardInfo.cardType !== 2){
+                            //转换储值卡折扣方案
+                            if(cardJudgment != '{'){
+                                cardInfo['detailsMap']={
+                                    'discountName':'暂无'
+                                }
+                            }
+                        }
+                        this.setState({
+                            cardModelVisible:true,
+                            cardInfo:cardInfo
+                        })
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("查询卡详情失败")
+                    this.setState({isLoading: false})
+                    console.error("查询卡详情失败", e)
+                }
+                break
+
         }
     }
 
@@ -3293,6 +3336,17 @@ class CashierBillingView extends React.Component {
                 <GuestPanel ref={ref => {this.guestPanelRef = ref}} customerInfo={this.state.memberProfile} reserveFlag={'invalid'} customerPressEvent={this.customerPressEvent.bind(this)}/>
                 {/*顾客多档案信息面板*/}
                 <PanelMultiProfilePanel ref={ref => {this.panelMultiProfilePanelRef = ref}} multiProfileData={this.state.multiProfiles} customerClickEvent={this.customerPressEvent.bind(this)}/>
+                {/*展示卡详情信息*/}
+                {
+                    this.state.cardModelVisible && (
+                        <ModalCardInfo
+                            data={this.state.cardInfo}
+                            visible={this.state.cardModelVisible}
+                            onConfirm={() => this.setState({cardModelVisible: false})}
+                        />
+                    )
+                }
+
             </View>
         );
     }

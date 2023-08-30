@@ -142,6 +142,15 @@ export const getMemberPortrait = params => {
     });
 }
 
+
+/**
+ * 获取会员面板卡片详情信息
+ */
+export const showCardDetailsInfo = params => {
+    return callService(api.showCardDetailsInfo, params).then(backData => {
+        return backData;
+    });
+}
 /**
  * 获取水单号
  */

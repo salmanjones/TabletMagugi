@@ -3,6 +3,7 @@ import {FlatList, ImageBackground, Text, TouchableOpacity, View} from "react-nat
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 
 export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, customerPressEvent})=>{
+
     const CardFlatItem = React.memo(({cardItem, index})=>{
         // 是否为偶数
         const isEvenElement = index % 2 == 0
@@ -50,77 +51,84 @@ export const CardFlatList = React.memo(({cardArray, cardType, extendsInfo, custo
         }
 
         return (
-            <ImageBackground
-                resizeMode={"contain"}
-                style={isEvenElement ? PanelCustomerStyles.cardItemBackground : PanelCustomerStyles.cardItemBackground2N}
-                source={cardBackGround}>
-                {/*卡类型*/}
-                <Text style={cardModeStyle}>
-                    {cardModeName}
-                </Text>
-                <View style={PanelCustomerStyles.cardItemContentBox}>
-                    <Text
-                        style={cardNameStyle}
-                        numberOfLines={2}
-                        ellipsizeMode={'tail'}>
-                        {cardItem.cardName}
+            <TouchableOpacity onPress={
+                ()=>{
+                    customerPressEvent('showCardDetail', {memberId: cardItem['cardMemberId'], cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
+                }
+            }>
+                <ImageBackground
+                    resizeMode={"contain"}
+                    style={isEvenElement ? PanelCustomerStyles.cardItemBackground : PanelCustomerStyles.cardItemBackground2N}
+                    source={cardBackGround}>
+                    {/*卡类型*/}
+                    <Text style={cardModeStyle}>
+                        {cardModeName}
                     </Text>
-                    <View style={PanelCustomerStyles.cardItemOperatorBox}>
-                        <Text style={hideCardBalance ? PanelCustomerStyles.cardItemYinCangBalance: cardBalanceStyle}>
-                            {
-                                cardTypeId == '1'
-                                    ? `¥${cardItem.cardBalance.toString().indexOf(".") != -1 ? cardItem.cardBalance.toFixed(1):cardItem.cardBalance}`
-                                    :`余${cardItem.cardBalance}次`
-                            }
+                    <View style={PanelCustomerStyles.cardItemContentBox}>
+                        <Text
+                            style={cardNameStyle}
+                            numberOfLines={2}
+                            ellipsizeMode={'tail'}>
+                            {cardItem.cardName}
                         </Text>
-                        {
-                            (()=>{
-                                if(isInvalidCard) { // 无效卡
-                                    return (
-                                        <TouchableOpacity style={cardButtonStyle} onPress={
-                                            ()=>{
-                                                customerPressEvent('editCardValidity', {
-                                                    cardId: cardItem.cardId,
-                                                    appUserId: extendsInfo.appUserId,
-                                                    reserveId: extendsInfo.reserveId
-                                                })
-                                            }
-                                        }>
-                                            <Text style={cardButtonTxtStyle}>
-                                                {'延期'}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    )
-                                }else if(cardItem.allowRecharge == '1'){ // 有效卡，可充值 allowRecharge:0不可充值 1：可充值
-                                    return (
-                                        <TouchableOpacity style={cardButtonStyle} onPress={
-                                            ()=>{
-                                                customerPressEvent('rechargeCardItem', {memberId: cardItem['cardMemberId'], cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
-                                            }
-                                        }>
-                                            <Text style={cardButtonTxtStyle}>
-                                                {'充值'}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    )
-                                }else{
-                                    return <View></View>
+                        <View style={PanelCustomerStyles.cardItemOperatorBox}>
+                            <Text style={hideCardBalance ? PanelCustomerStyles.cardItemYinCangBalance: cardBalanceStyle}>
+                                {
+                                    cardTypeId == '1'
+                                        ? `¥${cardItem.cardBalance.toString().indexOf(".") != -1 ? cardItem.cardBalance.toFixed(1):cardItem.cardBalance}`
+                                        :`余${cardItem.cardBalance}次`
                                 }
-                            })()
-                        }
+                            </Text>
+                            {
+                                (()=>{
+                                    if(isInvalidCard) { // 无效卡
+                                        return (
+                                            <TouchableOpacity style={cardButtonStyle} onPress={
+                                                ()=>{
+                                                    customerPressEvent('editCardValidity', {
+                                                        cardId: cardItem.cardId,
+                                                        appUserId: extendsInfo.appUserId,
+                                                        reserveId: extendsInfo.reserveId
+                                                    })
+                                                }
+                                            }>
+                                                <Text style={cardButtonTxtStyle}>
+                                                    {'延期'}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )
+                                    }else if(cardItem.allowRecharge == '1'){ // 有效卡，可充值 allowRecharge:0不可充值 1：可充值
+                                        return (
+                                            <TouchableOpacity style={cardButtonStyle} onPress={
+                                                ()=>{
+                                                    customerPressEvent('rechargeCardItem', {memberId: cardItem['cardMemberId'], cardId: cardItem.cardId, waiterId: extendsInfo.waiterId})
+                                                }
+                                            }>
+                                                <Text style={cardButtonTxtStyle}>
+                                                    {'充值'}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )
+                                    }else{
+                                        return <View></View>
+                                    }
+                                })()
+                            }
+                        </View>
                     </View>
-                </View>
-                <View style={PanelCustomerStyles.cardItemOtherBox}>
-                    <View style={PanelCustomerStyles.cardItemOtherWrap}>
-                        <Text style={PanelCustomerStyles.cardItemStore} numberOfLines={1} ellipsizeMode={'tail'}>
-                            {cardItem.cardStoreName}
-                        </Text>
-                        <Text style={cardDateStyle}>
-                            {isInvalidCard ? '已过期' :cardItem.cardValidity}
-                        </Text>
+                    <View style={PanelCustomerStyles.cardItemOtherBox}>
+                        <View style={PanelCustomerStyles.cardItemOtherWrap}>
+                            <Text style={PanelCustomerStyles.cardItemStore} numberOfLines={1} ellipsizeMode={'tail'}>
+                                {cardItem.cardStoreName}
+                            </Text>
+                            <Text style={cardDateStyle}>
+                                {isInvalidCard ? '已过期' :cardItem.cardValidity}
+                            </Text>
+                        </View>
                     </View>
-                </View>
-            </ImageBackground>
+                </ImageBackground>
+            </TouchableOpacity>
+
         )
     })
 

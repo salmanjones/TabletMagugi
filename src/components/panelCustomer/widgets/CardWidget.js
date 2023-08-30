@@ -4,6 +4,7 @@ import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
 import {CardFlatList} from "./CardFlatList";
 
 export const CardWidget = React.memo(({extendsInfo, cardsInfo, customerPressEvent})=>{
+    console.log(customerPressEvent,'customerPressEvent')
     // 选中tab state
     const [activeTabIndex, setActiveTabIndex] = useState(0)
     // tabs

@@ -33,6 +33,8 @@ export const preCheckStock = `${hostBms}/tablet/pay/bill/stock/preCheck`;
 export const payCashierBilling = `${hostBms}/tablet/pay/f2f/process`;
 //获取会员信息
 export const fetchMemberInfo = `${hostBms}/tablet/vipcard/find/members/info`;
+//获取会员面板卡片详情信息
+export const showCardDetailsInfo = `${hostBms}/tablet/new/reserve/find/card/detail/info`;
 //根据会员id查询对应的卡信息
 export const fetchMemberCardList = `${hostBms}/tablet/vipcard/find/members/card/list`;
 //获取等待会员信息

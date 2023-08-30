@@ -20,10 +20,12 @@ import {
     getStaffPermission,
     saveReserveVocation,
     updateCardValidity,
-    updateCustomerReserve
+    updateCustomerReserve,
+    showCardDetailsInfo
 } from "../../services/reserve";
 import MemberPanel from "../../components/panelCustomer/MemberPanel";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
+import {ModalCardInfo} from "../../components/vipcard/ModalCardInfo"
 import PanelMultiProfilePanel from "../../components/panelMultiProfile/PanelMultiProfilePanel";
 import CustomerReservePanel from "../../components/panelReserve/CustomerReservePanel";
 import StylistWidget from "./widgets/StylistFlatList"
@@ -104,6 +106,11 @@ export const ReserveBoardActivity = props => {
     })
     // 散客预约子组件
     const guestPanelRef = useRef(null);
+    //是否展示卡片弹窗详情
+    const [cardModelInfo,setCardModelInfo] =useState({
+        show: false,
+        card: {}
+    })
     // 获取预约数据（当前设备唯一编号，用来确定是否有新预约「多设备」）
     const [uniqueId, setUniqueId] = useState(parseInt(Math.random() * 10000+'') + "-" + new Date().getTime() + "-" + parseInt(Math.random() * 10000+''))
 
@@ -569,7 +576,8 @@ export const ReserveBoardActivity = props => {
                     },
                 ])
                 break;
-            case 'toCreateOrder': // 开单
+            // 开单
+            case 'toCreateOrder':
                 // 查询类型
                 const queryType = extra['queryType'] // 类型：phone:通过手机号查询 appUserId:用户id查询
                 const showType = extra['showType'] // 来源：member:会员面板点击开单 guestPhone:散客扫码面板查询顾客 scanCode:散客扫码面板点击查询 searchPhone: 多档案面板查询手机号
@@ -1009,6 +1017,43 @@ export const ReserveBoardActivity = props => {
                     console.error("获取会员档案失败", e)
                 }
                 break
+            case 'showCardDetail': //展示卡详情
+                setLoading(true)
+                try {
+                    const cardBackData = await showCardDetailsInfo({
+                        cardId: extra.cardId
+                    })
+                    if(cardBackData.code != '6000'){
+                        setLoading(false)
+                        // 错误
+                        showMessageExt("查询失败")
+                    }else{
+                        setLoading(false)
+                        // 卡详情信息
+                        const cardInfo = cardBackData['data'] || {}
+                        //判断卡详情details数据（脏数据情况）
+                        const cardJudgment = cardInfo['details'].substring(0,1)
+                        if(cardInfo.cardType !== 2){
+                            //转换储值卡折扣方案
+                            if(cardJudgment != '{'){
+                                cardInfo['detailsMap']={
+                                    'discountName':'暂无'
+                                }
+                            }
+                        }
+
+                        setCardModelInfo({
+                            show: true,
+                            card: cardInfo
+                        })
+                    }
+                }catch (e){
+                    // 错误
+                    showMessageExt("查询卡详情失败")
+                    setLoading(false)
+                    console.error("查询卡详情失败", e)
+                }
+                break
         }
     }, [reserveInfoArray])
 
@@ -1037,7 +1082,13 @@ export const ReserveBoardActivity = props => {
             member: member,
         });
     };
-
+    //确认关闭卡详情
+    const confirmCloseCardDetail=()=>{
+        setCardModelInfo({
+            show: false,
+            card:[]
+        })
+    }
     /// 取消创建散客档案
     const cancelNewMember = () => {
         setNewMemberInfo({
@@ -1178,6 +1229,16 @@ export const ReserveBoardActivity = props => {
                 onConfirm={confirmNewMember}
                 onCancel={cancelNewMember}
             />
+            {/*展示卡详情弹窗*/}
+            {
+                cardModelInfo.show && (
+                    <ModalCardInfo
+                        data={cardModelInfo.card}
+                        visible={cardModelInfo.show}
+                        onConfirm={confirmCloseCardDetail}
+                    />
+                )
+            }
         </View>
     )
 }

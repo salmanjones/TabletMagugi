@@ -18,6 +18,11 @@ export class ModalCardInfo extends React.PureComponent {
         this.setState({visible});
     }
 
+    componentDidMount() {
+        const {visible} = this.props;
+        this.setState({visible});
+    }
+
     onTabChanged = index => {
         let that = this;
         this.setState({tabIndex: index});
