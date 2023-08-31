@@ -598,87 +598,92 @@ class CashierBillingView extends React.Component {
         } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
             showMessage(nextProps.orderInfo.message);
         } else if (nextProps.orderInfo.propChangeType == 'reloadProfileInit') {
-            // init方法已经完成
-            const self = this
-            const {reloadCashierProfile, auth} = self.props
-            reloadCashierProfile('finish')
+            this.reloadProfileInit()
+        }
+    }
 
-            // 重新加载档案信息
-            const {member} = self.props.route.params
-            // 会员则刷新已有的会员卡
-            if(member && member.id){
-                const loginUser = auth.userInfo
-                const memberId = member.id
-                const {memberProfile} = self.state
-                // 获取最新会员信息
-                const portraitPromise = getMemberPortrait({
-                    p: 1,
-                    ps: 1000,
-                    cardInfoFlag: false,
-                    solrSearchType: 0,
-                    kw: memberId
-                })
-                // 获取最新会员卡
-                const cardsPromise = getMemberCards({
-                    memberId: memberId,
-                    isExpireCard: 1
-                })
-                // 获取最新会员卡数据
-                const billCardsPromise = getMemberBillCards({
-                    companyId: loginUser.companyId,
-                    storeId: loginUser.storeId,
-                    customerId: memberId,
-                    isExpireCard: 1
-                })
+    // 重新加载会员卡信息
+    reloadProfileInit(callBack){
+        // init方法已经完成
+        const self = this
+        const {reloadCashierProfile, auth} = self.props
+        reloadCashierProfile('finish')
 
-                Promise.all([portraitPromise, cardsPromise, billCardsPromise]).then(backData=>{
-                    // 处理返回的数据
-                    const portraitBackData = backData[0]
-                    const cardsBackData = backData[1]
-                    const billCardsBackData = backData[2]
-                    if (portraitBackData.code != '6000'
-                        || cardsBackData.code != '6000'
-                        || billCardsBackData.code != '6000') {
-                        // 错误
-                        console.error("获取最新会员信息失败", backData)
-                        // 刷新左上角用户信息
-                        self.getCustomerProfile(self, true, null, null)
-                    }else{
-                        // BMS会员档案
-                        const memberPortrait = portraitBackData['data']['memberList'][0] || {}
-                        if(!memberPortrait || !memberPortrait.id){
-                            memberPortrait['id'] = memberId
-                        }
-                        // BMS会员卡
-                        const memberCardInfo = cardsBackData['data']
-                        // 开单用的会员卡
-                        const billCards = billCardsBackData['data']
-                        // 新会员信息
-                        const newestMemberInfo = Object.assign({}, memberPortrait, {
-                            userImgUrl: getImage(
-                                memberProfile.imgUrl,
-                                ImageQutity.member_small,
-                                'https://pic.magugi.com/magugi_default_01.png'
-                            ),
-                            vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
-                            cardBalanceCount: memberCardInfo.cardBalanceCount,
-                            cardCount: memberCardInfo.cardCount
-                        })
+        // 重新加载档案信息
+        const {member} = self.props.route.params
+        // 会员则刷新已有的会员卡
+        if(member && member.id){
+            const loginUser = auth.userInfo
+            const memberId = member.id
+            const {memberProfile} = self.state
+            // 获取最新会员信息
+            const portraitPromise = getMemberPortrait({
+                p: 1,
+                ps: 1000,
+                cardInfoFlag: false,
+                solrSearchType: 0,
+                kw: memberId
+            })
+            // 获取最新会员卡
+            const cardsPromise = getMemberCards({
+                memberId: memberId,
+                isExpireCard: 1
+            })
+            // 获取最新会员卡数据
+            const billCardsPromise = getMemberBillCards({
+                companyId: loginUser.companyId,
+                storeId: loginUser.storeId,
+                customerId: memberId,
+                isExpireCard: 1
+            })
 
-                        // 重新处理会员信息
-                        this.bindMemberInfo(newestMemberInfo, ()=>{
-                            // 刷新左上角用户信息
-                            self.getCustomerProfile(self, true, null, null)
-                        })
-                    }
-                }).catch(e=>{
-                    console.warn("获取会员卡最新信息失败", e)
+            Promise.all([portraitPromise, cardsPromise, billCardsPromise]).then(backData=>{
+                // 处理返回的数据
+                const portraitBackData = backData[0]
+                const cardsBackData = backData[1]
+                const billCardsBackData = backData[2]
+                if (portraitBackData.code != '6000'
+                    || cardsBackData.code != '6000'
+                    || billCardsBackData.code != '6000') {
+                    // 错误
+                    console.error("获取最新会员信息失败", backData)
                     // 刷新左上角用户信息
                     self.getCustomerProfile(self, true, null, null)
-                })
-            }else{
-                this.getCustomerProfile(this, true, null, null)
-            }
+                }else{
+                    // BMS会员档案
+                    const memberPortrait = portraitBackData['data']['memberList'][0] || {}
+                    if(!memberPortrait || !memberPortrait.id){
+                        memberPortrait['id'] = memberId
+                    }
+                    // BMS会员卡
+                    const memberCardInfo = cardsBackData['data']
+                    // 开单用的会员卡
+                    const billCards = billCardsBackData['data']
+                    // 新会员信息
+                    const newestMemberInfo = Object.assign({}, memberPortrait, {
+                        userImgUrl: getImage(
+                            memberProfile.imgUrl,
+                            ImageQutity.member_small,
+                            'https://pic.magugi.com/magugi_default_01.png'
+                        ),
+                        vipStorageCardList: billCards.vipStorageCardList || memberCardInfo.vipStorageCardList,
+                        cardBalanceCount: memberCardInfo.cardBalanceCount,
+                        cardCount: memberCardInfo.cardCount
+                    })
+
+                    // 重新处理会员信息
+                    this.bindMemberInfo(newestMemberInfo, ()=>{
+                        // 刷新左上角用户信息
+                        self.getCustomerProfile(self, true, callBack, null)
+                    })
+                }
+            }).catch(e=>{
+                console.warn("获取会员卡最新信息失败", e)
+                // 刷新左上角用户信息
+                self.getCustomerProfile(self, true, null, null)
+            })
+        }else{
+            this.getCustomerProfile(this, true, null, null)
         }
     }
 
@@ -1721,7 +1726,7 @@ class CashierBillingView extends React.Component {
                                 } else {
                                     // 重新获取会员信息
                                     this.setState({isLoading: false})
-                                    this.getCustomerProfile(this, true, () => showMessageExt("卡延期成功"), null)
+                                    this.reloadProfileInit(() => showMessageExt("卡延期成功"))
                                 }
                             }).catch(e => {
                                 console.log(e)
