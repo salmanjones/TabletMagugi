@@ -95,7 +95,7 @@ class Recharge extends React.Component {
                             {
                                 (()=>{
                                     if(member && member.id && member.id.length > 0){
-                                        return (<VipUserInfoComponent memberId={member.id} showBtn={true}/>)
+                                        return (<VipUserInfoComponent memberId={member.id} showBtn={true} memberInfo={member}/>)
                                     }else{
                                         return (<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>)
                                     }

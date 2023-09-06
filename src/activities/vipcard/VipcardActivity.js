@@ -382,7 +382,7 @@ class VipCard extends React.Component {
                             (()=>{
                                 if(member && member.id && member.id.length > 0){
                                     // 会员信息
-                                    return (<VipUserInfoComponent memberId={member.id} showBtn={false}/>)
+                                    return (<VipUserInfoComponent memberId={member.id} showBtn={false} memberInfo={member}/>)
                                 }else{
                                     return (<Text style={RechargeStoredCardStyles.titleText}>会员卡</Text>)
                                 }

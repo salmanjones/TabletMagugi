@@ -54,6 +54,7 @@ export class VipUserInfoComponent extends React.PureComponent {
 
     render() {
         const {ckCount, czkCount, czkPriceSum, name, sex, phone, memberCardNo, imgUrl, isWechatMember} = this.state
+        const {memberInfo} = this.props
         return (
             <View style={{width: '100%'}}>
                 <ImageBackground resizeMethod="resize" source={require('@imgPath/store_bg.png')} style={RechargeStoredCardStyles.userbg}>
@@ -108,7 +109,7 @@ export class VipUserInfoComponent extends React.PureComponent {
                                     <TouchableOpacity
                                         style={RechargeStoredCardStyles.application}
                                         onPress={() => {
-                                            this.bankcard(this.props.showMember.params.member)
+                                            this.bankcard(memberInfo)
                                         }}
                                     >
                                         <Image resizeMethod="resize" source={require('@imgPath/application.png')}
