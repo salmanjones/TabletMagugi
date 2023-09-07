@@ -1151,7 +1151,9 @@ class MultiPay extends React.Component {
                 }
 
                 //赠金
-                if (!obj.attachMoneyList || !obj.attachMoneyList.length) return paySequence;
+                if (!obj.attachMoneyList || !obj.attachMoneyList.length) {
+                    return paySequence
+                };
                 obj.attachMoneyList.forEach((attach) => {
                     let sequenceKey = '2_' + obj.id + '_-1_' + attach.id;
                     let orgAttach = orgObj.attachMoneyList.find((x) => x.id == attach.id);
@@ -1199,7 +1201,9 @@ class MultiPay extends React.Component {
                     } else if (attach.paidAmt !== orgAttach.paidAmt) {
                         //修改
                         let item = paySequence.find((x) => x.key == sequenceKey);
-                        item.value.payAmount = attach.paidAmt;
+                        if(item){
+                            item.value.payAmount = attach.paidAmt;
+                        }
                     }
                 });
 
