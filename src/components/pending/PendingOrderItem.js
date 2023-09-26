@@ -6,6 +6,68 @@ import {CheckBox} from 'react-native-elements';
 import moment from 'moment';
 
 export class PendingOrderItem extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showLockTime: null
+        }
+
+        // 最大锁定时间
+        this.maxLockTime = 30
+        // 倒计时的id
+        this.lockTimeId = null
+    }
+
+    componentDidMount() {
+        // 清除倒计时
+        this.clearTimer()
+
+        // 开启倒计时
+        const {lockState, lockStartTime} = this.props // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付 lockState为1,代表单子锁定开始时间
+        if(lockState == '1' && lockStartTime && lockStartTime.length > 0){
+            let startTime = parseInt(lockStartTime)
+            let endTime = startTime + this.maxLockTime * 60 * 1000
+            let timeDiff = endTime - startTime
+
+            let timeNow = startTime
+            this.lockTimeId = setInterval(()=>{ // 创建新的定时
+                timeNow = timeNow + 1000
+                timeDiff = endTime - timeNow
+                if(timeDiff <= 0){ // 超过锁定时间，则退出当前页面
+                    this.clearTimer()
+                }else{
+                    // 剩余分钟数
+                    let minutes = parseInt((timeDiff /(60 * 1000)).toString())
+                    if(minutes.length < 2){
+                        minutes = '0' + minutes.toString()
+                    }
+                    let seconds = Math.floor(timeDiff / 1000 % 60, 10).toString();
+                    if(seconds.length < 2){
+                        seconds = '0' + seconds.toString()
+                    }
+
+                    this.setState({
+                        showLockTime: minutes + ":" + seconds
+                    })
+                }
+            }, 1000)
+
+        }
+    }
+
+    componentWillUnmount() {
+        // 清除倒计时
+        this.clearTimer()
+    }
+
+    clearTimer(){
+        this.lockTimeId && clearInterval(this.lockTimeId)
+        this.setState({
+            showLockTime: null
+        })
+    }
+
+
     render() {
         const {
             flowNumber,
@@ -23,21 +85,39 @@ export class PendingOrderItem extends PureComponent {
             isSelected,
             paidIn,
             staffName,
-            payWay
+            lockState
         } = this.props;
 
         const formatCreateTime = moment(createTime).format('MM月DD日 HH:mm');
         const formatPayEndTime = moment(payEndTime).format('MM月DD日 HH:mm');
         const showKeyNumber = keyNumber.length > 0;
+        const showLockTime = this.state.showLockTime
 
         return (
-            <TouchableOpacity style={payWay == 0 ? pendingStyles.swiperLiPhone: pendingStyles.swiperLi} onPress={onPress}>
+            <TouchableOpacity style={lockState != 0 ? pendingStyles.swiperLiPhone : pendingStyles.swiperLi} onPress={onPress}>
                 {
-                    payWay == 0 && (
-                        <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
-                            <Text style={pendingStyles.swiperLiPhoneTipsText}>已推送小程序</Text>
-                        </ImageBackground>
-                    )
+                    (()=>{
+                        // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付
+                        if(lockState == 1){
+                            return (
+                                <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
+                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>已推送{showLockTime ? ',剩余时间' + showLockTime: ''}</Text>
+                                </ImageBackground>
+                            )
+                        }else if(lockState == 2) {
+                            return (
+                                <ImageBackground style={pendingStyles.swiperLiPhoneCancel} resizeMode={'contain'} source={require("@imgPath/padding-order-cancel.png")}>
+                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>客户已取消</Text>
+                                </ImageBackground>
+                            )
+                        }else if(lockState == 3) {
+                            return (
+                                <ImageBackground style={pendingStyles.swiperLiPhoneCancel} resizeMode={'contain'} source={require("@imgPath/padding-order-cancel.png")}>
+                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>超时</Text>
+                                </ImageBackground>
+                            )
+                        }
+                    })()
                 }
                 <View
                     style={{
@@ -87,7 +167,7 @@ export class PendingOrderItem extends PureComponent {
                         </Text>
                     </View>
                     {
-                        staffName!=undefined && (
+                        staffName != undefined && (
                             <View style={pendingStyles.swiperPeoPel}>
                                 <ImageBackground source={require('@imgPath/people.png')} style={pendingStyles.swiperPeopel} resizeMode={'contain'}></ImageBackground>
                                 <Text style={pendingStyles.swiperName0}>{staffName}</Text>
@@ -130,7 +210,7 @@ export class PendingOrderItem extends PureComponent {
                     </Text>
                     <Text style={[pendingStyles.swiperRight, pendingStyles.swiperDate]} numberOfLines={1}>
                         {billingStatus != '1' && <Text>{formatCreateTime}</Text>} {billingStatus == '1' &&
-                    <Text>{formatPayEndTime}</Text>}
+                        <Text>{formatPayEndTime}</Text>}
                     </Text>
                 </View>
             </TouchableOpacity>

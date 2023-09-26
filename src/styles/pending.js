@@ -65,11 +65,21 @@ export const pendingStyles = StyleSheet.create({
         marginLeft: '2%',
         position: "relative"
     },
-    swiperLiPhoneTips:{
+    swiperLiPhoneCancel:{
         position: "absolute",
-        right: PixelUtil.size(-15),
+        right: PixelUtil.size(-18),
         bottom: PixelUtil.size(10),
         width: PixelUtil.size(160),
+        height: PixelUtil.size(62),
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    swiperLiPhoneTips:{
+        position: "absolute",
+        right: PixelUtil.size(-16),
+        bottom: PixelUtil.size(10),
+        width: PixelUtil.size(254),
         height: PixelUtil.size(62),
         display: "flex",
         justifyContent: 'center',

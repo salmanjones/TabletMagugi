@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {InteractionManager, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
 import {bindActionCreators} from 'redux';
@@ -12,24 +12,19 @@ import {PixelUtil, showMessage} from '../../utils';
 import {CheckBox} from 'react-native-elements';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import moment from "moment/moment";
-
-const CURRENT_TAB_INDEX = 1;
 
 const SwiperContainer = styled.View`
-    flex: 1;
+  flex: 1;
 `;
-
 const ImageNoContent = styled.Image`
-    width: ${PixelUtil.rect(572, 594).width};
-    height: ${PixelUtil.rect(572, 594).height};
+  width: ${PixelUtil.rect(572, 594).width};
+  height: ${PixelUtil.rect(572, 594).height};
 `;
-
 const NoContentContainer = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.5%
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5%
 `;
 
 class PendingOrder extends React.Component {
@@ -47,10 +42,10 @@ class PendingOrder extends React.Component {
             return;
         }
         var self = this;
-        const { getPendingList } = this.props;
+        const {getPendingList} = this.props;
         getPendingList('').then(res => {
             self.lastRefreshTime = new Date();
-            this.setState({ isMergePay: false, selectedBillings: [] });
+            this.setState({isMergePay: false, selectedBillings: []});
         });
     };
 
@@ -66,7 +61,6 @@ class PendingOrder extends React.Component {
     }
 
 
-
     getSwiperDataSource(list) {
         let groupedList = [];
         for (let i = 0, len = list.length; i < len; i += 8) {
@@ -78,11 +72,10 @@ class PendingOrder extends React.Component {
     onItemSelected = item => {
         if (this.state.isMergePay) {
             let itemIndex = this.state.selectedBillings.indexOf(item);
-            if (itemIndex == -1 ) {
-                if(this.state.selectedBillings.length < 5)
+            if (itemIndex == -1) {
+                if (this.state.selectedBillings.length < 5)
                     this.state.selectedBillings.push(item);
-            }
-            else this.state.selectedBillings.splice(itemIndex, 1);
+            } else this.state.selectedBillings.splice(itemIndex, 1);
 
             this.setState({
                 selectedBillings: [...this.state.selectedBillings],
@@ -119,10 +112,11 @@ class PendingOrder extends React.Component {
     };
 
     render() {
-        const { list, isLoading ,rights} = this.props;
-        const { isMergePay, selectedBillings } = this.state;
+        const {list, isLoading, rights} = this.props;
+        const {isMergePay, selectedBillings} = this.state;
         const groupList = this.getSwiperDataSource(list);
-        //const renderItem = this.renderItem;
+
+        console.log(JSON.stringify(groupList))
 
         return (
             <View style={cashierStyles.container}>
@@ -139,7 +133,7 @@ class PendingOrder extends React.Component {
                             placeholder={'水单号、手牌号或手机号'}
                             keyboardType={'numeric'}
                             onSearchPress={text => {
-                                this.setState({ isMergePay: false, selectedBillings: [] });
+                                this.setState({isMergePay: false, selectedBillings: []});
                                 this.props.getPendingList(text);
                             }}
                         />
@@ -167,8 +161,8 @@ class PendingOrder extends React.Component {
                 </View>
                 {!isLoading && groupList.length > 0 && (
                     <SwiperContainer>
-                        <PendingOrderSummary count={list.length} />
-                        <Swiper style={pendingStyles.singleBox} showsButtons={true} loop={false} paginationStyle={{ display: 'none' }}>
+                        <PendingOrderSummary count={list.length}/>
+                        <Swiper style={pendingStyles.singleBox} showsButtons={true} loop={false} paginationStyle={{display: 'none'}}>
                             {groupList.map((item, index) => (
                                 <View style={pendingStyles.swiperList} key={index}>
                                     {item.map(dItem => {
@@ -188,6 +182,8 @@ class PendingOrder extends React.Component {
                                                 isSelected={isSelected}
                                                 staffName={dItem.staffName}
                                                 payWay={dItem.payWay}
+                                                lockState={dItem.lockState}
+                                                lockStartTime={dItem.lockStartTime}
                                             />
                                         );
                                     })}
@@ -199,7 +195,7 @@ class PendingOrder extends React.Component {
 
                 {!isLoading && groupList.length == 0 && (
                     <NoContentContainer>
-                        <ImageNoContent source={require('@imgPath/no-content.png')} resizeMode={'contain'} />
+                        <ImageNoContent source={require('@imgPath/no-content.png')} resizeMode={'contain'}/>
                     </NoContentContainer>
                 )}
             </View>
@@ -211,7 +207,7 @@ const mapStateToProps = state => {
     return {
         list: state.pending.list,
         isLoading: state.pending.loading,
-        rights:state.pending.rights
+        rights: state.pending.rights
     };
 };
 

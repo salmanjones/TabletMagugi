@@ -101,7 +101,9 @@ export const fetchPendingList = flowNumber => {
                 totalPrice: x.totalPrice,
                 createTime: x.billing.createTime,
                 staffName: x.staffName || '',
-                payWay: x.billing.phoneLockStatus
+                payWay: x.billing.phoneLockStatus,
+                lockState: x.lockState, // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付
+                lockStartTime: x.lockStartTime // 当lockState为1的时候有用：锁定开始时间，最多锁定30分钟
             };
         });
         backData.rights = backData.data.rights || null;
