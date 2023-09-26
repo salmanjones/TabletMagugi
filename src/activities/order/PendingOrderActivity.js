@@ -4,7 +4,6 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
 import {bindActionCreators} from 'redux';
-
 import {PendingOrderItem, PendingOrderSummary, SearchModule} from '../../components';
 import {getPendingListAction} from '../../actions';
 import {cashierStyles, pendingStyles} from '../../styles';
@@ -41,7 +40,8 @@ class PendingOrder extends React.Component {
         if (!forceLoad && new Date() - this.lastRefreshTime <= 15000) {
             return;
         }
-        var self = this;
+
+        const self = this;
         const {getPendingList} = this.props;
         getPendingList('').then(res => {
             self.lastRefreshTime = new Date();
@@ -59,7 +59,6 @@ class PendingOrder extends React.Component {
         this._unsubscribe();
         this.props.reset && this.props.reset();
     }
-
 
     getSwiperDataSource(list) {
         let groupedList = [];
@@ -115,8 +114,6 @@ class PendingOrder extends React.Component {
         const {list, isLoading, rights} = this.props;
         const {isMergePay, selectedBillings} = this.state;
         const groupList = this.getSwiperDataSource(list);
-
-        console.log(JSON.stringify(groupList))
 
         return (
             <View style={cashierStyles.container}>
