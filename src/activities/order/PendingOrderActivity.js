@@ -75,7 +75,7 @@ class PendingOrder extends React.Component {
     }
 
     clearLockTimer(){
-        // 每5S刷新列表
+        // 每10S刷新列表
         this.lockTimeId && clearInterval(this.lockTimeId)
         this.lockTimeId = null
     }
