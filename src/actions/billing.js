@@ -542,15 +542,17 @@ const buildGetOrderData = (billingData, navParams) => {
 /**
  * 获取挂单列表
  */
-export const getPendingListAction = (flowNumber, refresh) => {
+export const getPendingListAction = (flowNumber, refresh, disableLoading = false) => {
     return function (dispatch, getState) {
-        dispatch({
-            type: GET_PENDING_LIST.PENDING,
-            body: {
-                searchKey: flowNumber,
-                refresh: refresh,
-            },
-        });
+        if(!disableLoading){
+            dispatch({
+                type: GET_PENDING_LIST.PENDING,
+                body: {
+                    searchKey: flowNumber,
+                    refresh: refresh,
+                },
+            });
+        }
 
         if (refresh) {
             flowNumber = getState().pending.searchKey;

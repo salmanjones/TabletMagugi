@@ -34,6 +34,8 @@ class PendingOrder extends React.Component {
             isMergePay: false,
             selectedBillings: [],
         };
+
+        this.lockTimeId = null
     }
 
     loadData = (forceLoad) => {
@@ -53,11 +55,29 @@ class PendingOrder extends React.Component {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.loadData(true);
         });
+
+        // 每10S刷新列表
+        this.clearLockTimer()
+        this.lockTimeId = setInterval(()=>{
+            const self = this;
+            const {getPendingList} = this.props;
+            getPendingList('', '', true).then(res => {
+                self.lastRefreshTime = new Date();
+                this.setState({isMergePay: false, selectedBillings: []});
+            });
+        }, 1000 * 10)
     }
 
     componentWillUnmount() {
+        this.clearLockTimer()
         this._unsubscribe();
         this.props.reset && this.props.reset();
+    }
+
+    clearLockTimer(){
+        // 每5S刷新列表
+        this.lockTimeId && clearInterval(this.lockTimeId)
+        this.lockTimeId = null
     }
 
     getSwiperDataSource(list) {
