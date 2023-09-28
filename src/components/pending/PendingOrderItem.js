@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Image, ImageBackground, Platform, Text, TouchableOpacity, View} from 'react-native';
-import {aboutBeautyStyles, manageConsumablesStyle, multiplyPayStyle, pendingStyles} from '../../styles';
+import {manageConsumablesStyle, pendingStyles} from '../../styles';
 
 import {CheckBox} from 'react-native-elements';
 import moment from 'moment';
@@ -19,21 +19,40 @@ export class PendingOrderItem extends PureComponent {
     }
 
     componentDidMount() {
+        this.processLockTime(this.props)
+    }
+
+    componentWillUnmount() {
+        // 清除倒计时
+        this.clearTimer()
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+
+    }
+
+    processLockTime(props){
         // 清除倒计时
         this.clearTimer()
 
         // 开启倒计时
-        const {lockState, lockStartTime} = this.props // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付 lockState为1,代表单子锁定开始时间
-        if(lockState == '1' && lockStartTime && lockStartTime.length > 0){
-            let startTime = parseInt(lockStartTime)
-            let endTime = startTime + this.maxLockTime * 60 * 1000
-            let timeDiff = endTime - startTime
-
-            let timeNow = startTime
+        const {lockState, lockStartTime} = props // lockState:1已推送，2已推送，用户取消，3已推送，超时未付 4:用户支付中  lockStartTime:代表单子锁定开始时间
+        if((lockState == '1' || lockState == '4' ) && lockStartTime && lockStartTime.length > 0){
+            // 倒计时开始时间
+            const startTime = parseInt(lockStartTime)
+            // 倒计时结束时间
+            const endTime = startTime + this.maxLockTime * 60 * 1000
+            // 当前最新时间
+            let timeNow = new Date().getTime()
+            // 计算剩余时间
+            let timeDiff = endTime - timeNow
             this.lockTimeId = setInterval(()=>{ // 创建新的定时
+                // 叠加定时
                 timeNow = timeNow + 1000
+                // 计算剩余时间
                 timeDiff = endTime - timeNow
-                if(timeDiff <= 0){ // 超过锁定时间，则退出当前页面
+
+                if(timeDiff <= 0){ // 超过锁定时间，则清除倒计时
                     this.clearTimer()
                 }else{
                     // 剩余分钟数
@@ -55,18 +74,12 @@ export class PendingOrderItem extends PureComponent {
         }
     }
 
-    componentWillUnmount() {
-        // 清除倒计时
-        this.clearTimer()
-    }
-
     clearTimer(){
         this.lockTimeId && clearInterval(this.lockTimeId)
         this.setState({
             showLockTime: null
         })
     }
-
 
     render() {
         const {
@@ -97,7 +110,7 @@ export class PendingOrderItem extends PureComponent {
             <TouchableOpacity style={lockState != 0 ? pendingStyles.swiperLiPhone : pendingStyles.swiperLi} onPress={onPress}>
                 {
                     (()=>{
-                        // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付
+                        // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付 4:用户支付中
                         if(lockState == 1){
                             return (
                                 <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
@@ -114,6 +127,12 @@ export class PendingOrderItem extends PureComponent {
                             return (
                                 <ImageBackground style={pendingStyles.swiperLiPhoneCancel} resizeMode={'contain'} source={require("@imgPath/padding-order-cancel.png")}>
                                     <Text style={pendingStyles.swiperLiPhoneTipsText}>超时</Text>
+                                </ImageBackground>
+                            )
+                        }else if(lockState == 4) {
+                            return (
+                                <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
+                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>支付中{showLockTime ? ',剩余时间' + showLockTime: ''}</Text>
                                 </ImageBackground>
                             )
                         }

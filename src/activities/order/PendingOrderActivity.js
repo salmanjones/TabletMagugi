@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Text, TouchableOpacity, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native/';
 import {bindActionCreators} from 'redux';
@@ -56,7 +56,7 @@ class PendingOrder extends React.Component {
             this.loadData(true);
         });
 
-        // 每10S刷新列表
+        // 每6S刷新列表
         this.clearLockTimer()
         this.lockTimeId = setInterval(()=>{
             const self = this;
@@ -65,7 +65,7 @@ class PendingOrder extends React.Component {
                 self.lastRefreshTime = new Date();
                 this.setState({isMergePay: false, selectedBillings: []});
             });
-        }, 1000 * 10)
+        }, 1000 * 6)
     }
 
     componentWillUnmount() {
@@ -183,10 +183,16 @@ class PendingOrder extends React.Component {
                             {groupList.map((item, index) => (
                                 <View style={pendingStyles.swiperList} key={index}>
                                     {item.map(dItem => {
-                                        let isSelected = selectedBillings.indexOf(dItem) !== -1;
+                                        const isSelected = selectedBillings.indexOf(dItem) !== -1;
                                         return (
                                             <PendingOrderItem
-                                                onPress={() => this.onItemSelected(dItem)}
+                                                onPress={() => {
+                                                    if (dItem.lockState != '4') {
+                                                        this.onItemSelected(dItem)
+                                                    } else {
+                                                        Alert.alert('支付中，不能修改')
+                                                    }
+                                                }}
                                                 flowNumber={dItem.flowNumber}
                                                 name={dItem.name}
                                                 keyNumber={dItem.keyNumber}
