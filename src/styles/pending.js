@@ -52,22 +52,9 @@ export const pendingStyles = StyleSheet.create({
         marginBottom: '1.5%',
         marginLeft: '2%',
     },
-    swiperLiPhone:{
-        width: '23%',
-        height: Platform.OS === 'ios' ? '46%' : '44%',
-        borderColor: '#ff9b1f',
-        borderWidth: PixelUtil.size(8),
-        borderStyle: 'solid',
-        borderRadius: PixelUtil.size(20),
-        paddingLeft: '2%',
-        paddingRight: '2%',
-        marginBottom: '1.5%',
-        marginLeft: '2%',
-        position: "relative"
-    },
     swiperLiPhoneCancel:{
         position: "absolute",
-        right: PixelUtil.size(-18),
+        right: PixelUtil.size(-14),
         bottom: PixelUtil.size(10),
         width: PixelUtil.size(160),
         height: PixelUtil.size(62),
@@ -77,7 +64,7 @@ export const pendingStyles = StyleSheet.create({
     },
     swiperLiPhoneTips:{
         position: "absolute",
-        right: PixelUtil.size(-16),
+        right: PixelUtil.size(-12),
         bottom: PixelUtil.size(10),
         width: PixelUtil.size(254),
         height: PixelUtil.size(62),

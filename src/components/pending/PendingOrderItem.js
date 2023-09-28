@@ -19,7 +19,7 @@ export class PendingOrderItem extends PureComponent {
     }
 
     componentDidMount() {
-        this.processLockTime(this.props)
+
     }
 
     componentWillUnmount() {
@@ -28,7 +28,7 @@ export class PendingOrderItem extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-
+        this.processLockTime(nextProps)
     }
 
     processLockTime(props){
@@ -54,6 +54,9 @@ export class PendingOrderItem extends PureComponent {
 
                 if(timeDiff <= 0){ // 超过锁定时间，则清除倒计时
                     this.clearTimer()
+                    this.setState({
+                        showLockTime: null
+                    })
                 }else{
                     // 剩余分钟数
                     let minutes = parseInt((timeDiff /(60 * 1000)).toString())
@@ -76,9 +79,6 @@ export class PendingOrderItem extends PureComponent {
 
     clearTimer(){
         this.lockTimeId && clearInterval(this.lockTimeId)
-        this.setState({
-            showLockTime: null
-        })
     }
 
     render() {
@@ -107,7 +107,7 @@ export class PendingOrderItem extends PureComponent {
         const showLockTime = this.state.showLockTime
 
         return (
-            <TouchableOpacity style={lockState != 0 ? pendingStyles.swiperLiPhone : pendingStyles.swiperLi} onPress={onPress}>
+            <TouchableOpacity style={pendingStyles.swiperLi} onPress={onPress}>
                 {
                     (()=>{
                         // 1已推送,倒计时中，2已推送，用户取消，3已推送，超时未付 4:用户支付中
@@ -131,7 +131,7 @@ export class PendingOrderItem extends PureComponent {
                             )
                         }else if(lockState == 4) {
                             return (
-                                <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-tips.png")}>
+                                <ImageBackground style={pendingStyles.swiperLiPhoneTips} resizeMode={'contain'} source={require("@imgPath/padding-order-paying.png")}>
                                     <Text style={pendingStyles.swiperLiPhoneTipsText}>支付中{showLockTime ? ',剩余时间' + showLockTime: ''}</Text>
                                 </ImageBackground>
                             )
