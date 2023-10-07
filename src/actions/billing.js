@@ -221,18 +221,25 @@ const cashierBillingSave = billingData => {
             type: CASHIERBILLING_SAVE.PENDING,
         });
 
-        return fetchSaveBilling(billingData)
-            .then(backData => {
+        return fetchSaveBilling(billingData).then(backData => {
+            const code = backData.code
+            const exceptions = backData.exceptions
+            if(code == '6000'){
                 dispatch({
                     type: CASHIERBILLING_SAVE.SUCCESS,
                 });
-            })
-            .catch(err => {
-                displayError(err, '', true);
+            }else{
+                displayError('', exceptions, true);
                 dispatch({
                     type: CASHIERBILLING_SAVE.ERROR,
                 });
+            }
+        }).catch(err => {
+            displayError(err, '', true);
+            dispatch({
+                type: CASHIERBILLING_SAVE.ERROR,
             });
+        });
     };
 };
 
