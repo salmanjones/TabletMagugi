@@ -126,7 +126,7 @@ export class PendingOrderItem extends PureComponent {
                         }else if(lockState == 3) {
                             return (
                                 <ImageBackground style={pendingStyles.swiperLiPhoneCancel} resizeMode={'contain'} source={require("@imgPath/padding-order-cancel.png")}>
-                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>超时</Text>
+                                    <Text style={pendingStyles.swiperLiPhoneTipsText}>已超时</Text>
                                 </ImageBackground>
                             )
                         }else if(lockState == 4) {
