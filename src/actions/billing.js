@@ -683,6 +683,9 @@ export const deleteBillingAction = (param) => {
                     case '-6':
                         msg = '从单不允许废单';
                         break;
+                    case '-98':
+                        msg = '该订单正在支付中，不可作废~';
+                        break;
                     case '-99':
                         msg = '从单不允许废单';
                         break;
