@@ -501,7 +501,7 @@ class CashierBillingView extends React.Component {
             showMessage('废单成功');
             this.props.resetToCashier();
         } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
-            showMessage(nextProps.orderInfo.message);
+            Alert.alert(nextProps.orderInfo.message)
         }
     }
 
