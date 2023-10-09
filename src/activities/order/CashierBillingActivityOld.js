@@ -54,7 +54,8 @@ import {
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
     deleteBillingAction,
-    getPendingListAction
+    getPendingListAction,
+    showDeleteFinishAction
 } from '../../actions';
 import {getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
@@ -501,6 +502,7 @@ class CashierBillingView extends React.Component {
             showMessage('废单成功');
             this.props.resetToCashier();
         } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
+            this.props.showDeleteFinish()
             Alert.alert(nextProps.orderInfo.message)
         }
     }
@@ -4239,6 +4241,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateCustomerInfo: (orderInfo) => {
             dispatch({type: CASHIERBILLING_CUSTOMER.SUCCESS, orderInfo: orderInfo});
+        },
+        showDeleteFinish: ()=>{
+            dispatch(showDeleteFinishAction())
         }
     };
 };

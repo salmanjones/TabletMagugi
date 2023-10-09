@@ -39,6 +39,7 @@ export const CASHIERBILLING_UPDATE_CONSUMABLE = createAction('CASHIERBILLING_UPD
 export const CASHIERBILLING_RELOAD_ORDER = createAction('CASHIERBILLING_RELOAD_ORDER'); //重新加载保存订单
 export const CASHIERBILLING_DELETE = createAction('CASHIERBILLING_DELETE'); //收银-废单
 export const CASHIERBILLING_RELOAD_PROFILE = createAction('CASHIERBILLING_RELOAD_MEMBER'); //收银-重新加载顾客档案
+export const CASHIERBILLING_DELETE_TIPS_FINISH = createAction('CASHIERBILLING_DELETE_TIPS_FINISH'); //收银-废单提示完成
 
 //PendingOrderActivity
 export const GET_PENDING_LIST = createAction('GET_PENDING_LIST'); //获取挂单列表

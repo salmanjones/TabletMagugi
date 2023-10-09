@@ -3,7 +3,7 @@ import {handleActions} from 'redux-actions';
 import {
     CASHIERBILLING_CLEAR,
     CASHIERBILLING_CUSTOMER,
-    CASHIERBILLING_DELETE,
+    CASHIERBILLING_DELETE, CASHIERBILLING_DELETE_TIPS_FINISH,
     CASHIERBILLING_FLOWNUMBER,
     CASHIERBILLING_FLOWNUMBER_INIT,
     CASHIERBILLING_GET,
@@ -64,6 +64,11 @@ export const billingOrderReducer = handleActions({
     [CASHIERBILLING_RELOAD_PROFILE.SUCCESS]:()=>{
         return {
             propChangeType: 'reloadProfileFinish'
+        }
+    },
+    [CASHIERBILLING_DELETE_TIPS_FINISH.SUCCESS]:()=>{
+        return {
+            propChangeType: 'showDeleteOrderTipsFinish'
         }
     },
     //开单

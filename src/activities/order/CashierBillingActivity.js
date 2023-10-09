@@ -1,19 +1,7 @@
 //libs
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Alert,
-    Animated,
-    FlatList,
-    Image,
-    ImageBackground,
-    InteractionManager,
-    PanResponder,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import {Alert, Animated, FlatList, Image, ImageBackground, PanResponder, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-root-toast';
 import Swipeout from 'react-native-swipeout';
@@ -51,18 +39,10 @@ import {
     cashierCheckFlowNumberAction,
     clearBillingCacheAction,
     deleteBillingAction,
-    getPendingListAction, reloadProfileAction
+    getPendingListAction,
+    reloadProfileAction, showDeleteFinishAction
 } from '../../actions';
-import {
-    decodeContent,
-    getImage,
-    ImageQutity,
-    PaymentResultStatus,
-    PixelUtil,
-    showMessage,
-    showMessageExt,
-    throttle
-} from '../../utils';
+import {decodeContent, getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, showMessageExt, throttle} from '../../utils';
 import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
@@ -72,9 +52,9 @@ import {
     getMemberDetail,
     getMemberInfo,
     getMemberPortrait,
+    showCardDetailsInfo,
     updateCardValidity,
-    updateMemberProfile,
-    showCardDetailsInfo
+    updateMemberProfile
 } from "../../services/reserve";
 import dayjs from "dayjs";
 import GuestPanel from "../../components/panelCustomer/GuestPanel";
@@ -596,6 +576,7 @@ class CashierBillingView extends React.Component {
             showMessage('废单成功');
             this.props.resetToCashier();
         } else if (nextProps.orderInfo.propChangeType == 'deleteOrderError') {
+            this.props.showDeleteFinish()
             Alert.alert(nextProps.orderInfo.message)
         } else if (nextProps.orderInfo.propChangeType == 'reloadProfileInit') {
             this.reloadProfileInit()
@@ -5175,6 +5156,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         reloadCashierProfile: (status)=>{
             dispatch(reloadProfileAction(status))
+        },
+        showDeleteFinish: ()=>{
+            dispatch(showDeleteFinishAction())
         }
     };
 };

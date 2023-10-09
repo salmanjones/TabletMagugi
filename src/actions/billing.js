@@ -19,6 +19,7 @@ import {
 import {
     CASHIERBILLING_CLEAR,
     CASHIERBILLING_DELETE,
+    CASHIERBILLING_DELETE_TIPS_FINISH,
     CASHIERBILLING_FLOWNUMBER,
     CASHIERBILLING_FLOWNUMBER_INIT,
     CASHIERBILLING_GET,
@@ -58,6 +59,11 @@ export const reloadProfileAction = (status) => {
     }
 }
 
+export const showDeleteFinishAction = () => {
+    return {
+        type: CASHIERBILLING_DELETE_TIPS_FINISH.SUCCESS,
+    }
+}
 
 export const cashierBillingFlowNumberInitAction = refeshTag => {
     return (dispatch, getState) => {
