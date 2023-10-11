@@ -473,10 +473,18 @@ class MergeOrderPay extends React.Component {
 
         this.calculateBilling((data) => {
             if (data.data.payResultCode === '1' && !data.data.payTypeErrorList) {
-                let totalCouponPrice = (data.data.payTypeUsedList || []).reduce(
-                    (result, x) => result + (x.payType == 5 ? x.consumeActualMoney : 0),
-                    0
+                let totalCouponPrice = 0;
+                (data.data.payTypeUsedList || []).forEach(x=> {
+                        if (x.payType == 5) { // 优惠券
+                            if (x.payMode == "1") { // 折扣
+                                totalCouponPrice = totalCouponPrice + x.discountPrice
+                            } else { // 抵扣
+                                totalCouponPrice = totalCouponPrice + x.consumeActualMoney, 0
+                            }
+                        }
+                    }
                 );
+
 
                 // 处理优惠券多选的情况
                 const checkedCoupons = []
