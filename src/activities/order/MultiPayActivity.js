@@ -1242,22 +1242,17 @@ class MultiPay extends React.Component {
         let param = {
             itemList: JSON.stringify(items.filter((x) => x.service != 2)),
             paymentList: JSON.stringify(payTypes),
-            //realPay: false,
             billingInfo: JSON.stringify(billingInfo),
             sendMsg: '0',
         };
         this.setState({isLoading: true});
-        fetchPrePayBilling(param)
-            .then((data) => {
-                //this.setState({ isLoading: false });
-                cb && cb(data);
-            })
-            .catch((err) => {
-                showMessage('网络异常', true);
-            })
-            .finally(() => {
-                this.setState({isLoading: false});
-            });
+        fetchPrePayBilling(param).then((data) => {
+            cb && cb(data);
+        }).catch((err) => {
+            showMessage('网络异常', true);
+        }).finally(() => {
+            this.setState({isLoading: false});
+        });
     };
 
     checkResult(data) {
@@ -1447,9 +1442,9 @@ class MultiPay extends React.Component {
             })
         }
 
-        let preState = {...this.state, cards, selectedCoupons, payTypes: [...this.state.payTypes], paySequence};
+        const preState = {...this.state, cards, selectedCoupons, payTypes: [...this.state.payTypes], paySequence};
         this.calculateBilling(preState, (data) => {
-            let {payTypeUsedList} = data.data;
+            const {payTypeUsedList} = data.data;
             try {
                 this.checkResult(data);
 
