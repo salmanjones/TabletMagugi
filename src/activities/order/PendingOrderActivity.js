@@ -61,6 +61,7 @@ class PendingOrder extends React.Component {
         this.lockTimeId = setInterval(()=>{
             const self = this;
             const {getPendingList} = this.props;
+            const {isMergePay, selectedBillings} = this.state
             getPendingList('', '', true).then(res => {
                 self.lastRefreshTime = new Date();
             });
@@ -89,14 +90,18 @@ class PendingOrder extends React.Component {
 
     onItemSelected = item => {
         if (this.state.isMergePay) {
-            let itemIndex = this.state.selectedBillings.indexOf(item);
-            if (itemIndex == -1) {
-                if (this.state.selectedBillings.length < 5)
-                    this.state.selectedBillings.push(item);
-            } else this.state.selectedBillings.splice(itemIndex, 1);
+            let selectedBillings = [...this.state.selectedBillings]
+            const isChecked = selectedBillings.filter(sitem=>sitem.billingNo == item.billingNo).length > 0;
+            if (!isChecked) {
+                if (selectedBillings.length < 5){
+                    selectedBillings.push(item);
+                }
+            } else {
+                selectedBillings = selectedBillings.filter(sitem=>sitem.billingNo != item.billingNo)
+            }
 
             this.setState({
-                selectedBillings: [...this.state.selectedBillings],
+                selectedBillings,
             });
         } else {
             this.goOrder(item);
@@ -182,7 +187,7 @@ class PendingOrder extends React.Component {
                             {groupList.map((item, index) => (
                                 <View style={pendingStyles.swiperList} key={index}>
                                     {item.map(dItem => {
-                                        const isSelected = selectedBillings.indexOf(dItem) !== -1;
+                                        const isSelected = selectedBillings.filter(item => item.billingNo == dItem.billingNo).length > 0;
                                         return (
                                             <PendingOrderItem
                                                 onPress={() => {
