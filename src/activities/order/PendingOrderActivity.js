@@ -59,12 +59,15 @@ class PendingOrder extends React.Component {
         // 每6S刷新列表
         this.clearLockTimer()
         this.lockTimeId = setInterval(()=>{
-            const self = this;
-            const {getPendingList} = this.props;
-            getPendingList('', '', true).then(res => {
-                self.lastRefreshTime = new Date();
-                this.setState({isMergePay: false, selectedBillings: []});
-            });
+            const isMergePay = this.state
+            if(!isMergePay){ // 并单支付时，不进行刷新
+                const self = this;
+                const {getPendingList} = this.props;
+                getPendingList('', '', true).then(res => {
+                    self.lastRefreshTime = new Date();
+                    this.setState({isMergePay: false, selectedBillings: []});
+                });
+            }
         }, 1000 * 6)
     }
 
