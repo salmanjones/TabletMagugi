@@ -85,7 +85,7 @@ export const ConsumeFlatList = React.memo(({consumeArray})=>{
                                                     setShowMore(!showMore)
                                                 }
                                             }}>
-                                            <Text style={PanelConsumeStyles.showMoreBoxTitle}>查看更多</Text>
+                                            <Text style={PanelConsumeStyles.showMoreBoxTitle}>{showMore ? '收起':'查看更多'}</Text>
                                             <ImageBackground resizeMode={"contain"} style={PanelConsumeStyles.showMoreIcon} source={
                                                 showMore ? require('@imgPath/reserve_customer_panel_cosume_up.png') : require('@imgPath/reserve_customer_panel_cosume_down.png')}/>
                                         </TouchableOpacity>
