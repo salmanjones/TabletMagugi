@@ -9,6 +9,7 @@ import {ProfileWidget} from "./widgets/ProfileWidget"
 import {PortraitWidget} from "./widgets/PortraitWidget"
 import {ModifyInfoWidget} from "./widgets/ModifyInfoWidget";
 import {ReserveBoardStyles} from "../../styles/ReserveBoard";
+import {ConsumeWidget} from "./widgets/ConsumeWidget";
 
 /**
  * 会员预约详情、档案信息浮动面板
@@ -96,8 +97,11 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         couponList: [],
         cardsInfo: {},
         czkCount: 0,
-        ckCount: 0
+        ckCount: 0,
+        billingDetailsList: [],
+        cardDetailsList: []
     }
+
     // 服务人ID
     let waiterId = ''
     if(customerInfo['reserveInfo'] && customerInfo['reserveInfo']['staffId']){
@@ -106,7 +110,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
 
     // 页签数据
     // let tabArray = ['预约信息', '优惠券', '顾客资产', '消费画像', '基础档案']
-    let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案']
+    let tabArray = ['预约信息', '优惠券', '顾客资产', '基础档案', '消费明细']
     if (customerInfo.couponList.length < 1) {
         tabArray = tabArray.filter(item => item != '优惠券')
     }
@@ -125,11 +129,14 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
         && zeroCardList.length < 1 ) {
         tabArray = tabArray.filter(item => item != '顾客资产')
     }
-    if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') {
+    if (pagerName == 'CashierBillingActivity' && customerInfo.isBmsNew == '1') { // 来自于收银页面
         tabArray = tabArray.filter(item => item == '基础档案')
     }
     if(!customerInfo['reserveInfo']){
         tabArray = tabArray.filter(item => item != '预约信息')
+    }
+    if(!((customerInfo.billingDetailsList && customerInfo.billingDetailsList.length > 0) || (customerInfo.cardDetailsList && customerInfo.cardDetailsList.length > 0))){
+        tabArray = tabArray.filter(item => item != '消费明细')
     }
 
     // 命中的页签
@@ -141,6 +148,13 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     useEffect(() => {
         setTabIndex(0)
     }, [animateState.sliderShow])
+
+    let tabContentStyle = PanelCustomerStyles.memberExtraTabContentBox
+    if(tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'){
+        tabContentStyle = PanelCustomerStyles.memberExtraTabReserveBox
+    }else if(tabArray[tabIndex] == '消费明细'){
+        tabContentStyle = PanelCustomerStyles.memberExtraTabConsumeBox
+    }
 
     return (
         <View style={animateState.sliderShow ? PanelCustomerStyles.rightPanelMask : {display: 'none'}}>
@@ -269,10 +283,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                 }
                             </View>
                             {/*tab内容*/}
-                            <View
-                                style={tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'
-                                    ? PanelCustomerStyles.memberExtraTabReserveBox
-                                    : PanelCustomerStyles.memberExtraTabContentBox}>
+                            <View style={tabContentStyle}>
                                 {
                                     tabArray[tabIndex] == '预约信息' && customerInfo['reserveInfo'] &&(
                                         <ReserveWidget pagerName={pagerName}
@@ -319,6 +330,15 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                                     <PortraitWidget portraitInfo={customerInfo}/>
                                                 )
                                             }
+                                        }
+                                    })()
+                                }
+                                {
+                                    (() => {
+                                        if (tabArray[tabIndex] == '消费明细') {
+                                            return (
+                                                <ConsumeWidget customerInfo={customerInfo}/>
+                                            )
                                         }
                                     })()
                                 }

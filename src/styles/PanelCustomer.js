@@ -254,6 +254,13 @@ export const PanelCustomerStyles = StyleSheet.create({
         paddingHorizontal: PixelUtil.size(40),
         paddingVertical: PixelUtil.size(32),
     },
+    memberExtraTabConsumeBox: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        paddingHorizontal: PixelUtil.size(40),
+        paddingVertical: PixelUtil.size(0),
+    },
     operatorWrap: {
         width: '100%',
         height: PixelUtil.size(150),
