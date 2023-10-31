@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Text, TouchableOpacity, View} from "react-native";
 import {PanelConsumeStyles} from "../../../styles/PanelConsume";
-import {CardFlatList} from "./CardFlatList";
 import {ConsumeFlatList} from "./ComsumeFlatList";
 
 export const ConsumeWidget = React.memo(({customerInfo})=>{
