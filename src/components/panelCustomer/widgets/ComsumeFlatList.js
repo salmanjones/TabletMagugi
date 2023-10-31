@@ -16,7 +16,7 @@ export const ConsumeFlatList = React.memo(({consumeArray})=>{
                         <Text style={PanelConsumeStyles.baseConsumeDate}>{consumeItem.billingTime}</Text>
                     </View>
                     <View  style={PanelConsumeStyles.baseProfileFlow}>
-                        <Text style={PanelConsumeStyles.baseProfileNo}>档案号：{consumeItem.billingTime}</Text>
+                        <Text style={PanelConsumeStyles.baseProfileNo}>档案号：{consumeItem.memberNo}</Text>
                         <Text style={PanelConsumeStyles.baseFlowNo}>水单号：{consumeItem.flowNumber}</Text>
                     </View>
                     <View  style={PanelConsumeStyles.baseServicer}>
