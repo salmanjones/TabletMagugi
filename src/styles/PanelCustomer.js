@@ -710,13 +710,23 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     memberPortraitBox: {
         width: '100%',
+        height: '100%',
+        position: 'relative',
         backgroundColor: '#ffffff',
-        borderRadius: PixelUtil.size(26),
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        padding: PixelUtil.size(50),
-        paddingBottom: 0,
-        position: 'relative'
+        padding: PixelUtil.size(40),
+    },
+    memberPortraitConsume:{
+        display: "flex",
+        flexDirection:"column",
+        justifyContent: 'flex-start',
+        alignItems:"flex-start",
+        marginBottom: PixelUtil.size(40)
+    },
+    memberPortraitBase:{
+        display: "flex",
+        flexDirection:"column",
+        justifyContent: 'flex-start',
+        alignItems:"flex-start"
     },
     memberPortraitTitle: {
         width: '100%',
@@ -724,7 +734,7 @@ export const PanelCustomerStyles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(40)
+        marginBottom: PixelUtil.size(26)
     },
     contentBodyTitleIcon: {
         width: PixelUtil.size(20),
@@ -735,14 +745,29 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(34),
         color: '#2d2d2d',
         fontWeight: '900',
-        marginLeft: PixelUtil.size(10)
     },
     memberPropertyBox: {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: PixelUtil.size(48)
+        marginBottom: PixelUtil.size(26)
+    },
+    memberPropertyVBox: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+        marginBottom: PixelUtil.size(26)
+    },
+    memberPropertyVProfileBox: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+        marginBottom: PixelUtil.size(92)
     },
     memberPropertyTitle: {
         width: PixelUtil.size(184),
@@ -821,11 +846,77 @@ export const PanelCustomerStyles = StyleSheet.create({
         fontSize: PixelUtil.size(26),
         color: '#898888',
         fontWeight: '500',
+        textAlign: 'right'
     },
     memberPortraitPValue: {
         color: '#2D2D2D',
         fontSize: PixelUtil.size(26),
         fontWeight: '700',
+    },
+    memberPortraitVPValue: {
+        marginTop: PixelUtil.size(20),
+        width: '100%',
+        padding: PixelUtil.size(24),
+        paddingTop: 0,
+        borderWidth: PixelUtil.size(2),
+        borderStyle: 'dashed',
+        borderColor: '#ccc',
+        backgroundColor: "#f9fafb",
+        borderRadius: PixelUtil.size(18)
+    },
+    memberPortraitVPItem:{
+        width: '100%',
+        marginTop: PixelUtil.size(24),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    memberPortraitVPItemRowTitle:{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    memberPortraitCircle:{
+        width: PixelUtil.size(8),
+        height: PixelUtil.size(8),
+        borderRadius: PixelUtil.size(4),
+        backgroundColor: '#131418'
+    },
+    memberPortraitVPItemRowVal:{
+        flex:1,
+        marginLeft: PixelUtil.size(12),
+        fontSize: PixelUtil.size(26),
+        color: '#2d2d2d',
+        fontWeight: "500",
+    },
+    memberPortraitVPItemRowProj:{
+        width: '33.33%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    memberPortraitVPItemRowNo:{
+        width: '33.33%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    memberPortraitVPItemRowName:{
+        width: '33.33%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    memberPortraitVPItemRowDesc:{
+        fontSize: PixelUtil.size(26),
+        color: '#2d2d2d',
+        fontWeight: "500",
     },
     memberCardsBox: {
         width: '100%',

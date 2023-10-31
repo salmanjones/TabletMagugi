@@ -150,9 +150,9 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }, [animateState.sliderShow])
 
     let tabContentStyle = PanelCustomerStyles.memberExtraTabContentBox
-    if(tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像' || tabArray[tabIndex] == '基础档案'){
+    if(tabArray[tabIndex] == '预约信息' || tabArray[tabIndex] == '消费画像'){
         tabContentStyle = PanelCustomerStyles.memberExtraTabReserveBox
-    }else if(tabArray[tabIndex] == '消费明细'){
+    }else if(tabArray[tabIndex] == '消费明细' || tabArray[tabIndex] == '基础档案'){
         tabContentStyle = PanelCustomerStyles.memberExtraTabConsumeBox
     }
 
