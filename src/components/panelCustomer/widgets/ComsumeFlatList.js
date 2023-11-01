@@ -106,7 +106,7 @@ export const ConsumeFlatList = React.memo(({consumeArray})=>{
                                                         <Text style={PanelConsumeStyles.itemDetailPrice} ellipsizeMode={"tail"} numberOfLines={1}>¥{detail.projectPrice}</Text>
                                                     </View>
                                                     <Text style={PanelConsumeStyles.itemDetailRight}>
-                                                        ¥{detail.projectPay}
+                                                        {detail.projectPay}
                                                     </Text>
                                                 </View>
                                             ))
