@@ -17,7 +17,7 @@ export const AppConfig = {
     requestTimeout: 300000,
     client: 'tablet_magi',
     appId: 'Magugi715758&!%=&ARG-Tablet='
-};
+}
 
 export const StateCode = {
     reqSuccess: '6000', //请求成功
@@ -35,21 +35,21 @@ export const StateCode = {
     failToRemoveTokenCache: '5005', //清除tokon缓存异常
     failToGetStaffId: '5006', //无效登录信息
     requestTimeout: '5007', //请求超时
-};
+}
 
 export const ListStatus = {
     loading: 'loading',
     end: 'end',
     idle: 'idle',
     error: 'error',
-};
+}
 
 export const PaymentResultStatus = {
     success: 'success',
     timeout: 'timeout',
     error: 'error',
     partial: 'partial',
-};
+}
 
 export const ImageQutity = {
     staff: '@200w_1l_80Q',
@@ -57,12 +57,16 @@ export const ImageQutity = {
     brand: '@100w_1l_80Q',
     member_big: '@1500w_1l',
     staffPrice: '@436w_1l',
-};
-
+}
 
 export const systemConfig = {
     version: env.ver,
     updateVersionLimitTime: 180000,
-};
+}
+
+export const LinkWeCom = { // 企微调用配置
+    tokenKey: '_linkwecom_token_', // token key
+    tokenSymbol: '2A9tOlwgtRbRVY3ywzr6gsjakUmv9j5xajFZpDatE7U=', // 调用服务的密钥
+}
 
 

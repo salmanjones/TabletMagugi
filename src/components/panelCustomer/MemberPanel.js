@@ -116,7 +116,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
     }
 
     // 会员卡信息
-    const cardsInfo = customerInfo['cardsInfo']
+    const cardsInfo = customerInfo['cardsInfo'] || {}
     const validCardList = cardsInfo.card1List || []       // 可用余额
     const invalidCardList = cardsInfo.card2List || []     // 过期卡
     const storageCardList = cardsInfo.card3List || []     // 储值卡
@@ -220,7 +220,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         储值卡
                                     </Text>
                                     <Text style={PanelCustomerStyles.propertyInfoItemValue}>
-                                        {customerInfo.czkCount}张
+                                        {customerInfo.czkCount || "0"}张
                                     </Text>
                                 </View>
                                 <View
@@ -229,7 +229,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         次卡
                                     </Text>
                                     <Text style={PanelCustomerStyles.propertyInfoItemValue}>
-                                        {customerInfo.ckCount}张
+                                        {customerInfo.ckCount || "0"}张
                                     </Text>
                                 </View>
                                 <View
@@ -238,7 +238,7 @@ const MemberPanelForwardRef = forwardRef((props, refArgs) => {
                                         储值卡余额
                                     </Text>
                                     <Text style={PanelCustomerStyles.propertyInfoItemValue}>
-                                        ¥{customerInfo.czkPriceSum}
+                                        ¥{customerInfo.czkPriceSum || "0.0"}
                                     </Text>
                                 </View>
                                 {

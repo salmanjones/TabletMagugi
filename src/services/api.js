@@ -2,6 +2,7 @@ import env from '../../env.js'
 // 美界私有化
 const hostBms = env.api.bms;
 const hostApp = env.api.app;
+const hostLwm = env.api.lwm;
 
 //获取BMS令牌
 export const getTokenBms = `${hostBms}/tablet/token/get`;
@@ -167,3 +168,8 @@ export const getPayByCards = `${hostBms}/tablet/new/reserve/find/billing/card/pa
 export const getSmsCode= `${hostBms}/tablet/sms/code/get`
 //验证输入的验证码
 export const verifySmsCode= `${hostBms}/tablet/sms/code/verify`
+
+// ---------------------------- linkWecom企业微信服务 ----------------------------
+export const lwTokenUrl = `${hostLwm}/auth/thirdPermit` // 企微Auth接口
+// 获取企微员工活码
+export const lwGetStoreQR = `${hostLwm}/open/qr/downloadByName` // 企微获取门店福利官企微码
