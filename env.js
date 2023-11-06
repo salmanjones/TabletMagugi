@@ -12,13 +12,13 @@ export default {
         // lwm: 'http://linkwe.magugi.vip',
 
         // 测试
-        // bms: 'http://192.168.1.56:8080/bms',
-        // app: 'http://192.168.1.56:8080/app/datahandler',
-        // lwm: 'http://linkwe.magugi.vip',
+        bms: 'http://192.168.1.56:8080/bms',
+        app: 'http://192.168.1.56:8080/app/datahandler',
+        lwm: 'http://linkwe.magugi.vip',
 
         // self
-        bms: 'http://192.168.1.2:8080/bms',
-        app: 'http://192.168.1.2:8080/app/datahandler',
-        lwm: 'http://192.168.1.9:6180'
+        // bms: 'http://192.168.1.2:8080/bms',
+        // app: 'http://192.168.1.2:8080/app/datahandler',
+        // lwm: 'http://192.168.1.9:6180'
     }
 }
