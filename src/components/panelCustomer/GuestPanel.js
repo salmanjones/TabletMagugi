@@ -154,7 +154,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         })
         const wecomQR = getStoreQRImg({
             scene,
-            name: '美界造型江宁万达店' || loginUser.storeName,
+            name: loginUser.storeName,
             uniqueId: glUniqueId,
         })
         const qrPromise = [wxappQR]
