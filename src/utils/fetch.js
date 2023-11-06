@@ -251,13 +251,13 @@ export const callLinkWeCom = async (options) => {
                 credentials: 'include',
                 timeout: options.timeout || 1000 * 60 * 10,
                 method: options.method || 'post',
-                responseType: options.responseType.toString().toLowerCase() || 'json',
+                responseType: options.responseType ? options.responseType.toString().toLowerCase() : 'json',
                 headers: {
                     'symbol': LinkWeCom.tokenSymbol,
                     "Content-Type": options.contentType || 'application/json;charset=utf-8',
                 },
                 tokenUrl: api.lwTokenUrl,
-                body: qs.stringify(options.data || {})
+                body: JSON.stringify(options.data || {})
             }
 
             if (config.responseType == 'json' || config.responseType == 'arraybuffer') {

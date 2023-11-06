@@ -1,16 +1,59 @@
 import {PanelCustomerStyles} from "../../../styles/PanelCustomer";
-import {Image, ImageBackground, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import React, {useState} from "react";
 
 /**
  * 散客开单二维码页面
  * @type {React.NamedExoticComponent<object>}
  */
-export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, rescanQREvent, customerPressEvent, showMode, reserveInfo, actionType, pagerName})=>{
+export const GuestProfileWidget = React.memo(({qrType, scanState, wxQRImg, rescanQREvent, customerPressEvent, changeQrType, showMode, reserveInfo, actionType, pagerName})=>{
     /// 查询值
     const [userPhone, setUserPhone] = useState('')
     /// 服务人ID
     const waiterId = reserveInfo && reserveInfo.staffId  ? reserveInfo.staffId : ''
+
+    /// 查询信息组件
+    const QueryInfoWidget =  React.memo(()=> {
+        return (
+            <View style={pagerName != 'CashierBillingActivity' ? PanelCustomerStyles.guestProfileSearchBox : PanelCustomerStyles.guestProfileCashierBox}>
+                {/*<Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>*/}
+                <TouchableOpacity
+                    style={PanelCustomerStyles.headSearchBoxCustomer}
+                    onPress={() => {
+                        customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
+                    }}>
+                    {/*输入框*/}
+                    <Image
+                        resizeMode={"contain"}
+                        style={PanelCustomerStyles.headSearchIcon}
+                        source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
+                    <TextInput
+                        keyboardType={'phone-pad'}
+                        editable={false}
+                        style={PanelCustomerStyles.headSearchInputEmptyWithBorder}
+                        placeholder={'员工端信息查询入口'}
+                        placeholderTextColor={'#8e8e8e'}
+                        onChange={({nativeEvent}) => {
+                            const inputText = nativeEvent.text.trim()
+                            const phone = inputText.replace(/[^\d.]/g, "")
+                            setUserPhone(phone)
+                        }}
+                        onPressIn={() => {
+                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
+                        }}
+                        value={userPhone}
+                        maxLength={11}/>
+                    {/*查询*/}
+                    <View style={PanelCustomerStyles.headSearchButton}>
+                        <Image
+                            resizeMode={"contain"}
+                            style={PanelCustomerStyles.headSearchButtonImg}
+                            source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    })
 
     return (
         <View style={PanelCustomerStyles.guestProfileBox}>
@@ -31,77 +74,40 @@ export const GuestProfileWidget = React.memo(({tabIndex, scanState, wxQRImg, res
             {
                 (()=>{
                     if(scanState == null){ // 未扫码
-                        return (
-                            <View style={PanelCustomerStyles.guestContentBox}>
-                                <Text
-                                    style={PanelCustomerStyles.guestProfileTitle}>
-                                    亲爱的顾客，请使用微信扫一扫，完成会员身份确认！
-                                </Text>
-                                {/*小程序二维码*/}
-                                <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>
-                                {/*查询顾客*/}
-                                <View style={pagerName != 'CashierBillingActivity' ? PanelCustomerStyles.guestProfileSearchBox:PanelCustomerStyles.guestProfileCashierBox}>
-                                    {/* 根据最新需求，屏蔽此提示
-                                        <Text style={PanelCustomerStyles.guestProfileSearchTitle}>不想扫码，查询顾客</Text>
-                                    */}
-                                    <TouchableOpacity
-                                        style={PanelCustomerStyles.headSearchBoxCustomer}
-                                        onPress={()=>{
-                                            customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
+                        if(qrType == 'wecom'){ // 企微二维码
+                            return (
+                                <View style={PanelCustomerStyles.guestContentBox}>
+                                    <Text style={PanelCustomerStyles.guestProfileTitle}>
+                                        亲爱的顾客，请使用微信扫一扫，添加门店福利官！
+                                    </Text>
+                                    {/*小程序二维码*/}
+                                    <View style={PanelCustomerStyles.guestProfileWecomBox}>
+                                        <Image style={PanelCustomerStyles.guestProfileWecomCode} source={{uri: wxQRImg}}/>
+                                        <TouchableOpacity style={PanelCustomerStyles.closeWecomCode} onPress={() => {
+                                            changeQrType()
                                         }}>
-                                        {/*输入框*/}
-                                        <Image
-                                            resizeMode={"contain"}
-                                            style={PanelCustomerStyles.headSearchIcon}
-                                            source={require('@imgPath/reserve_panel_customer_search_icon.png')}></Image>
-                                        <TextInput
-                                            keyboardType={'phone-pad'}
-                                            editable={false}
-                                            style={PanelCustomerStyles.headSearchInputEmptyWithBorder}
-                                            placeholder={'员工端信息查询入口'}
-                                            placeholderTextColor={'#8e8e8e'}
-                                            onChange={({nativeEvent})=>{
-                                                const inputText = nativeEvent.text.trim()
-                                                const phone = inputText.replace(/[^\d.]/g, "")
-                                                setUserPhone(phone)
-                                            }}
-                                            onPressIn={()=>{
-                                                customerPressEvent("toCreateOrder", {phone: userPhone, queryType: 'phone', showType: 'guestPhone', showMode, waiterId, actionType, pagerName})
-                                            }}
-                                            value={userPhone}
-                                            maxLength={11}/>
-                                        {/*查询*/}
-                                        <View style={PanelCustomerStyles.headSearchButton}>
-                                            <Image
-                                                resizeMode={"contain"}
-                                                style={PanelCustomerStyles.headSearchButtonImg}
-                                                source={require('@imgPath/reserve_panel_customer_search_btn.png')}></Image>
-                                        </View>
-                                    </TouchableOpacity>
+                                            <Image style={PanelCustomerStyles.closeWecomImg} source={require('@imgPath/reserve_customer_guest_profile_wecom.png')}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                    {/*查询顾客*/}
+                                    <QueryInfoWidget/>
                                 </View>
-                                {/*直接开单: 根据最新需求，屏蔽此按钮*/}
-                                {/*{*/}
-                                {/*    pagerName != 'CashierBillingActivity' && (*/}
-                                {/*        <View style={PanelCustomerStyles.guestProfileOrderBox}>*/}
-                                {/*            <TouchableOpacity*/}
-                                {/*                style={PanelCustomerStyles.guestProfileOrderWrap}*/}
-                                {/*                onPress={()=>{*/}
-                                {/*                    customerPressEvent("forwardToCashier", {showMode, waiterId, actionType})*/}
-                                {/*                }}>*/}
-                                {/*                <ImageBackground*/}
-                                {/*                    resizeMode={"contain"}*/}
-                                {/*                    style={PanelCustomerStyles.guestProfileOrderImg}*/}
-                                {/*                    source={require('@imgPath/reserve_panel_customer_create_order.png')}>*/}
-                                {/*                    <Text style={PanelCustomerStyles.guestProfileOrderTxt}>*/}
-                                {/*                        {actionType == 'createOrder' ? '散客直接开单':'散客直接开卡'}*/}
-                                {/*                    </Text>*/}
-                                {/*                </ImageBackground>*/}
-                                {/*            </TouchableOpacity>*/}
-                                {/*        </View>*/}
-                                {/*    )*/}
-                                {/*}*/}
-                            </View>
-                        )
+                            )
+                        }else{ // 小程序码
+                            return (
+                                <View style={PanelCustomerStyles.guestContentBox}>
+                                    <Text
+                                        style={PanelCustomerStyles.guestProfileTitle}>
+                                        亲爱的顾客，请使用微信扫一扫，完成会员身份确认！
+                                    </Text>
+                                    {/*小程序二维码*/}
+                                    <Image style={PanelCustomerStyles.guestProfileQRCode} source={{uri: wxQRImg}}/>
+                                    {/*查询顾客*/}
+                                    <QueryInfoWidget />
+                                </View>
+                            )
+                        }
+
                     }else if(scanState == 0){ // 已扫码
                         return (
                             <View style={PanelCustomerStyles.guestContentWaitBox}>

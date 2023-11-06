@@ -1196,6 +1196,31 @@ export const PanelCustomerStyles = StyleSheet.create({
         height: PixelUtil.size(390),
         marginTop: PixelUtil.size(40)
     },
+    guestProfileWecomBox: {
+        width: PixelUtil.size(390),
+        height: PixelUtil.size(390),
+        marginTop: PixelUtil.size(40),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F7F7F7',
+        position: 'relative'
+    },
+    guestProfileWecomCode: {
+        width: PixelUtil.size(276),
+        height: PixelUtil.size(276),
+    },
+    closeWecomCode:{
+        position: 'absolute',
+        top: PixelUtil.size(20),
+        right: PixelUtil.size(20),
+        width: PixelUtil.size(28),
+        height: PixelUtil.size(28),
+    },
+    closeWecomImg:{
+        width: '100%',
+        height: '100%',
+    },
     guestProfileSearchBox: {
         marginTop: PixelUtil.size(60),
         width: '100%',

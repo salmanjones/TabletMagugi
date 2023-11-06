@@ -172,4 +172,6 @@ export const verifySmsCode= `${hostBms}/tablet/sms/code/verify`
 // ---------------------------- linkWecom企业微信服务 ----------------------------
 export const lwTokenUrl = `${hostLwm}/auth/thirdPermit` // 企微Auth接口
 // 获取企微员工活码
-export const lwGetStoreQR = `${hostLwm}/open/qr/downloadByName` // 企微获取门店福利官企微码
+export const lwGetStoreQR = `${hostLwm}/open/qr/download/dyna` // 企微获取门店福利官企微码
+// 查询企微扫码状态
+export const lwGetQRState = `${hostLwm}/open/qr/qrcode/flag` // 企微福利官企微码扫码状态

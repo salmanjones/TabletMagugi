@@ -7,6 +7,8 @@ import {GuestProfileWidget} from "./widgets/GusetProfile";
 import ReduxStore from "../../store/store";
 import {getGuestQRImg, getScanQRState} from "../../services/reserve";
 import Spinner from "react-native-loading-spinner-overlay";
+import {getStoreQRImg, getStoreQRState} from "../../services/linkwe";
+const Base64 = require('../../utils/encrypt/base64');
 
 let loopTimerId = null // 定时器ID
 let glUniqueId = null // 唯一ID
@@ -14,8 +16,9 @@ let glUniqueId = null // 唯一ID
  * 散客开单浮动面板
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
  */
-const maxWaitTime = 1000 * 60 * 2.5 // 最大等待时间为3分钟，比后台多等待30秒
+const maxWaitTime = 1000 * 60 * 3.5 // 最大等待时间为3分钟，比后台多等待30秒
 let loopTimeSum = 0 // 累计等待时间
+let currentQRType = 'wecom'
 const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPressEvent}, refArgs) => {
     // 左滑动画
     const animateLeft = new Animated.Value(PixelUtil.screenSize.width - PixelUtil.size(120));
@@ -52,6 +55,8 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     const [tabIndex, setTabIndex] = useState(0)
     /// 加载中
     const [isLoading, setLoading] = useState(false)
+    /// 当前呈现的二维码类型
+    const [qrType, setQrType] = useState('wecom')
     /// 小程序二维码
     const [wxQRImg, setWxQRImg] = useState(null)
     /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
@@ -79,9 +84,11 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             }
         }
         setActionType(actionType)
-        setWxQRImg('')
+        setWxQRImg(null)
         setShowMode(mode)
         setTabIndex(0)
+        setQrType('wecom')
+        currentQRType = 'wecom'
         setPagerName(pagerName)
 
         Animated.timing(animateState.sliderLeft, {
@@ -102,6 +109,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             duration: 500,
             useNativeDriver: false
         }).start(() => {
+            clearTimer()
             setAnimateState({
                 ...animateState,
                 sliderShow: false
@@ -136,18 +144,38 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         // 预约ID
         const reserveId = customerInfo.reserveInfo && customerInfo.reserveInfo.reserveId ? customerInfo.reserveInfo.reserveId : ''
 
-
+        // 获取小程序二维码
         setLoading(true)
-        getGuestQRImg({
+        const wxappQR = getGuestQRImg({
             args: JSON.stringify(qrArgs),
             storeId: loginUser.storeId,
             uniqueId: glUniqueId,
             reserveId: reserveId
-        }).then(backData => {
-            const {code, data} = backData
+        })
+        const wecomQR = getStoreQRImg({
+            scene,
+            name: '美界造型江宁万达店' || loginUser.storeName,
+            uniqueId: glUniqueId,
+        })
+        const qrPromise = [wxappQR]
+        if(currentQRType == "wecom"){
+            qrPromise.push(wecomQR)
+        }
+
+        Promise.all(qrPromise).then(response=>{
+            // 小程序码
+            const wxappData = response[0]
+            const {code, data} = wxappData
             if (code == '6000') {
-                setWxQRImg(data)
+                if(currentQRType == "wecom"){
+                    setWxQRImg(Base64.decode(response[1]))
+                }else{
+                    setWxQRImg(data)
+                }
+
                 callBack && callBack()
+            }else{
+                showMessageExt("获取小程序码失败")
             }
         }).catch(e => {
             showMessageExt("获取小程序码失败")
@@ -162,8 +190,9 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         if (animateState.sliderShow) { // 展示请求二维码
             getUniqueId()
             setScanState(null)
+
             getScanCode(() => {
-                if (showMode == 'noReserve') {
+                if (showMode == 'noReserve') { // 未预约
                     refreshQRCodeState()
                 }
             })
@@ -186,13 +215,32 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                 return
             }
 
+            // 准备状态获取
             const args = {uniqueId: glUniqueId}
-            getScanQRState(args).then(result => {
-                const resCode = result.code
-                const {state, appUserId} = result.data // -1 授权超时 0扫码成功 1授权成功
-                if (resCode == '6000' && state !== null && state !== undefined) {
-                    setScanState(state)
-                    if (state == 1) { // 授权成功
+            const scanQRStatePromise = [getScanQRState(args)] // 获取小程序码状态
+            if(currentQRType == 'wecom'){
+                scanQRStatePromise.push(getStoreQRState(args)) // 获取企微扫码状态
+            }
+
+            // 获取扫码状态
+            Promise.all(scanQRStatePromise).then(response=>{
+                const wxappResult = response[0]
+                const wxappCode = wxappResult.code
+                const {state, appUserId} = wxappResult.data // -1 授权超时 0扫码成功 1授权成功
+                if (wxappCode == '6000') {
+                    let showState = state
+                    if(currentQRType == 'wecom'){
+                        const wecomResult = response[1]
+                        const wecomState = wecomResult.data //  0已生成码，1已扫码，3码已超时
+                        if(wecomState == '1'){ // 已扫码
+                            showState = '0'
+                        }else if(wecomState == '3'){
+                            showState = '-1'
+                        }
+                    }
+
+                    setScanState(showState)
+                    if (showState == '1') { // 授权成功
                         // 清除循环定时
                         clearTimer()
 
@@ -237,6 +285,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         clearTimer()
         // 重新生成二维码
         getUniqueId()
+
         // 获取新二维码
         getScanCode(() => {
             // 刷新页面状态
@@ -276,6 +325,16 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             waiterId,
             actionType
         })
+    }
+
+    /// 更改二维码呈现
+    const changeQrType = ()=>{
+        // 更换二维码呈现类型
+        currentQRType = 'wxapp'
+        setQrType('wxapp')
+        // 将二维码置空
+        setWxQRImg(null)
+        rescanQRCode(null)
     }
 
     return (
@@ -355,16 +414,17 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                                 {
                                     tabArray[tabIndex] == '基础档案' && (
                                         <GuestProfileWidget
-                                            tabIndex={tabIndex}
+                                            qrType={qrType}
                                             sliderShow={animateState.sliderShow}
-                                            scanState={scanState}
                                             wxQRImg={wxQRImg}
+                                            scanState={scanState}
                                             rescanQREvent={rescanQRCode}
                                             showMode={showMode}
+                                            changeQrType={changeQrType}
                                             customerPressEvent={customerPressEvent}
                                             reserveInfo={customerInfo['reserveInfo']}
                                             actionType={actionType}
-                                            pagerName={pagerName}/>
+                                            pagerName={pagerName} />
                                     )
                                 }
                             </View>
