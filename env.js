@@ -9,12 +9,12 @@ export default {
         // test
         // bms: 'http://192.168.1.194:8000/bms',
         // app: 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler',
-        // lwm: 'http://linkwe.magugi.vip',
+        // lwm: 'http://192.168.1.188:6180',
 
         // 测试
         bms: 'http://192.168.1.56:8080/bms',
         app: 'http://192.168.1.56:8080/app/datahandler',
-        lwm: 'http://linkwe.magugi.vip',
+        lwm: 'http://192.168.1.188:6180',
 
         // self
         // bms: 'http://192.168.1.2:8080/bms',
