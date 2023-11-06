@@ -136,6 +136,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
         // 预约ID
         const reserveId = customerInfo.reserveInfo && customerInfo.reserveInfo.reserveId ? customerInfo.reserveInfo.reserveId : ''
 
+
         setLoading(true)
         getGuestQRImg({
             args: JSON.stringify(qrArgs),
