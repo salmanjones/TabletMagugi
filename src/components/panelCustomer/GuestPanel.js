@@ -325,6 +325,9 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
             waiterId,
             actionType
         })
+
+        // 关闭层
+        hideRightPanel()
     }
 
     /// 更改二维码呈现
