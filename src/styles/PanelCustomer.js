@@ -1212,10 +1212,11 @@ export const PanelCustomerStyles = StyleSheet.create({
     },
     closeWecomCode:{
         position: 'absolute',
-        top: PixelUtil.size(20),
-        right: PixelUtil.size(20),
-        width: PixelUtil.size(28),
-        height: PixelUtil.size(28),
+        top: PixelUtil.size(8),
+        right: PixelUtil.size(8),
+        width: PixelUtil.size(50),
+        height: PixelUtil.size(50),
+        padding: PixelUtil.size(12),
     },
     closeWecomImg:{
         width: '100%',
