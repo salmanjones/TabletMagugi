@@ -59,7 +59,7 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
     const [qrType, setQrType] = useState('wecom')
     /// 小程序二维码
     const [wxQRImg, setWxQRImg] = useState(null)
-    /// 扫码状态 0:未扫码 1:已扫码 2:已授权 3:授权超时
+    /// 扫码状态 -1 授权超时 0扫码成功 1授权成功
     const [scanState, setScanState] = useState(null)
     /// 来源页面
     const [pagerName, setPagerName] = useState(null)
@@ -228,10 +228,10 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                 const wxappCode = wxappResult.code
                 const {state, appUserId} = wxappResult.data // -1 授权超时 0扫码成功 1授权成功
                 if (wxappCode == '6000') {
-                    let showState = state
-                    if(currentQRType == 'wecom'){
+                    let showState = state // 扫码状态 -1 授权超时 0扫码成功 1授权成功
+                    if(currentQRType == 'wecom'){ // 当前未企微码
                         const wecomResult = response[1]
-                        const wecomState = wecomResult.data //  0已生成码，1已扫码，3码已超时
+                        const wecomState = wecomResult.data // 0已生成码，1已扫码，3码已超时
                         if(wecomState == '1'){ // 已扫码
                             showState = '0'
                         }else if(wecomState == '3'){
@@ -239,7 +239,11 @@ const GuestPanelForwardRef = forwardRef(({customerInfo, reserveFlag, customerPre
                         }
                     }
 
+                    if(state == '1' || state == '-1'){ // -1 授权超时 1授权成功
+                        showState = state
+                    }
                     setScanState(showState)
+
                     if (showState == '1') { // 授权成功
                         // 清除循环定时
                         clearTimer()
