@@ -121,6 +121,17 @@ export const GuestProfileWidget = React.memo(({qrType, scanState, wxQRImg, resca
                                 <Text style={PanelCustomerStyles.guestScanResultSubTxt}>
                                     请使用小程序授权手机号登录…
                                 </Text>
+                                <TouchableOpacity
+                                    style={PanelCustomerStyles.guestProfileRescanWrap}
+                                    onPress={()=>{
+                                        rescanQREvent(null)
+                                    }}>
+                                    <View style={PanelCustomerStyles.guestProfileTimeout}>
+                                        <Text style={PanelCustomerStyles.guestProfileOrderTxt}>
+                                            重新扫码
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         )
                     }else if(scanState == 1){ // 已授权
