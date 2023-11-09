@@ -42,7 +42,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                         </View>
                         <View style={PanelCustomerStyles.memberPropertyBox}>
                             <Text style={PanelCustomerStyles.memberPortraitPTitle}>
-                                服务人：
+                                服&ensp;务&ensp;人：
                             </Text>
                             <Text style={PanelCustomerStyles.memberPortraitPValue}>
                                 {lastConsumeInfo.lastServers}
@@ -94,7 +94,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                 </View>
                 <View style={PanelCustomerStyles.memberPropertyBox}>
                     <Text style={PanelCustomerStyles.memberPortraitPTitle}>
-                        性别：
+                        性&ensp;&ensp;&ensp;&ensp;别：
                     </Text>
                     <Text style={PanelCustomerStyles.memberPortraitPValue}>
                         {portraitInfo.sex == '1' ? '男':'女'}
@@ -102,7 +102,7 @@ export const PortraitWidget = React.memo(({portraitInfo})=>{
                 </View>
                 <View style={PanelCustomerStyles.memberPropertyBox}>
                     <Text style={PanelCustomerStyles.memberPortraitPTitle}>
-                        生日：
+                        生&ensp;&ensp;&ensp;&ensp;日：
                     </Text>
                     <Text style={PanelCustomerStyles.memberPortraitPValue}>
                         {portraitInfo.birthday && portraitInfo.birthday.length > 0 && portraitInfo.birthday != 'Invalid Date' ? portraitInfo.birthday: '暂无'}

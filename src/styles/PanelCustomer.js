@@ -842,11 +842,11 @@ export const PanelCustomerStyles = StyleSheet.create({
         color: '#ffffff'
     },
     memberPortraitPTitle: {
-        width: PixelUtil.size(132),
+        width: PixelUtil.size(158),
         fontSize: PixelUtil.size(26),
         color: '#898888',
         fontWeight: '500',
-        textAlign: 'right'
+        textAlign: 'right',
     },
     memberPortraitPValue: {
         color: '#2D2D2D',
