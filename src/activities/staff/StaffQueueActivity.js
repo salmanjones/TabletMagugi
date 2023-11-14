@@ -472,7 +472,7 @@ export class StaffQueueView extends React.Component {
                             <View style={staffQueueStyles.itemInfo}>
                                 <Text style={staffQueueStyles.NickName}>{item.nickName}</Text>
                                 <Text style={staffQueueStyles.PositionName}>{item.positionName}</Text>
-                                <StarRating score={item.score}></StarRating>
+                                {/*<StarRating score={item.score}></StarRating>*/}
                             </View>
                             {/*价格*/}
                             <View style={staffQueueStyles.priceBox}>
