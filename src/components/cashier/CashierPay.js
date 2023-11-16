@@ -60,29 +60,21 @@ export class CashierPay extends React.Component {
         }, 0);
 
         this.setState({loading: true});
-        getAvailablePaymentInfo(params)
-            .then((o) => {
-                if (o.data) {
-                    let channels = this.getAvailableChannels();
-                    let first = Object.keys(channels).map(key => ({
-                        key: key,
-                        value: channels[key]
-                    })).find(x => x.value).key;
-
-                    this.setState({
-                        channel: first,
-                        coupons: o.data.coupons || [],
-                        othersPaymentList: o.data.othersPaymentList || [],
-                        wait4PayAmt: totalPrice
-                    });
-                }
-            })
-            .catch((err) => {
-                console.error('获取支付信息异常', err)
-                showMessage('获取支付信息异常', err);
-            }).finally(() => {
-                this.setState({loading: false});
-            });
+        getAvailablePaymentInfo(params).then((o) => {
+            if (o.data) {
+                this.setState({
+                    channel: 'multiply',
+                    coupons: o.data.coupons || [],
+                    othersPaymentList: o.data.othersPaymentList || [],
+                    wait4PayAmt: totalPrice
+                });
+            }
+        }).catch((err) => {
+            console.error('获取支付信息异常', err)
+            showMessage('获取支付信息异常', err);
+        }).finally(() => {
+            this.setState({loading: false});
+        });
     }
 
     //选择支付通道
@@ -337,10 +329,9 @@ export class CashierPay extends React.Component {
 
     getAvailableChannels() {
         const {memberType, consumeItems} = this.props;
-        let isMember = memberType == '0';
-        let hasCardProject = !!consumeItems.find((item) => item.projectConsumeType == '1');
-
-        let channels = {tablet: true, miniApp: true, app: true};
+        const isMember = memberType == '0';
+        const hasCardProject = !!consumeItems.find((item) => item.projectConsumeType == '1');
+        const channels = {tablet: true, miniApp: true, app: true};
 
         if (hasCardProject) {
             channels.tablet = false;
@@ -374,7 +365,8 @@ export class CashierPay extends React.Component {
         const isUseCash = companySetting.isUseCash;
         let wait4PayAmt = this.state.wait4PayAmt;
         wait4PayAmt = wait4PayAmt == '-0.0' ? '0.0' : wait4PayAmt;
-        let availableChannels = this.getAvailableChannels();
+
+        const availableChannels = this.getAvailableChannels();
         const couponDesc = selectedCoupons.length ? `已选择${selectedCoupons.length}张优惠券` : coupons.length ? `可用优惠券${coupons.length}张` : '暂无可用优惠券';
         return (
             <View style={cashierPayStyle.modalBackground}>
@@ -453,7 +445,7 @@ export class CashierPay extends React.Component {
                                             <TouchableOpacity
                                                 style={channel == 'tablet' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
                                                 onPress={this.onChannalChoosed.bind(this, 'tablet')}>
-                                                <Image source={require('@imgPath/pay-quickly.png')}
+                                                <Image source={require('@imgPath/pay-quickly-no-recommend.png')}
                                                        style={cashierPayStyle.timePayImgPb} resizeMode={'contain'}/>
                                                 <Text style={cashierPayStyle.titleText}>快速支付</Text>
                                             </TouchableOpacity>
@@ -462,7 +454,7 @@ export class CashierPay extends React.Component {
                                         <TouchableOpacity
                                             style={channel == 'multiply' ? cashierPayStyle.timePayRotherActive : cashierPayStyle.timePayRother}
                                             onPress={this.onChannalChoosed.bind(this, 'multiply')}>
-                                            <Image source={require('@imgPath/pay-multiply.png')}
+                                            <Image source={require('@imgPath/pay-multiply-recommend.png')}
                                                    style={cashierPayStyle.timePaymultiply} resizeMode={'contain'}/>
                                             <Text style={cashierPayStyle.titleText}>组合支付</Text>
                                         </TouchableOpacity>
