@@ -22,7 +22,7 @@ class StaffModifyModalClass extends PureComponent {
 		};
 
 		this.captionMap = {
-			assign: '是否指定',
+			assign: '请选择设置',
 			staff: '选择服务人',
 			position: '设置职务',
 			performance: '设置业绩',
@@ -455,23 +455,23 @@ class StaffInfo extends PureComponent {
 												resizeMode={'contain'}
 											/>
 										)}
-										<View
-											style={
-												currentModifyItem === 'assign' ? (
-													AmendServicerModalStyle.servicerGenreTextBoxActive
-												) : (
-												AmendServicerModalStyle.servicerGenreTextBox
-												)
-											}
-										>
-											<Text style={AmendServicerModalStyle.servicerGenreText}>
-												{staff.appoint === 'true' ? '指定' : '非指定'}
-											</Text>
-											<Image resizeMethod="resize"
-												source={require('@imgPath/redact-111c3c.png')}
-												style={AmendServicerModalStyle.redactImgOther}
-											/>
-										</View>
+										{/*<View*/}
+										{/*	style={*/}
+										{/*		currentModifyItem === 'assign' ? (*/}
+										{/*			AmendServicerModalStyle.servicerGenreTextBoxActive*/}
+										{/*		) : (*/}
+										{/*		AmendServicerModalStyle.servicerGenreTextBox*/}
+										{/*		)*/}
+										{/*	}*/}
+										{/*>*/}
+										{/*	<Text style={AmendServicerModalStyle.servicerGenreText}>*/}
+										{/*		{staff.appoint === 'true' ? '指定' : '非指定'}*/}
+										{/*	</Text>*/}
+										{/*	<Image resizeMethod="resize"*/}
+										{/*		source={require('@imgPath/redact-111c3c.png')}*/}
+										{/*		style={AmendServicerModalStyle.redactImgOther}*/}
+										{/*	/>*/}
+										{/*</View>*/}
 									</View>
 								</TouchableOpacity>
 							)}
@@ -668,38 +668,39 @@ class AssignSelect extends PureComponent {
 		//const { isAssign } = this.state;
 		return (
 			<View style={AmendServicerModalStyle.btnBOX}>
-				<View style={AmendServicerModalStyle.appointBtnBox}>
-					<Image resizeMethod="resize"
-						source={require('@imgPath/assign.png')}
-						style={AmendServicerModalStyle.appointBtnAssign}
-					/>
-					<TouchableOpacity
-						underlayColor="white"
-						style={
-							isAssign === 'true' ? (
-								AmendServicerModalStyle.appointBtn
-							) : (
-								AmendServicerModalStyle.unAppointBtn
-							)
-						}
-						onPress={() => {
-							onAssignSelected('true');
-						}}
-					>
-						<Text style={AmendServicerModalStyle.appointBtnText}>指定</Text>
-					</TouchableOpacity>
-				</View>
-				<TouchableOpacity
-					underlayColor="white"
-					style={
-						isAssign === 'true' ? AmendServicerModalStyle.unAppointBtn : AmendServicerModalStyle.appointBtn
-					}
-					onPress={() => {
-						onAssignSelected('false');
-					}}
-				>
-					<Text style={AmendServicerModalStyle.appointBtnText}>非指定</Text>
-				</TouchableOpacity>
+                <Text>暂无</Text>
+				{/*<View style={AmendServicerModalStyle.appointBtnBox}>*/}
+				{/*	<Image resizeMethod="resize"*/}
+				{/*		source={require('@imgPath/assign.png')}*/}
+				{/*		style={AmendServicerModalStyle.appointBtnAssign}*/}
+				{/*	/>*/}
+				{/*	<TouchableOpacity*/}
+				{/*		underlayColor="white"*/}
+				{/*		style={*/}
+				{/*			isAssign === 'true' ? (*/}
+				{/*				AmendServicerModalStyle.appointBtn*/}
+				{/*			) : (*/}
+				{/*				AmendServicerModalStyle.unAppointBtn*/}
+				{/*			)*/}
+				{/*		}*/}
+				{/*		onPress={() => {*/}
+				{/*			onAssignSelected('true');*/}
+				{/*		}}*/}
+				{/*	>*/}
+				{/*		<Text style={AmendServicerModalStyle.appointBtnText}>指定</Text>*/}
+				{/*	</TouchableOpacity>*/}
+				{/*</View>*/}
+				{/*<TouchableOpacity*/}
+				{/*	underlayColor="white"*/}
+				{/*	style={*/}
+				{/*		isAssign === 'true' ? AmendServicerModalStyle.unAppointBtn : AmendServicerModalStyle.appointBtn*/}
+				{/*	}*/}
+				{/*	onPress={() => {*/}
+				{/*		onAssignSelected('false');*/}
+				{/*	}}*/}
+				{/*>*/}
+				{/*	<Text style={AmendServicerModalStyle.appointBtnText}>非指定</Text>*/}
+				{/*</TouchableOpacity>*/}
 			</View>
 		);
 	}

@@ -2270,28 +2270,28 @@ class CashierBillingView extends React.Component {
                                                               numberOfLines={1}>{currentServicerInfo.storeStaffNo}</Text>
                                                     </View>
                                                 </View>
-                                                <View
-                                                    style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>
-                                                    <View style={cashierBillingStyle.servicerWayChooseWay}>
-                                                        <TouchableOpacity
-                                                            style={currentServicerInfo.appoint == 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
-                                                            onPress={this.onAppoint.bind(this, '0')}>
-                                                            <Text style={cashierBillingStyle.servicerChooseWayText}>
-                                                                轮牌
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity
-                                                            style={currentServicerInfo.appoint != 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}
-                                                            onPress={this.onAppoint.bind(this, '1')}>
-                                                            <Text style={cashierBillingStyle.servicerChooseWayText}>
-                                                                指定
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                    <Image resizeMethod="resize"
-                                                           style={cashierBillingStyle.servicerAppoint}
-                                                           source={require('@imgPath/assign.png')}/>
-                                                </View>
+                                                {/*<View*/}
+                                                {/*    style={this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'proj' || this.state.consumeItems[this.state.currentEditConsumeItemIndex].itemType == 'card' ? cashierBillingStyle.servicerWayBox : cashierBillingStyle.hidden}>*/}
+                                                {/*    <View style={cashierBillingStyle.servicerWayChooseWay}>*/}
+                                                {/*        <TouchableOpacity*/}
+                                                {/*            style={currentServicerInfo.appoint == 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}*/}
+                                                {/*            onPress={this.onAppoint.bind(this, '0')}>*/}
+                                                {/*            <Text style={cashierBillingStyle.servicerChooseWayText}>*/}
+                                                {/*                轮牌*/}
+                                                {/*            </Text>*/}
+                                                {/*        </TouchableOpacity>*/}
+                                                {/*        <TouchableOpacity*/}
+                                                {/*            style={currentServicerInfo.appoint != 'false' ? cashierBillingStyle.servicerChooseWayLiActive : cashierBillingStyle.servicerChooseWayLi}*/}
+                                                {/*            onPress={this.onAppoint.bind(this, '1')}>*/}
+                                                {/*            <Text style={cashierBillingStyle.servicerChooseWayText}>*/}
+                                                {/*                指定*/}
+                                                {/*            </Text>*/}
+                                                {/*        </TouchableOpacity>*/}
+                                                {/*    </View>*/}
+                                                {/*    <Image resizeMethod="resize"*/}
+                                                {/*           style={cashierBillingStyle.servicerAppoint}*/}
+                                                {/*           source={require('@imgPath/assign.png')}/>*/}
+                                                {/*</View>*/}
                                                 {/*职位*/}
                                                 <View style={cashierBillingStyle.servicerPosition}>
                                                     <Text

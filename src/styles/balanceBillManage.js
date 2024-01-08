@@ -194,6 +194,9 @@ export const balanceBillManageStyle = StyleSheet.create({
     infoBox: {
         width: PixelUtil.rect(340, 128).width,
         height: PixelUtil.rect(340, 128).height,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     infoItem: {
         width: PixelUtil.rect(340, 42).width,

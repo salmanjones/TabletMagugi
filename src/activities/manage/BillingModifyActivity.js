@@ -103,18 +103,18 @@ export class ConsumeItemDetail extends React.PureComponent {
                                                 </View>
                                             </View>
                                             <View style={balanceBillManageStyle.infoBox}>
-                                                <Text
-                                                    style={[
-                                                        balanceBillManageStyle.textStyle333,
-                                                        balanceBillManageStyle.infoItem,
-                                                    ]}
-                                                >
-                                                    {itemInfo.service == 1
-                                                        ? staffInfo.appoint === 'true'
-                                                            ? '指定'
-                                                            : '非指定'
-                                                        : ''}
-                                                </Text>
+                                                {/*<Text*/}
+                                                {/*    style={[*/}
+                                                {/*        balanceBillManageStyle.textStyle333,*/}
+                                                {/*        balanceBillManageStyle.infoItem,*/}
+                                                {/*    ]}*/}
+                                                {/*>*/}
+                                                {/*    {itemInfo.service == 1*/}
+                                                {/*        ? staffInfo.appoint === 'true'*/}
+                                                {/*            ? '指定'*/}
+                                                {/*            : '非指定'*/}
+                                                {/*        : ''}*/}
+                                                {/*</Text>*/}
                                                 <Text
                                                     style={[
                                                         balanceBillManageStyle.textStyleBox,
