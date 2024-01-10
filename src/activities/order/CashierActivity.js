@@ -364,35 +364,43 @@ class CashierView extends React.Component {
                                     <Text style={memberIdentifyStyle.waitRefreshText}>刷新</Text>
                                 </TouchableOpacity>
                             </View>
-                            <FlatList
-                                data={memberList}
-                                extraData={member}
-                                keyExtractor={item => item.id}
-                                renderItem={this.renderWaitMemberItem}
-                            />
+                            {
+                                memberList && memberList.length > 0 && (
+                                    <FlatList
+                                        data={memberList}
+                                        extraData={member}
+                                        keyExtractor={item => item.id}
+                                        renderItem={this.renderWaitMemberItem}
+                                    />
+                                )
+                            }
+
                         </View>
                     )}
                     {/*查询的列表*/}
                     {searchStart && (
                         <View style={{height: '87%'}}>
-                            <FlatList
-                                data={list}
-                                keyExtractor={item => item.id}
-                                initialNumToRender={pageSize}
-                                extraData={member}
-                                renderItem={this.renderMemberListItem}
-                                onEndReached={this.loadMore}
-                                ListFooterComponent={
-                                    <FlatListFooter
-                                        state={listState}
-                                        pageSize={pageSize}
-                                        onRefresh={this.loadMore}
-                                        itemCount={list.length}
+                            {
+                                list && list.length > 0 && (
+                                    <FlatList
+                                        data={list}
+                                        keyExtractor={item => item.id}
+                                        initialNumToRender={pageSize}
+                                        extraData={member}
+                                        renderItem={this.renderMemberListItem}
+                                        onEndReached={this.loadMore}
+                                        ListFooterComponent={
+                                            <FlatListFooter
+                                                state={listState}
+                                                pageSize={pageSize}
+                                                onRefresh={this.loadMore}
+                                                itemCount={list.length}
+                                            />
+                                        }
+                                        onEndReachedThreshold={0.1}
                                     />
-                                }
-                                onEndReachedThreshold={0.1}
-                            />
-
+                                )
+                            }
                         </View>
                     )}
                 </View>

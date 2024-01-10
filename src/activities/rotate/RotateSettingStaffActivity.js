@@ -147,7 +147,7 @@ export class RotateSettingStaffActivity extends React.Component {
                                                 </View>
                                             </View>
                                             {
-                                                this.state.settingState ? (
+                                                this.state.settingState && this.state.rotateInfoList.length > 0 ? (
                                                     <FlatList
                                                         data={this.state.rotateInfoList}
                                                         numColumns={2}

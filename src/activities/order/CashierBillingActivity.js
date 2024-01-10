@@ -40,10 +40,10 @@ import {
     clearBillingCacheAction,
     deleteBillingAction,
     getPendingListAction,
-    reloadProfileAction, showDeleteFinishAction
+    reloadProfileAction,
+    showDeleteFinishAction
 } from '../../actions';
 import {decodeContent, getImage, ImageQutity, PaymentResultStatus, PixelUtil, showMessage, showMessageExt, throttle} from '../../utils';
-import {MultiPayActivity} from './MultiPayActivity';
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
@@ -2697,76 +2697,79 @@ class CashierBillingView extends React.Component {
                                         {
                                             // 项目列表
                                             this.state.addConsumeType == 'proj' && (
-                                                <View
-                                                    style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
-                                                    <FlatList
-                                                        data={this.state.currentShowProjDatas}
-                                                        numColumns={3}
-                                                        keyExtractor={item => {
-                                                            const projItem = this.state.allProjDatas[item];
-                                                            return projItem.itemNo
-                                                        }}
-                                                        renderItem={({item}) => {
-                                                            let projItem = this.state.allProjDatas[item];
-                                                            return (
-                                                                <TouchableOpacity style={cashierBillingStyle.addServicerLi}
-                                                                                  key={item}
-                                                                                  onPress={this.addConsumeItem.bind(this, {
-                                                                                      itemId: item,
-                                                                                      itemName: projItem.name,
-                                                                                      itemNo: projItem.itemNo,
-                                                                                      itemPrice: projItem.sumPrice,
-                                                                                      itemNum: 1,
-                                                                                      itemType: 'proj',
-                                                                                      isChoosed: false,
-                                                                                      unitType: '',
-                                                                                      canUse: true,
-                                                                                      limitBuy: projItem.limitBuy
-                                                                                  })}>
-                                                                    <View style={cashierBillingStyle.addServicerLiBox}>
-                                                                        <Text style={cashierBillingStyle.addServicerName}
-                                                                              numberOfLines={2}>
-                                                                            {projItem.name}
-                                                                        </Text>
-                                                                        {
-                                                                            (projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
-                                                                                <View
-                                                                                    style={cashierBillingStyle.addServicerInfo}>
-                                                                                    <Text
-                                                                                        style={cashierBillingStyle.addServicerNumber}>
-                                                                                        {projItem.itemNo}
-                                                                                    </Text>
-                                                                                    <Text
-                                                                                        style={cashierBillingStyle.addServicerLimit}>
-                                                                                        可购{projItem.limitBuy.canBuyCount}件
-                                                                                    </Text>
-                                                                                    <Text
-                                                                                        style={cashierBillingStyle.addServicerPrice}>
-                                                                                        {projItem.limitBuy.canBuyCount > 0 ? projItem.limitBuy.limitPrice : projItem.sumPrice}
-                                                                                    </Text>
-                                                                                </View>
-                                                                            )
-                                                                        }
-                                                                        {
-                                                                            !(projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
-                                                                                <View
-                                                                                    style={cashierBillingStyle.addServicerInfo}>
-                                                                                    <Text
-                                                                                        style={cashierBillingStyle.addServicerNumber}>
-                                                                                        {projItem.itemNo}
-                                                                                    </Text>
-                                                                                    <Text
-                                                                                        style={cashierBillingStyle.addServicerPrice}>
-                                                                                        {projItem.sumPrice}
-                                                                                    </Text>
-                                                                                </View>
-                                                                            )
-                                                                        }
-                                                                    </View>
-                                                                </TouchableOpacity>
-                                                            )
-                                                        }}
-                                                    />
+                                                <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'proj' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
+                                                    {
+                                                        this.state.currentShowProjDatas && this.state.currentShowProjDatas.length > 0 && (
+                                                            <FlatList
+                                                                data={this.state.currentShowProjDatas}
+                                                                numColumns={3}
+                                                                keyExtractor={item => {
+                                                                    const projItem = this.state.allProjDatas[item];
+                                                                    return projItem.itemNo
+                                                                }}
+                                                                renderItem={({item}) => {
+                                                                    let projItem = this.state.allProjDatas[item];
+                                                                    return (
+                                                                        <TouchableOpacity style={cashierBillingStyle.addServicerLi}
+                                                                                          key={item}
+                                                                                          onPress={this.addConsumeItem.bind(this, {
+                                                                                              itemId: item,
+                                                                                              itemName: projItem.name,
+                                                                                              itemNo: projItem.itemNo,
+                                                                                              itemPrice: projItem.sumPrice,
+                                                                                              itemNum: 1,
+                                                                                              itemType: 'proj',
+                                                                                              isChoosed: false,
+                                                                                              unitType: '',
+                                                                                              canUse: true,
+                                                                                              limitBuy: projItem.limitBuy
+                                                                                          })}>
+                                                                            <View style={cashierBillingStyle.addServicerLiBox}>
+                                                                                <Text style={cashierBillingStyle.addServicerName}
+                                                                                      numberOfLines={2}>
+                                                                                    {projItem.name}
+                                                                                </Text>
+                                                                                {
+                                                                                    (projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
+                                                                                        <View
+                                                                                            style={cashierBillingStyle.addServicerInfo}>
+                                                                                            <Text
+                                                                                                style={cashierBillingStyle.addServicerNumber}>
+                                                                                                {projItem.itemNo}
+                                                                                            </Text>
+                                                                                            <Text
+                                                                                                style={cashierBillingStyle.addServicerLimit}>
+                                                                                                可购{projItem.limitBuy.canBuyCount}件
+                                                                                            </Text>
+                                                                                            <Text
+                                                                                                style={cashierBillingStyle.addServicerPrice}>
+                                                                                                {projItem.limitBuy.canBuyCount > 0 ? projItem.limitBuy.limitPrice : projItem.sumPrice}
+                                                                                            </Text>
+                                                                                        </View>
+                                                                                    )
+                                                                                }
+                                                                                {
+                                                                                    !(projItem.limitBuy && projItem.limitBuy.hidden !== true) && (
+                                                                                        <View
+                                                                                            style={cashierBillingStyle.addServicerInfo}>
+                                                                                            <Text
+                                                                                                style={cashierBillingStyle.addServicerNumber}>
+                                                                                                {projItem.itemNo}
+                                                                                            </Text>
+                                                                                            <Text
+                                                                                                style={cashierBillingStyle.addServicerPrice}>
+                                                                                                {projItem.sumPrice}
+                                                                                            </Text>
+                                                                                        </View>
+                                                                                    )
+                                                                                }
+                                                                            </View>
+                                                                        </TouchableOpacity>
+                                                                    )
+                                                                }}
+                                                            />
+                                                        )
+                                                    }
                                                 </View>
                                             )
                                         }
@@ -2779,75 +2782,78 @@ class CashierBillingView extends React.Component {
                                             </View>
                                         }
                                         {this.state.addConsumeType == 'item' && (
-                                            <View
-                                                style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'item' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
-                                                <FlatList
-                                                    data={this.state.currentShowItemDatas}
-                                                    numColumns={3}
-                                                    keyExtractor={item => {
-                                                        const takeItem = this.state.allItemDatas[item];
-                                                        return takeItem.itemNo
-                                                    }}
-                                                    renderItem={({item}) => {
-                                                        let takeItem = this.state.allItemDatas[item];
-                                                        return (
-                                                            <TouchableOpacity style={cashierBillingStyle.addServicerLi}
-                                                                              key={item}
-                                                                              onPress={this.addConsumeItem.bind(this, {
-                                                                                  itemId: item,
-                                                                                  itemName: takeItem.name,
-                                                                                  itemNo: takeItem.itemNo,
-                                                                                  itemPrice: takeItem.unitPrice,
-                                                                                  itemNum: 1,
-                                                                                  itemType: 'item',
-                                                                                  isChoosed: false,
-                                                                                  unitType: '1',
-                                                                                  canUse: true,
-                                                                                  limitBuy: takeItem.limitBuy
-                                                                              })}>
-                                                                <View style={cashierBillingStyle.addServicerLiBox}>
-                                                                    <Text style={cashierBillingStyle.addServicerName}
-                                                                          numberOfLines={2}>
-                                                                        {takeItem.name}
-                                                                    </Text>
+                                            <View style={!this.state.showFilterKeyBoard && this.state.addConsumeType == 'item' ? cashierBillingStyle.consumeBody : cashierBillingStyle.hidden}>
+                                                {
+                                                    this.state.currentShowItemDatas && this.state.currentShowItemDatas.length > 0 && (
+                                                        <FlatList
+                                                            data={this.state.currentShowItemDatas}
+                                                            numColumns={3}
+                                                            keyExtractor={item => {
+                                                                const takeItem = this.state.allItemDatas[item];
+                                                                return takeItem.itemNo
+                                                            }}
+                                                            renderItem={({item}) => {
+                                                                let takeItem = this.state.allItemDatas[item];
+                                                                return (
+                                                                    <TouchableOpacity style={cashierBillingStyle.addServicerLi}
+                                                                                      key={item}
+                                                                                      onPress={this.addConsumeItem.bind(this, {
+                                                                                          itemId: item,
+                                                                                          itemName: takeItem.name,
+                                                                                          itemNo: takeItem.itemNo,
+                                                                                          itemPrice: takeItem.unitPrice,
+                                                                                          itemNum: 1,
+                                                                                          itemType: 'item',
+                                                                                          isChoosed: false,
+                                                                                          unitType: '1',
+                                                                                          canUse: true,
+                                                                                          limitBuy: takeItem.limitBuy
+                                                                                      })}>
+                                                                        <View style={cashierBillingStyle.addServicerLiBox}>
+                                                                            <Text style={cashierBillingStyle.addServicerName}
+                                                                                  numberOfLines={2}>
+                                                                                {takeItem.name}
+                                                                            </Text>
 
-                                                                    {
-                                                                        (takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
-                                                                            <View
-                                                                                style={cashierBillingStyle.addServicerInfo}>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.addServicerNumber}>
-                                                                                    {takeItem.itemNo}
-                                                                                </Text>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.addServicerLimit}>可购{takeItem.limitBuy.canBuyCount}件</Text>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.addServicerPrice}>
-                                                                                    {takeItem.limitBuy.canBuyCount > 0 ? takeItem.limitBuy.limitPrice : takeItem.unitPrice}
-                                                                                </Text>
-                                                                            </View>
-                                                                        )
-                                                                    }
-                                                                    {
-                                                                        !(takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
-                                                                            <View
-                                                                                style={cashierBillingStyle.addServicerInfo}>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.addServicerNumber}>
-                                                                                    {takeItem.itemNo}
-                                                                                </Text>
-                                                                                <Text
-                                                                                    style={cashierBillingStyle.addServicerPrice}>
-                                                                                    {takeItem.unitPrice}
-                                                                                </Text>
-                                                                            </View>
-                                                                        )
-                                                                    }
-                                                                </View>
-                                                            </TouchableOpacity>
-                                                        )
-                                                    }}
-                                                />
+                                                                            {
+                                                                                (takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
+                                                                                    <View
+                                                                                        style={cashierBillingStyle.addServicerInfo}>
+                                                                                        <Text
+                                                                                            style={cashierBillingStyle.addServicerNumber}>
+                                                                                            {takeItem.itemNo}
+                                                                                        </Text>
+                                                                                        <Text
+                                                                                            style={cashierBillingStyle.addServicerLimit}>可购{takeItem.limitBuy.canBuyCount}件</Text>
+                                                                                        <Text
+                                                                                            style={cashierBillingStyle.addServicerPrice}>
+                                                                                            {takeItem.limitBuy.canBuyCount > 0 ? takeItem.limitBuy.limitPrice : takeItem.unitPrice}
+                                                                                        </Text>
+                                                                                    </View>
+                                                                                )
+                                                                            }
+                                                                            {
+                                                                                !(takeItem.limitBuy && takeItem.limitBuy.hidden !== true) && (
+                                                                                    <View
+                                                                                        style={cashierBillingStyle.addServicerInfo}>
+                                                                                        <Text
+                                                                                            style={cashierBillingStyle.addServicerNumber}>
+                                                                                            {takeItem.itemNo}
+                                                                                        </Text>
+                                                                                        <Text
+                                                                                            style={cashierBillingStyle.addServicerPrice}>
+                                                                                            {takeItem.unitPrice}
+                                                                                        </Text>
+                                                                                    </View>
+                                                                                )
+                                                                            }
+                                                                        </View>
+                                                                    </TouchableOpacity>
+                                                                )
+                                                            }}
+                                                        />
+                                                    )
+                                                }
                                             </View>)
                                         }
 

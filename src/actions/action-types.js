@@ -1,17 +1,17 @@
 import {createAction} from '../utils';
 
 //LoginActivity
-export const LOGIN_TEXTINPUT_CHANGE = 1000; //登录输入框改变
-export const LOGIN_TEXTINPUT_FOCUSIN = 1001; //输入框获得焦点
-export const LOGIN_TEXTINPUT_FOCUSOUT = 1002; //输入框失去焦点
-export const LOGIN_TEXTINPUT_CHECK = 1003; //校验用户输入结果
-export const LOGIN_SUBMIT_POSTING = 1005; //提交表单
-export const LOGIN_SUCCESS = 1006; //登陆成功
-export const LOGIN_SESSION_SUCCESS = 1007; //登陆成功-存储用户信息
-export const LOGIN_FAILURE = 1008; //登录失败
-export const LOGIN_FORM_CLEAR = 1009; //清空表单
-export const LOGOUT_SUCCESS = 1010; //注销成功
-export const LOGIN_LINK_RESETPWD = 1011; //跳转重置密码
+export const LOGIN_TEXTINPUT_CHANGE = "1000"; //登录输入框改变
+export const LOGIN_TEXTINPUT_FOCUSIN = "1001"; //输入框获得焦点
+export const LOGIN_TEXTINPUT_FOCUSOUT = "1002"; //输入框失去焦点
+export const LOGIN_TEXTINPUT_CHECK = "1003"; //校验用户输入结果
+export const LOGIN_SUBMIT_POSTING = "1005"; //提交表单
+export const LOGIN_SUCCESS = "1006"; //登陆成功
+export const LOGIN_SESSION_SUCCESS = "1007"; //登陆成功-存储用户信息
+export const LOGIN_FAILURE = "1008"; //登录失败
+export const LOGIN_FORM_CLEAR = "1009"; //清空表单
+export const LOGOUT_SUCCESS = "1010"; //注销成功
+export const LOGIN_LINK_RESETPWD = "1011"; //跳转重置密码
 
 //ResetpwdActivity
 export const RESETPWD_SEND_CODE = createAction('RESETPWD_SEND_CODE'); //重置密码-发送验证码

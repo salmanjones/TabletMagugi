@@ -120,106 +120,110 @@ class MergeOrderPay extends React.Component {
                 </View>
                 <View style={pendingOrderPayStyle.billInfoBox}>
                     <View style={pendingOrderPayStyle.timePayL}>
-                        <FlatList
-                            data={billings}
-                            initialNumToRender={billings.length}
-                            keyExtractor={(item, index) => index}
-                            renderItem={({ item, index }) => {
-                                let isMainBilling = item == mainBilling;
-                                let isMember = item.memberType === '0';
-                                let actualPay = item.consumeList
-                                    .reduce(
-                                        (result, consume) =>
-                                            result + (consume.projectConsumeType == 1 ? 0 : consume.paidIn - (consume.discountPrice || 0)),
-                                        0
-                                    )
-                                    .toFixed(2);
-                                return (
-                                    <View>
-                                        <Swipeout
-                                            autoClose={true}
-                                            style={
-                                                isMainBilling
-                                                    ? pendingOrderPayStyle.timePayLiSwiperOutActive
-                                                    : pendingOrderPayStyle.timePayLiSwiperOut
-                                            }
-                                            right={[
-                                                {
-                                                    text: '移出结算',
-                                                    backgroundColor: 'red',
-                                                    underlayColor: '#ff4444',
-                                                    onPress: () => {
-                                                        this.removeBilling(item);
-                                                    },
-                                                },
-                                            ]}
-                                        >
-                                            <TouchableOpacity
-                                                style={pendingOrderPayStyle.timePayLiFirst}
-                                                onPress={() => this.selectMainBilling(item)}
-                                            >
-                                                <View style={pendingOrderPayStyle.timePayItemO}>
-                                                    <Image
-                                                        resizeMethod="resize"
-                                                        source={
-                                                            isMainBilling
-                                                                ? require('@imgPath/pending-radio-active.png')
-                                                                : require('@imgPath/pending-radio.png')
-                                                        }
-                                                        style={pendingOrderPayStyle.imgStyle}
-                                                        resizeMode={'contain'}
-                                                    />
-                                                </View>
-                                                <View style={pendingOrderPayStyle.timePayLiInfo}>
-                                                    <Text style={pendingOrderPayStyle.FF7149Text}>NO.{item.flowNumber}</Text>
-                                                    <Text style={[pendingOrderPayStyle.C333Text, { width: '40%' }]} numberOfLines={1}>
-                                                        {item.name}
-                                                    </Text>
-                                                    <Text style={pendingOrderPayStyle.C333Text}>
-                                                        {isMember ? item.phone : item.phone === '19800002015' ? '' : item.phone}
-                                                    </Text>
-                                                </View>
-                                                <View style={pendingOrderPayStyle.timePayItem}>
-                                                    <Text style={pendingOrderPayStyle.timePayTextRed}>￥{actualPay}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </Swipeout>
-                                        {item.consumeList.map((consume) => {
-                                            let isTimeCardProject = consume.projectConsumeType == 1;
-                                            return (
-                                                <View
-                                                    key={consume.id}
-                                                    style={isMainBilling ? pendingOrderPayStyle.timePayLiActive : pendingOrderPayStyle.timePayLi}
+                        {
+                            billings && billings.length > 0 && (
+                                <FlatList
+                                    data={billings}
+                                    initialNumToRender={billings.length}
+                                    keyExtractor={(item, index) => index}
+                                    renderItem={({ item, index }) => {
+                                        let isMainBilling = item == mainBilling;
+                                        let isMember = item.memberType === '0';
+                                        let actualPay = item.consumeList
+                                            .reduce(
+                                                (result, consume) =>
+                                                    result + (consume.projectConsumeType == 1 ? 0 : consume.paidIn - (consume.discountPrice || 0)),
+                                                0
+                                            )
+                                            .toFixed(2);
+                                        return (
+                                            <View>
+                                                <Swipeout
+                                                    autoClose={true}
+                                                    style={
+                                                        isMainBilling
+                                                            ? pendingOrderPayStyle.timePayLiSwiperOutActive
+                                                            : pendingOrderPayStyle.timePayLiSwiperOut
+                                                    }
+                                                    right={[
+                                                        {
+                                                            text: '移出结算',
+                                                            backgroundColor: 'red',
+                                                            underlayColor: '#ff4444',
+                                                            onPress: () => {
+                                                                this.removeBilling(item);
+                                                            },
+                                                        },
+                                                    ]}
                                                 >
-                                                    <View style={pendingOrderPayStyle.timePayItem}></View>
-                                                    <View style={pendingOrderPayStyle.timePayType}>
-                                                        <Text style={pendingOrderPayStyle.timePayText} numberOfLines={2}>
-                                                            {consume.itemName}
-                                                        </Text>
-                                                    </View>
-                                                    <View style={pendingOrderPayStyle.timePayItem}>
-                                                        <Text style={pendingOrderPayStyle.timePayText}>￥{consume.costPrice}</Text>
-                                                    </View>
-                                                    <View style={pendingOrderPayStyle.timePayItem}>
-                                                        <Text style={pendingOrderPayStyle.timePayText}>{consume.amount}</Text>
-                                                    </View>
-                                                    <View style={pendingOrderPayStyle.timePayItem}>
-                                                        <Text style={pendingOrderPayStyle.timePayText}>{consume.discountPrice}</Text>
-                                                    </View>
-                                                    <View style={pendingOrderPayStyle.timePayItem}>
-                                                        <Text style={pendingOrderPayStyle.timePayText}>
-                                                            {isTimeCardProject
-                                                                ? consume.consumeTimeAmount
-                                                                : (consume.paidIn - (consume.discountPrice || 0)).toFixed(2)}
-                                                        </Text>
-                                                    </View>
-                                                </View>
-                                            );
-                                        })}
-                                    </View>
-                                );
-                            }}
-                        />
+                                                    <TouchableOpacity
+                                                        style={pendingOrderPayStyle.timePayLiFirst}
+                                                        onPress={() => this.selectMainBilling(item)}
+                                                    >
+                                                        <View style={pendingOrderPayStyle.timePayItemO}>
+                                                            <Image
+                                                                resizeMethod="resize"
+                                                                source={
+                                                                    isMainBilling
+                                                                        ? require('@imgPath/pending-radio-active.png')
+                                                                        : require('@imgPath/pending-radio.png')
+                                                                }
+                                                                style={pendingOrderPayStyle.imgStyle}
+                                                                resizeMode={'contain'}
+                                                            />
+                                                        </View>
+                                                        <View style={pendingOrderPayStyle.timePayLiInfo}>
+                                                            <Text style={pendingOrderPayStyle.FF7149Text}>NO.{item.flowNumber}</Text>
+                                                            <Text style={[pendingOrderPayStyle.C333Text, { width: '40%' }]} numberOfLines={1}>
+                                                                {item.name}
+                                                            </Text>
+                                                            <Text style={pendingOrderPayStyle.C333Text}>
+                                                                {isMember ? item.phone : item.phone === '19800002015' ? '' : item.phone}
+                                                            </Text>
+                                                        </View>
+                                                        <View style={pendingOrderPayStyle.timePayItem}>
+                                                            <Text style={pendingOrderPayStyle.timePayTextRed}>￥{actualPay}</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                </Swipeout>
+                                                {item.consumeList.map((consume) => {
+                                                    let isTimeCardProject = consume.projectConsumeType == 1;
+                                                    return (
+                                                        <View
+                                                            key={consume.id}
+                                                            style={isMainBilling ? pendingOrderPayStyle.timePayLiActive : pendingOrderPayStyle.timePayLi}
+                                                        >
+                                                            <View style={pendingOrderPayStyle.timePayItem}></View>
+                                                            <View style={pendingOrderPayStyle.timePayType}>
+                                                                <Text style={pendingOrderPayStyle.timePayText} numberOfLines={2}>
+                                                                    {consume.itemName}
+                                                                </Text>
+                                                            </View>
+                                                            <View style={pendingOrderPayStyle.timePayItem}>
+                                                                <Text style={pendingOrderPayStyle.timePayText}>￥{consume.costPrice}</Text>
+                                                            </View>
+                                                            <View style={pendingOrderPayStyle.timePayItem}>
+                                                                <Text style={pendingOrderPayStyle.timePayText}>{consume.amount}</Text>
+                                                            </View>
+                                                            <View style={pendingOrderPayStyle.timePayItem}>
+                                                                <Text style={pendingOrderPayStyle.timePayText}>{consume.discountPrice}</Text>
+                                                            </View>
+                                                            <View style={pendingOrderPayStyle.timePayItem}>
+                                                                <Text style={pendingOrderPayStyle.timePayText}>
+                                                                    {isTimeCardProject
+                                                                        ? consume.consumeTimeAmount
+                                                                        : (consume.paidIn - (consume.discountPrice || 0)).toFixed(2)}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    );
+                                                })}
+                                            </View>
+                                        );
+                                    }}
+                                />
+                            )
+                        }
                     </View>
                     <View style={pendingOrderPayStyle.timePayR}>
                         <PayArea

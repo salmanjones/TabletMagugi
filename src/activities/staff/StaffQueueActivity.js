@@ -4,17 +4,10 @@ import {staffQueueStyles} from '../../styles';
 import {connect} from 'react-redux';
 import {AppConfig, decodeContent, getImage, ImageQutity, showMessageExt} from "../../utils";
 import {fetchStaffList, fetchWorksList} from '../../services';
-import {StarRating} from "../../components";
 import Toast from "react-native-root-toast";
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {
-    getBillFlowNO,
-    getMemberBillCards,
-    getMemberCards,
-    getMemberPortrait,
-    getStaffPermission
-} from "../../services/reserve";
+import {getBillFlowNO, getMemberBillCards, getMemberCards, getMemberPortrait, getStaffPermission} from "../../services/reserve";
 import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 export class StaffQueueView extends React.Component {
@@ -544,25 +537,29 @@ export class StaffQueueView extends React.Component {
                     <View style={staffQueueStyles.ListHeader}>
                         <Text style={staffQueueStyles.HeaderTxt}>发型师</Text>
                     </View>
-                    <FlatList
-                        style={staffQueueStyles.ListBox}
-                        data={staffList}
-                        renderItem={renderStaffItem}
-                        keyExtractor={(item, index) => item.staffId}
-                        numColumns={1}
-                        ItemSeparatorComponent={()=>{
-                            return (
-                                <View></View>
-                            )
-                        }}
-                        ListEmptyComponent={()=>{
-                            return (
-                                <View style={staffQueueStyles.ListEmptyBox}>
-                                    <Text>请配置发型师预约时间</Text>
-                                </View>
-                            )
-                        }}
-                    />
+                    {
+                        staffList && staffList.length > 0 && (
+                            <FlatList
+                                style={staffQueueStyles.ListBox}
+                                data={staffList}
+                                renderItem={renderStaffItem}
+                                keyExtractor={(item, index) => item.staffId}
+                                numColumns={1}
+                                ItemSeparatorComponent={()=>{
+                                    return (
+                                        <View></View>
+                                    )
+                                }}
+                                ListEmptyComponent={()=>{
+                                    return (
+                                        <View style={staffQueueStyles.ListEmptyBox}>
+                                            <Text>请配置发型师预约时间</Text>
+                                        </View>
+                                    )
+                                }}
+                            />
+                        )
+                    }
                 </View>
                 <View style={staffQueueStyles.containerWorks}>
                     <View style={staffQueueStyles.WorksHeader}>
@@ -572,7 +569,7 @@ export class StaffQueueView extends React.Component {
                         {
                             (()=>{
                                 if(hasSelectedStaff == true){
-                                    if(worksList.length < 1 ){
+                                    if(!worksList || worksList.length < 1 ){
                                         return ( // 无作品
                                             <View style={staffQueueStyles.WorksEmptyBox}>
                                                 <Image resizeMethod="resize" source={require('@imgPath/works_empty.png')} style={staffQueueStyles.WorksEmptyImg}/>

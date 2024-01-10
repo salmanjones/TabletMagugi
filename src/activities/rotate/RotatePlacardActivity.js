@@ -452,30 +452,34 @@ class RotatePlacard extends React.Component {
                                 )}
                             </View>
                         </View>
-                        <FlatList
-                            // style={index%2==1?rotateItemStyles.scrollContentOdd:rotateItemStyles.scrollContent}
-                            style={rotateItemStyles.scrollContentother}
-                            data={datas}
-                            initialNumToRender={datas.length}
-                            keyExtractor={(item, index) => index}
-                            renderItem={({ item, index }) => (
-                                <PlacardGroup
-                                    index={index}
-                                    id={item._id}
-                                    staffs={item.staffInfo || []}
-                                    setting={item.cardInfo}
-                                    onItemSeleted={staff => {
-                                        this.onPlacardSelected(staff, item);
-                                    }}
-                                    onAddStaff={() => {
-                                        this.onAddStaff(item);
-                                    }}
-                                    onSaveSort={(id, staffs) => {
-                                        this.onSaveSort(id, staffs);
-                                    }}
+                        {
+                            datas && datas.length > 0 && (
+                                <FlatList
+                                    // style={index%2==1?rotateItemStyles.scrollContentOdd:rotateItemStyles.scrollContent}
+                                    style={rotateItemStyles.scrollContentother}
+                                    data={datas}
+                                    initialNumToRender={datas.length}
+                                    keyExtractor={(item, index) => index}
+                                    renderItem={({ item, index }) => (
+                                        <PlacardGroup
+                                            index={index}
+                                            id={item._id}
+                                            staffs={item.staffInfo || []}
+                                            setting={item.cardInfo}
+                                            onItemSeleted={staff => {
+                                                this.onPlacardSelected(staff, item);
+                                            }}
+                                            onAddStaff={() => {
+                                                this.onAddStaff(item);
+                                            }}
+                                            onSaveSort={(id, staffs) => {
+                                                this.onSaveSort(id, staffs);
+                                            }}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+                            )
+                        }
                     </View>
                 ) : (
                     <NullRotate />

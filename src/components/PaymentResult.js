@@ -65,15 +65,19 @@ export const PaymentResult = ({status, cardList}) => {
                                 </View>
                             </View>
                             <View style={payForStyle.cardUseBody}>
-                                <FlatList
-                                    data={cardList}
-                                    keyExtractor={(item)=>item.cardName}
-                                    renderItem={
-                                        ({item}) => {
-                                            return <UseCardItem cardInfo={item}/>
-                                        }
-                                    }
-                                />
+                                {
+                                    cardList && cardList.length > 0 && (
+                                        <FlatList
+                                            data={cardList}
+                                            keyExtractor={(item)=>item.cardName}
+                                            renderItem={
+                                                ({item}) => {
+                                                    return <UseCardItem cardInfo={item}/>
+                                                }
+                                            }
+                                        />
+                                    )
+                                }
                             </View>
                         </View>
                     )
