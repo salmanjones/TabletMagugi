@@ -26,7 +26,7 @@ import {fetchStaffAcl} from '../../services';
 import {VipUserInfoComponent} from "../../components/vipcard/VipUserInfo";
 import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 import {sendSmsCode, verifySmsCode} from "../../services/sms";
-import {getMemberDetail} from "../../services/reserve";
+import {enableSendSms, getMemberDetail} from "../../services/reserve";
 
 const Msg = {
     noCard: '请选择要购买的会员卡',
@@ -59,6 +59,22 @@ class VipCard extends React.Component {
         const {operateUser, clearCache} = this.props;
         // 清除缓存数据
         clearCache()
+
+        // 是否需要发送短信
+        const {loginUser} = this.props
+        enableSendSms({
+            storeId: loginUser.storeId,
+        }).then(res => {
+            const {code, data} = res
+            if (code == '6000') {
+                const isEnable = res.data.hasPhoneVerifyCode
+                this.setState({
+                    enableCheckSms: isEnable
+                })
+            }
+        }).catch(e=>{
+            console.error(e)
+        })
 
         // 获取员工权限
         let aclTxt = 'ncashier_opencard_card_money';

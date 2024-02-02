@@ -168,6 +168,8 @@ export const getPayByCards = `${hostBms}/tablet/new/reserve/find/billing/card/pa
 export const getSmsCode= `${hostBms}/tablet/sms/code/get`
 //验证输入的验证码
 export const verifySmsCode= `${hostBms}/tablet/sms/code/verify`
+//开卡是否需要发送短信
+export const enableSendSms= `${hostBms}/tablet/vipcard/find/auth`
 
 // ---------------------------- linkWecom企业微信服务 ----------------------------
 export const lwTokenUrl = `${hostLwm}/auth/thirdPermit` // 企微Auth接口

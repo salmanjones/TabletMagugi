@@ -105,6 +105,15 @@ export const getMemberDetail = params => {
 }
 
 /**
+ * 开卡是否需要发送短信
+ */
+export const enableSendSms = params => {
+    return callService(api.enableSendSms, params).then(backData => {
+        return backData;
+    });
+}
+
+/**
  * 卡延期
  */
 export const updateCardValidity = params => {
