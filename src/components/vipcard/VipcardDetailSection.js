@@ -241,7 +241,7 @@ export class VipcardDetailSection extends React.PureComponent {
                                                         editable={true}
                                                         keyboardType={'numeric'}
                                                         style={RechargeStoredCardStyles.cardPwdValue}
-                                                        placeholder={'请请入验证码'}
+                                                        placeholder={'请入验证码'}
                                                         placeholderTextColor={'#8e8e8e'}
                                                         value={smsCode}
                                                         onChangeText={value=> {changeSmsCode(value)}}
