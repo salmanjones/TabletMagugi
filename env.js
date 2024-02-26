@@ -12,7 +12,7 @@ export default {
         // lwm: 'http://linkwe.magugi.vip',
 
         // 测试
-        // bms: 'http://192.168.1.56:8080/bms',
+        // bms: 'http://192.168.1.57:8080/bms',
         // app: 'http://192.168.1.56:8080/app/datahandler',
         // lwm: 'http://linkwe.magugi.vip',
 
