@@ -7,8 +7,8 @@ export default {
         lwm: 'https://lwapi.magi2002.com',
 
         // test
-        // bms: 'http://192.168.1.194:8000/bms',
-        // app: 'http://192.168.1.194:8000/peafowl-datahandler-deploy/datahandler',
+        // bms: 'http://192.168.1.189:8000/bms',
+        // app: 'http://192.168.1.189:8000/peafowl-datahandler-deploy/datahandler',
         // lwm: 'http://linkwe.magugi.vip',
 
         // 测试
