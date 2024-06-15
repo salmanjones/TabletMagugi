@@ -3,7 +3,7 @@
 
 ## 安装依赖
 ### 公用
-1. 未安装cnpm的执行如下命令
+1. 未安装pnpm的执行如下命令
 ```
 npm install -g cnpm --registry=https://registry.npmmirror.com
 ```
