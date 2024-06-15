@@ -103,7 +103,7 @@ export class PendingOrderItem extends PureComponent {
 
         const formatCreateTime = moment(createTime).format('MM月DD日 HH:mm');
         const formatPayEndTime = moment(payEndTime).format('MM月DD日 HH:mm');
-        const showKeyNumber = keyNumber.length > 0;
+        const showKeyNumber = keyNumber && keyNumber.length > 0;
         const showLockTime = this.state.showLockTime
 
         return (
