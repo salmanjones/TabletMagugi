@@ -39,7 +39,7 @@ import {
     VipcardActivityOld
 } from '../activities';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
-import Orientation from 'react-native-orientation';
+import Orientation from '@spicysparks/react-native-orientation';
 import {fetchFindVersionResult} from '../services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UpgradeBoxer} from '../components';
