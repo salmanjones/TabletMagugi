@@ -1,5 +1,6 @@
-import {AppConfig, callService} from '../utils';
-import {staffQueues, staffWorks} from "./api";
+import {AppConfig, callADM, callService} from '../utils';
+import {getMBlogs, staffQueues, staffWorks,} from "./api";
+import * as api from "./api";
 
 /**
  * 门店员工列表
@@ -22,14 +23,30 @@ export const fetchStaffList = (storeId, orderBy) => {
  * @param pageSize
  * @returns {Promise<Promise<unknown> | Promise.Promise>}
  */
-export const fetchWorksList = (appUserId, pageNo = "1", pageSize = "15")=>{
+export const fetchWorksList = (appUserId, pageNo = "1", pageSize = "15") => {
     let params = {
-        cname:'',
+        cname: '',
         staffAppUserId: appUserId,
-        targetAppUserId:appUserId,
+        targetAppUserId: appUserId,
         pageNo: pageNo + "",
         pageSize: pageSize + ""
     }
 
     return callService(staffWorks, params, AppConfig.platform.app)
+}
+
+/**
+ * 获取员工作品（新）
+ */
+export const fetchMBlogs = (data) => {
+    let params = {
+        method: "get",
+        header: {
+            'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: getMBlogs,
+        data: data
+    }
+
+    return callADM(params)
 }

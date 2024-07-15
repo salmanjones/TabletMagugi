@@ -3,6 +3,7 @@ import env from '../../env.js'
 const hostBms = env.api.bms;
 const hostApp = env.api.app;
 const hostLwm = env.api.lwm;
+const hostADM = env.api.adm;
 
 //获取BMS令牌
 export const getTokenBms = `${hostBms}/tablet/token/get`;
@@ -177,3 +178,6 @@ export const lwTokenUrl = `${hostLwm}/auth/thirdPermit` // 企微Auth接口
 export const lwGetStoreQR = `${hostLwm}/open/qr/download/dyna` // 企微获取门店福利官企微码
 // 查询企微扫码状态
 export const lwGetQRState = `${hostLwm}/open/qr/qrcode/flag` // 企微福利官企微码扫码状态
+
+// ---------------------------- 美界新管理后台服务 ----------------------------
+export const getMBlogs = `${hostADM}/admin-api/system/find-work/staff/page`

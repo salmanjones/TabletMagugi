@@ -196,19 +196,19 @@ const adopt = (url, config, resolve, reject) => {
                         options['method'] = 'post'
                         delete options['data']
 
-                        fetch(options.tokenUrl, options).then(backResponse=>{
+                        fetch(options.tokenUrl, options).then(backResponse => {
                             backResponse.json().then(jsonObj => {
                                 const accessToken = jsonObj.data['access_token']
-                                AsyncStorage.setItem(LinkWeCom.tokenKey, accessToken).then(_=>{
+                                AsyncStorage.setItem(LinkWeCom.tokenKey, accessToken).then(_ => {
                                     config.headers['Authorization'] = 'Bearer ' + accessToken
                                     adopt(url, config, resolve, reject)
-                                }).catch(e=>{
+                                }).catch(e => {
                                     reject('缓存linkWeCom Token失败')
                                 })
-                            }).catch(e=>{
+                            }).catch(e => {
                                 reject("处理token失败：" + JSON.stringify(e))
                             })
-                        }).catch(e=>{
+                        }).catch(e => {
                             reject("获取token失败：" + JSON.stringify(e))
                         })
                     } else {
@@ -266,9 +266,9 @@ export const callLinkWeCom = async (options) => {
                     delete config['body']
                 }
 
-                getStorage(LinkWeCom.tokenKey).then(authToken=>{
+                getStorage(LinkWeCom.tokenKey).then(authToken => {
                     // 请求令牌
-                    if(authToken && authToken.length > 0){
+                    if (authToken && authToken.length > 0) {
                         config.headers['Authorization'] = 'Bearer ' + authToken
                     }
 
@@ -277,6 +277,90 @@ export const callLinkWeCom = async (options) => {
                 }).catch(err => {
                     console.error("err", err)
                     reject('获取token缓存失败')
+                })
+            } else {
+                reject('无效的数据响应类型，仅支持：json, arraybuffer')
+            }
+        }
+    })
+}
+
+/**
+ * 美界新管理后台
+ * @param url
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const callADM = async (options) => {
+    return new Promise((resolve, reject) => {
+        if (!options.url || options.url.trim().length < 1) {
+            reject('请求地址不能为空')
+        } else {
+            const config = {
+                mode: 'cors',
+                credentials: 'include',
+                timeout: options.timeout || 1000 * 60 * 10,
+                method: options.method || 'post',
+                responseType: options.responseType ? options.responseType.toString().toLowerCase() : 'json',
+                headers: Object.assign({
+                    'tenant-id': '1',
+                    'content-type': 'application/x-www-form-urlencoded'
+                }, options.header),
+                body: JSON.stringify(options.data || {})
+            }
+
+            if (config.responseType == 'json' || config.responseType == 'arraybuffer') {
+                if (config.method.toString().toLowerCase() === 'get') { // 处理get请求
+                    options.url = options.url + '?' + qs.stringify(options.data || {})
+                    delete config['body']
+                }
+
+                // 超时时间
+                const timeout = () => {
+                    return new Promise((resolve, reject) => {
+                        const timerId = setTimeout(() => {
+                            timerId && clearTimeout(timerId)
+                            resolve('timeout') // 504 网络请求超时
+                        }, config.timeout);
+                    })
+                }
+
+                // 带超时的fetch
+                Promise.race([timeout(), fetch(options.url, config)]).then(response => {
+                    if (response === 'timeout') {
+                        reject('网络请求超时，错误码:504')
+                    } else {
+                        // 用于判定状态
+                        const resStatData = response.clone()
+                        const httpStatus = resStatData.status
+                        resStatData.json().then(statInfo => {
+                            const statCode = statInfo.code
+                            if (httpStatus == '200') {
+                                if (statCode == '0') {
+                                    response.json().then(json => {
+                                        resolve(json)
+                                    })
+                                } else {
+                                    reject("业务数据异常，错误码:" + statCode)
+                                }
+                            } else {
+                                reject("网络请求错误，错误码:" + httpStatus)
+                            }
+                        }).catch(_ => {
+                            if (httpStatus == '200') {
+                                response.arrayBuffer().then(buffer => {
+                                    const base64Value = Base64Arraybuffer.encode(buffer)
+                                    resolve(base64Value)
+                                }).catch(e1 => {
+                                    reject(e1)
+                                })
+                            } else {
+                                reject("网络请求错误，错误码:" + httpStatus)
+                            }
+                        })
+                    }
+                }).catch(e => {
+                    reject(e)
                 })
             } else {
                 reject('无效的数据响应类型，仅支持：json, arraybuffer')

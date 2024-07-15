@@ -3,11 +3,17 @@ import {FlatList, Image, Platform, Text, TouchableOpacity, View} from 'react-nat
 import {staffQueueStyles} from '../../styles';
 import {connect} from 'react-redux';
 import {AppConfig, decodeContent, getImage, ImageQutity, showMessageExt} from "../../utils";
-import {fetchStaffList, fetchWorksList} from '../../services';
+import {fetchMBlogs, fetchStaffList, fetchWorksList} from '../../services';
 import Toast from "react-native-root-toast";
 import {AppNavigate} from "../../navigators";
 import Spinner from "react-native-loading-spinner-overlay";
-import {getBillFlowNO, getMemberBillCards, getMemberCards, getMemberPortrait, getStaffPermission} from "../../services/reserve";
+import {
+    getBillFlowNO,
+    getMemberBillCards,
+    getMemberCards,
+    getMemberPortrait,
+    getStaffPermission
+} from "../../services/reserve";
 import {TimerRightWidget} from "../../components/header/TimerRightWidget";
 
 export class StaffQueueView extends React.Component {
@@ -114,6 +120,9 @@ export class StaffQueueView extends React.Component {
             return {...prevState, staffList, worksList: [], staffSelected, waiterId: staffSelected.staffId};
         }, ()=>{
             this.loadWorks(true)
+
+            // 新作品获取
+            // this.fetchMBlogs(true)
         });
     }
 
@@ -177,6 +186,28 @@ export class StaffQueueView extends React.Component {
                     isLoading: false
                 })
             })
+        })
+    }
+
+
+    // 测试加载作品
+    fetchMBlogs(){
+        let self = this
+        let {staffSelected} = self.state
+        fetchMBlogs({
+            staffId: staffSelected.staffId,
+            storeId: staffSelected.storeId,
+            pageNo: 1,
+            pageSize: 10,
+        }).then(data=>{
+            console.log("===============================================")
+            console.log(data)
+            console.log("###############################################")
+        }).catch(e=>{
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.error(e)
+            console.error(staffSelected)
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         })
     }
 
