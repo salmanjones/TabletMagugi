@@ -1,5 +1,5 @@
 import {AppConfig, callADM, callService} from '../utils';
-import {getMBlogs, staffQueues, staffWorks,} from "./api";
+import {getMBlogDetail, getMBlogs, staffQueues, staffWorks,} from "./api";
 import * as api from "./api";
 
 /**
@@ -45,6 +45,22 @@ export const fetchMBlogs = (data) => {
             'content-type': 'application/x-www-form-urlencoded'
         },
         url: getMBlogs,
+        data: data
+    }
+
+    return callADM(params)
+}
+
+/**
+ * 获取员工作品详情（新）
+ */
+export const fetchMBlogDetail = (data) => {
+    let params = {
+        method: "get",
+        header: {
+            'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: getMBlogDetail,
         data: data
     }
 

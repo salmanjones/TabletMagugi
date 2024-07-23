@@ -181,3 +181,4 @@ export const lwGetQRState = `${hostLwm}/open/qr/qrcode/flag` // 企微福利官�
 
 // ---------------------------- 美界新管理后台服务 ----------------------------
 export const getMBlogs = `${hostADM}/admin-api/system/find-work/staff/page`
+export const getMBlogDetail = `${hostADM}/admin-api/system/find-work/staff/get`

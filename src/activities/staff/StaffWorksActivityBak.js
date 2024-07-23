@@ -73,7 +73,7 @@ export class StaffWorksView extends React.Component {
         })
     }
 
-    toCashier() {
+    toCashier(){
         this.setState({
             showVideo: false
         }, async () => {
@@ -87,7 +87,7 @@ export class StaffWorksView extends React.Component {
 
             try {
                 // 服务人信息
-                const waiterId = this.state.staffInfo['staffId']
+                const waiterId =  this.state.staffInfo['staffId']
                 const imgUrl = this.props.route.params.imgUrl
                 const memberId = this.props.route.params.memberId
 
@@ -99,7 +99,7 @@ export class StaffWorksView extends React.Component {
                 })
                 // 获取水单号
                 const flowNumberBackData = await getBillFlowNO()
-                if (memberId && memberId.length > 0) { // 散客扫码-->转会员
+                if(memberId && memberId.length > 0){ // 散客扫码-->转会员
                     // 开始准备开单的数据-获取BMS会员档案
                     const portraitBackData = await getMemberPortrait({
                         p: 1,
@@ -121,27 +121,27 @@ export class StaffWorksView extends React.Component {
                         isExpireCard: 1
                     })
                     // 会员档案
-                    if (portraitBackData.code != '6000'
+                    if(portraitBackData.code != '6000'
                         || cardsBackData.code != '6000'
                         || permissionBackData.code != '6000'
                         || billCardsBackData.code != '6000'
-                        || flowNumberBackData.code != '6000') {
+                        || flowNumberBackData.code != '6000'){
                         // 错误
                         showMessageExt("开单失败")
                         this.setState({
                             isLoading: false
                         })
-                    } else {
+                    }else{
                         this.setState({
                             isLoading: false
                         })
                         // BMS会员档案
                         const memberPortrait = portraitBackData['data']['memberList'][0] || {}
-                        if (!memberPortrait || !memberPortrait.id) {
+                        if(!memberPortrait || !memberPortrait.id){
                             memberPortrait['id'] = memberId
                         }
                         // BMS会员卡
-                        const memberCardInfo = cardsBackData['data']
+                        const memberCardInfo =  cardsBackData['data']
                         // 员工权限
                         const staffPermission = permissionBackData['data']
                         // 开单用的会员卡
@@ -207,17 +207,17 @@ export class StaffWorksView extends React.Component {
                         // 开单
                         AppNavigate.navigate('CashierBillingActivity', params)
                     }
-                } else { // 散客直接开单
+                }else{ // 散客直接开单
                     // 会员档案
-                    if (permissionBackData.code != '6000'
-                        || flowNumberBackData.code != '6000') {
+                    if(permissionBackData.code != '6000'
+                        || flowNumberBackData.code != '6000'){
                         // 错误
                         showMessageExt("开单失败")
                         // 加载中
                         this.setState({
                             isLoading: false
                         })
-                    } else {
+                    }else{
                         // 加载中
                         this.setState({
                             isLoading: false
@@ -247,10 +247,10 @@ export class StaffWorksView extends React.Component {
                         }
 
                         const params = {
-                            orderInfoLeftData: {
-                                customerNumber: "1",
-                                isOldCustomer: "0",
-                                handNumber: ""
+                            orderInfoLeftData:{
+                                customerNumber:"1",
+                                isOldCustomer:"0",
+                                handNumber:""
                             },
                             companyId: loginUser.companyId,
                             storeId: loginUser.storeId,
@@ -264,7 +264,7 @@ export class StaffWorksView extends React.Component {
                             numType: "flownum",
                             numValue: flowNumber,
                             page: pagerName,
-                            member: null,
+                            member:null,
                             type: "vip",
                             roundMode: roundMode,
                             moduleCode: moduleCode,
@@ -286,7 +286,7 @@ export class StaffWorksView extends React.Component {
         })
     }
 
-    videoError() {
+    videoError(){
         Toast.show('视频加载错误', {
             duration: Toast.durations.LONG,
             position: Toast.positions.BOTTOM,
@@ -313,7 +313,7 @@ export class StaffWorksView extends React.Component {
                     {/*立即开单*/}
                     <TouchableOpacity
                         style={staffQueueStyles.reserveButtonKaiDan}
-                        onPress={() => {
+                        onPress={()=>{
                             this.toCashier()
                         }}>
                         <Image
@@ -323,15 +323,13 @@ export class StaffWorksView extends React.Component {
                     </TouchableOpacity>
                 </View>
                 {
-                    showVideo && workInfo.contentType == 2 ?
+                    showVideo && workInfo.contentType == 1 ?
                         (
-                            <Video source={{uri: workInfo['showImgList'][0]}}
-                                   ref={(ref) => {
-                                       _mediaPlayer = ref
-                                   }}
+                            <Video source={{uri: workInfo.videoUrl}}
+                                   ref={(ref) => {_mediaPlayer = ref}}
                                    onBuffer={this.onBuffer}
                                    onError={this.videoError}
-                                   poster={workInfo['picUrl'] + '?imageView2/0/w/800/q/85'}
+                                   poster={workInfo.showImg}
                                    repeat={true}
                                    resizeMode={'contain'}
                                    posterResizeMode={'contain'}
@@ -339,58 +337,50 @@ export class StaffWorksView extends React.Component {
                         )
                         :
                         (
-                            <Swiper
-                                from={0}
-                                minDistanceForAction={0.1}
-                                controlsProps={{
-                                    dotsTouchable: true,
-                                    prevPos: 'left',
-                                    nextPos: 'right',
-                                    DotComponent: ({index, activeIndex, isActive, onPress}) => {
-                                        return (
-                                            <TouchableOpacity onPress={onPress}>
-                                                <View
-                                                    style={activeIndex == index ? staffWorksStyles.activeDot : staffWorksStyles.normalDot}/>
-                                            </TouchableOpacity>
-                                        )
-                                    },
-                                    dotsWrapperStyle: staffWorksStyles.dotsWrapperStyle,
-                                    NextComponent: ({onPress}) => (
-                                        <TouchableOpacity onPress={onPress}>
-                                            <Image style={staffWorksStyles.iconImg}
-                                                   source={require('@imgPath/icon-work-next-op.png')}
-                                                   resizeMethod="resize"/>
-                                        </TouchableOpacity>
-                                    ),
-                                    PrevComponent: ({onPress}) => (
-                                        <TouchableOpacity onPress={onPress}>
-                                            <Image style={staffWorksStyles.iconImg}
-                                                   source={require('@imgPath/icon-work-prev-op.png')}
-                                                   resizeMethod="resize"/>
-                                        </TouchableOpacity>
-                                    ),
-                                }}
-                            >
-                                {workInfo && workInfo['showImgList'].map((item, index) => {
+                        <Swiper
+                            from={0}
+                            minDistanceForAction={0.1}
+                            controlsProps={{
+                                dotsTouchable: true,
+                                prevPos: 'left',
+                                nextPos: 'right',
+                                DotComponent: ({ index, activeIndex, isActive, onPress }) => {
                                     return (
-                                        <View style={staffWorksStyles.imgBox} key={index}>
-                                            <Image style={staffWorksStyles.workImg} source={{uri: item + '?imageView2/0/w/800/q/85'}}
-                                                   resizeMethod="resize" resizeMode={'contain'}/>
-                                        </View>
+                                        <TouchableOpacity onPress={onPress}>
+                                            <View style={activeIndex==index ? staffWorksStyles.activeDot: staffWorksStyles.normalDot}/>
+                                        </TouchableOpacity>
                                     )
-                                })}
-                            </Swiper>
-                        )
+                                },
+                                dotsWrapperStyle: staffWorksStyles.dotsWrapperStyle,
+                                NextComponent: ({ onPress }) => (
+                                    <TouchableOpacity onPress={onPress}>
+                                        <Image style={staffWorksStyles.iconImg} source={require('@imgPath/icon-work-next-op.png')} resizeMethod="resize"/>
+                                    </TouchableOpacity>
+                                ),
+                                PrevComponent: ({ onPress }) => (
+                                    <TouchableOpacity onPress={onPress}>
+                                        <Image style={staffWorksStyles.iconImg} source={require('@imgPath/icon-work-prev-op.png')} resizeMethod="resize"/>
+                                    </TouchableOpacity>
+                                ),
+                            }}
+                        >
+                            {workInfo && workInfo.imgUrls.map((item, index)=>{
+                                return (
+                                    <View style={staffWorksStyles.imgBox} key={index}>
+                                        <Image style={staffWorksStyles.workImg} source={{uri: item}} resizeMethod="resize" resizeMode={'contain'}/>
+                                    </View>
+                                )
+                            })}
+                        </Swiper>
+                    )
                 }
                 <View style={staffWorksStyles.footerWrap}>
                     <View style={staffWorksStyles.footerLeft}>
-                        <Image style={staffWorksStyles.staffPhoto} source={{uri: staffInfo.staffPhoto}}
-                               resizeMethod="resize"/>
+                        <Image style={staffWorksStyles.staffPhoto} source={{uri: staffInfo.staffPhoto}} resizeMethod="resize"/>
                         <Text style={staffWorksStyles.staffName}>{staffInfo.nickName}</Text>
                         <Text style={staffWorksStyles.staffName}>{staffInfo.positionName}</Text>
-                        <Image resizeMethod="resize" source={require('@imgPath/icon-like.png')}
-                               style={staffWorksStyles.likeCountImg}/>
-                        <Text style={staffWorksStyles.likeCountTxt}>{workInfo.likeNumber}</Text>
+                        <Image resizeMethod="resize" source={require('@imgPath/icon-like.png')} style={staffWorksStyles.likeCountImg}/>
+                        <Text style={staffWorksStyles.likeCountTxt}>{workInfo.countOfLike}</Text>
                     </View>
                 </View>
             </View>

@@ -16,6 +16,7 @@ let worksBoxHeight =  bodyHeight - PixelUtil.size(100, 2048)
 let worksListHeight =  worksBoxHeight
 let worksListWidth = PixelUtil.screenSize.width * 0.63
 let worksCellWidth = (PixelUtil.screenSize.width * 0.63 - PixelUtil.size(40, 2048) * 2  -  PixelUtil.size(8, 2048) * 3)/4
+let worksCellHeight = worksCellWidth * (4/3)
 
 export const staffQueueStyles = StyleSheet.create({
     hidden: {
@@ -267,7 +268,7 @@ export const staffQueueStyles = StyleSheet.create({
         marginBottom: PixelUtil.size(8, 2048),
         marginRight: PixelUtil.size(8, 2048),
         width: worksCellWidth,
-        height: worksCellWidth,
+        height: worksCellHeight,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -281,7 +282,7 @@ export const staffQueueStyles = StyleSheet.create({
         marginBottom: PixelUtil.size(8, 2048),
         marginRight: PixelUtil.size(8, 2048),
         width: worksCellWidth,
-        height: worksCellWidth,
+        height: worksCellHeight,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -289,7 +290,7 @@ export const staffQueueStyles = StyleSheet.create({
         position: 'relative',
         borderWidth: PixelUtil.size(4, 2048),
         borderRadius: PixelUtil.size(12, 2048),
-        borderColor: '#ff770f',
+        borderColor: '#ff770f'
     },
     lastChild:{
         marginBottom: PixelUtil.size(40, 2048)
