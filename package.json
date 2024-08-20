@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "start": "npx react-native start",
+        "debugger": "npx react-native start --reset-cache --experimental-debugger",
         "start-nocache": "npx react-native start --reset-cache",
         "pod": "npx pod-install",
         "android": "npx react-native run-android",
