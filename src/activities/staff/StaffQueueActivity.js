@@ -15,6 +15,7 @@ import {
     getStaffPermission
 } from "../../services/reserve";
 import {TimerRightWidget} from "../../components/header/TimerRightWidget";
+import {cloneDeep} from "lodash/lang";
 
 export class StaffQueueView extends React.Component {
     constructor(props) {
@@ -22,6 +23,8 @@ export class StaffQueueView extends React.Component {
         this.state = {
             isLoading: false,
             staffList: [],
+            staffListRaw: [],
+            filterPositions: [],
             worksList: [],
             worksTotal: 0,
             platform: Platform.OS === 'ios' ? 'ios' : 'android',
@@ -60,18 +63,41 @@ export class StaffQueueView extends React.Component {
             if (code == '6000') { // 数据请求成功
                 let staffList = data.result
 
+                // 员工职务信息
+                const positionsData = []
+
                 // 处理员工信息
-                staffList.forEach((staff, idx) => {
+                staffList.forEach((staff) => {
                     staff.nickName = decodeContent(staff.nickName)
                     staff.staffPhoto = staff.staffPhoto && staff.staffPhoto.length > 0 ? AppConfig.imageServer + staff.staffPhoto + '?imageView2/3/w/650/q/85' : AppConfig.defaultAvatar
                     staff.selected = ''
+
+                    const positionId = staff['positionId']
+                    const positionName = staff['positionName']
+                    const isPosExist = positionsData.filter(item => {
+                        return item.id == positionId
+                    }).length > 0
+                    if (!isPosExist) {
+                        positionsData.push({
+                            id: positionId,
+                            name: positionName,
+                            active: false
+                        })
+                    }
+                })
+                positionsData.sort((pos1, pos2) => {
+                    const pid1 = parseInt(pos1.id)
+                    const pid2 = parseInt(pos2.id)
+                    return pid1 - pid2
                 })
 
                 let staffSelected = staffList[0]
                 this.setState({
                     staffList,
+                    staffListRaw: cloneDeep(staffList),
                     staffSelected,
-                    waiterId: staffSelected.staffId
+                    waiterId: staffSelected.staffId,
+                    filterPositions: positionsData
                 }, () => {
                     // 加载第一位员工的作品
                     self.fetchMBlogs(true)
@@ -157,7 +183,7 @@ export class StaffQueueView extends React.Component {
                 pageSize
             }).then(backData => {
                 const {code, data} = backData
-                if(code == '0'){
+                if (code == '0') {
                     // 处理员工信息
                     const worksData = data.list
                     const worksTotal = data.total
@@ -170,7 +196,7 @@ export class StaffQueueView extends React.Component {
                         worksList,
                         worksTotal
                     })
-                }else{
+                } else {
                     self.loadError('works')
                 }
             }).catch(e => {
@@ -200,7 +226,7 @@ export class StaffQueueView extends React.Component {
             const workInfo = worksList[index]
             fetchMBlogDetail({id: workInfo.id}).then(backResult => {
                 const {code, data} = backResult
-                if(code == '0'){
+                if (code == '0') {
                     const imgUrl = self.props.route.params.imgUrl
                     const memberId = self.props.route.params.memberId
                     const pagerName = self.props.route.params.pagerName
@@ -215,13 +241,13 @@ export class StaffQueueView extends React.Component {
                     }
                     // 页面跳转
                     AppNavigate.navigate('StaffWorksActivity', params)
-                }else{
+                } else {
                     self.loadError('works')
                 }
-            }).catch(e=>{
+            }).catch(e => {
                 console.error("获取员工作品错误", e)
                 self.loadError('works')
-            }).finally(_=>{
+            }).finally(_ => {
                 self.setState({
                     isLoading: false
                 })
@@ -465,10 +491,68 @@ export class StaffQueueView extends React.Component {
         }
     }
 
+    setFilterItem = (index) => {
+        const filterPositions = this.state.filterPositions.map((item, idx) => {
+            if (index == idx) {
+                item.active = !item.active
+            } else {
+                item.active = false
+            }
+
+            return item
+        })
+
+        // 处理筛选数据
+        let staffListData = cloneDeep(this.state.staffListRaw)
+        const filterItem = filterPositions.find(item => item.active === true)
+        if(filterItem && filterItem.active === true){
+            staffListData = staffListData.filter(item=>{
+                return item.positionId == filterItem.id
+            })
+        }
+
+        this.setState({
+            staffList: staffListData,
+            filterPositions,
+            staffSelected: undefined,
+            waiterId: ''
+        })
+    }
+
     render() {
-        const {isLoading, staffList, worksList} = this.state
+        const {isLoading, staffList, filterPositions, worksList} = this.state
         // 是够已选中发型师
         const hasSelectedStaff = staffList.filter(item => item.selected && item.selected.length > 0).length > 0
+
+        // 作品渲染
+        const renderWorkItem = ({item, index}) => (
+            <TouchableOpacity onPress={() => {
+                this.selectedWork(index)
+            }}>
+                <View
+                    style={index == this.state.worksList.length - 1 ? staffQueueStyles.lastChild : staffQueueStyles.normalChild}>
+                    <View
+                        style={item.selected == 'selected' ? staffQueueStyles.workSelectedCell : staffQueueStyles.workCell}>
+                        <Image style={staffQueueStyles.workImg}
+                               source={{uri: item['picUrl'] + '?imageView2/0/w/800/q/85'}} resizeMethod="resize"
+                               resizeMode={'contain'}/>
+                        {
+                            item.contentType == '2' && (
+                                <Image style={staffQueueStyles.videoImg}
+                                       resizeMethod="resize"
+                                       resizeMode={'contain'}
+                                       source={{uri: 'https://pic.magugi.com/0f98d3833dc94fa7457567baaab6ea4c'}}
+                                />)
+                        }
+                        <View style={staffQueueStyles.likeCountBox}>
+                            <Image resizeMethod="resize" source={require('@imgPath/icon-like.png')}
+                                   style={staffQueueStyles.likeCountImg}/>
+                            <Text style={staffQueueStyles.likeCountTxt}>{item['likeNumber']}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
 
         // 单员工渲染
         const renderStaffItem = ({item, index}) => (
@@ -476,7 +560,8 @@ export class StaffQueueView extends React.Component {
                 this.selectedStaff(index)
             }}>
                 <View style={staffQueueStyles.itemCell}>
-                    <View style={item.selected == 'selected' ? staffQueueStyles.itemSelectedCellWrap : staffQueueStyles.itemCellWrap}>
+                    <View
+                        style={item.selected == 'selected' ? staffQueueStyles.itemSelectedCellWrap : staffQueueStyles.itemCellWrap}>
                         <Image style={staffQueueStyles.itemLeft} source={{uri: item.staffPhoto}} resizeMethod="resize"/>
                         <View style={staffQueueStyles.itemRight}>
                             {/*人气值*/}
@@ -510,31 +595,20 @@ export class StaffQueueView extends React.Component {
             </TouchableOpacity>
         );
 
-        // 作品渲染
-        const renderWorkItem = ({item, index}) => (
-            <TouchableOpacity onPress={() => {
-                this.selectedWork(index)
-            }}>
-                <View
-                    style={index == this.state.worksList.length - 1 ? staffQueueStyles.lastChild : staffQueueStyles.normalChild}>
-                    <View style={item.selected == 'selected' ? staffQueueStyles.workSelectedCell : staffQueueStyles.workCell}>
-                        <Image style={staffQueueStyles.workImg} source={{uri: item['picUrl'] + '?imageView2/0/w/800/q/85'}} resizeMethod="resize" resizeMode={'contain'}/>
-                        {
-                            item.contentType == '2' && (
-                                <Image style={staffQueueStyles.videoImg}
-                                       resizeMethod="resize"
-                                       resizeMode={'contain'}
-                                       source={{uri: 'https://pic.magugi.com/0f98d3833dc94fa7457567baaab6ea4c'}}
-                                />)
-                        }
-                        <View style={staffQueueStyles.likeCountBox}>
-                            <Image resizeMethod="resize" source={require('@imgPath/icon-like.png')}
-                                   style={staffQueueStyles.likeCountImg}/>
-                            <Text style={staffQueueStyles.likeCountTxt}>{item['likeNumber']}</Text>
-                        </View>
-                    </View>
+        // 筛选职务
+        const filterItem = ({item, index}) => (
+
+                <View style={index == 0 ? staffQueueStyles.filterPosItem0 : staffQueueStyles.filterPosItem}>
+                    <TouchableOpacity onPress={() => {
+                        this.setFilterItem(index)
+                    }}>
+                    <Text
+                        style={item.active ? staffQueueStyles.filterPosItemTextActive : staffQueueStyles.filterPosItemText}>
+                        {item.name}
+                    </Text>
+                    </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
+
         );
 
         // 总视图
@@ -568,6 +642,19 @@ export class StaffQueueView extends React.Component {
                     <View style={staffQueueStyles.ListHeader}>
                         <Text style={staffQueueStyles.HeaderTxt}>发型师</Text>
                     </View>
+                    <FlatList style={staffQueueStyles.FilterPosBox}
+                              horizontal={true}
+                              data={filterPositions}
+                              renderItem={filterItem}
+                              keyExtractor={(item) => {
+                                  return item.id
+                              }}
+                              ItemSeparatorComponent={() => {
+                                  return (
+                                      <View></View>
+                                  )
+                              }}
+                    />
                     {
                         staffList && staffList.length > 0 && (
                             <FlatList

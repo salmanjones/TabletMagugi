@@ -4,10 +4,11 @@ import {PixelUtil} from '../utils';
 
 let naviBarHeight = PixelUtil.size(120, 2048)
 let headerHeight = PixelUtil.size(108, 2048)
+let filterHeight = PixelUtil.size(128, 2048)
 let lineHeight = PixelUtil.size(2, 2048)
 let footerHeight = 0
 let bodyHeight = PixelUtil.screenSize.height - naviBarHeight - footerHeight
-let listHeight = bodyHeight - headerHeight - lineHeight
+let listHeight = bodyHeight - headerHeight - filterHeight - lineHeight
 // 员工cell宽度
 let staffCellWidth = PixelUtil.screenSize.width * 0.37 - PixelUtil.size(40, 2048) * 2
 let staffRightWidth = staffCellWidth - PixelUtil.size(203, 2048) - PixelUtil.size(4, 2048)
@@ -70,6 +71,42 @@ export const staffQueueStyles = StyleSheet.create({
         borderBottomWidth: PixelUtil.size(2, 2048),
         borderColor:'#cbcbcb',
         borderRightWidth: PixelUtil.size(2, 2048)
+    },
+    FilterPosBox: {
+        width: '100%',
+        height: PixelUtil.size(128)
+    },
+    filterPosItem0: {
+        height: PixelUtil.size(64),
+        marginTop: PixelUtil.size(32, 2048),
+        marginLeft: PixelUtil.size(26, 2048),
+        marginRight: PixelUtil.size(26, 2048),
+    },
+    filterPosItem: {
+        height: PixelUtil.size(64),
+        marginTop: PixelUtil.size(32, 2048),
+        marginRight: PixelUtil.size(26, 2048),
+    },
+    filterPosItemText:{
+        paddingTop: PixelUtil.size(12, 2048),
+        paddingRight: PixelUtil.size(22, 2048),
+        paddingBottom: PixelUtil.size(12, 2048),
+        paddingLeft: PixelUtil.size(22, 2048),
+        fontSize: PixelUtil.size(30),
+        color: '#222222',
+        backgroundColor: '#ffffff',
+        display: 'flex'
+    },
+    filterPosItemTextActive:{
+        paddingTop: PixelUtil.size(12, 2048),
+        paddingRight: PixelUtil.size(22, 2048),
+        paddingBottom: PixelUtil.size(12, 2048),
+        paddingLeft: PixelUtil.size(22, 2048),
+        fontSize: PixelUtil.size(30),
+        color: '#FFFFFF',
+        fontWeight: 500,
+        backgroundColor: '#101B3C',
+        display: 'flex'
     },
     ListBox:{
         width: '100%',
