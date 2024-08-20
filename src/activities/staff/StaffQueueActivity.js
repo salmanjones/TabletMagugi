@@ -597,18 +597,15 @@ export class StaffQueueView extends React.Component {
 
         // 筛选职务
         const filterItem = ({item, index}) => (
-
-                <View style={index == 0 ? staffQueueStyles.filterPosItem0 : staffQueueStyles.filterPosItem}>
-                    <TouchableOpacity onPress={() => {
-                        this.setFilterItem(index)
-                    }}>
-                    <Text
-                        style={item.active ? staffQueueStyles.filterPosItemTextActive : staffQueueStyles.filterPosItemText}>
-                        {item.name}
-                    </Text>
-                    </TouchableOpacity>
-                </View>
-
+            <View style={[index == 0 ? staffQueueStyles.filterPosItem0 : staffQueueStyles.filterPosItem, item.active ? staffQueueStyles.filterPosActive: staffQueueStyles.filterPosGen] }>
+                <TouchableOpacity onPress={() => {
+                    this.setFilterItem(index)
+                }}>
+                <Text style={item.active ? staffQueueStyles.filterPosItemTextActive : staffQueueStyles.filterPosItemText}>
+                    {item.name}
+                </Text>
+                </TouchableOpacity>
+            </View>
         );
 
         // 总视图

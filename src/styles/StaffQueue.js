@@ -4,7 +4,7 @@ import {PixelUtil} from '../utils';
 
 let naviBarHeight = PixelUtil.size(120, 2048)
 let headerHeight = PixelUtil.size(108, 2048)
-let filterHeight = PixelUtil.size(128, 2048)
+let filterHeight = PixelUtil.size(96, 2048)
 let lineHeight = PixelUtil.size(2, 2048)
 let footerHeight = 0
 let bodyHeight = PixelUtil.screenSize.height - naviBarHeight - footerHeight
@@ -74,18 +74,28 @@ export const staffQueueStyles = StyleSheet.create({
     },
     FilterPosBox: {
         width: '100%',
-        height: PixelUtil.size(128)
+        height: PixelUtil.size(96)
     },
     filterPosItem0: {
         height: PixelUtil.size(64),
         marginTop: PixelUtil.size(32, 2048),
         marginLeft: PixelUtil.size(26, 2048),
         marginRight: PixelUtil.size(26, 2048),
+        borderRadius: PixelUtil.size(10),
+        backgroundColor: '#ffffff',
     },
     filterPosItem: {
         height: PixelUtil.size(64),
         marginTop: PixelUtil.size(32, 2048),
         marginRight: PixelUtil.size(26, 2048),
+        borderRadius: PixelUtil.size(10),
+        backgroundColor: '#ffffff',
+    },
+    filterPosActive:{
+        backgroundColor: '#101B3C',
+    },
+    filterPosGen:{
+        backgroundColor: '#ffffff',
     },
     filterPosItemText:{
         paddingTop: PixelUtil.size(12, 2048),
@@ -94,7 +104,6 @@ export const staffQueueStyles = StyleSheet.create({
         paddingLeft: PixelUtil.size(22, 2048),
         fontSize: PixelUtil.size(30),
         color: '#222222',
-        backgroundColor: '#ffffff',
         display: 'flex'
     },
     filterPosItemTextActive:{
@@ -105,7 +114,6 @@ export const staffQueueStyles = StyleSheet.create({
         fontSize: PixelUtil.size(30),
         color: '#FFFFFF',
         fontWeight: 500,
-        backgroundColor: '#101B3C',
         display: 'flex'
     },
     ListBox:{
