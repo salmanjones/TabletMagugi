@@ -15,6 +15,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D47E5847297586BD0057A13E /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D47E5846297586BD0057A13E /* Fonts */; };
 		D47E5849297638C50057A13E /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47E5848297638C50057A13E /* bundle */; };
+		D49C8D952C883FA80059811C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49C8D942C883FA80059811C /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,9 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-TabletMagugi-TabletMagugiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabletMagugi-TabletMagugiTests.release.xcconfig"; path = "Target Support Files/Pods-TabletMagugi-TabletMagugiTests/Pods-TabletMagugi-TabletMagugiTests.release.xcconfig"; sourceTree = "<group>"; };
 		D47E5846297586BD0057A13E /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		D47E5848297638C50057A13E /* bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundle; sourceTree = "<group>"; };
+		D49C8D942C883FA80059811C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		D49C8D962C885BCC0059811C /* libReact-hermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-hermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D49C8D982C885C070059811C /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -42,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D49C8D952C883FA80059811C /* SwiftUI.framework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-TabletMagugi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +70,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D49C8D982C885C070059811C /* hermes.xcframework */,
+				D49C8D962C885BCC0059811C /* libReact-hermes.a */,
+				D49C8D942C883FA80059811C /* SwiftUI.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-TabletMagugi.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-TabletMagugi-TabletMagugiTests.a */,
@@ -314,6 +322,8 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-Wl",
+					"-ld_classic",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.magi.tablet;
 				PRODUCT_NAME = TabletMagugi;
@@ -347,6 +357,8 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-Wl",
+					"-ld_classic",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.magi.tablet;
 				PRODUCT_NAME = TabletMagugi;
@@ -513,8 +525,6 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-Wl",
-                    "-ld_classic",
 					"-weak-lswiftCoreGraphics",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
